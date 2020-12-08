@@ -7,10 +7,10 @@ using System.Drawing;
 
 namespace SPI_AOI.Models
 {
-    class Mark
+    public class Mark
     {
         public string ID { get; set; }
-        public Rectangle Bouding { get; set; }
         public int NO { get; set; }
+        public Rectangle Bouding { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Stencil.SDK
+namespace SPI_AOI.Uitls
 {
     class Convertor
     {

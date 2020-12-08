@@ -1,0 +1,50 @@
+﻿<Window x:Class="SPI_AOI.Views.ModelManagement.AutoAdjustWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SPI_AOI.Views.ModelManagement"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        xmlns:cvt="clr-namespace:SPI_AOI.Views"
+        ResizeMode="NoResize"
+        Initialized="Window_Initialized"
+        Title="Auto Adjust Window" Height="232.52" Width="360.163">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>
+            <cvt:BrushColorCvt x:Key="BrushColor"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Label x:Name="label" Content="Gerber:" HorizontalAlignment="Left" Margin="10,27,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="cbGerber" HorizontalAlignment="Left" Margin="64,27,0,0" VerticalAlignment="Top" Width="237" Height="29" SelectionChanged="cbGerber_SelectionChanged">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                        <Border BorderThickness="1" BorderBrush="Black" Background="{Binding Path=Color, Converter={StaticResource ResourceKey=BrushColor}}" Width="15" Height="15"></Border>
+                        <Label Margin="10,0,0,0" Content="{Binding FileName}" ></Label>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Label x:Name="label_Copy" Content="Cad:" HorizontalAlignment="Left" Margin="26,76,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="cbCad" HorizontalAlignment="Left" Margin="64,73,0,0" VerticalAlignment="Top" Width="237" Height="29" SelectionChanged="cbCad_SelectionChanged">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                        <Border BorderThickness="1" BorderBrush="Black" Background="{Binding Path=Color, Converter={StaticResource ResourceKey=BrushColor}}" Width="15" Height="15"></Border>
+                        <Label Margin="10,0,0,0" Content="{Binding FileName}" ></Label>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Button x:Name="button" HorizontalAlignment="Left" Margin="207,119,0,0" VerticalAlignment="Top" Width="94" RenderTransformOrigin="0.546,0.252" Height="35" Click="button_Click">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="../../Resources/Icons/xyz.jpg" ></Image>
+                <Label Content="Adjust"></Label>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>

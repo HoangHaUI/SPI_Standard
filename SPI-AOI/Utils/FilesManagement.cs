@@ -6,7 +6,7 @@ namespace Heal
 {
     class FilesManagement
     {
-        private static Logger mLog = MyLog.GetInstance();
+        private static Logger mLog = LogCtl.GetInstance();
         public static void DeleteFiles(string path, int hours, bool subfolder = false, bool WriteLog = true)
         {
             if(Directory.Exists(path))

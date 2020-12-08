@@ -36,6 +36,26 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Emgu.CV.UI, Version=4.1.1.3497, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <HintPath>..\packages\EMGU.CV.4.1.1.3497\lib\net35\Emgu.CV.UI.dll</HintPath>
@@ -47,6 +67,9 @@
     </Reference>
     <Reference Include="GerberLibrary">
       <HintPath>..\..\..\..\..\Stencil\Source\CSharp\Stencil\bin\x64\Debug\GerberLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="MvCameraControl.Net">
+      <HintPath>C:\Program Files (x86)\MVS\Development\Bin\win64\MvCameraControl.Net.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -117,24 +140,37 @@
     <Compile Include="Models\Fov.cs" />
     <Compile Include="Models\GerberFile.cs" />
     <Compile Include="Models\Hardware.cs" />
-    <Compile Include="Models\ImportedFile.cs" />
     <Compile Include="Models\Mark.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\PadItem.cs" />
-    <Compile Include="Models\Utils.cs" />
-    <Compile Include="Theme.cs" />
+    <Compile Include="Models\ShowModel.cs" />
+    <Compile Include="Utils\Utils.cs" />
     <Compile Include="Utils\Convertor.cs" />
     <Compile Include="Utils\FilesManagement.cs" />
-    <Compile Include="Utils\Gerber.cs" />
-    <Compile Include="Utils\Gerber2Bitmap.cs" />
+    <Compile Include="Utils\FOVOptimize.cs" />
+    <Compile Include="Utils\GerberUtils.cs" />
     <Compile Include="Utils\HikCamera.cs" />
     <Compile Include="Utils\LogCtl.cs" />
     <Compile Include="Utils\SLMP.cs" />
+    <Compile Include="Views\ModelManagement\AutoAdjustWindow.xaml.cs">
+      <DependentUpon>AutoAdjustWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ModelManagement\AvailabilityLayerWindow.xaml.cs">
+      <DependentUpon>AvailabilityLayerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ModelManagement\GerberTools.xaml.cs">
       <DependentUpon>GerberTools.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ModelManagement\MyStruct.cs" />
+    <Compile Include="Views\ModelManagement\RotationWindow.xaml.cs">
+      <DependentUpon>RotationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ModelManagement\XYMovingWindow.xaml.cs">
+      <DependentUpon>XYMovingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ValueConverter.cs" />
+    <Compile Include="Views\WaitingForm.xaml.cs">
+      <DependentUpon>WaitingForm.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -147,11 +183,31 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ModelManagement\AutoAdjustWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ModelManagement\AvailabilityLayerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ModelManagement\GerberTools.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ModelManagement\RotationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ModelManagement\XYMovingWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Styles\Base.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WaitingForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -170,6 +226,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\Icons\green-checkbox-png-7.png" />
+    <Resource Include="Resources\Icons\rotate_left_90.png" />
+    <Resource Include="Resources\Icons\rotate_right_90.png" />
+    <Resource Include="Resources\Icons\rotation.png" />
+    <Resource Include="Resources\Icons\pad.png" />
+    <Resource Include="Resources\Icons\XY.png" />
+    <Resource Include="Resources\Icons\Single_Pointpng.png" />
+    <Resource Include="Resources\Icons\xyz-png-2.png" />
+    <Resource Include="Resources\Icons\xyz.jpg" />
     <Resource Include="Resources\Icons\file_cad-512.png" />
     <Resource Include="Resources\Icons\adminsetting.jpg" />
     <Resource Include="Resources\Icons\alarmrs.png" />

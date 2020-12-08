@@ -12,10 +12,10 @@ namespace Heal
     /// <para> Show all level to console window</para>
     /// <para>Write Error, Warn, Debug, Fatal, Off, and Trace level to log file.</para>
     /// </summary>
-    public class MyLog
+    public class LogCtl
     {
         private static Logger Logger;
-        private static MyLog mlog;
+        private static LogCtl mlog;
         /// <summary>
         /// <para>en: Initialization configuration for writing to file </para>
         /// <para>vi: Cấu hình khởi tạo để ghi vào tập tin</para>
@@ -72,7 +72,7 @@ namespace Heal
 
                 if(mlog == null)
                 {
-                    mlog = new MyLog();
+                    mlog = new LogCtl();
                     if (Logger == null)
                     {
                         Logger = LogManager.GetLogger("Debug");

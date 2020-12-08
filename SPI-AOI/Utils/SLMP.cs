@@ -22,7 +22,7 @@ namespace Heal
         private string _word;
         private string _Listsp = "MYZDLFVBSW";
         private static Object synLock = new Object();
-        private static Logger mLog = Heal.MyLog.GetInstance();
+        private static Logger mLog = Heal.LogCtl.GetInstance();
 
         public SLMP(string ip, int port)
         {

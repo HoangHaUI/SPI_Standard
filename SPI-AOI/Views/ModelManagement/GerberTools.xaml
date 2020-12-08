@@ -9,10 +9,10 @@
         xmlns:emgu="clr-namespace:Emgu.CV.UI;assembly=Emgu.CV.UI"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="GerberTools" 
+        Title="Gerber Tools" 
         Height="900" Width="1600"
         Background="#FFF5F5F5"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" KeyDown="Window_KeyDown">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -41,7 +41,9 @@
                         <MenuItem Header="_"></MenuItem>
                     </MenuItem>
                     <MenuItem Header="_View" Margin="5">
-                        <MenuItem Header="_Show Line" IsCheckable="True"></MenuItem>
+                        <MenuItem x:Name="chbShowLinkLine" Click="chbShowLinkLine_Click" Header="_Show Link Line" IsCheckable="True"></MenuItem>
+                        <MenuItem x:Name="chbShowComponentCenter" Header="_Show Component Center" IsCheckable="True" Click="chbShowComponentCenter_Click"></MenuItem>
+                        <MenuItem x:Name="chbShowComponentName" Click="chbShowComponentName_Click" Header="_Show Component Name" IsCheckable="True"></MenuItem>
                     </MenuItem>
                     <MenuItem Header="_Short Keys" Margin="5">
                         <MenuItem Header="_Open Gerber file"></MenuItem>
@@ -55,14 +57,36 @@
                     </MenuItem>
                 </Menu>
                 <ToolBar Background="Transparent" Margin="0,5,0,0">
-                    <Button Width="35" Height="35" Margin="5,0,5,0">
+                    <Button x:Name="btImportGerber"
+                            Click="btImportGerber_Click"
+                            Width="35" Height="35" Margin="5,0,5,0">
                         <Image Source="../../Resources/Icons/gerber_icon.png"></Image>
                     </Button>
-                    <Button Width="35" Height="35" Margin="5,0,5,0">
+                    <Button x:Name="btImportCad"
+                            Click="btImportCad_Click"
+                            Width="35" Height="35" Margin="5,0,5,0">
                         <Image Source="../../Resources/Icons/file_cad-512.png"></Image>
                     </Button>
-                    <Button Width="35" Height="35" Margin="5,0,5,0">
-                        <Image Source="../../Resources/Icons/gerber_icon.png"></Image>
+                    <Button x:Name="btSetROI" Click="btSetROI_Click" Width="35" Height="35" Margin="5,0,5,0">
+                        <Image Source="../../Resources/Icons/crop-512.png"></Image>
+                    </Button>
+                    <Button x:Name="btRotation"
+                            Click="btRotation_Click" Width="35"
+                            Height="35" Margin="5,0,5,0"
+                            ToolTip="Manual adjust R - XY">
+                        <Image Source="../../Resources/Icons/rotation.png"></Image>
+                    </Button>
+                    <Button x:Name="btSelectPad"
+                            Click="btSelectPad_Click" Width="35"
+                            Height="35" Margin="5,0,5,0"
+                            ToolTip="Select Items">
+                        <Image Source="../../Resources/Icons/pad.png"></Image>
+                    </Button>
+                    <Button x:Name="btAdjustsadxXY" 
+                            Click="btAdjustXY_Click" Width="35"
+                            Height="35" Margin="5,0,5,0"
+                            ToolTip="Auto Adjsut XY">
+                        <Image Source="../../Resources/Icons/copy.png"></Image>
                     </Button>
                 </ToolBar>
             </StackPanel>
@@ -70,16 +94,18 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="157*"/>
-                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <GroupBox Margin="5" Header="View">
-                    <WindowsFormsHost Margin="5" Background="LightGray">
+                    <WindowsFormsHost Margin="5" Background="Black">
                         <emgu:ImageBox x:Name="imBox"
                                        MouseDown="imBox_MouseDown"
                                        MouseUp="imBox_MouseUp"
                                        MouseMove="imBox_MouseMove"
+                                       MouseWheel="imBox_MouseWheel"
                                        Paint="imBox_Paint"
+                                       FunctionalMode="RightClickMenu"
                                        ></emgu:ImageBox>
                     </WindowsFormsHost>
                 </GroupBox>
@@ -93,27 +119,37 @@
                     <Grid Grid.Row="0">
                         <GroupBox Margin="5" Header="Files">
                             <GroupBox.Resources>
-                                
+
                             </GroupBox.Resources>
-                            <ListBox x:Name="listImportedFile" Margin="10" Background="Transparent">
+                            <ListBox x:Name="listImportedFile" Margin="10" Background="Transparent" SelectionMode="Single">
                                 <ListBox.ItemTemplate>
-                                    <DataTemplate >
-                                        <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-                                            <Border BorderThickness="1" MouseDown="Border_MouseDown" BorderBrush="Black" Background="{Binding Path=Color, Converter={StaticResource BrushColor}}" Width="15" Height="15"></Border>
-                                            <Label Margin="10,0,0,0" Content="FILe.text" ></Label>
-                                        </StackPanel>
+                                    <DataTemplate>
+                                        <DockPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                                                <CheckBox Margin="10,5,10,0" IsChecked="{Binding Visible}" Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"></CheckBox>
+                                                <Border BorderThickness="1" BorderBrush="Black" Background="{Binding Path=Color, Converter={StaticResource BrushColor}}" Width="15" Height="15" MouseUp="Border_MouseUp"></Border>
+                                                <Label Margin="10,0,0,0" Content="{Binding FileName}" >
+                                                </Label>
+                                                <StackPanel.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem x:Name="menuCtxCopy" Header="_Copy" Click="menuCtxCopy_Click"></MenuItem>
+                                                        <MenuItem x:Name="menuCtxDelete" Header="_Delete" Click="menuCtxDelete_Click"></MenuItem>
+                                                    </ContextMenu>
+                                                </StackPanel.ContextMenu>
+                                            </StackPanel>
+                                        </DockPanel>
+                                        
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
+                                
                             </ListBox>
                         </GroupBox>
                     </Grid>
                     <Grid Grid.Row="1">
                         <GroupBox Margin="5" Header="Details">
-
                         </GroupBox>
                     </Grid>
                 </Grid>
-                
             </Grid>
         </Grid>
     </Grid>
