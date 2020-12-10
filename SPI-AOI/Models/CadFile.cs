@@ -12,17 +12,18 @@ namespace SPI_AOI.Models
     public class CadFile
     {
         private static NLog.Logger mLog = Heal.LogCtl.GetInstance();
-        public string ID { get; set; }
-        public Color Color { get; set; }
-        public string FileName { get; set; }
-        public string FilePath { get; set; }
-        public bool Visible { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-        public double Angle { get; set; }
-        public Rectangle SelectCenter { get; set; }
-        public Point CenterRotation { get; set; }
-        public List<CadItem> CadItems { get; set; }
+        public string ID { get; set; }//
+        public int NOCadFile { get; set; }
+        public Color Color { get; set; }//
+        public string FileName { get; set; }//
+        public string FilePath { get; set; }//
+        public bool Visible { get; set; }//
+        public int X { get; set; }//
+        public int Y { get; set; }//
+        public double Angle { get; set; }//
+        public Rectangle SelectCenter { get; set; }//
+        public Point CenterRotation { get; set; }//
+        public List<CadItem> CadItems { get; set; }//
         public static CadFile GetNewCadFile(string ID, string Path, double DPI, int GerberWidth = 0, int GerberHeight= 0)
         {
             FileInfo fi = new FileInfo(Path);
@@ -32,7 +33,6 @@ namespace SPI_AOI.Models
             cad.FileName = fi.Name;
             cad.FilePath = fi.FullName;
             cad.Visible = true;
-           
             cad.Angle = 0;
             cad.CadItems = new List<CadItem>();
             string[] content = File.ReadAllLines(fi.FullName);
@@ -86,6 +86,16 @@ namespace SPI_AOI.Models
                     return null;
                 }
             }
+            // add undefine caditem
+            CadItem cadItemUndefine = new CadItem();
+            cadItemUndefine.ID = ID;
+            cadItemUndefine.Name = "UNDEFINE";
+            cadItemUndefine.Center = new PointF(-9999, -9999);
+            cadItemUndefine.Angle = 0;
+            cadItemUndefine.Code = "UNDEFINE";
+            cadItemUndefine.Pads = new List<PadItem>();
+            cad.CadItems.Add(cadItemUndefine);
+            // calculate rotate point
             for (int i = 0; i < cad.CadItems.Count; i++)
             {
                 PointF ct = cad.CadItems[i].Center;
@@ -94,14 +104,16 @@ namespace SPI_AOI.Models
             _YMax -= _XMin;
             _XMax -= _XMin;
             _YMin -= _XMin;
-            _XMin = 0;
+            _XMin = 0; 
             cad.CenterRotation = new Point((int)(_XMax - _XMin) / 2, (int)(_YMax - _YMin) / 2);
             cad.X = GerberWidth / 2 - cad.CenterRotation.X;
             cad.Y = GerberHeight / 2 - cad.CenterRotation.Y;
+            
             return cad;
         }
         public Point GetCenterSelected()
         {
+            List<Point> centerSelected = new List<Point>();
             for (int i = 0; i < CadItems.Count; i++)
             {
                 Point ct = Point.Round(CadItems[i].Center);
@@ -111,14 +123,54 @@ namespace SPI_AOI.Models
                 Rectangle bound = new Rectangle(newCtRotate.X, newCtRotate.Y, 1, 1);
                 if (this.SelectCenter.Contains(bound))
                 {
-                    return newCtRotate;
+                    centerSelected.Add(newCtRotate);
                 }
             }
-            return new Point();
+            if (centerSelected.Count > 0)
+            {
+                long x = 0;
+                long y = 0;
+                for (int i = 0; i < centerSelected.Count; i++)
+                {
+                    x += centerSelected[i].X;
+                    y += centerSelected[i].Y;
+                }
+                x = x / centerSelected.Count;
+                y = y / centerSelected.Count;
+                return new Point(Convert.ToInt32(x), Convert.ToInt32(y));
+            }
+            else
+            {
+                return new Point();
+            }
         }
-        public CadFile Clone()
+        public CadFile Copy()
         {
-            return (CadFile)this.MemberwiseClone();
+            CadFile cad = new CadFile();
+            cad.ID = this.ID;
+            cad.FileName = this.FileName;
+            cad.FilePath = this.FilePath;
+            cad.Angle = this.Angle;
+            cad.Color = this.Color;
+            cad.CenterRotation = new Point(this.CenterRotation.X, CenterRotation.Y);
+            cad.SelectCenter = Rectangle.Empty;
+            cad.Visible = true;
+            cad.X = this.X;
+            cad.Y = this.Y;
+
+            cad.CadItems = new List<CadItem>();
+            for (int i = 0; i < this.CadItems.Count; i++)
+            {
+                cad.CadItems.Add(this.CadItems[i].Copy());
+            }
+            return cad;
+        }
+        public void ClearLinkPadItem()
+        {
+            for (int i = 0; i < this.CadItems.Count; i++)
+            {
+                this.CadItems[i].Pads = new List<PadItem>();
+            }
         }
     }
 }

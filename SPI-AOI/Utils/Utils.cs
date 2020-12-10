@@ -42,5 +42,31 @@ namespace SPI_AOI
             }
             return scr;
         }
+        public static int GetCircleByThreePoint(Point P1, Point P2, Point P3, ref PointF Center, ref double Radius)
+        {
+            // phuong trinh duong thang p1, p2
+            float dt12a = (P1.X - P2.X) == 0 ? 0 : (P1.Y - P2.Y) / (P1.X - P2.X);
+            float dt12b = P2.Y - (dt12a * P2.X);
+            // phuon trinh duong thang p2,p3
+            float dt23a = (P3.X - P2.X) == 0 ? 0 : (P3.Y - P2.Y) / (P3.X - P2.X);
+            float dt23b = P2.Y - (dt12a * P2.X);
+            //tim trung diem
+            PointF mid12 = new PointF((P1.X + P2.X) / 2, (P1.Y + P2.Y) / 2);
+            PointF mid23 = new PointF((P3.X + P2.X) / 2, (P3.Y + P2.Y) / 2);
+            //tim duong thang vuong goc di qua trung dien
+            dt12a = dt12a == 0 ? 0 : -1 / dt12a;
+            dt12b = mid12.Y - dt12a * mid12.X;
+            dt23a = dt23a == 0 ? 0 : -1 / dt23a;
+            dt23b = mid23.Y - dt23a * mid23.X;
+            // tinh tam va ban kinh
+            Center.X = (dt12a - dt23a) == 0 ? 0 : ((dt23b - dt12b) / (dt12a - dt23a));
+            Center.Y = (dt23a * Center.X + dt23b);
+            Radius = (float)Math.Sqrt(Math.Pow((P1.X - Center.X), 2) + Math.Pow((P1.Y - Center.Y), 2));
+            return 0;
+        }
+        public static double DistanceTwoPoint(Point P1, Point P2)
+        {
+            return Math.Sqrt(Math.Pow(P2.X - P1.X, 2) + Math.Pow(P2.Y - P1.Y, 2));
+        }
     }
 }

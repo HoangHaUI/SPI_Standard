@@ -4,9 +4,277 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SPI_AOI"
+        xmlns:pie="clr-namespace:PieControls;assembly=PieControls"
         mc:Ignorable="d"
-        Title="[FII] SPI-AOI" Height="350" Width="525" Background="#FFF0F0F0">
-    <Grid>
-        
+        Height="1000" Width="1800"
+        WindowStartupLocation="CenterScreen"
+        Title="[FII] SPI-AOI" Background="#FFF0F0F0">
+    <Grid Name="grMain">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="85"></RowDefinition>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Name="MenuTools" Orientation="Vertical" Grid.Row="0">
+            <DockPanel Name="dpnMenu" Margin="10" >
+                <Menu Name="MenuStrip" FontSize="15" DockPanel.Dock="Top">
+                    <MenuItem  Header="_Menu">
+                        <MenuItem Header="_New">
+                            <MenuItem.Icon>
+                                <Image Source="../Resources/Icons/newfile.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem  Header="_Open">
+                            <MenuItem.Icon>
+                                <Image Source="../Resources/Icons/openfile.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem  Header="_CLose">
+                        </MenuItem>
+                        <MenuItem  x:Name="btExit" Header="_Exit">
+                            <MenuItem.Icon>
+                                <Image Source="../Resources/Icons/exit.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem  Header="_Tools">
+                        <MenuItem  Header="_PLC">
+                        </MenuItem>
+                        <MenuItem  Header="_Camera">
+                        </MenuItem>
+                        <MenuItem  Header="_Light Source">
+                        </MenuItem>
+                        <MenuItem  Header="_Models">
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem  Header="_Help">
+                        <MenuItem  Header="_Log">
+                        </MenuItem>
+                        <MenuItem  Header="_Contact us">
+                        </MenuItem>
+                        <MenuItem  Header="_About">
+                        </MenuItem>
+                    </MenuItem>
+                </Menu>
+            </DockPanel>
+            <DockPanel Margin="5,5,5,0">
+                <ToolBar Background="Transparent">
+                    <Button ToolTip="Basic settings" Background="Transparent">
+                        <Image Source="../Resources/Icons/settings.png" Width="25"></Image>
+                    </Button>
+                    <Separator></Separator>
+                    <Button  ToolTip="Admin settings" Background="Transparent">
+                        <Image Source="../Resources/Icons/adminsetting.jpg" Width="25"></Image>
+                    </Button>
+                    <Separator></Separator>
+                    <Button  ToolTip="PLC Configurations"  Background="Transparent">
+                        <Image Source="../Resources/Icons/plc_2.png" Width="25"></Image>
+                    </Button>
+                    <Separator></Separator>
+                    <Button  ToolTip="Lightsource configurations"  Background="Transparent" >
+                        <Image Source="../Resources/Icons/light.png" Width="25"></Image>
+                    </Button>
+                    <Separator></Separator>
+                    <Button  ToolTip="Camera configurations" Background="Transparent">
+                        <Image Source="../Resources/Icons/camera-hozi.png" Width="25"></Image>
+                    </Button>
+                    <Separator></Separator>
+                    <Button ToolTip="Machine solution define" Background="Transparent">
+                        <Image Source="../Resources/Icons/issue.png" Width="25"></Image>
+                    </Button>
+                    <Separator></Separator>
+
+                    <Button x:Name="btModelManager" ToolTip="Model Management" Background="Transparent" >
+                        <Image Source="../Resources/Icons/model_icon.png" Width="25"></Image>
+                    </Button>
+                    <Separator></Separator>
+                    <Label Content="Model:" ></Label>
+                    <ComboBox x:Name="cbModelsName" Width="300" Height="30"></ComboBox>
+                    <Button ToolTip="Run" Background="Transparent">
+                        <Image Source="../Resources/Icons/start.png" Width="25"></Image>
+                    </Button>
+                </ToolBar>
+            </DockPanel>
+        </StackPanel>
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="270"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Margin="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="140"/>
+                </Grid.RowDefinitions>
+                <GroupBox x:Name="groupBox" Grid.Row="0" Header="View" >
+                    <Border Background="Black">
+                        <Image Source="D:\Heal\Projects\B06\Stencil\Recycle\1.bmp" />
+                    </Border>
+                </GroupBox>
+                <GroupBox x:Name="groupBox1" Grid.Row="1" Header="History"  >
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Horizontal" x:Name="stackFovs" HorizontalAlignment="Left">
+                            <Canvas></Canvas>
+                        </StackPanel>
+                    </ScrollViewer>
+                </GroupBox>
+            </Grid>
+            <Grid Grid.Column="1" Margin="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="270"/>
+                    <RowDefinition Height="35*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <GroupBox Header="Model information" >
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <StackPanel Margin="5">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label  Content="Model Name:" Foreground="Gray"></Label>
+                                        <Label  Content="SMT-HPT102SJ2008013" FontSize="15" FontWeight="Bold"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label  Content="Load time:" Foreground="Gray"></Label>
+                                        <Label  Content="11:31:20 30/11/2020" FontSize="15" ></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label  Content="Gerber file:" Foreground="Gray"></Label>
+                                        <Label  Content="HPT102SJ2008013.gbr" FontSize="15"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label  Content="FOVs:" Foreground="Gray"></Label>
+                                        <Label  Content="111 FOVs" FontSize="15"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label  Content="Cycle Time:" Foreground="Gray"></Label>
+                                        <Label  Content="30.5s" FontSize="15"></Label>
+                                    </StackPanel>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </GroupBox>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <GroupBox Header="Diagram" >
+                        <Border Margin="3" Background="DarkGray">
+                            <Image Source="D:\Heal\Projects\B06\Stencil\Recycle\1.bmp"></Image>
+                        </Border>
+                    </GroupBox>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <GroupBox Header="Result details" >
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                            <StackPanel Margin="5">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label  Content="Model Name:" Foreground="Gray"></Label>
+                                    <Label  Content="SMT-HPT102SJ2008013" FontSize="15" FontWeight="Bold"></Label>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label  Content="Load time:" Foreground="Gray"></Label>
+                                    <Label  Content="11:31:20 30/11/2020" FontSize="15" ></Label>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label  Content="Gerber file:" Foreground="Gray"></Label>
+                                    <Label  Content="HPT102SJ2008013.gbr" FontSize="15"></Label>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label  Content="SN:" Foreground="Gray"></Label>
+                                    <Label  Content="SVM0002353" FontSize="15"></Label>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label  Content="Cycle Time:" Foreground="Gray"></Label>
+                                    <Label  Content="30.5s" FontSize="15"></Label>
+                                </StackPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="2" Margin="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="220"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <GroupBox Header="Machine Status" >
+                                <Border Background="Green" BorderBrush="White" BorderThickness="0.7" CornerRadius="5" Margin="5">
+                                    <Label  Content="Running" HorizontalAlignment="Center"  VerticalAlignment="Center" FontWeight="Bold" FontSize="13"></Label>
+                                </Border>
+                            </GroupBox>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <GroupBox Header="Door Status" >
+                                <Border Background="Green" BorderBrush="White" BorderThickness="0.7" CornerRadius="5" Margin="5">
+                                    <Label  Content="Close" HorizontalAlignment="Center"  VerticalAlignment="Center" FontWeight="Bold" FontSize="13"></Label>
+                                </Border>
+                            </GroupBox>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <GroupBox  Header="Statistical">
+                        <StackPanel Margin="5,15,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton  Content="Shift" IsChecked="True">
+                                </RadioButton>
+                                <RadioButton  Margin="40,0,0,0" Content="Day">
+                                </RadioButton>
+                                <RadioButton  Margin="40,0,0,0" Content="Total">
+                                </RadioButton>
+                            </StackPanel>
+                            <Grid Height="140" Margin="10,20, 10,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="70"></ColumnDefinition>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <StackPanel HorizontalAlignment="Left">
+                                        <Label  Content="Pass:" Margin="0,10,0,0"></Label>
+                                        <TextBox Width="70" Background="Transparent" Text="89" TextAlignment="Center"></TextBox>
+                                        <Label  Content="Fail:" Margin="0,10,0,0"></Label>
+                                        <TextBox Width="70" Background="Transparent" Text="22" TextAlignment="Center"></TextBox>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <Canvas>
+                                        <Label Content="Rate chart" FontSize="11"  Canvas.Left="62"></Label>
+                                        <pie:PieControl Canvas.Left="40" Canvas.Top="25" 
+                                                        Foreground="White" Grid.Column="1" x:Name="chartPassFail" Width="100" Height="100" HorizontalAlignment="Left"/>
+                                    </Canvas>
+
+                                </Grid>
+                            </Grid>
+
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+                <Grid Grid.Row="2" Margin="3">
+                    <GroupBox  Header="Summary">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="24*"/>
+                                <RowDefinition Height="50*"/>
+                                <RowDefinition Height="71*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <StackPanel HorizontalAlignment="Left">
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

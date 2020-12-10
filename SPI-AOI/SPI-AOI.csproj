@@ -79,6 +79,9 @@
       <HintPath>..\packages\NLog.4.7.5\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PieControls">
+      <HintPath>..\..\..\..\..\Stencil\Source\CSharp\Stencil\bin\x64\Debug\PieControls.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -226,6 +229,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\Icons\link_icon.png" />
     <Resource Include="Resources\Icons\green-checkbox-png-7.png" />
     <Resource Include="Resources\Icons\rotate_left_90.png" />
     <Resource Include="Resources\Icons\rotate_right_90.png" />

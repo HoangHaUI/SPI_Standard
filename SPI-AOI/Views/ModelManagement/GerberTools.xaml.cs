@@ -16,6 +16,9 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using System.ComponentModel;
 using System.Threading;
+using System.IO;
+using Newtonsoft.Json;
+
 
 namespace SPI_AOI.Views.ModelManagement 
 {
@@ -43,6 +46,7 @@ namespace SPI_AOI.Views.ModelManagement
             listImportedFile.ItemsSource = mImportedFiles;
             mModel = Model.GetNewModel("HAHA", "thieu", null, 500, new System.Drawing.Size(600, 400));
             UpdateUIModel();
+            imBox.SetZoomScale(0.5, new System.Drawing.Point(1, 1));
         }
         private void UpdateUIModel()
         {
@@ -216,16 +220,17 @@ namespace SPI_AOI.Views.ModelManagement
         }
         public void ShowAllLayerImb(ActionMode mode)
         {
+            Image<Bgr, byte> imgLayers = ShowModel.GetLayoutImage(mModel, mode);
             imBox.Invoke(new Action(() =>
             {
                 var x = imBox.Image;
-                Image<Bgr, byte> imgLayers = ShowModel.GetLayoutImage(mModel, mode);
                 imBox.Image = imgLayers;
                 if (x != null)
                 {
                     x.Dispose();
                     x = null;
                 }
+                imBox.Refresh();
             }));
         }
         private void Border_MouseUp(object sender, MouseButtonEventArgs e)
@@ -385,7 +390,7 @@ namespace SPI_AOI.Views.ModelManagement
             if (mModel != null)
             {
                 mModel.ShowLinkLine = (sender as MenuItem).IsChecked;
-                ShowAllLayerImb(ActionMode.Draw_Cad);
+                ShowAllLayerImb(ActionMode.Render);
             }
         }
 
@@ -417,11 +422,46 @@ namespace SPI_AOI.Views.ModelManagement
                     MessageBox.Show(string.Format("Only support Cad file!"), "Question", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
-                CadFile cad = ((CadFile)item).Clone();
+                CadFile cad = ((CadFile)item).Copy();
                 mModel.Cad.Add(cad);
                 ShowAllLayerImb(ActionMode.Draw_Cad);
                 UpdateListImportedFile();
             }
+        }
+
+        private void btLinkPad_Click(object sender, RoutedEventArgs e)
+        {
+            if (mModel.Gerber is GerberFile || mModel.Cad.Count > 0)
+            {
+                mModel.ClearLinkPad();
+                foreach (var item in mModel.Cad)
+                {
+                    Thread pr = new Thread(() => {
+                        mModel.AutoLinkPad(item);
+                        ShowAllLayerImb(ActionMode.Update_Color_Gerber);
+                    });
+                    pr.Start();
+                }
+                    
+            }
+            else
+            {
+                MessageBox.Show(string.Format("Please insert gerber file..."), "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void btDowload_Click(object sender, RoutedEventArgs e)
+        {
+            
+            mModel.ImgGerberProcessedBgr.Dispose();
+            mModel.ImgGerberProcessedBgr = null;
+            mModel.Gerber.OrgGerberImage.Dispose();
+            mModel.Gerber.OrgGerberImage = null;
+            mModel.Gerber.ProcessingGerberImage.Dispose();
+            mModel.Gerber.ProcessingGerberImage = null;
+            string s = JsonConvert.SerializeObject(mModel);
+            File.WriteAllText("test.json", s);
+            mModel = JsonConvert.DeserializeObject<Model>(s);
         }
     }
 }

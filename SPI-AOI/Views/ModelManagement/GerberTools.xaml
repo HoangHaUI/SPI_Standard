@@ -12,6 +12,7 @@
         Title="Gerber Tools" 
         Height="900" Width="1600"
         Background="#FFF5F5F5"
+        WindowState="Maximized"
         WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" KeyDown="Window_KeyDown">
     <Window.Resources>
         <ResourceDictionary>
@@ -56,7 +57,7 @@
                         <MenuItem Header="_"></MenuItem>
                     </MenuItem>
                 </Menu>
-                <ToolBar Background="Transparent" Margin="0,5,0,0">
+                <ToolBar x:Name="toolBarMain" Background="Transparent" Margin="0,5,0,0">
                     <Button x:Name="btImportGerber"
                             Click="btImportGerber_Click"
                             Width="35" Height="35" Margin="5,0,5,0">
@@ -87,6 +88,19 @@
                             Height="35" Margin="5,0,5,0"
                             ToolTip="Auto Adjsut XY">
                         <Image Source="../../Resources/Icons/copy.png"></Image>
+                    </Button>
+                    <Button x:Name="btLinkPad" 
+                            Click="btLinkPad_Click" Width="35"
+                            Height="35" Margin="5,0,5,0"
+                            ToolTip="Auto Adjsut XY">
+                        <Image Source="../../Resources/Icons/link_icon.png"></Image>
+                    </Button>
+                    <Button x:Name="btDowload" 
+                            Click="btDowload_Click" Width="35"
+                            Height="35" Margin="5,0,5,0"
+                            ToolTip="Auto Adjsut XY" Content="Dow">
+                        
+                        <!--<Image Source="../../Resources/Icons/link_icon.png"></Image>-->
                     </Button>
                 </ToolBar>
             </StackPanel>
