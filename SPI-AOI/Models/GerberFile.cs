@@ -16,7 +16,8 @@ namespace SPI_AOI.Models
     public class GerberFile
     {
         public static Logger mLog = Heal.LogCtl.GetInstance();
-        public string ID { get; set; }//
+        public string ModelID { get; set; }//
+        public string GerberID { get; set; }
         public Color Color { get; set; }//
         public string FileName { get; set; }//
         public string FilePath { get; set; }//
@@ -32,6 +33,7 @@ namespace SPI_AOI.Models
         public List<Mark> MarkPoint { get; set; }
         public List<Fov> FOVs { get; set; }
         public List<PadItem> PadItems { get; set; }
+        
         public static GerberFile GetNewGerber(string ID, string Path, float DPI, Size FOV)
         {
             if(Path == null)
@@ -45,7 +47,8 @@ namespace SPI_AOI.Models
             {
                 return null;
             }
-            gerber.ID = ID;
+            gerber.ModelID = ID;
+            gerber.GerberID = Utils.GetNewID();
             gerber.FileName = fi.Name;
             gerber.FilePath = fi.FullName;
             gerber.Color = Color.FromArgb(255, 0, 0);
@@ -64,6 +67,24 @@ namespace SPI_AOI.Models
             gerber.LinkPadWidthFov(FOV);
             return gerber;
             
+        }
+        public void LoadGerber(float DPI)
+        {
+            FileInfo fi = new FileInfo(this.FilePath);
+            if (!Directory.Exists("TempPath"))
+
+            {
+                Directory.CreateDirectory("TempPath");
+            }
+            File.WriteAllBytes("TempPath/" + this.FileName, this.FileData);
+            SPI_AOI.Utils.GerberRenderResult renderResults = SPI_AOI.Utils.GerberUtils.Render("TempPath/" + this.FileName, DPI, Color.White, Color.Black);
+            File.Delete("TempPath/" + this.FileName);
+            if (renderResults.Status == SPI_AOI.Utils.ActionStatus.Fail)
+            {
+                return;
+            }
+            this.OrgGerberImage = renderResults.GerberImage;
+            this.ProcessingGerberImage = this.OrgGerberImage.Copy();
         }
         public void SetROI(Rectangle ROI, Size FOV)
         {
@@ -126,7 +147,7 @@ namespace SPI_AOI.Models
         }
         public void UpdateFOV(Size FOV)
         {
-            this.FOVs = Fov.GetFov(this.ID, this.ProcessingGerberImage, this.ROI, FOV, this.StartPoint);
+            this.FOVs = Fov.GetFov(this.GerberID, this.ProcessingGerberImage, this.ROI, FOV, this.StartPoint);
         }
         public void UpdatePadItems()
         {
@@ -137,7 +158,7 @@ namespace SPI_AOI.Models
                     this.PadItems[i].Dispose();
                 }
             }
-            this.PadItems = PadItem.GetPads(this.ID, this.ProcessingGerberImage, this.ROI);
+            this.PadItems = PadItem.GetPads(this.GerberID, this.ProcessingGerberImage, this.ROI);
             
         }
         public void LinkPadWidthFov(Size FOV)
@@ -150,7 +171,8 @@ namespace SPI_AOI.Models
                     Rectangle fov = SPI_AOI.Utils.FOVOptimize.GetRectangleByAnchor(this.FOVs[j].Anchor, FOV);
                     if(fov.Contains(padBound))
                     {
-                        this.PadItems[i].FOVs.Add(this.FOVs[j]);
+                        this.PadItems[i].FOVs.Add(j);
+                        this.FOVs[j].PadItems.Add(i);
                         break;
                     }
                 }
@@ -160,7 +182,8 @@ namespace SPI_AOI.Models
         {
             for (int i = 0; i < this.PadItems.Count ; i++)
             {
-                this.PadItems[i].CadItem = null;
+                this.PadItems[i].CadFileID = string.Empty;
+                this.PadItems[i].CadItemIndex = -1;
             }
         }
         public void Dispose()

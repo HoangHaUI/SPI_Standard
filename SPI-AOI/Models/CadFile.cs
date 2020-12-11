@@ -12,11 +12,12 @@ namespace SPI_AOI.Models
     public class CadFile
     {
         private static NLog.Logger mLog = Heal.LogCtl.GetInstance();
-        public string ID { get; set; }//
-        public int NOCadFile { get; set; }
+        public string ModelID { get; set; }//
+        public string CadFileID { get; set; }//
         public Color Color { get; set; }//
         public string FileName { get; set; }//
         public string FilePath { get; set; }//
+        public string[] CadFileData { get; set; }
         public bool Visible { get; set; }//
         public int X { get; set; }//
         public int Y { get; set; }//
@@ -28,7 +29,8 @@ namespace SPI_AOI.Models
         {
             FileInfo fi = new FileInfo(Path);
             CadFile cad = new CadFile();
-            cad.ID = ID;
+            cad.ModelID = ID;
+            cad.CadFileID = Utils.GetNewID();
             cad.Color = Color.FromArgb(0, 255, 0);
             cad.FileName = fi.Name;
             cad.FilePath = fi.FullName;
@@ -55,12 +57,12 @@ namespace SPI_AOI.Models
                 CadItem cadItem = new CadItem();
                 try
                 {
-                    cadItem.ID = ID;
+                    cadItem.CadFileID = cad.CadFileID;
                     cadItem.Name = arr[0];
                     cadItem.Center = new PointF((float)(-Convert.ToDouble(arr[1]) * DPI / 25.4), (float)(Convert.ToDouble(arr[2]) * DPI / 25.4));
                     cadItem.Angle = Convert.ToDouble(arr[3]);
                     cadItem.Code = arr[4];
-                    cadItem.Pads = new List<PadItem>();
+                    cadItem.PadsIndex = new List<int>();
                     cad.CadItems.Add(cadItem);
                     if(cadItem.Center.X < _XMin )
                     {
@@ -88,12 +90,12 @@ namespace SPI_AOI.Models
             }
             // add undefine caditem
             CadItem cadItemUndefine = new CadItem();
-            cadItemUndefine.ID = ID;
+            cadItemUndefine.CadFileID = cad.CadFileID;
             cadItemUndefine.Name = "UNDEFINE";
             cadItemUndefine.Center = new PointF(-9999, -9999);
             cadItemUndefine.Angle = 0;
             cadItemUndefine.Code = "UNDEFINE";
-            cadItemUndefine.Pads = new List<PadItem>();
+            cadItemUndefine.PadsIndex = new List<int>();
             cad.CadItems.Add(cadItemUndefine);
             // calculate rotate point
             for (int i = 0; i < cad.CadItems.Count; i++)
@@ -108,7 +110,7 @@ namespace SPI_AOI.Models
             cad.CenterRotation = new Point((int)(_XMax - _XMin) / 2, (int)(_YMax - _YMin) / 2);
             cad.X = GerberWidth / 2 - cad.CenterRotation.X;
             cad.Y = GerberHeight / 2 - cad.CenterRotation.Y;
-            
+            cad.CadFileData = content;
             return cad;
         }
         public Point GetCenterSelected()
@@ -147,7 +149,8 @@ namespace SPI_AOI.Models
         public CadFile Copy()
         {
             CadFile cad = new CadFile();
-            cad.ID = this.ID;
+            cad.ModelID = this.ModelID;
+            cad.CadFileID = Utils.GetNewID();
             cad.FileName = this.FileName;
             cad.FilePath = this.FilePath;
             cad.Angle = this.Angle;
@@ -157,11 +160,11 @@ namespace SPI_AOI.Models
             cad.Visible = true;
             cad.X = this.X;
             cad.Y = this.Y;
-
+            CadFileData = this.CadFileData;
             cad.CadItems = new List<CadItem>();
             for (int i = 0; i < this.CadItems.Count; i++)
             {
-                cad.CadItems.Add(this.CadItems[i].Copy());
+                cad.CadItems.Add(this.CadItems[i].Copy(cad.CadFileID));
             }
             return cad;
         }
@@ -169,7 +172,7 @@ namespace SPI_AOI.Models
         {
             for (int i = 0; i < this.CadItems.Count; i++)
             {
-                this.CadItems[i].Pads = new List<PadItem>();
+                this.CadItems[i].PadsIndex = new List<int>();
             }
         }
     }

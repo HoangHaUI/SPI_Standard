@@ -39,7 +39,6 @@ namespace SPI_AOI.Views.ModelManagement
         public GerberTools()
         {
             InitializeComponent();
-
         }
         private void Window_Initialized(object sender, EventArgs e)
         {
@@ -442,7 +441,6 @@ namespace SPI_AOI.Views.ModelManagement
                     });
                     pr.Start();
                 }
-                    
             }
             else
             {
@@ -452,16 +450,9 @@ namespace SPI_AOI.Views.ModelManagement
 
         private void btDowload_Click(object sender, RoutedEventArgs e)
         {
-            
-            mModel.ImgGerberProcessedBgr.Dispose();
-            mModel.ImgGerberProcessedBgr = null;
-            mModel.Gerber.OrgGerberImage.Dispose();
-            mModel.Gerber.OrgGerberImage = null;
-            mModel.Gerber.ProcessingGerberImage.Dispose();
-            mModel.Gerber.ProcessingGerberImage = null;
-            string s = JsonConvert.SerializeObject(mModel);
-            File.WriteAllText("test.json", s);
-            mModel = JsonConvert.DeserializeObject<Model>(s);
+            mModel = Model.LoadModel("test.json");
+            ShowAllLayerImb(ActionMode.Render);
+            UpdateListImportedFile();
         }
     }
 }

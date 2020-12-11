@@ -68,5 +68,20 @@ namespace SPI_AOI
         {
             return Math.Sqrt(Math.Pow(P2.X - P1.X, 2) + Math.Pow(P2.Y - P1.Y, 2));
         }
+        public static double DistanceSquaredAngle(Point P1, Point P2)
+        {
+            System.Windows.Vector v1 = new System.Windows.Vector(P2.X - P1.X, P2.Y - P1.Y);
+            System.Windows.Vector vx = new System.Windows.Vector(1, 0);
+            System.Windows.Vector vy = new System.Windows.Vector(0, 1);
+            double angle = System.Windows.Vector.AngleBetween(v1, vx);
+            if (Math.Abs(angle % 90) > 45)
+            {
+                angle = System.Windows.Vector.AngleBetween(v1, vy);
+            }
+            angle = Math.Abs(angle % 90);
+            double leght = DistanceTwoPoint(P1, P2);
+            double dist = Math.Cos(angle * Math.PI / 180.0) * leght;
+            return dist;
+        }
     }
 }

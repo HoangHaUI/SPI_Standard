@@ -147,6 +147,7 @@
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\PadItem.cs" />
     <Compile Include="Models\ShowModel.cs" />
+    <Compile Include="Models\Utils.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Utils\Convertor.cs" />
     <Compile Include="Utils\FilesManagement.cs" />

@@ -9,6 +9,7 @@ using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using System.IO;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace SPI_AOI.Models
 {
@@ -28,18 +29,19 @@ namespace SPI_AOI.Models
         public bool ShowComponentCenter { get; set; }
         public bool ShowComponentName { get; set; }
         public bool ShowOnlyInROI { get; set; }
+        public bool HightLineLinkedPad { get; set; }
         public static Model GetNewModel(string ModelName, string Owner, string GerberPath, float DPI, Size FOV)
         {
             Model model = new Model();
-            model.ID = Guid.NewGuid().ToString().ToUpper();
+            model.ID = Utils.GetNewID();
             model.Name = ModelName;
             model.Owner = Owner;
-            
             model.CreateTime = DateTime.Now;
             model.ShowLinkLine = true;
             model.ShowComponentCenter = true;
             model.ShowComponentName = true;
             model.ShowOnlyInROI = true;
+            model.HightLineLinkedPad = true;
             model.DPI = DPI;
             model.FOV = FOV;
             model.GetNewGerber(GerberPath);
@@ -80,6 +82,44 @@ namespace SPI_AOI.Models
             }
             
         }
+        public string SaveModel(string Path)
+        {
+            try
+            {
+                this.ImgGerberProcessedBgr.Dispose();
+                this.ImgGerberProcessedBgr = null;
+                this.Gerber.OrgGerberImage.Dispose();
+                this.Gerber.OrgGerberImage = null;
+                this.Gerber.ProcessingGerberImage.Dispose();
+                this.Gerber.ProcessingGerberImage = null;
+                string json = JsonConvert.SerializeObject(this);
+                File.WriteAllText(Path, json);
+            }
+            catch
+            {
+                return null;
+            }
+            return new FileInfo(Path).FullName;
+        }
+        public static Model LoadModel(string Path)
+        {
+            Model model = null;
+            try
+            {
+
+                string s = File.ReadAllText(Path);
+                model = JsonConvert.DeserializeObject<Model>(s);
+            }
+            catch
+            {
+                return null;
+            }
+           if(model.Gerber != null)
+            {
+                model.Gerber.LoadGerber(model.DPI);
+            }
+            return model;
+        }
         public void RemoveCadByName(string Name)
         {
             for (int i = 0; i < this.Cad.Count; i++)
@@ -99,12 +139,15 @@ namespace SPI_AOI.Models
         }
         public void RotateGerber(double Angle)
         {
+            ClearLinkPad();
             double angle = this.Gerber.Angle;
             angle = (angle + Angle) % 360;
             this.Gerber.SetAngle(angle, this.FOV);
+            
         }
         public void SetROI(Rectangle ROI)
         {
+            ClearLinkPad();
             this.Gerber.SetROI(ROI, this.FOV);
         }
 
@@ -196,13 +239,14 @@ namespace SPI_AOI.Models
                 padsList.Add(new Tuple<Point, int>(this.Gerber.PadItems[i].Center, i));
             }
             Point cadCenterRotate = Cad.CenterRotation;
-            List<CadItem> cadItemNotLink = new List<CadItem>();
+            List<Tuple<CadItem, int>> cadItemNotLink = new List<Tuple<CadItem, int>>();
             int cadX = Cad.X;
             int cadY = Cad.Y;
             double cadAngle = Cad.Angle;
             // filter Resistor and Capacitor component
-            foreach (var item in Cad.CadItems)
+            for (int t = 0; t < Cad.CadItems.Count; t++)
             {
+                var item = Cad.CadItems[t];
                 string name = Convert.ToString(item.Name[0]);
                 string nextName = Convert.ToString(item.Name[1]);
                 Point cadCenter = Point.Round(item.Center);
@@ -210,16 +254,18 @@ namespace SPI_AOI.Models
                 var sorted = padsList.OrderBy(i => ImageProcessingUtils.DistanceTwoPoint(i.Item1, cadCenterRotated));
                 if ((name.ToUpper() == "R" || name.ToUpper() == "C") && "0123456789".Contains(nextName))
                 {
-                    item.Pads.Add(this.Gerber.PadItems[sorted.ElementAt(0).Item2]);
-                    item.Pads.Add(this.Gerber.PadItems[sorted.ElementAt(1).Item2]);
-                    this.Gerber.PadItems[sorted.ElementAt(0).Item2].CadItem = item;
-                    this.Gerber.PadItems[sorted.ElementAt(1).Item2].CadItem = item;
+                    item.PadsIndex.Add(sorted.ElementAt(0).Item2);
+                    item.PadsIndex.Add(sorted.ElementAt(1).Item2);
+                    this.Gerber.PadItems[sorted.ElementAt(0).Item2].CadFileID = Cad.CadFileID;
+                    this.Gerber.PadItems[sorted.ElementAt(0).Item2].CadItemIndex = t;
+                    this.Gerber.PadItems[sorted.ElementAt(1).Item2].CadFileID = Cad.CadFileID;
+                    this.Gerber.PadItems[sorted.ElementAt(1).Item2].CadItemIndex = t;
                 }
                 else
                 {
                     if (name.ToUpper() != "S")
                     {
-                        cadItemNotLink.Add(item);
+                        cadItemNotLink.Add(new Tuple<CadItem, int>(item, t));
                     }
                 }
             }
@@ -227,16 +273,15 @@ namespace SPI_AOI.Models
             padsList.Clear();
             for (int i = 0; i < this.Gerber.PadItems.Count; i++)
             {
-                if (this.Gerber.PadItems[i].CadItem == null || this.Gerber.PadItems[i].CadItem == new CadItem())
+                if (string.IsNullOrEmpty(this.Gerber.PadItems[i].CadFileID))
                 {
                     padsList.Add(new Tuple<Point, int>(this.Gerber.PadItems[i].Center, i));
                 }
             }
-
             // filter only has two pad
-            List<Tuple<Point, int, CadItem>> mayPads = new List<Tuple<Point, int, CadItem>>();
-            foreach (var item in cadItemNotLink)
+            foreach (var itemtl in cadItemNotLink)
             {
+                var item = itemtl.Item1;
                 string name = Convert.ToString(item.Name[0]);
                 string nextName = Convert.ToString(item.Name[1]);
                 Point cadCenter = Point.Round(item.Center);
@@ -245,10 +290,6 @@ namespace SPI_AOI.Models
                 Tuple<Point, int>[] arSorted = sorted.ToArray();
                 List<int> idGot = new List<int>();
                 int limit = arSorted.Length > 10 ? 10 : arSorted.Length;
-                //if (item.Name == "D1010")
-                //{
-                //    Console.WriteLine("Break");
-                //}
                 double crDist = -1;
                 for (int i = 0; i < limit - 1; i++)
                 {
@@ -277,7 +318,7 @@ namespace SPI_AOI.Models
                             break;
                         }
                         Point ctP12 = new Point((p1.X + p2.X) / 2, (p1.Y + p2.Y) / 2);
-                        if (Math.Abs(ctP12.X - cadCenterRotated.X) < 0.01 * this.DPI || Math.Abs(ctP12.Y - cadCenterRotated.Y) < 0.01)
+                        if (Math.Abs(ctP12.X - cadCenterRotated.X) < 0.01 * this.DPI || Math.Abs(ctP12.Y - cadCenterRotated.Y) < 0.01 * this.DPI)
                         {
                             if (crDist != -1 && (Math.Abs(crDist - d1) > 0.5 * crDist || Math.Abs(crDist - d2) > 0.5 * crDist))
                             {
@@ -294,29 +335,65 @@ namespace SPI_AOI.Models
                 {
                     for (int i = 0; i < idGot.Count; i++)
                     {
-                        this.Gerber.PadItems[idGot[i]].CadItem = item;
-                        item.Pads.Add(this.Gerber.PadItems[idGot[i]]);
+                        this.Gerber.PadItems[idGot[i]].CadFileID = Cad.CadFileID;
+                        this.Gerber.PadItems[idGot[i]].CadItemIndex = itemtl.Item2;
+                        item.PadsIndex.Add(idGot[i]);
                     }
                 }
             }
             // reset pads and cad list
             padsList.Clear();
             cadItemNotLink.Clear();
+            //get all pad
             for (int i = 0; i < this.Gerber.PadItems.Count; i++)
             {
-                if (this.Gerber.PadItems[i].CadItem == null || this.Gerber.PadItems[i].CadItem == new CadItem())
-                {
+                //if (string.IsNullOrEmpty(this.Gerber.PadItems[i].CadFileID))
+                //{
                     padsList.Add(new Tuple<Point, int>(this.Gerber.PadItems[i].Center, i));
-                }
+                //}
             }
             for (int i = 0; i < Cad.CadItems.Count; i++)
             {
-                if (Cad.CadItems[i].Pads.Count == 0)
+                if (Cad.CadItems[i].PadsIndex.Count == 0 && Cad.CadItems[i].Name[0].ToString().ToUpper() != "S")
                 {
-                    cadItemNotLink.Add(Cad.CadItems[i]);
+                    cadItemNotLink.Add(new Tuple<CadItem, int>(Cad.CadItems[i], i));
                 }
             }
-
+            foreach (var itemtl in cadItemNotLink)
+            {
+                var item = itemtl.Item1;
+                string name = Convert.ToString(item.Name[0]);
+                string nextName = Convert.ToString(item.Name[1]);
+                Point cadCenter = Point.Round(item.Center);
+                Point cadCenterRotated = CadItem.GetCenterRotated(cadCenter, cadCenterRotate, cadX, cadY, cadAngle);
+                double angle = Math.Abs(item.Angle % 90);
+                angle = angle > 45 ? 90 - angle : angle;
+                var sorted = padsList.OrderBy(i => ImageProcessingUtils.DistanceTwoPoint(i.Item1, cadCenterRotated) * Math.Cos(angle * Math.PI / 180.0));
+                
+                Tuple<Point, int>[] arSorted = sorted.ToArray();
+                int limit = arSorted.Length > 1000 ? 1000 : arSorted.Length;
+                List<int> idGot = new List<int>();
+                //double deviationDist = Math.Max(d1, d2) > 0.05 * this.DPI ? 0.1 * Math.Min(d1, d2) : 0.03 * this.DPI;
+                if(item.Name == "U50")
+                {
+                    Console.WriteLine();
+                }
+                for (int i = 0; i < limit - 1; i++)
+                {
+                    if (!string.IsNullOrEmpty(this.Gerber.PadItems[arSorted[i].Item2].CadFileID))
+                    {
+                        break;
+                    }
+                    idGot.Add(arSorted[i].Item2);
+                }
+                for (int i = 0; i < idGot.Count; i++)
+                {
+                    this.Gerber.PadItems[idGot[i]].CadFileID = Cad.CadFileID;
+                    this.Gerber.PadItems[idGot[i]].CadItemIndex = itemtl.Item2;
+                    item.PadsIndex.Add(idGot[i]);
+                }
+            }
+            Console.WriteLine("done!");
         }
 
         public List<object> GetListLayerInRect(System.Drawing.Rectangle Rect)

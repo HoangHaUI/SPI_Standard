@@ -25,11 +25,11 @@ namespace SPI_AOI.Models
             model.ImgGerberProcessedBgr = new Image<Bgr, byte>(model.Gerber.ProcessingGerberImage.Size);
             using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
             {
-                if(model.ShowLinkLine)
+                if(model.HightLineLinkedPad)
                 {
                     foreach (var item in model.Gerber.PadItems)
                     {
-                        if (item.CadItem != null)
+                        if (!string.IsNullOrEmpty(item.CadFileID) && item.CadItemIndex != -1)
                         {
                             contours.Push(item.Contour);
                         }
@@ -39,7 +39,7 @@ namespace SPI_AOI.Models
                     contours.Clear();
                     foreach (var item in model.Gerber.PadItems)
                     {
-                        if (item.CadItem == null)
+                        if (string.IsNullOrEmpty(item.CadFileID) || item.CadItemIndex == -1)
                         {
                             contours.Push(item.Contour);
                         }
@@ -151,19 +151,18 @@ namespace SPI_AOI.Models
                             {
                                 CvInvoke.Circle(img, newCtRotate, 3, color, -1);
                             }
-                            if(model.ShowComponentName)
-                            {
-                                newCtRotate.X += 5;
-                                CvInvoke.PutText(img, txt, newCtRotate, Emgu.CV.CvEnum.FontFace.HersheyDuplex, 0.5, color, 1);
-                            }
                             if (model.ShowLinkLine)
                             {
-                                for (int i = 0; i < caditem.Pads.Count; i++)
+                                for (int i = 0; i < caditem.PadsIndex.Count; i++)
                                 {
-                                    CvInvoke.Line(img, newCtRotate, caditem.Pads[i].Center, new MCvScalar(0, 255, 0), 1); 
+                                    CvInvoke.Line(img, newCtRotate, model.Gerber.PadItems[caditem.PadsIndex[i]].Center, new MCvScalar(0, 255, 0), 1);
                                 }
                             }
-
+                            if (model.ShowComponentName)
+                            {
+                                newCtRotate.X += 5;
+                                CvInvoke.PutText(img, txt, newCtRotate, Emgu.CV.CvEnum.FontFace.HersheyDuplex, 0.5, color, 1, Emgu.CV.CvEnum.LineType.Filled);
+                            }
                         }
                         
                     }

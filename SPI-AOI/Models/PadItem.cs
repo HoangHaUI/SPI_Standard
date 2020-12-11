@@ -13,18 +13,18 @@ namespace SPI_AOI.Models
 {
     public class PadItem
     {
-        public string ID { get; set; }//
-        public int NO { get; set; }//
-        public Rectangle  Bouding { get; set; }//
-        public VectorOfPoint Contour { get; set; }//
-        public Point Center { get; set; }//
-        public Thresh Insufficient { get; set; }//
-        public Thresh Excess { get; set; }//
-        public Thresh Position { get; set; }//
-        public Thresh Bridge { get; set; }//
-        public CadItem CadItem { get; set; }//
-        public List<Fov> FOVs { get; set; }
-        public static List<PadItem> GetPads(string ID, Image<Gray, byte> ImgGerber, Rectangle ROI)
+        public string GerberID { get; set; }
+        public Rectangle  Bouding { get; set; }
+        public VectorOfPoint Contour { get; set; }
+        public Point Center { get; set; }
+        public Thresh Insufficient { get; set; }
+        public Thresh Excess { get; set; }
+        public Thresh Position { get; set; }
+        public Thresh Bridge { get; set; }
+        public int CadItemIndex { get; set; }
+        public string CadFileID { get; set; }
+        public List<int> FOVs { get; set; }
+        public static List<PadItem> GetPads(string GerberID, Image<Gray, byte> ImgGerber, Rectangle ROI)
         {
             List<PadItem> padItems = new List<PadItem>();
             ImgGerber.ROI = ROI;
@@ -39,7 +39,7 @@ namespace SPI_AOI.Models
                     Point ctCnt = new Point(Convert.ToInt32(mm.M10 / mm.M00), Convert.ToInt32(mm.M01 / mm.M00));
                     Rectangle bound = CvInvoke.BoundingRectangle(contours[i]);
                     PadItem pad = new PadItem();
-                    pad.ID = ID;
+                    pad.GerberID = GerberID;
                     bound.X += ROI.X;
                     bound.Y += ROI.Y;
                     ctCnt.X += ROI.X;
@@ -57,7 +57,9 @@ namespace SPI_AOI.Models
                     pad.Excess = new Thresh(5, 10);
                     pad.Insufficient = new Thresh(5, 10);
                     pad.Position = new Thresh(5, 10);
-                    pad.FOVs = new List<Fov>();
+                    pad.FOVs = new List<int>();
+                    pad.CadFileID = string.Empty;
+                    pad.CadItemIndex = -1;
                     padItems.Add(pad);
                 }
             }

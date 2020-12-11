@@ -1,0 +1,20 @@
+﻿SPI-AOI
+
+
+winexe
+C#
+.cs
+D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\
+SPI_AOI
+none
+false
+DEBUG;TRACE
+D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\App.xaml
+8795023689
+1-2138471434
+30382656664
+351444037387
+Views\MainWindow.xaml;Views\ModelManagement\AutoAdjustWindow.xaml;Views\ModelManagement\AvailabilityLayerWindow.xaml;Views\ModelManagement\GerberTools.xaml;Views\ModelManagement\RotationWindow.xaml;Views\ModelManagement\XYMovingWindow.xaml;Views\Styles\Base.xaml;Views\WaitingForm.xaml;
+
+False
+
