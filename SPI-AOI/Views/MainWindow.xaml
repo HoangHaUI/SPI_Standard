@@ -4,10 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SPI_AOI"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:MSChart="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
         xmlns:pie="clr-namespace:PieControls;assembly=PieControls"
         mc:Ignorable="d"
         Height="1000" Width="1800"
         WindowStartupLocation="CenterScreen"
+        Initialized="Window_Initialized"
         Title="[FII] SPI-AOI" Background="#FFF0F0F0">
     <Grid Name="grMain">
         <Grid.RowDefinitions>
@@ -96,42 +99,47 @@
             </DockPanel>
         </StackPanel>
         <Grid Grid.Row="1" Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="400"/>
-                <ColumnDefinition Width="270"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Margin="3">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="140"/>
-                </Grid.RowDefinitions>
-                <GroupBox x:Name="groupBox" Grid.Row="0" Header="View" >
-                    <Border Background="Black">
-                        <Image Source="D:\Heal\Projects\B06\Stencil\Recycle\1.bmp" />
-                    </Border>
-                </GroupBox>
-                <GroupBox x:Name="groupBox1" Grid.Row="1" Header="History"  >
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                        <StackPanel Orientation="Horizontal" x:Name="stackFovs" HorizontalAlignment="Left">
-                            <Canvas></Canvas>
-                        </StackPanel>
-                    </ScrollViewer>
-                </GroupBox>
-            </Grid>
-            <Grid Grid.Column="1" Margin="3">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="180"/>
-                    <RowDefinition Height="270"/>
-                    <RowDefinition Height="35*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <GroupBox Header="Model information" >
-                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <Grid Margin="5">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="480"/>
+                    <ColumnDefinition Width="350"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0" Margin="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="200"/>
+                    </Grid.RowDefinitions>
+                    <GroupBox x:Name="groupBox" Grid.Row="0" Header="Diagram" BorderBrush="Gray" FontWeight="Bold">
+                        <Border Background="Black" Margin="5">
+                            <Image Source="D:\Heal\Projects\B06\Stencil\Recycle\1.bmp" />
+                        </Border>
+                    </GroupBox>
+                    <GroupBox x:Name="groupBox1" Grid.Row="1" BorderBrush="Gray" Header="Pannel Position"  >
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <StackPanel Orientation="Horizontal" x:Name="stackFovs" HorizontalAlignment="Left">
+                                <Canvas></Canvas>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </GroupBox>
+                </Grid>
+                <Grid Grid.Column="1" Margin="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="180"/>
+                        <RowDefinition Height="300"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="35*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <GroupBox Header="Model information" BorderBrush="Gray" FontWeight="Bold">
+
                                 <StackPanel Margin="5">
                                     <StackPanel Orientation="Horizontal">
                                         <Label  Content="Model Name:" Foreground="Gray"></Label>
@@ -154,127 +162,226 @@
                                         <Label  Content="30.5s" FontSize="15"></Label>
                                     </StackPanel>
                                 </StackPanel>
-                            </ScrollViewer>
-                        </GroupBox>
-                    </Grid>
-                </Grid>
-                <Grid Grid.Row="1">
-                    <GroupBox Header="Diagram" >
-                        <Border Margin="3" Background="DarkGray">
-                            <Image Source="D:\Heal\Projects\B06\Stencil\Recycle\1.bmp"></Image>
-                        </Border>
-                    </GroupBox>
-                </Grid>
-                <Grid Grid.Row="2">
-                    <GroupBox Header="Result details" >
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                            <StackPanel Margin="5">
-                                <StackPanel Orientation="Horizontal">
-                                    <Label  Content="Model Name:" Foreground="Gray"></Label>
-                                    <Label  Content="SMT-HPT102SJ2008013" FontSize="15" FontWeight="Bold"></Label>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label  Content="Load time:" Foreground="Gray"></Label>
-                                    <Label  Content="11:31:20 30/11/2020" FontSize="15" ></Label>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label  Content="Gerber file:" Foreground="Gray"></Label>
-                                    <Label  Content="HPT102SJ2008013.gbr" FontSize="15"></Label>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label  Content="SN:" Foreground="Gray"></Label>
-                                    <Label  Content="SVM0002353" FontSize="15"></Label>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label  Content="Cycle Time:" Foreground="Gray"></Label>
-                                    <Label  Content="30.5s" FontSize="15"></Label>
-                                </StackPanel>
-                            </StackPanel>
-                        </ScrollViewer>
-                    </GroupBox>
-                </Grid>
-            </Grid>
-            <Grid Grid.Column="2" Margin="3">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="70"/>
-                    <RowDefinition Height="220"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <GroupBox Header="Machine Status" >
-                                <Border Background="Green" BorderBrush="White" BorderThickness="0.7" CornerRadius="5" Margin="5">
-                                    <Label  Content="Running" HorizontalAlignment="Center"  VerticalAlignment="Center" FontWeight="Bold" FontSize="13"></Label>
-                                </Border>
                             </GroupBox>
                         </Grid>
                         <Grid Grid.Column="1">
-                            <GroupBox Header="Door Status" >
-                                <Border Background="Green" BorderBrush="White" BorderThickness="0.7" CornerRadius="5" Margin="5">
-                                    <Label  Content="Close" HorizontalAlignment="Center"  VerticalAlignment="Center" FontWeight="Bold" FontSize="13"></Label>
-                                </Border>
-                            </GroupBox>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid Grid.Row="1">
-                    <GroupBox  Header="Statistical">
-                        <StackPanel Margin="5,15,0,0">
-                            <StackPanel Orientation="Horizontal">
-                                <RadioButton  Content="Shift" IsChecked="True">
-                                </RadioButton>
-                                <RadioButton  Margin="40,0,0,0" Content="Day">
-                                </RadioButton>
-                                <RadioButton  Margin="40,0,0,0" Content="Total">
-                                </RadioButton>
-                            </StackPanel>
-                            <Grid Height="140" Margin="10,20, 10,10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="70"></ColumnDefinition>
-                                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="0">
-                                    <StackPanel HorizontalAlignment="Left">
-                                        <Label  Content="Pass:" Margin="0,10,0,0"></Label>
-                                        <TextBox Width="70" Background="Transparent" Text="89" TextAlignment="Center"></TextBox>
-                                        <Label  Content="Fail:" Margin="0,10,0,0"></Label>
-                                        <TextBox Width="70" Background="Transparent" Text="22" TextAlignment="Center"></TextBox>
-                                    </StackPanel>
-                                </Grid>
-                                <Grid Grid.Column="1">
-                                    <Canvas>
-                                        <Label Content="Rate chart" FontSize="11"  Canvas.Left="62"></Label>
-                                        <pie:PieControl Canvas.Left="40" Canvas.Top="25" 
-                                                        Foreground="White" Grid.Column="1" x:Name="chartPassFail" Width="100" Height="100" HorizontalAlignment="Left"/>
-                                    </Canvas>
-
-                                </Grid>
-                            </Grid>
-
-                        </StackPanel>
-                    </GroupBox>
-                </Grid>
-                <Grid Grid.Row="2" Margin="3">
-                    <GroupBox  Header="Summary">
-                        <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="24*"/>
-                                <RowDefinition Height="50*"/>
-                                <RowDefinition Height="71*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <StackPanel HorizontalAlignment="Left">
-                                </StackPanel>
+                                <GroupBox Header="PLC"  FontWeight="Bold" BorderBrush="Gray">
+                                    <Border Background="Green" BorderBrush="White" BorderThickness="0.7" CornerRadius="5" Margin="5">
+                                        <Label  Content="OK" 
+                                                HorizontalAlignment="Center" 
+                                                VerticalAlignment="Center"
+                                                FontWeight="Bold" FontSize="15"
+                                                Foreground="White"></Label>
+                                    </Border>
+                                </GroupBox>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <GroupBox Header="DOOR" FontWeight="Bold" BorderBrush="Gray">
+                                    <Border Background="Green" BorderBrush="White" 
+                                                    BorderThickness="0.7" CornerRadius="5" Margin="5">
+                                        <Label  Content="Closed" 
+                                                HorizontalAlignment="Center" 
+                                                VerticalAlignment="Center"
+                                                FontWeight="Bold" FontSize="15"
+                                                Foreground="White"></Label>
+                                    </Border>
+                                </GroupBox>
                             </Grid>
                         </Grid>
-                    </GroupBox>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <GroupBox Header="Camera View" FontWeight="Bold" BorderBrush="Gray">
+                            <Border Margin="5" Background="DarkGray">
+                                <Image Source="D:\Heal\Projects\B06\Stencil\Recycle\1.bmp"></Image>
+                            </Border>
+                        </GroupBox>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30*"/>
+                                <ColumnDefinition Width="30*"/>
+                                <ColumnDefinition Width="40*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Border  Margin="5,10,5,0" Background="Gray" CornerRadius="5">
+                                    <Image></Image>
+                                </Border>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <Border Margin="5,10,5,0" Background="Gray" CornerRadius="5">
+                                    <Image></Image>
+                                </Border>
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <GroupBox Header="FOVs" BorderBrush="Gray" FontWeight="Bold">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label Content="30" FontSize="35"/>
+                                        <Label Content="/" FontSize="35"/>
+                                        <Label Content="30" FontSize="35"/>
+                                    </StackPanel>
+                                </GroupBox>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <GroupBox Header="Result details" BorderBrush="Gray">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="140"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                        <StackPanel Margin="5">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label  Content="Model Name:" Foreground="Gray"></Label>
+                                                <Label  Content="SMT-HPT102SJ2008013" FontSize="15" FontWeight="Bold"></Label>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label  Content="Load time:" Foreground="Gray"></Label>
+                                                <Label  Content="11:31:20 30/11/2020" FontSize="15" ></Label>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label  Content="Gerber file:" Foreground="Gray"></Label>
+                                                <Label  Content="HPT102SJ2008013.gbr" FontSize="15"></Label>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label  Content="SN:" Foreground="Gray"></Label>
+                                                <Label  Content="SVM0002353" FontSize="15"></Label>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label  Content="Cycle Time:" Foreground="Gray"></Label>
+                                                <Label  Content="30.5s" FontSize="15"></Label>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                    
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <!--<Label Content="PASS" HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center" FontSize="45"
+                                           FontWeight="Bold"
+                                           Foreground="Green">
+
+                                    </Label>-->
+                                </Grid>
+                            </Grid>
+                            
+                        </GroupBox>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="2" Margin="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="220"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <GroupBox Header="Running Mode" FontWeight="Bold" >
+                                    <Border Background="Green" BorderBrush="White"
+                                            BorderThickness="0.7" CornerRadius="5" 
+                                            Margin="5">
+                                        <Label  Content="Control Run" 
+                                                HorizontalAlignment="Center"  
+                                                VerticalAlignment="Center" 
+                                                FontWeight="Bold" FontSize="15"
+                                                Foreground="White"></Label>
+                                    </Border>
+                                </GroupBox>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <GroupBox Header="Machine Status" FontWeight="Bold" >
+                                    <Border Background="Green"
+                                            BorderBrush="White" BorderThickness="0.7" 
+                                            CornerRadius="5" Margin="5">
+                                        <Label  Content="Running" 
+                                                HorizontalAlignment="Center" 
+                                                VerticalAlignment="Center" 
+                                                FontWeight="Bold" FontSize="15"
+                                                Foreground="White"></Label>
+                                    </Border>
+                                </GroupBox>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <GroupBox  Header="YEILD RATE" BorderBrush="Gray" FontWeight="Bold">
+                            <StackPanel Margin="5,15,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton  Content="Shift" IsChecked="True">
+                                    </RadioButton>
+                                    <RadioButton  Margin="40,0,0,0" Content="Day">
+                                    </RadioButton>
+                                    <RadioButton  Margin="40,0,0,0" Content="Total">
+                                    </RadioButton>
+                                </StackPanel>
+                                <Grid Height="140" Margin="10,20, 10,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="70"></ColumnDefinition>
+                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <StackPanel HorizontalAlignment="Left">
+                                            <Label  Content="Pass:" Margin="0,10,0,0"></Label>
+                                            <TextBox Width="70" Background="Transparent" Text="89" TextAlignment="Center" FontSize="20" FontWeight="Bold"></TextBox>
+                                            <Label  Content="Fail:" Margin="0,10,0,0"></Label>
+                                            <TextBox Width="70" Background="Transparent" Text="22" TextAlignment="Center" FontSize="20" FontWeight="Bold"></TextBox>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <Canvas Margin="10,0,0,0">
+                                            <WindowsFormsHost Background="Transparent" Margin="5,0,0,0"
+                                                              Width="210" Height="120">
+                                                <MSChart:Chart x:Name="chartYeildRate">
+                                                    <MSChart:Chart.ChartAreas>
+                                                        <MSChart:ChartArea/>
+                                                    </MSChart:Chart.ChartAreas>
+                                                    <MSChart:Chart.Legends>
+                                                        <MSChart:Legend/>
+                                                    </MSChart:Chart.Legends>
+                                                </MSChart:Chart>
+                                            </WindowsFormsHost>
+                                        </Canvas>
+
+                                    </Grid>
+                                </Grid>
+
+                            </StackPanel>
+                        </GroupBox>
+                    </Grid>
+                    <Grid Grid.Row="2" Margin="3">
+                        <GroupBox  Header="Summary" BorderBrush="Gray" FontWeight="Bold">
+                            <Grid>
+                                <DataGrid x:Name="dgwAnchors"
+                                          Margin="5"
+                                          BorderBrush="Transparent"
+                                          IsReadOnly="True" 
+                                          AutoGenerateColumns="False" 
+                                          >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Width="1*" Header="Defect"/>
+                                        <DataGridTextColumn Width="2*" Header="Count"/>
+                                        <DataGridTextColumn Width="2*" Header="Rate"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </GroupBox>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>
+
     </Grid>
 </Window>
