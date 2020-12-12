@@ -236,8 +236,6 @@ namespace Heal
                     mLog.Error(ex.Message);
                     return -1;
                 }
-
-
             }
             else
             {

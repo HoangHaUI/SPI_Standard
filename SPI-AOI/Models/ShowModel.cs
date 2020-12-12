@@ -8,6 +8,8 @@ using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using System.Collections;
 using System.Drawing;
+using System.Threading;
+using System.Diagnostics;
 
 namespace SPI_AOI.Models
 {
@@ -23,41 +25,33 @@ namespace SPI_AOI.Models
         private static void DrawColor(Model model)
         {
             model.ImgGerberProcessedBgr = new Image<Bgr, byte>(model.Gerber.ProcessingGerberImage.Size);
-            using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
+            Color cl = model.Gerber.Color;
+            using (VectorOfVectorOfPoint contoursLinked = new VectorOfVectorOfPoint())
+            using (VectorOfVectorOfPoint contoursNoneLink = new VectorOfVectorOfPoint())
             {
-                if(model.HightLineLinkedPad)
+                for (int i = 0; i < model.Gerber.PadItems.Count; i++)
                 {
-                    foreach (var item in model.Gerber.PadItems)
+                    var item = model.Gerber.PadItems[i];
+                    if (!string.IsNullOrEmpty(item.CadFileID) && item.CadItemIndex != -1)
                     {
-                        if (!string.IsNullOrEmpty(item.CadFileID) && item.CadItemIndex != -1)
-                        {
-                            contours.Push(item.Contour);
-                        }
+                        contoursLinked.Push(item.Contour);
                     }
-                    Color cl = model.Gerber.Color;
-                    CvInvoke.DrawContours(model.ImgGerberProcessedBgr, contours, -1, new MCvScalar(255, 0, 0), -1);
-                    contours.Clear();
-                    foreach (var item in model.Gerber.PadItems)
+                    else
                     {
-                        if (string.IsNullOrEmpty(item.CadFileID) || item.CadItemIndex == -1)
-                        {
-                            contours.Push(item.Contour);
-                        }
+                            contoursNoneLink.Push(item.Contour);
                     }
-                    CvInvoke.DrawContours(model.ImgGerberProcessedBgr, contours, -1, new MCvScalar(cl.B, cl.G, cl.R), -1);
-                    
+                }
+                if (model.HightLineLinkedPad)
+                {
+                    CvInvoke.DrawContours(model.ImgGerberProcessedBgr, contoursLinked, -1, new MCvScalar(255, 0, 0), -1);
                 }
                 else
                 {
-                    foreach (var item in model.Gerber.PadItems)
-                    {
-                        contours.Push(item.Contour);
-                    }
-                    Color cl = model.Gerber.Color;
-                    CvInvoke.DrawContours(model.ImgGerberProcessedBgr, contours, -1, new MCvScalar(cl.B, cl.G, cl.R), -1);
+                    CvInvoke.DrawContours(model.ImgGerberProcessedBgr, contoursLinked, -1, new MCvScalar(cl.B, cl.G, cl.R), -1);
                 }
-                
+                CvInvoke.DrawContours(model.ImgGerberProcessedBgr, contoursNoneLink, -1, new MCvScalar(cl.B, cl.G, cl.R), -1);
             }
+
         }
         private static void HightLightSelectPad(Image<Bgr, byte> ImgDraw , Model model)
         {
@@ -66,27 +60,35 @@ namespace SPI_AOI.Models
                 for (int i = 0; i < model.Gerber.PadItems.Count; i++)
                 {
                     Rectangle bound = CvInvoke.BoundingRectangle(model.Gerber.PadItems[i].Contour);
-                    if (model.Gerber.ROI != new Rectangle() && model.Gerber.ROI != Rectangle.Empty)
+
+                    if (model.Gerber.SelectPad.Contains(bound))
                     {
-                        if (model.Gerber.SelectPad.Contains(bound) && model.Gerber.ROI.Contains(bound))
-                        {
-                            contours.Push(model.Gerber.PadItems[i].Contour);
-                        }
+                        contours.Push(model.Gerber.PadItems[i].Contour);
                     }
-                    else
-                    {
-                        if (model.Gerber.SelectPad.Contains(bound))
-                        {
-                            contours.Push(model.Gerber.PadItems[i].Contour);
-                        }
-                    }
-                   
                 }
                 CvInvoke.DrawContours(ImgDraw, contours, -1, new MCvScalar(255, 255, 255), -1);
             }
         }
+        private static void HightLightMarkPoint(Image<Bgr, byte> ImgDraw, Model model)
+        {
+            using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    int idMark = model.Gerber.MarkPoint.PadMark[i];
+                    if (idMark != -1)
+                    {
+                        contours.Push(model.Gerber.PadItems[idMark].Contour);
+                        Point ct = model.Gerber.PadItems[idMark].Center;
+                        CvInvoke.PutText(ImgDraw, "G" + (i + 1).ToString() , new Point(ct.X + 10, ct.Y - 10), Emgu.CV.CvEnum.FontFace.HersheyDuplex, 0.9, new MCvScalar(0, 255, 255), 1, Emgu.CV.CvEnum.LineType.Filled);
+                    }
+                }
+                CvInvoke.DrawContours(ImgDraw, contours, -1, new MCvScalar(0, 255, 255), -1);
+            }
+        }
         public static Image<Bgr, byte> GetLayoutImage(Model model , ActionMode mode)
         {
+            
             Image<Bgr, byte> img = null;
             if (model.Gerber is GerberFile)
             {
@@ -111,6 +113,7 @@ namespace SPI_AOI.Models
                             break;
                     }
                 }
+                
                 if (model.Gerber.Visible)
                 {
                     img = model.ImgGerberProcessedBgr.Copy();
@@ -119,6 +122,7 @@ namespace SPI_AOI.Models
                         HightLightSelectPad(img, model);
                     }
                 }
+
                 else
                 {
                     img = new Image<Bgr, byte>(model.ImgGerberProcessedBgr.Size);
@@ -153,10 +157,14 @@ namespace SPI_AOI.Models
                             }
                             if (model.ShowLinkLine)
                             {
-                                for (int i = 0; i < caditem.PadsIndex.Count; i++)
+                                if(caditem.Name != "UNDEFINE")
                                 {
-                                    CvInvoke.Line(img, newCtRotate, model.Gerber.PadItems[caditem.PadsIndex[i]].Center, new MCvScalar(0, 255, 0), 1);
+                                    for (int i = 0; i < caditem.PadsIndex.Count; i++)
+                                    {
+                                        CvInvoke.Line(img, newCtRotate, model.Gerber.PadItems[caditem.PadsIndex[i]].Center, new MCvScalar(0, 255, 0), 1);
+                                    }
                                 }
+                                
                             }
                             if (model.ShowComponentName)
                             {
@@ -166,6 +174,10 @@ namespace SPI_AOI.Models
                         }
                         
                     }
+                }
+                if (model.Gerber.Visible)
+                {
+                    HightLightMarkPoint(img, model);
                 }
             }
 

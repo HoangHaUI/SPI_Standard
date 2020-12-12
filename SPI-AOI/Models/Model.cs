@@ -15,14 +15,14 @@ namespace SPI_AOI.Models
 {
     public class Model
     {
-        public string ID { get; set; }//
-        public string Name { get;set; }//
-        public string Owner { get; set; }//
-        public DateTime CreateTime { get; set; }//
-        public float DPI { get; set; }//
-        public Size FOV { get; set; }//
-        public GerberFile Gerber { get; set; }//
-        public List<CadFile> Cad { get; set; }//
+        public string ID { get; set; }
+        public string Name { get;set; }
+        public string Owner { get; set; }
+        public DateTime CreateTime { get; set; }
+        public float DPI { get; set; }
+        public Size FOV { get; set; }
+        public GerberFile Gerber { get; set; }
+        public List<CadFile> Cad { get; set; }
         public Image<Bgr, byte> ImgGerberProcessedBgr { get; set; }
         public List<PadItem> SelectPads { get; set; }
         public bool ShowLinkLine { get; set; }
@@ -30,6 +30,7 @@ namespace SPI_AOI.Models
         public bool ShowComponentName { get; set; }
         public bool ShowOnlyInROI { get; set; }
         public bool HightLineLinkedPad { get; set; }
+        public Hardware HardwareSettings { get; set; }
         public static Model GetNewModel(string ModelName, string Owner, string GerberPath, float DPI, Size FOV)
         {
             Model model = new Model();
@@ -46,6 +47,7 @@ namespace SPI_AOI.Models
             model.FOV = FOV;
             model.GetNewGerber(GerberPath);
             model.Cad = new List<CadFile>();
+            model.HardwareSettings = new Hardware();
             return model;
         }
         public int GetNewGerber(string Path)
@@ -61,7 +63,17 @@ namespace SPI_AOI.Models
                 return 0;
             }
         }
-        public int GerNewCad(string Path)
+        public void UpdateAfterEditGerber()
+        {
+            this.Gerber.UpdateFOV(this.FOV);
+            this.Gerber.LinkPadWidthFov(this.FOV);
+        }
+        public void UpdateFOV()
+        {
+            this.Gerber.UpdateFOV(this.FOV);
+            this.Gerber.LinkPadWidthFov(this.FOV);
+        }
+        public int GetNewCad(string Path)
         {
             int gerberW = 0;
             int gerberH = 0;
@@ -80,24 +92,30 @@ namespace SPI_AOI.Models
                 this.Cad.Add(cad);
                 return 0;
             }
-            
         }
         public string SaveModel(string Path)
         {
+            var mgGerberProcessedBgr = this.ImgGerberProcessedBgr;
+            this.ImgGerberProcessedBgr = null;
+            var orgGerberImage = this.Gerber.OrgGerberImage;
+            this.Gerber.OrgGerberImage = null;
+            var processingGerberImage = this.Gerber.ProcessingGerberImage;
+            this.Gerber.ProcessingGerberImage = null;
             try
             {
-                this.ImgGerberProcessedBgr.Dispose();
-                this.ImgGerberProcessedBgr = null;
-                this.Gerber.OrgGerberImage.Dispose();
-                this.Gerber.OrgGerberImage = null;
-                this.Gerber.ProcessingGerberImage.Dispose();
-                this.Gerber.ProcessingGerberImage = null;
+                
                 string json = JsonConvert.SerializeObject(this);
                 File.WriteAllText(Path, json);
             }
             catch
             {
                 return null;
+            }
+            finally
+            {
+                this.ImgGerberProcessedBgr = mgGerberProcessedBgr;
+                this.Gerber.OrgGerberImage = orgGerberImage;
+                this.Gerber.ProcessingGerberImage = processingGerberImage;
             }
             return new FileInfo(Path).FullName;
         }
@@ -106,7 +124,6 @@ namespace SPI_AOI.Models
             Model model = null;
             try
             {
-
                 string s = File.ReadAllText(Path);
                 model = JsonConvert.DeserializeObject<Model>(s);
             }
@@ -114,9 +131,12 @@ namespace SPI_AOI.Models
             {
                 return null;
             }
-           if(model.Gerber != null)
+            if(model != null)
             {
-                model.Gerber.LoadGerber(model.DPI);
+                if (model.Gerber != null)
+                {
+                    model.Gerber.LoadGerber(model.DPI);
+                }
             }
             return model;
         }
@@ -145,6 +165,10 @@ namespace SPI_AOI.Models
             this.Gerber.SetAngle(angle, this.FOV);
             
         }
+        public Image<Bgr, byte> GetFOVImage(int IDFOV = -1)
+        {
+            return this.Gerber.GetFOVDiagram(this.FOV, IDFOV);
+        }
         public void SetROI(Rectangle ROI)
         {
             ClearLinkPad();
@@ -159,77 +183,166 @@ namespace SPI_AOI.Models
             }
             this.Gerber.ClearLinkCadItem();
         }
-        //public void AutoLinkPad(CadFile Cad, int Width = 800, int Height = 800)
-        //{
-
-        //    List<Tuple<Point, int>> padsList = new List<Tuple<Point, int>>();
-        //    for (int i = 0; i < this.Gerber.PadItems.Count; i++)
-        //    {
-        //        padsList.Add(new Tuple<Point, int>(this.Gerber.PadItems[i].Center, i));
-        //    }
-        //    Point cadCenterRotate = Cad.CenterRotation;
-        //    List<CadItem> cadItemNotLink = new List<CadItem>();
-        //    int cadX = Cad.X;
-        //    int cadY = Cad.Y;
-        //    double cadAngle = Cad.Angle;
-
-        //    // filter onle tow pads component
-        //    foreach (var item in Cad.CadItems)
-        //    {
-        //        string name = Convert.ToString(item.Name[0]);
-        //        string nextName = Convert.ToString(item.Name[1]);
-        //        Point cadCenter = Point.Round(item.Center);
-        //        Point cadCenterRotated = CadItem.GetCenterRotated(cadCenter, cadCenterRotate, cadX, cadY, cadAngle);
-        //        var sorted = padsList.OrderBy(i => ImageProcessingUtils.DistanceTwoPoint(i.Item1, cadCenterRotated));
-        //        Tuple<Point, int>[] arSorted = sorted.ToArray();
-        //        Point p1 = arSorted[0].Item1;
-        //        Point p2 = arSorted[1].Item1;
-        //        Point p3 = arSorted[2].Item1;
-        //        Point ctP12 = new Point((p1.X + p2.X) / 2, (p1.Y + p2.Y) / 2);
-        //        double d1 = ImageProcessingUtils.DistanceTwoPoint(p1, cadCenterRotated);
-        //        double d2 = ImageProcessingUtils.DistanceTwoPoint(p2, cadCenterRotated);
-        //        double d3 = ImageProcessingUtils.DistanceTwoPoint(p3, cadCenterRotated);
-        //        System.Windows.Vector v1 = new System.Windows.Vector(p1.X - p2.X, p1.Y - p2.Y);
-        //        System.Windows.Vector vo = new System.Windows.Vector(1, 0);
-        //        double angle = System.Windows.Vector.AngleBetween(v1, vo);
-        //        angle = Math.Abs(angle % 45);
-        //        double angleRef = Math.Abs(Cad.Angle % 45);
-        //        double deviationDist = Math.Max(d1, d2) > 0.05 * this.DPI ? 0.1 * Math.Min(d1, d2) : 0.03 * this.DPI;
-        //        if(item.Name == "L2977")
-        //        {
-        //            Console.WriteLine("");
-        //        }
-        //        if ((d2 - d1 < deviationDist &&
-        //            (d3 - d2) > 2 * (d2 - d1) &&
-        //            Math.Abs(angle - angleRef) < 5 &&
-        //            Math.Abs(ctP12.X - cadCenterRotated.X) < deviationDist &&
-        //            Math.Abs(ctP12.Y - cadCenterRotated.Y) < deviationDist)
-        //            || (name.ToUpper() == "R" || name.ToUpper() == "C") && "0123456789".Contains(nextName))
-        //        {
-        //            item.Pads.Add(this.Gerber.PadItems[sorted.ElementAt(0).Item2]);
-        //            item.Pads.Add(this.Gerber.PadItems[sorted.ElementAt(1).Item2]);
-        //            this.Gerber.PadItems[sorted.ElementAt(0).Item2].CadItem = item;
-        //            this.Gerber.PadItems[sorted.ElementAt(1).Item2].CadItem = item;
-        //        }
-        //        else
-        //        {
-        //            if (name.ToUpper() != "S")
-        //            {
-        //                cadItemNotLink.Add(item);
-        //            }
-        //        }
-        //    }
-        //    // reset pad list
-        //    padsList.Clear();
-        //    for (int i = 0; i < this.Gerber.PadItems.Count; i++)
-        //    {
-        //        if (this.Gerber.PadItems[i].CadItem == null || this.Gerber.PadItems[i].CadItem == new CadItem())
-        //        {
-        //            padsList.Add(new Tuple<Point, int>(this.Gerber.PadItems[i].Center, i));
-        //        }
-        //    }
-        //}
-
+        public void DeteleLinkPad(PadItem Pad)
+        {
+            if (Pad.CadItemIndex < 0)
+                return;
+            int idPad = this.Gerber.PadItems.IndexOf(Pad);
+            for (int i = 0; i < this.Cad.Count; i++)
+            {
+                if(this.Cad[i].CadFileID == Pad.CadFileID)
+                {
+                    CadFile cad = this.Cad[i];
+                    cad.CadItems[Pad.CadItemIndex].PadsIndex.Remove(idPad);
+                    break;
+                }
+            }
+            Pad.CadItemIndex = -1;
+            Pad.CadFileID = string.Empty;
+        }
+        public List<PadItem> GetPadsInRect(Rectangle Rect, bool Linked = false)
+        {
+            List<PadItem> pads = new List<PadItem>();
+            Thread t1 = new Thread(() => {
+                List<PadItem> padT1 = GetPadsInRect(Rect, 0, 1* this.Gerber.PadItems.Count / 3, Linked);
+                lock(pads)
+                {
+                    pads.AddRange(padT1);
+                }
+            });
+            Thread t2 = new Thread(() => {
+                List<PadItem> padT2 = GetPadsInRect(Rect, 1 * this.Gerber.PadItems.Count / 3, 2*this.Gerber.PadItems.Count / 3, Linked);
+                lock (pads)
+                {
+                    pads.AddRange(padT2);
+                }
+            });
+            Thread t3 = new Thread(() => {
+                List<PadItem> padT3 = GetPadsInRect(Rect, 2 * this.Gerber.PadItems.Count / 3, this.Gerber.PadItems.Count, Linked);
+                lock (pads)
+                {
+                    pads.AddRange(padT3);
+                }
+            });
+            t1.Start();
+            t2.Start();
+            t3.Start();
+            t1.Join();
+            t2.Join();
+            t3.Join();
+            return pads;
+        }
+        private List<PadItem> GetPadsInRect(Rectangle Rect, int Start, int Stop, bool Linked = false)
+        {
+            List<PadItem> pads = new List<PadItem>();
+            for (int i = Start; i < Stop; i++)
+            {
+                var item = this.Gerber.PadItems[i];
+                if (Linked)
+                {
+                    if (item.CadItemIndex < 0)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    if (item.CadItemIndex >= 0)
+                    {
+                        continue;
+                    }
+                }
+                Rectangle bound = new Rectangle(item.Center.X, item.Center.Y, 1, 1);
+                if (Rect.Contains(bound))
+                {
+                    pads.Add(item);
+                }
+            }
+            return pads;
+        }
+        public List<Tuple<CadFile, int>> GetSuggestCadItemName(Rectangle Rect, bool GetAllComponent = false)
+        {
+            List<Tuple<CadFile, int>> suggest = new List<Tuple<CadFile, int>>();
+            if (Rect != Rectangle.Empty)
+            {
+                Thread t1 = new Thread(() => { 
+                  // find pads in rect
+                    for (int i = 0; i < this.Gerber.PadItems.Count; i++)
+                    {
+                        var item = this.Gerber.PadItems[i];
+                        if(item.CadItemIndex >=0)
+                        {
+                            Rectangle bound = new Rectangle(item.Center.X, item.Center.Y, 1, 1);
+                            if (Rect.Contains(bound))
+                            {
+                                for (int j = 0; j < this.Cad.Count; j++)
+                                {
+                                    if (this.Cad[j].CadFileID == item.CadFileID)
+                                    {
+                                        Tuple<CadFile, int> tlCad = new Tuple<CadFile, int>(this.Cad[j], item.CadItemIndex);
+                                        lock (suggest)
+                                        {
+                                            if (!suggest.Contains(tlCad))
+                                            {
+                                                suggest.Add(tlCad);
+                                            }
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    
+                    }
+                });
+                // cad layer
+                Thread t2 = new Thread(()=>{
+                    foreach (var item in this.Cad)
+                    {
+                        for (int i = 0; i < item.CadItems.Count; i++)
+                        {
+                            Point ct = Point.Round(item.CadItems[i].Center);
+                            ct.X += item.X;
+                            ct.Y += item.Y;
+                            Point newCtRotate = ImageProcessingUtils.PointRotation(ct, new Point((int)item.CenterRotation.X + item.X, (int)item.CenterRotation.Y + item.Y), item.Angle * Math.PI / 180.0);
+                            Rectangle bound = new Rectangle(newCtRotate.X, newCtRotate.Y, 1, 1);
+                            if (Rect.Contains(bound))
+                            {
+                                Tuple<CadFile, int> tlCad = new Tuple<CadFile, int>(item, i);
+                                lock (suggest)
+                                {
+                                    if (!suggest.Contains(tlCad) || i == item.CadItems.Count - 1)
+                                    {
+                                        suggest.Add(tlCad);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    foreach (var item in this.Cad)
+                    {
+                        for (int i = item.CadItems.Count - 1; i >= 0; i--)
+                        {
+                            Tuple<CadFile, int> tlCad = new Tuple<CadFile, int>(item, i);
+                            if (!suggest.Contains(tlCad))
+                            {
+                                suggest.Add(tlCad);
+                                if (!GetAllComponent)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                });
+                t1.Start();
+                t2.Start();
+                t1.Join();
+                t2.Join();
+            }
+            return suggest;
+        }
+        
         public void AutoLinkPad(CadFile Cad, int Width = 800, int Height = 800)
         {
 
@@ -384,6 +497,11 @@ namespace SPI_AOI.Models
                     {
                         break;
                     }
+                    double d1 = ImageProcessingUtils.DistanceTwoPoint(arSorted[i].Item1, cadCenterRotated);
+                    if(d1 > this.DPI)
+                    {
+                        break;
+                    }
                     idGot.Add(arSorted[i].Item2);
                 }
                 for (int i = 0; i < idGot.Count; i++)
@@ -393,7 +511,6 @@ namespace SPI_AOI.Models
                     item.PadsIndex.Add(idGot[i]);
                 }
             }
-            Console.WriteLine("done!");
         }
 
         public List<object> GetListLayerInRect(System.Drawing.Rectangle Rect)
@@ -434,6 +551,10 @@ namespace SPI_AOI.Models
                 }
             }
             return listObj;
+        }
+        public void Dispose()
+        {
+            this.Gerber.Dispose();
         }
     }
 }

@@ -30,10 +30,9 @@ namespace SPI_AOI.Models
         public Rectangle ROI { get; set; }//
         public Rectangle SelectPad { get; set; }//
         public List<Rectangle> RemoveROI { get; set; }
-        public List<Mark> MarkPoint { get; set; }
+        public Mark MarkPoint { get; set; }
         public List<Fov> FOVs { get; set; }
         public List<PadItem> PadItems { get; set; }
-        
         public static GerberFile GetNewGerber(string ID, string Path, float DPI, Size FOV)
         {
             if(Path == null)
@@ -60,7 +59,8 @@ namespace SPI_AOI.Models
             gerber.ROI = new Rectangle();
             gerber.SelectPad = Rectangle.Empty;
             gerber.RemoveROI = new List<Rectangle>();
-            gerber.MarkPoint = new List<Mark>();
+            gerber.MarkPoint = new Mark(gerber.GerberID);
+            gerber.ResetMark();
             gerber.StartPoint = SPI_AOI.Utils.StartPoint.TOP_LEFT;
             gerber.UpdatePadItems();
             gerber.UpdateFOV(FOV);
@@ -90,13 +90,14 @@ namespace SPI_AOI.Models
         {
             this.ROI = ROI;
             this.UpdatePadItems();
-            
+            this.ResetMark();
             //this.UpdateFOV(FOV);
             //this.LinkPadWidthFov(FOV);
         }
         public void SetStartPoint(SPI_AOI.Utils.StartPoint StartPoint, Size FOV)
         {
             this.StartPoint = StartPoint;
+            this.ResetMark();
             //this.UpdateFOV(FOV);
         }
         public void SetAngle(double Angle, Size FOV)
@@ -109,8 +110,14 @@ namespace SPI_AOI.Models
             }
             this.ProcessingGerberImage = ImageProcessingUtils.ImageRotation(this.OrgGerberImage.Copy(), new Point(this.OrgGerberImage.Width / 2, this.OrgGerberImage.Height / 2), this.Angle * Math.PI / 180.0);
             this.UpdatePadItems();
+            this.ResetMark();
             //this.UpdateFOV(FOV);
             //this.LinkPadWidthFov(FOV);
+        }
+        public void ResetMark()
+        {
+            this.MarkPoint.PadMark[0] = -1;
+            this.MarkPoint.PadMark[0] = -1;
         }
         public Point GetCenterPadsSelected()
         {
@@ -121,7 +128,7 @@ namespace SPI_AOI.Models
             List<Point> centerEachPad = new List<Point>();
             for (int i = 0; i < this.PadItems.Count; i++)
             {
-                Rectangle bound = this.PadItems[i].Bouding;// new Rectangle(this.PadItems[i].Center.X, this.PadItems[i].Center.Y, 1,1);
+                Rectangle bound =  new Rectangle(this.PadItems[i].Center.X, this.PadItems[i].Center.Y, 1,1);
                 if (this.SelectPad.Contains(bound))
                 {
                     centerEachPad.Add(new Point(bound.X + bound.Width / 2, bound.Y + bound.Height / 2));
@@ -148,6 +155,17 @@ namespace SPI_AOI.Models
         public void UpdateFOV(Size FOV)
         {
             this.FOVs = Fov.GetFov(this.GerberID, this.ProcessingGerberImage, this.ROI, FOV, this.StartPoint);
+        }
+        public Image<Bgr, byte> GetFOVDiagram(Size FOV, int IndexHightLight)
+        {
+            List<Point> anchors = new List<Point>();
+            for (int i = 0; i < this.FOVs.Count; i++)
+            {
+                anchors.Add(this.FOVs[i].Anchor);
+            }
+            Image<Bgr, byte> img =  Fov.GetFOVDiagram(this.ProcessingGerberImage, anchors.ToArray(), FOV, IndexHightLight);
+            img.ROI = this.ROI;
+            return img;
         }
         public void UpdatePadItems()
         {
@@ -199,7 +217,6 @@ namespace SPI_AOI.Models
                 this.OrgGerberImage = null;
             }
             RemoveROI.Clear();
-            MarkPoint.Clear();
             FOVs.Clear();
             PadItems.Clear();
         }

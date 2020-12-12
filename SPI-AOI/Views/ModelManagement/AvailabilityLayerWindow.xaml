@@ -7,8 +7,9 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
+        Background="#FFEEEEEE"
         xmlns:cvt="clr-namespace:SPI_AOI.Views"
-        Title="Availability Layers" Height="130.081" Width="351.219" Initialized="Window_Initialized">
+        Title="Availability Layers" Height="130.081" Width="393.73" Initialized="Window_Initialized">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -26,9 +27,10 @@
                     </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
+            
         </ComboBox>
         <Label Content="Layer" HorizontalAlignment="Left" Margin="8,29,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btSelect" Click="btSelect_Click" Width="32" Height="29" HorizontalAlignment="Left" Margin="285,32,0,0" VerticalAlignment="Top">
+        <Button x:Name="btSelect" Click="btSelect_Click" Width="66" Height="29" HorizontalAlignment="Left" Margin="285,32,0,0" VerticalAlignment="Top">
             <Image Source="../../Resources/Icons/green-checkbox-png-7.png"></Image>
         </Button>
     </Grid>

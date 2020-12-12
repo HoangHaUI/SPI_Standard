@@ -30,5 +30,9 @@ namespace SPI_AOI.Models
             }
             return fovs;
         }
+        public static Image<Bgr, byte> GetFOVDiagram(Image<Gray, byte> ImgGerber, Point[] Anchor, Size FOV, int IndexHightLight)
+        {
+            return SPI_AOI.Utils.FOVOptimize.GetDiagramHightLight(ImgGerber, Anchor, FOV, IndexHightLight);
+        }
     }
 }

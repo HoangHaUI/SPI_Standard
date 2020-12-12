@@ -1,0 +1,185 @@
+﻿<Window x:Class="SPI_AOI.Views.ModelManagement.DashBoard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SPI_AOI.Views.ModelManagement"
+        mc:Ignorable="d"
+        Title="Model Management - Dash Board" Height="323.84" Width="700"
+        Background="#FFEEEEEE"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Initialized="Window_Initialized"
+        >
+    <Border BorderThickness="2" BorderBrush="Gray" CornerRadius="5" Margin="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="223*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <DockPanel Margin="10">
+                    <ToolBar Background="Transparent">
+                        <ToolBar.Resources>
+                            <Style x:Key="btTool" TargetType="Button">
+                                <Setter Property="Margin" Value="10,0,10,0"></Setter>
+                            </Style>
+                        </ToolBar.Resources>
+                        <Label Content="Model:"  FontWeight="Bold"></Label>
+                        <ComboBox x:Name="cbModelsName" Width="230" Height="30" FontWeight="Bold"
+                          FontSize="15" IsReadOnly="True" Cursor="Hand" ToolTip="List models"
+                              ForceCursor="True" SelectionChanged="cbModelsName_SelectionChanged"/>
+
+                        <Button x:Name="btReload" Background="Transparent"
+                                Style="{StaticResource btTool}"
+                                ToolTip="Reload models"  Click="btReload_Click">
+                            <Image Source="../../Resources/Icons/refresh.ico"></Image>
+                        </Button>
+                        <Separator></Separator>
+                        <Button x:Name="btAddModel" ToolTip="Add Model"
+                                Style="{StaticResource btTool}"
+                                Click="btAddModel_Click">
+                            <Image Source="../../Resources/Icons/newfileicon.png"></Image>
+                        </Button>
+                        <Button x:Name="btSaveModel" ToolTip="Save Model" 
+                                Style="{StaticResource btTool}"
+                                Click="btSaveModel_Click">
+                            <Image Source="../../Resources/Icons/save.png"></Image>
+                        </Button>
+
+                        <Button x:Name="btRemoveModel" ToolTip="Remove Model" 
+                                Style="{StaticResource btTool}"
+                                Click="btRemoveModel_Click">
+                            <Image Source="../../Resources/Icons/bin.png" Height="30"></Image>
+                        </Button>
+                        <Separator></Separator>
+                        <Button x:Name="btImportModel" ToolTip="Import Model" 
+                                Style="{StaticResource btTool}"
+                                Click="btImportModel_Click">
+                            <Image Source="../../Resources/Icons/import.jpg"></Image>
+                        </Button>
+                        <Button x:Name="btExportModel" ToolTip="Export Model" 
+                                Style="{StaticResource btTool}"
+                                Click="btExportModel_Click">
+                            <Image Source="../../Resources/Icons/export.png"></Image>
+                        </Button>
+                    </ToolBar>
+                </DockPanel>
+            </Grid>
+            <Grid x:Name="gridConfig" Grid.Row="1">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="350*"/>
+                        <ColumnDefinition Width="350*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <GroupBox Header="Model Details"  Margin="0,0,5,0">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Opacity="0.7">
+                                <StackPanel Margin="10,20,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label  Content="Model Name:"></Label>
+                                        <Label x:Name="lbModelName"  Content="-----"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label  Content="Create Time:"></Label>
+                                        <Label x:Name="lbTimeCreate"   Content="-----"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label  Content="Owner:"></Label>
+                                        <Label  x:Name="lbOwner"   Content="-----"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label  Content="Gerber file:"></Label>
+                                        <Label  x:Name="lbGerberFile"   Content="-----"></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label  Content="Num FOVs:"></Label>
+                                        <Label  x:Name="lbNumFOVs"   Content="-----"></Label>
+                                    </StackPanel>
+                                    
+
+                                </StackPanel>
+                            </ScrollViewer>
+                        </GroupBox>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <GroupBox  Header="Model settings">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent">
+                                <StackPanel Margin="0,10,0,0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions >
+                                            <ColumnDefinition Width="6*"></ColumnDefinition>
+                                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0"  HorizontalAlignment="Left">
+                                            <Label   FontWeight="Bold" Content="Step1: Gerber &amp; Cad Files"></Label>
+                                        </Grid>
+                                        <Grid Grid.Column="1">
+                                            <Button x:Name="btGerberSettings"  Height="30"
+                                                    Margin="5" Width="120" 
+                                                    Click="btGerberSettings_Click">
+                                                <DockPanel>
+                                                    <Image Source="../../Resources/Icons/gerber_icon.png"></Image>
+                                                    <Label Content="Settings" ></Label>
+                                                </DockPanel>
+
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions >
+                                            <ColumnDefinition Width="6*"></ColumnDefinition>
+                                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0"  HorizontalAlignment="Left">
+                                            <Label  FontWeight="Bold" Content="Step2: FOVs Capturing"></Label>
+                                        </Grid>
+                                        <Grid Grid.Column="1">
+                                            <Button x:Name="btFOVsSettings" 
+                                                    Height="30" Margin="5" Width="120"
+                                                    Click="btFOVsSettings_Click">
+                                                <DockPanel>
+                                                    <Image Source="../../Resources/Icons/penyellow.png"></Image>
+                                                    <Label Content="Settings" ></Label>
+                                                </DockPanel>
+
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions >
+                                            <ColumnDefinition Width="6*"></ColumnDefinition>
+                                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0"  HorizontalAlignment="Left">
+                                            <Label  FontWeight="Bold" Content="Step3: Hardware"></Label>
+                                        </Grid>
+                                        <Grid Grid.Column="1">
+                                            <Button x:Name="btHardwareSettings" 
+                                                    Height="30" Margin="5" Width="120"
+                                                    Click="btHardwareSettings_Click">
+                                                <DockPanel>
+                                                    <Image Source="../../Resources/Icons/setting.png"></Image>
+                                                    <Label Content="Settings" ></Label>
+                                                </DockPanel>
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions >
+                                            <ColumnDefinition Width="6*"></ColumnDefinition>
+                                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0"  HorizontalAlignment="Left"/>
+                                        <Grid Grid.Column="1"/>
+                                    </Grid>
+
+                                </StackPanel>
+                            </ScrollViewer>
+                        </GroupBox>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

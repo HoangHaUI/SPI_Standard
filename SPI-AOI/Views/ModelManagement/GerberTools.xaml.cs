@@ -18,6 +18,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.IO;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 
 namespace SPI_AOI.Views.ModelManagement 
@@ -29,23 +30,26 @@ namespace SPI_AOI.Views.ModelManagement
     {
         // variable user status
         bool mMousePress = false;
-        bool mIsDrawing = false;
-        bool mIsDrawROI = false;
-        bool mIsDrawItems = false;
+        bool mCtrlPress = false;
+        //bool mIsDrawROI = false;
+        //bool mIsDrawItems = false;
         System.Drawing.Rectangle mSelectRecangle = System.Drawing.Rectangle.Empty;
         System.Drawing.Point StartPoint = new System.Drawing.Point();
         public Model mModel = new Model();
         private List<object> mImportedFiles = new List<object>();
-        public GerberTools()
+        private List<PadItem> mPads = new List<PadItem>();
+        public GerberTools(Model model)
         {
+            mModel = model;
             InitializeComponent();
         }
         private void Window_Initialized(object sender, EventArgs e)
         {
             listImportedFile.ItemsSource = mImportedFiles;
-            mModel = Model.GetNewModel("HAHA", "thieu", null, 500, new System.Drawing.Size(600, 400));
+            dgwPads.ItemsSource = mPads;
             UpdateUIModel();
-            imBox.SetZoomScale(0.5, new System.Drawing.Point(1, 1));
+            UpdateListImportedFile();
+            ShowAllLayerImb(ActionMode.Render, thisThread:true);
         }
         private void UpdateUIModel()
         {
@@ -54,15 +58,20 @@ namespace SPI_AOI.Views.ModelManagement
                 chbShowLinkLine.IsChecked = mModel.ShowLinkLine;
                 chbShowComponentCenter.IsChecked = mModel.ShowComponentCenter;
                 chbShowComponentName.IsChecked = mModel.ShowComponentName;
+                chbHighlightPadLinked.IsChecked = mModel.HightLineLinkedPad;
             }
         }
         private void UpdateListImportedFile()
         {
             mImportedFiles.Clear();
+            mPads.Clear();
             if (mModel.Gerber is GerberFile)
             {
-
                 mImportedFiles.Add(mModel.Gerber);
+                for (int i = 0; i < mModel.Gerber.PadItems.Count; i++)
+                {
+                    mPads.Add(mModel.Gerber.PadItems[i]);
+                }
             }
             for (int i = 0; i < mModel.Cad.Count; i++)
             {
@@ -71,40 +80,23 @@ namespace SPI_AOI.Views.ModelManagement
             this.Dispatcher.Invoke(() =>
             {
                 listImportedFile.Items.Refresh();
+                dgwPads.Items.Refresh();
             });
+
         }
         private void imBox_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (mIsDrawing)
-            {
-                mMousePress = true;
-                mSelectRecangle = System.Drawing.Rectangle.Empty;
-                StartPoint.X = Convert.ToInt32(e.Location.X / imBox.ZoomScale + imBox.HorizontalScrollBar.Value);
-                StartPoint.Y = Convert.ToInt32(e.Location.Y / imBox.ZoomScale + imBox.VerticalScrollBar.Value);
-            }
+            mMousePress = true;
+            mSelectRecangle = System.Drawing.Rectangle.Empty;
+            Cursor = Cursors.Cross;
+            StartPoint.X = Convert.ToInt32(e.Location.X / imBox.ZoomScale + imBox.HorizontalScrollBar.Value);
+            StartPoint.Y = Convert.ToInt32(e.Location.Y / imBox.ZoomScale + imBox.VerticalScrollBar.Value);
         }
 
         private void imBox_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             mMousePress = false;
-            mIsDrawing = false;
-            if (mSelectRecangle != System.Drawing.Rectangle.Empty)
-            {
-                if (mIsDrawROI)
-                {
-                    mModel.SetROI(mSelectRecangle);
-                    ShowAllLayerImb(ActionMode.Render);
-                    mIsDrawROI = false;
-                }
-                if(mIsDrawItems)
-                {
-                    DrawItems(mSelectRecangle);
-                    mIsDrawItems = false;
-                }
-            }
             Cursor = Cursors.Arrow;
-            mSelectRecangle = System.Drawing.Rectangle.Empty;
-            imBox.Refresh();
         }
         private void DrawItems(System.Drawing.Rectangle Rect)
         {
@@ -134,9 +126,46 @@ namespace SPI_AOI.Views.ModelManagement
                 ShowAllLayerImb(ActionMode.Select_Pad);
             }
         }
+        private void DeletePads(System.Drawing.Rectangle Rect)
+        {
+            List<PadItem> pads = mModel.GetPadsInRect(Rect, Linked:true);
+            foreach (var item in pads)
+            {
+                mModel.DeteleLinkPad(item);
+            }
+            ShowAllLayerImb(ActionMode.Update_Color_Gerber);
+        }
+        private void SetPadName(System.Drawing.Rectangle Rect)
+        {
+            List<Tuple<CadFile, int>> suggets = mModel.GetSuggestCadItemName(Rect);
+            int id = -1;
+            if (suggets.Count > 0 )
+            {
+                SuggestLinkPadWindow avaiWD = new SuggestLinkPadWindow(suggets);
+                avaiWD.ShowDialog();
+                id = avaiWD.ItemSelected;
+            }
+            if (id > -1)
+            {
+                
+                List<PadItem> pads = mModel.GetPadsInRect(Rect, Linked:false);
+                foreach (var item in pads)
+                {
+                    CadFile cadFile = suggets[id].Item1;
+                    int idCadItem = suggets[id].Item2;
+                    CadItem cadItem = cadFile.CadItems[idCadItem];
+                    PadItem pad = item;
+                    int idPadItem = mModel.Gerber.PadItems.IndexOf(pad);
+                    pad.CadFileID = cadFile.CadFileID;
+                    pad.CadItemIndex = idCadItem;
+                    cadItem.PadsIndex.Add(idPadItem);
+                }
+                ShowAllLayerImb(ActionMode.Update_Color_Gerber);
+            }
+        }
         private void imBox_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (mMousePress && mIsDrawing)
+            if (mMousePress)
             {
                 System.Drawing.Point endPoint = new System.Drawing.Point();
 
@@ -180,7 +209,7 @@ namespace SPI_AOI.Views.ModelManagement
                 System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
                 if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    int r = mModel.GerNewCad(ofd.FileName);
+                    int r = mModel.GetNewCad(ofd.FileName);
                     if(r == 0)
                     {
                         UpdateListImportedFile();
@@ -217,10 +246,27 @@ namespace SPI_AOI.Views.ModelManagement
                 wait.ShowDialog();
             }
         }
-        public void ShowAllLayerImb(ActionMode mode)
+        public void ShowAllLayerImb(ActionMode mode, bool thisThread = false)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            
             Image<Bgr, byte> imgLayers = ShowModel.GetLayoutImage(mModel, mode);
-            imBox.Invoke(new Action(() =>
+            if(!thisThread)
+            {
+                imBox.Invoke(new Action(() =>
+                {
+                    var x = imBox.Image;
+                    imBox.Image = imgLayers;
+                    if (x != null)
+                    {
+                        x.Dispose();
+                        x = null;
+                    }
+                    imBox.Refresh();
+                }));
+            }
+            else
             {
                 var x = imBox.Image;
                 imBox.Image = imgLayers;
@@ -230,7 +276,8 @@ namespace SPI_AOI.Views.ModelManagement
                     x = null;
                 }
                 imBox.Refresh();
-            }));
+            }  
+            
         }
         private void Border_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -278,9 +325,21 @@ namespace SPI_AOI.Views.ModelManagement
         {
             if (imBox.Image != null)
             {
-                mIsDrawing = true;
-                mIsDrawROI = true;
-                Cursor = Cursors.Cross;
+                if(mSelectRecangle != System.Drawing.Rectangle.Empty)
+                {
+                    if(mSelectRecangle.Width + mSelectRecangle.X < mModel.Gerber.ProcessingGerberImage.Width &&
+                       mSelectRecangle.Height + mSelectRecangle.Y < mModel.Gerber.ProcessingGerberImage.Height)
+                    {
+                        mModel.SetROI(mSelectRecangle);
+                        mSelectRecangle = System.Drawing.Rectangle.Empty;
+                        ShowAllLayerImb(ActionMode.Render);
+                    }
+                    else
+                    {
+                        MessageBox.Show(string.Format("ROI selected is incorrect!"), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    
+                }
             }
         }
 
@@ -345,9 +404,16 @@ namespace SPI_AOI.Views.ModelManagement
             {
                 if (imBox.Image != null)
                 {
-                    mIsDrawing = true;
-                    mIsDrawItems = true;
-                    Cursor = Cursors.Cross;
+                    if(mSelectRecangle != System.Drawing.Rectangle.Empty)
+                    {
+                        DrawItems(mSelectRecangle);
+                        mSelectRecangle = System.Drawing.Rectangle.Empty;
+                        imBox.Refresh();
+                    }
+                    else
+                    {
+                        MessageBox.Show(string.Format("Area select is emty!"), "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
             }
             else
@@ -355,25 +421,27 @@ namespace SPI_AOI.Views.ModelManagement
                 MessageBox.Show(string.Format("Please insert gerber file..."), "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-
-        private void btSelectCenter_Click(object sender, RoutedEventArgs e)
-        {
-            if (imBox.Image != null)
-            {
-                mIsDrawing = true;
-                mIsDrawItems = true;
-                Cursor = Cursors.Cross;
-            }
-        }
-
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Escape)
+            if(e.Key == Key.LeftCtrl || e.Key == Key.Right)
             {
-                mIsDrawing = false;
-                mIsDrawROI = false;
-                mIsDrawItems = false;
-                Cursor = Cursors.Arrow;
+                mCtrlPress = true;
+            }
+            if (e.Key == Key.D && mCtrlPress)
+            {
+                btSetLinkPad_Click(null, null);
+            }
+            if (e.Key == Key.R && mCtrlPress)
+            {
+                btSetROI_Click(null, null);
+            }
+            if (e.Key == Key.B && mCtrlPress)
+            {
+                btSelectPad_Click(null, null);
+            }
+            if (e.Key == Key.Delete)
+            {
+                btDeleteLinkPad_Click(null, null);
             }
         }
         private void btRotation_Click(object sender, RoutedEventArgs e)
@@ -450,9 +518,185 @@ namespace SPI_AOI.Views.ModelManagement
 
         private void btDowload_Click(object sender, RoutedEventArgs e)
         {
-            mModel = Model.LoadModel("test.json");
-            ShowAllLayerImb(ActionMode.Render);
-            UpdateListImportedFile();
+            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+            ofd.Filter = "Json file | *.json";
+            if(ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                mModel = Model.LoadModel(ofd.FileName);
+                ShowAllLayerImb(ActionMode.Render);
+                UpdateListImportedFile();
+                UpdateUIModel();
+            }
+            
+        }
+
+        private void btSetLinkPad_Click(object sender, RoutedEventArgs e)
+        {
+            if (mModel.Gerber is GerberFile || mModel.Cad.Count > 0)
+            {
+                if (imBox.Image != null)
+                {
+                    if (mSelectRecangle != System.Drawing.Rectangle.Empty)
+                    {
+                        SetPadName(mSelectRecangle);
+                        mSelectRecangle = System.Drawing.Rectangle.Empty;
+                        imBox.Refresh();
+                        UpdateListImportedFile();
+                    }
+                    else
+                    {
+                        MessageBox.Show(string.Format("Area select is emty!"), "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show(string.Format("Please insert gerber file..."), "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+        private void btDeleteLinkPad_Click(object sender, RoutedEventArgs e)
+        {
+            if (mModel.Gerber is GerberFile || mModel.Cad.Count > 0)
+            {
+                if (imBox.Image != null)
+                {
+                    if (mSelectRecangle != System.Drawing.Rectangle.Empty)
+                    {
+                        DeletePads(mSelectRecangle);
+                        mSelectRecangle = System.Drawing.Rectangle.Empty;
+                        imBox.Refresh();
+                        UpdateListImportedFile();
+                    }
+                    else
+                    {
+                        MessageBox.Show(string.Format("Area select is emty!"), "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show(string.Format("Please insert gerber file..."), "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftCtrl || e.Key == Key.Right)
+            {
+                mCtrlPress = false;
+            }
+        }
+
+        private void btSave_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.SaveFileDialog sd = new System.Windows.Forms.SaveFileDialog();
+            sd.DefaultExt = ".json";
+            sd.Filter = "Json file | *.json";
+            if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+
+                mModel.SaveModel(sd.FileName);
+                MessageBox.Show(string.Format("Save successfuly!..."), "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void chbHighlightPadLinked_Click(object sender, RoutedEventArgs e)
+        {
+            if (mModel != null)
+            {
+                mModel.HightLineLinkedPad = (sender as MenuItem).IsChecked;
+                ShowAllLayerImb(ActionMode.Render);
+            }
+        }
+
+        private void btPadSettings_Click(object sender, RoutedEventArgs e)
+        {
+            if (mModel.Gerber is GerberFile || mModel.Cad.Count > 0)
+            {
+                List<PadItem> count = mModel.GetPadsInRect(new System.Drawing.Rectangle(0, 0, mModel.Gerber.ProcessingGerberImage.Width, mModel.Gerber.ProcessingGerberImage.Height), Linked: false);
+                
+                if(count.Count == 0)
+                {
+                    List<PadItem> listSelectPad = mModel.GetPadsInRect(mSelectRecangle, Linked: true);
+                    PadconditionWindow padConditionWD = new PadconditionWindow(mModel.Gerber.PadItems, listSelectPad);
+                    padConditionWD.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("Please link all pad before settings!..."), "Information", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void btMark1_Click(object sender, RoutedEventArgs e)
+        {
+            if (mModel.Gerber is GerberFile || mModel.Cad.Count > 0)
+            {
+                List<PadItem> count = mModel.GetPadsInRect(new System.Drawing.Rectangle(0, 0, mModel.Gerber.ProcessingGerberImage.Width, mModel.Gerber.ProcessingGerberImage.Height), Linked: false);
+
+                if (count.Count == 0)
+                {
+                    List<PadItem> listSelectPad = mModel.GetPadsInRect(mSelectRecangle, Linked: true);
+                    if(listSelectPad.Count > 1)
+                    {
+                        MessageBox.Show(string.Format("You are select more than 1 item!..."), "Information", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else if(listSelectPad.Count < 1)
+                    {
+                        MessageBox.Show(string.Format("Not found mark point!..."), "Information", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else if (listSelectPad[0].NoID == mModel.Gerber.MarkPoint.PadMark[1])
+                    {
+                        MessageBox.Show(string.Format("This is G2 Mark point!..."), "Information", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        mModel.Gerber.MarkPoint.PadMark[0] = listSelectPad[0].NoID;
+                        mSelectRecangle = System.Drawing.Rectangle.Empty;
+                        ShowAllLayerImb(ActionMode.Draw_Cad);
+                    }
+                    
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("Please link all pad before settings!..."), "Information", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void btMark2_Click(object sender, RoutedEventArgs e)
+        {
+            if (mModel.Gerber is GerberFile || mModel.Cad.Count > 0)
+            {
+                List<PadItem> count = mModel.GetPadsInRect(new System.Drawing.Rectangle(0, 0, mModel.Gerber.ProcessingGerberImage.Width, mModel.Gerber.ProcessingGerberImage.Height), Linked: false);
+
+                if (count.Count == 0)
+                {
+                    List<PadItem> listSelectPad = mModel.GetPadsInRect(mSelectRecangle, Linked: true);
+                    if (listSelectPad.Count > 1)
+                    {
+                        MessageBox.Show(string.Format("You are select more than 1 item!..."), "Information", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else if (listSelectPad.Count < 1)
+                    {
+                        MessageBox.Show(string.Format("Not found mark point!..."), "Information", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else if(listSelectPad[0].NoID == mModel.Gerber.MarkPoint.PadMark[0])
+                    {
+                        MessageBox.Show(string.Format("This is G1 Mark point!..."), "Information", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        mModel.Gerber.MarkPoint.PadMark[1] = listSelectPad[0].NoID;
+                        mSelectRecangle = System.Drawing.Rectangle.Empty;
+                        ShowAllLayerImb(ActionMode.Draw_Cad);
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("Please link all pad before settings!..."), "Information", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
     }
 }

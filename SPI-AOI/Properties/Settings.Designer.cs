@@ -8,22 +8,366 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SPI_AOI.Properties
-{
-
-
+namespace SPI_AOI.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public float DPI {
+            get {
+                return ((float)(this["DPI"]));
+            }
+            set {
+                this["DPI"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("600, 400")]
+        public global::System.Drawing.Size FOV {
+            get {
+                return ((global::System.Drawing.Size)(this["FOV"]));
+            }
+            set {
+                this["FOV"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+        public string PLC_IP {
+            get {
+                return ((string)(this["PLC_IP"]));
+            }
+            set {
+                this["PLC_IP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1997")]
+        public int PLC_PORT {
+            get {
+                return ((int)(this["PLC_PORT"]));
+            }
+            set {
+                this["PLC_PORT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_GO_TOP {
+            get {
+                return ((string)(this["PLC_BIT_GO_TOP"]));
+            }
+            set {
+                this["PLC_BIT_GO_TOP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_GO_BOT {
+            get {
+                return ((string)(this["PLC_BIT_GO_BOT"]));
+            }
+            set {
+                this["PLC_BIT_GO_BOT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_GO_LEFT {
+            get {
+                return ((string)(this["PLC_BIT_GO_LEFT"]));
+            }
+            set {
+                this["PLC_BIT_GO_LEFT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_GO_RIGHT {
+            get {
+                return ((string)(this["PLC_BIT_GO_RIGHT"]));
+            }
+            set {
+                this["PLC_BIT_GO_RIGHT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_GO_HOME {
+            get {
+                return ((string)(this["PLC_BIT_GO_HOME"]));
+            }
+            set {
+                this["PLC_BIT_GO_HOME"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_REG_SPEED {
+            get {
+                return ((string)(this["PLC_REG_SPEED"]));
+            }
+            set {
+                this["PLC_REG_SPEED"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_REG_X_TOP {
+            get {
+                return ((string)(this["PLC_REG_X_TOP"]));
+            }
+            set {
+                this["PLC_REG_X_TOP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_REG_Y_TOP {
+            get {
+                return ((string)(this["PLC_REG_Y_TOP"]));
+            }
+            set {
+                this["PLC_REG_Y_TOP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_REG_X_BOT {
+            get {
+                return ((string)(this["PLC_REG_X_BOT"]));
+            }
+            set {
+                this["PLC_REG_X_BOT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_REG_Y_BOT {
+            get {
+                return ((string)(this["PLC_REG_Y_BOT"]));
+            }
+            set {
+                this["PLC_REG_Y_BOT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_ERROR_MACHINE {
+            get {
+                return ((string)(this["PLC_BIT_ERROR_MACHINE"]));
+            }
+            set {
+                this["PLC_BIT_ERROR_MACHINE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_ERROR_MACHINE_CONFIRM {
+            get {
+                return ((string)(this["PLC_BIT_ERROR_MACHINE_CONFIRM"]));
+            }
+            set {
+                this["PLC_BIT_ERROR_MACHINE_CONFIRM"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_HAS_PRODUCT {
+            get {
+                return ((string)(this["PLC_BIT_HAS_PRODUCT"]));
+            }
+            set {
+                this["PLC_BIT_HAS_PRODUCT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_WIRTE_COORDINATES_FINISH {
+            get {
+                return ((string)(this["PLC_BIT_WIRTE_COORDINATES_FINISH"]));
+            }
+            set {
+                this["PLC_BIT_WIRTE_COORDINATES_FINISH"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_GO_COORDINATES_FINISH {
+            get {
+                return ((string)(this["PLC_BIT_GO_COORDINATES_FINISH"]));
+            }
+            set {
+                this["PLC_BIT_GO_COORDINATES_FINISH"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_CAPTURE_FINISH {
+            get {
+                return ((string)(this["PLC_BIT_CAPTURE_FINISH"]));
+            }
+            set {
+                this["PLC_BIT_CAPTURE_FINISH"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_PRODUCT_FAIL {
+            get {
+                return ((string)(this["PLC_BIT_PRODUCT_FAIL"]));
+            }
+            set {
+                this["PLC_BIT_PRODUCT_FAIL"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_PRODUCT_PASS {
+            get {
+                return ((string)(this["PLC_BIT_PRODUCT_PASS"]));
+            }
+            set {
+                this["PLC_BIT_PRODUCT_PASS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_DOOR_STATUS {
+            get {
+                return ((string)(this["PLC_BIT_DOOR_STATUS"]));
+            }
+            set {
+                this["PLC_BIT_DOOR_STATUS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_MACHINE_STATUS {
+            get {
+                return ((string)(this["PLC_BIT_MACHINE_STATUS"]));
+            }
+            set {
+                this["PLC_BIT_MACHINE_STATUS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_SETUP_MODEL {
+            get {
+                return ((string)(this["PLC_BIT_SETUP_MODEL"]));
+            }
+            set {
+                this["PLC_BIT_SETUP_MODEL"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_CONTROLRUN {
+            get {
+                return ((string)(this["PLC_BIT_CONTROLRUN"]));
+            }
+            set {
+                this["PLC_BIT_CONTROLRUN"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_READ_QRCODE_FAIL {
+            get {
+                return ((string)(this["PLC_BIT_READ_QRCODE_FAIL"]));
+            }
+            set {
+                this["PLC_BIT_READ_QRCODE_FAIL"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_CAPTURE_FAIL {
+            get {
+                return ((string)(this["PLC_BIT_CAPTURE_FAIL"]));
+            }
+            set {
+                this["PLC_BIT_CAPTURE_FAIL"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM10")]
+        public string LIGHT_COM {
+            get {
+                return ((string)(this["LIGHT_COM"]));
+            }
+            set {
+                this["LIGHT_COM"] = value;
             }
         }
     }

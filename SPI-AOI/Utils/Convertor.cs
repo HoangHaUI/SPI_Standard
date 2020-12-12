@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace SPI_AOI.Uitls
+namespace SPI_AOI.Utils
 {
     class Convertor
     {

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:SPI_AOI.Views.ModelManagement"
         xmlns:cvt="clr-namespace:SPI_AOI.Views"
         mc:Ignorable="d"
+        Background="#FFEEEEEE"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         Title="Adjust Window" Height="208.667" Width="367" Initialized="Window_Initialized">
     <Window.Resources>

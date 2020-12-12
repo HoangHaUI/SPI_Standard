@@ -11,15 +11,16 @@
         mc:Ignorable="d"
         Title="Gerber Tools" 
         Height="900" Width="1600"
-        Background="#FFF5F5F5"
+        Background="#FFEEEEEE"
         WindowState="Maximized"
-        WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" KeyDown="Window_KeyDown">
+        WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
             </ResourceDictionary.MergedDictionaries>
             <cvt:BrushColorCvt x:Key="BrushColor"/>
+            <cvt:BrushPadCvt x:Key="BrushPad"/>
         </ResourceDictionary>
         
     </Window.Resources>
@@ -42,6 +43,7 @@
                         <MenuItem Header="_"></MenuItem>
                     </MenuItem>
                     <MenuItem Header="_View" Margin="5">
+                        <MenuItem x:Name="chbHighlightPadLinked" Click="chbHighlightPadLinked_Click" Header="_Highlight Pad Linked" IsCheckable="True"></MenuItem>
                         <MenuItem x:Name="chbShowLinkLine" Click="chbShowLinkLine_Click" Header="_Show Link Line" IsCheckable="True"></MenuItem>
                         <MenuItem x:Name="chbShowComponentCenter" Header="_Show Component Center" IsCheckable="True" Click="chbShowComponentCenter_Click"></MenuItem>
                         <MenuItem x:Name="chbShowComponentName" Click="chbShowComponentName_Click" Header="_Show Component Name" IsCheckable="True"></MenuItem>
@@ -60,15 +62,20 @@
                 <ToolBar x:Name="toolBarMain" Background="Transparent" Margin="0,5,0,0">
                     <Button x:Name="btImportGerber"
                             Click="btImportGerber_Click"
+                            ToolTip="Import gerber file"
                             Width="35" Height="35" Margin="5,0,5,0">
                         <Image Source="../../Resources/Icons/gerber_icon.png"></Image>
                     </Button>
                     <Button x:Name="btImportCad"
                             Click="btImportCad_Click"
+                            ToolTip="Import Cad file"
                             Width="35" Height="35" Margin="5,0,5,0">
                         <Image Source="../../Resources/Icons/file_cad-512.png"></Image>
                     </Button>
-                    <Button x:Name="btSetROI" Click="btSetROI_Click" Width="35" Height="35" Margin="5,0,5,0">
+                    <Button x:Name="btSetROI" 
+                            Click="btSetROI_Click"
+                            ToolTip="ROI - Crop (Ctrl + R)"
+                            Width="35" Height="35" Margin="5,0,5,0">
                         <Image Source="../../Resources/Icons/crop-512.png"></Image>
                     </Button>
                     <Button x:Name="btRotation"
@@ -80,7 +87,7 @@
                     <Button x:Name="btSelectPad"
                             Click="btSelectPad_Click" Width="35"
                             Height="35" Margin="5,0,5,0"
-                            ToolTip="Select Items">
+                            ToolTip="Select Items (Ctrl + B)">
                         <Image Source="../../Resources/Icons/pad.png"></Image>
                     </Button>
                     <Button x:Name="btAdjustsadxXY" 
@@ -92,16 +99,49 @@
                     <Button x:Name="btLinkPad" 
                             Click="btLinkPad_Click" Width="35"
                             Height="35" Margin="5,0,5,0"
-                            ToolTip="Auto Adjsut XY">
-                        <Image Source="../../Resources/Icons/link_icon.png"></Image>
+                            ToolTip="Auto Link Pad">
+                        <Image Source="../../Resources/Icons/link.png"></Image>
+                    </Button>
+                    <Button x:Name="btSetLinkPad" 
+                            Click="btSetLinkPad_Click" Width="35"
+                            Height="35" Margin="5,0,5,0"
+                            ToolTip="Set Pad Name">
+                        <Image Source="../../Resources/Icons/D10.png"></Image>
+                    </Button>
+                    <Button x:Name="btDeleteLinkPad" 
+                            Click="btDeleteLinkPad_Click" Width="35"
+                            Height="35" Margin="5,0,5,0"
+                            ToolTip="Remove Pad Name">
+                        <Image Source="../../Resources/Icons/-icon.png"></Image>
+                    </Button>
+                    <Button x:Name="btPadSettings" 
+                            Click="btPadSettings_Click" Width="35"
+                            Height="35" Margin="5,0,5,0"
+                            ToolTip="Pad settings">
+                        <Image Source="../../Resources/Icons/settings.png"></Image>
+                    </Button>
+                    <Button x:Name="btMark1" 
+                            Click="btMark1_Click" Width="35"
+                            Height="35" Margin="5,0,5,0"
+                            ToolTip="Set Mark 1">
+                        <Image Source="../../Resources/Icons/mark1.png"></Image>
+                    </Button>
+                    <Button x:Name="btMark2" 
+                            Click="btMark2_Click" Width="35"
+                            Height="35" Margin="5,0,5,0"
+                            ToolTip="Set Mark 1">
+                        <Image Source="../../Resources/Icons/mark2.png"></Image>
+                    </Button>
+                    <!--<Button x:Name="btSave" 
+                            Click="btSave_Click" Width="35"
+                            Height="35" Margin="5,0,5,0"
+                            ToolTip="Save model">
                     </Button>
                     <Button x:Name="btDowload" 
                             Click="btDowload_Click" Width="35"
                             Height="35" Margin="5,0,5,0"
-                            ToolTip="Auto Adjsut XY" Content="Dow">
-                        
-                        <!--<Image Source="../../Resources/Icons/link_icon.png"></Image>-->
-                    </Button>
+                            ToolTip="Auto Adjsut XY">
+                    </Button>-->
                 </ToolBar>
             </StackPanel>
         </Grid>
@@ -112,7 +152,7 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <GroupBox Margin="5" Header="View">
-                    <WindowsFormsHost Margin="5" Background="Black">
+                    <WindowsFormsHost Margin="0,10,10,0" Background="#FF111111">
                         <emgu:ImageBox x:Name="imBox"
                                        MouseDown="imBox_MouseDown"
                                        MouseUp="imBox_MouseUp"
@@ -160,7 +200,22 @@
                         </GroupBox>
                     </Grid>
                     <Grid Grid.Row="1">
-                        <GroupBox Margin="5" Header="Details">
+                        <GroupBox Margin="5" Header="Pads">
+                            <DockPanel>
+                                <DataGrid x:Name="dgwPads" Margin="0,10,0,0" BorderThickness="0" IsReadOnly="True" AutoGenerateColumns="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTemplateColumn Header="Status" Width="50">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Border BorderThickness="1" BorderBrush="Black" Background="{Binding Path=CadItemIndex, Converter={StaticResource BrushPad}}" Width="15" Height="15"></Border>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                        <DataGridTextColumn Width="1*" Header="X" Binding="{Binding Center.X}" />
+                                        <DataGridTextColumn Width="1*" Header="Y" Binding="{Binding Center.Y}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </DockPanel>
                         </GroupBox>
                     </Grid>
                 </Grid>

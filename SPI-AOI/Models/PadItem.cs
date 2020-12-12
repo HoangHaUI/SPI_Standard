@@ -14,13 +14,14 @@ namespace SPI_AOI.Models
     public class PadItem
     {
         public string GerberID { get; set; }
+        public int NoID { get; set; }
         public Rectangle  Bouding { get; set; }
         public VectorOfPoint Contour { get; set; }
         public Point Center { get; set; }
-        public Thresh Insufficient { get; set; }
-        public Thresh Excess { get; set; }
-        public Thresh Position { get; set; }
-        public Thresh Bridge { get; set; }
+        public StandardThreshold AreaThresh { get; set; }
+        public StandardThreshold VolumeThresh { get; set; }
+        public StandardThreshold ShiftXThresh { get; set; }
+        public StandardThreshold ShiftYThresh { get; set; }
         public int CadItemIndex { get; set; }
         public string CadFileID { get; set; }
         public List<int> FOVs { get; set; }
@@ -53,13 +54,14 @@ namespace SPI_AOI.Models
                         cntPoint[k].Y += ROI.Y;
                     }
                     pad.Contour = new VectorOfPoint(cntPoint);
-                    pad.Bridge = new Thresh(5,10);
-                    pad.Excess = new Thresh(5, 10);
-                    pad.Insufficient = new Thresh(5, 10);
-                    pad.Position = new Thresh(5, 10);
+                    pad.AreaThresh = new StandardThreshold(5,10);
+                    pad.VolumeThresh = new StandardThreshold(5, 10);
+                    pad.ShiftXThresh = new StandardThreshold(5, 10);
+                    pad.ShiftYThresh = new StandardThreshold(5, 10);
                     pad.FOVs = new List<int>();
                     pad.CadFileID = string.Empty;
                     pad.CadItemIndex = -1;
+                    pad.NoID = i;
                     padItems.Add(pad);
                 }
             }
@@ -77,15 +79,15 @@ namespace SPI_AOI.Models
             }
         }
     }
-    public class Thresh
+    public class StandardThreshold
     {
-        public double Warning { get; set; }
-        public double Error { get; set; }
-        public Thresh() { }
-        public Thresh(double Warning, double Error)
+        public double LSL { get; set; }
+        public double USL { get; set; }
+        public StandardThreshold() { }
+        public StandardThreshold(double USL, double LSL)
         {
-            this.Warning = Warning;
-            this.Error = Error;
+            this.LSL = LSL;
+            this.USL = USL;
         }
     }
     

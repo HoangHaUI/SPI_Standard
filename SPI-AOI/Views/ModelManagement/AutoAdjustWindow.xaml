@@ -8,6 +8,7 @@
         WindowStartupLocation="CenterScreen"
         xmlns:cvt="clr-namespace:SPI_AOI.Views"
         ResizeMode="NoResize"
+        Background="#FFEEEEEE"
         Initialized="Window_Initialized"
         Title="Auto Adjust Window" Height="232.52" Width="360.163">
     <Window.Resources>

@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
+        Background="#FFEEEEEE"
         Title="XY Moving" Height="219.454" Width="320.996" Initialized="Window_Initialized">
     <Window.Resources>
         <ResourceDictionary>
