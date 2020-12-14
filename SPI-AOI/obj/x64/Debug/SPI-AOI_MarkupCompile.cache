@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\App.xaml
-1558751300
+1688564680
 1-2138471434
-41114006899
+43-1624998222
 36-1252027120
-Views\MainWindow.xaml;Views\ModelManagement\AutoAdjustWindow.xaml;Views\ModelManagement\DashBoard.xaml;Views\ModelManagement\FOVCaptureWindow.xaml;Views\ModelManagement\HardwareWindow.xaml;Views\ModelManagement\NewModel.xaml;Views\ModelManagement\SuggestLinkPadWindow.xaml;Views\ModelManagement\AvailabilityLayerWindow.xaml;Views\ModelManagement\GerberTools.xaml;Views\ModelManagement\RotationWindow.xaml;Views\ModelManagement\PadconditionWindow.xaml;Views\ModelManagement\XYMovingWindow.xaml;Views\Styles\Base.xaml;Views\UserManagement\LoginWindow.xaml;Views\WaitingForm.xaml;
+Views\MainConfigWindow\PLCBitDefineWindow.xaml;Views\MainWindow.xaml;Views\ModelManagement\AutoAdjustWindow.xaml;Views\ModelManagement\DashBoard.xaml;Views\ModelManagement\FOVCaptureWindow.xaml;Views\ModelManagement\HardwareWindow.xaml;Views\ModelManagement\NewModel.xaml;Views\ModelManagement\SuggestLinkPadWindow.xaml;Views\ModelManagement\AvailabilityLayerWindow.xaml;Views\ModelManagement\GerberTools.xaml;Views\ModelManagement\RotationWindow.xaml;Views\ModelManagement\PadconditionWindow.xaml;Views\ModelManagement\XYMovingWindow.xaml;Views\Styles\Base.xaml;Views\UserManagement\LoginWindow.xaml;Views\WaitingForm.xaml;
 
 False
 

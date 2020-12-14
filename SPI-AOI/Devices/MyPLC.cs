@@ -15,37 +15,69 @@ namespace SPI_AOI.Devices
         {
             return mSLMP.GetPing();
         }
-        public int Set_Go_Top()
+        public int Set_Go_Up_Top()
         {
-            return mSLMP.SetDevice(mParam.PLC_BIT_GO_TOP, 1);
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_UP_TOP, 1);
         }
-        public int Reset_Go_Top()
+        public int Reset_Go_Up_Top()
         {
-            return mSLMP.SetDevice(mParam.PLC_BIT_GO_TOP, 0);
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_UP_TOP, 0);
         }
-        public int Set_Go_Bot()
+        public int Set_Go_Down_Top()
         {
-            return mSLMP.SetDevice(mParam.PLC_BIT_GO_BOT, 1);
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_DOWN_TOP, 1);
         }
-        public int Reset_Go_Bot()
+        public int Reset_Go_Down_Top()
         {
-            return mSLMP.SetDevice(mParam.PLC_BIT_GO_BOT, 0);
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_DOWN_TOP, 0);
         }
-        public int Set_Go_Left()
+        public int Set_Go_Left_Top()
         {
-            return mSLMP.SetDevice(mParam.PLC_BIT_GO_LEFT, 1);
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_LEFT_TOP, 1);
         }
-        public int Reset_Go_Left()
+        public int Reset_Go_Left_Top()
         {
-            return mSLMP.SetDevice(mParam.PLC_BIT_GO_LEFT, 0);
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_LEFT_TOP, 0);
         }
-        public int Set_Go_Right()
+        public int Set_Go_Right_Top()
         {
-            return mSLMP.SetDevice(mParam.PLC_BIT_GO_RIGHT, 1);
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_RIGHT_TOP, 1);
         }
-        public int Reset_Go_Right()
+        public int Reset_Go_Right_Top()
         {
-            return mSLMP.SetDevice(mParam.PLC_BIT_GO_RIGHT, 0);
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_RIGHT_TOP, 0);
+        }
+        public int Set_Go_Up_Bot()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_UP_BOT, 1);
+        }
+        public int Reset_Go_Up_Bot()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_UP_BOT, 0);
+        }
+        public int Set_Go_Down_Bot()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_DOWN_BOT, 1);
+        }
+        public int Reset_Go_Down_Bot()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_DOWN_BOT, 0);
+        }
+        public int Set_Go_Left_Bot()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_LEFT_BOT, 1);
+        }
+        public int Reset_Go_Left_Bot()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_LEFT_BOT, 0);
+        }
+        public int Set_Go_Right_Bot()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_RIGHT_BOT, 1);
+        }
+        public int Reset_Go_Right_Bot()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_RIGHT_BOT, 0);
         }
         public int Set_Go_Home()
         {
@@ -75,6 +107,14 @@ namespace SPI_AOI.Devices
         {
             return mSLMP.SetDevice2(mParam.PLC_REG_Y_TOP, value);
         }
+        public int Get_X_Top()
+        {
+            return mSLMP.GetDevice2(mParam.PLC_REG_X_TOP);
+        }
+        public int Get_Y_Top()
+        {
+            return mSLMP.GetDevice2(mParam.PLC_REG_Y_TOP);
+        }
         public int Set_X_Bot(int value)
         {
             return mSLMP.SetDevice2(mParam.PLC_REG_X_BOT, value);
@@ -82,6 +122,14 @@ namespace SPI_AOI.Devices
         public int Set_Y_Bot(int value)
         {
             return mSLMP.SetDevice2(mParam.PLC_REG_Y_BOT, value);
+        }
+        public int Get_X_Bot()
+        {
+            return mSLMP.GetDevice2(mParam.PLC_REG_X_BOT);
+        }
+        public int Get_Y_Bot()
+        {
+            return mSLMP.GetDevice2(mParam.PLC_REG_Y_BOT);
         }
         public int Get_Error_Machine()
         {

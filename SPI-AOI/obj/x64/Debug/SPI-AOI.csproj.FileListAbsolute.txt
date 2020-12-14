@@ -100,3 +100,5 @@ D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\
 D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\ModelManagement\HardwareWindow.baml
 D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\UserManagement\LoginWindow.g.cs
 D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\UserManagement\LoginWindow.baml
+D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\MainConfigWindow\PLCBitDefineWindow.g.cs
+D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\MainConfigWindow\PLCBitDefineWindow.baml

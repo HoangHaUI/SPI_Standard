@@ -36,32 +36,80 @@
                         <Grid Grid.Row="0">
                             <GroupBox  Header="Move XY Axis:">
                                 <Canvas>
-                                    <Button x:Name="btUp" BorderBrush="Transparent" Background="Transparent" Width="35" Height="35" Canvas.Top="20" Canvas.Left="80"
-                                                ToolTip="Axis go up" MouseDown="btUp_MouseDown" MouseUp="btUp_MouseUp">
+                                    <RadioButton x:Name="rbConveyor" Content="Conveyor"  IsChecked="True"
+                                                  Canvas.Top="20" Canvas.Left="15" FontSize="15">
+
+                                    </RadioButton>
+                                    <RadioButton x:Name="rbTopAxis" Content="Top Axis"
+                                                Canvas.Top="45" Canvas.Left="15" FontSize="15">
+                                        
+                                    </RadioButton>
+                                    <RadioButton x:Name="rbBotAxis" Content="Bot Axis"
+                                                  Canvas.Top="70" Canvas.Left="15" FontSize="15">
+
+                                    </RadioButton>
+                                    
+                                    <Button Width="70" Height="25" Content="Read Code"
+                                            Canvas.Top="100" Canvas.Left="15"
+                                            ></Button>
+                                    <Button x:Name="btUp" BorderBrush="Transparent"
+                                            Background="Transparent" Width="35"
+                                            Height="35" 
+                                            Canvas.Top="20"
+                                            Canvas.Left="135"
+                                            ToolTip="Axis go up" 
+                                            MouseDown="btUp_MouseDown" 
+                                            MouseUp="btUp_MouseUp">
                                         <Image Source="../../Resources/Icons/arrow-up.png"></Image>
                                     </Button>
-                                    <Button x:Name="btLeft"  BorderBrush="Transparent" Background="Transparent" Width="35" Height="35" Canvas.Top="55" Canvas.Left="45"
-                                                ToolTip="Axis go left" MouseDown="btLeft_MouseDown" MouseUp="btLeft_MouseUp">
+                                    <Button x:Name="btLeft"  BorderBrush="Transparent"
+                                            Background="Transparent" Width="35"
+                                            Height="35" 
+                                            Canvas.Top="55" 
+                                            Canvas.Left="100"
+                                            ToolTip="Axis go left" 
+                                            MouseDown="btLeft_MouseDown"
+                                            MouseUp="btLeft_MouseUp">
                                         <Image Source="../../Resources/Icons/arrow-left.png"></Image>
                                     </Button>
-                                    <Button  x:Name="btRight" BorderBrush="Transparent" Background="Transparent" Width="35" Height="35" Canvas.Top="55" Canvas.Left="115"
-                                                ToolTip="Axis go right" MouseDown="btRight_MouseDown" MouseUp="btRight_MouseUp">
+                                    <Button  x:Name="btRight" BorderBrush="Transparent" 
+                                             Background="Transparent" Width="35" 
+                                             Height="35" 
+                                             Canvas.Top="55" 
+                                             Canvas.Left="170"
+                                                ToolTip="Axis go right" 
+                                             MouseDown="btRight_MouseDown" 
+                                             MouseUp="btRight_MouseUp">
                                         <Image Source="../../Resources/Icons/arrow-right.png"></Image>
                                     </Button>
-                                    <Button  x:Name="btDown" BorderBrush="Transparent" Background="Transparent" Width="35" Height="35" Canvas.Top="90" Canvas.Left="80"
-                                                ToolTip="Axis go down" MouseDown="btDown_MouseDown" MouseUp="btDown_MouseUp">
+                                    <Button  x:Name="btDown" BorderBrush="Transparent"
+                                             Background="Transparent" 
+                                             Width="35" Height="35" 
+                                             Canvas.Top="90" 
+                                             Canvas.Left="135"
+                                             ToolTip="Axis go down" 
+                                             MouseDown="btDown_MouseDown" 
+                                             MouseUp="btDown_MouseUp">
                                         <Image Source="../../Resources/Icons/arrow-down.png"></Image>
                                     </Button>
-                                    <Button  x:Name="btHome" BorderBrush="Transparent" Background="Transparent" Width="35" Height="35" Canvas.Top="10" Canvas.Right="90"
-                                                ToolTip="Go Home" MouseDown="btHome_MouseDown">
+                                    <Button  x:Name="btHome" BorderBrush="Transparent" 
+                                             Background="Transparent" Width="35" 
+                                             Height="35" 
+                                             Canvas.Top="10" 
+                                             Canvas.Right="30"
+                                             ToolTip="Go Home" 
+                                             MouseDown="btHome_MouseDown">
                                         <Image Source="../../Resources/Icons/home.png"></Image>
                                     </Button>
-                                    <Label Content="Speed:"  Canvas.Top="50" Canvas.Left="190"></Label>
+                                    <Label Content="Speed:"  
+                                           Canvas.Top="50" 
+                                           Canvas.Right="70"></Label>
                                     <Slider x:Name="slSpeed" Minimum="100" Maximum="20000" 
-                                            Value="1000" Width="100" Canvas.Top="80"
-                                            
+                                            Value="1000" Width="100" 
+                                            Canvas.Top="80"
+                                             Canvas.Right="20"
                                             ValueChanged="slSpeed_ValueChanged"
-                                            Canvas.Left="190">
+                                           >
                                     </Slider>
                                 </Canvas>
                             </GroupBox>
@@ -135,10 +183,10 @@
                                                     <Label  Content="Light Intensity:" Margin="5,0,0,0"></Label>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <WindowsFormsHost Width="110" Height="20" Margin="10,0,0,5" Background="#FF111111">
+                                                    <WindowsFormsHost Width="50" Height="20" Margin="10,0,0,5" Background="#FF111111">
                                                         <wf:NumericUpDown x:Name="nLightIntensity"
                                                                           ValueChanged="nLightIntensity_ValueChanged"
-                                                                          Width="300"
+                                                                          Width="50"
                                                                           Minimum="0"
                                                                           Maximum="255"
                                                                           TextAlign="Right"

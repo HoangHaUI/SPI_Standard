@@ -14,6 +14,7 @@ namespace SPI_AOI.Models
         public  double Gamma { get; set; }
         public double ExposureTime { get; set; }
         public Point MarkPosition { get; set; }
+        public Point ReadCodePosition { get; set; }
         public Hardware()
         {
             this.LightIntensity = 255;

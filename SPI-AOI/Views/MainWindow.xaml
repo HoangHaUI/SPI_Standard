@@ -1,4 +1,4 @@
-﻿<Window x:Class="SPI_AOI.Views.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,19 +7,24 @@
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:MSChart="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
         xmlns:pie="clr-namespace:PieControls;assembly=PieControls"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="SPI_AOI.Views.MainWindow"
         mc:Ignorable="d"
         Height="1000" Width="1800"
         WindowStartupLocation="CenterScreen"
         Initialized="Window_Initialized"
         Title="[FII] SPI-AOI" Background="#FFF0F0F0">
-    <Grid Name="grMain">
+    <Grid x:Name="grMain">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="157*"/>
+            <ColumnDefinition Width="291*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="85"></RowDefinition>
+            <RowDefinition Height="85"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <StackPanel Name="MenuTools" Orientation="Vertical" Grid.Row="0">
-            <DockPanel Name="dpnMenu" Margin="10" >
-                <Menu Name="MenuStrip" FontSize="15" DockPanel.Dock="Top">
+        <StackPanel x:Name="MenuTools" Orientation="Vertical" Grid.Row="0" Grid.ColumnSpan="2">
+            <DockPanel x:Name="dpnMenu" Margin="10" >
+                <Menu x:Name="MenuStrip" FontSize="15" DockPanel.Dock="Top">
                     <MenuItem  Header="_Menu">
                         <MenuItem Header="_New">
                             <MenuItem.Icon>
@@ -31,8 +36,7 @@
                                 <Image Source="../Resources/Icons/openfile.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem  Header="_CLose">
-                        </MenuItem>
+                        <MenuItem  Header="_CLose"/>
                         <MenuItem  x:Name="btExit" Header="_Exit">
                             <MenuItem.Icon>
                                 <Image Source="../Resources/Icons/exit.png"/>
@@ -40,65 +44,69 @@
                         </MenuItem>
                     </MenuItem>
                     <MenuItem  Header="_Tools">
-                        <MenuItem  Header="_PLC">
-                        </MenuItem>
-                        <MenuItem  Header="_Camera">
-                        </MenuItem>
-                        <MenuItem  Header="_Light Source">
-                        </MenuItem>
-                        <MenuItem  Header="_Models">
-                        </MenuItem>
+                        <MenuItem  Header="_PLC"/>
+                        <MenuItem  Header="_Camera"/>
+                        <MenuItem  Header="_Light Source"/>
+                        <MenuItem  Header="_Models"/>
                     </MenuItem>
                     <MenuItem  Header="_Help">
-                        <MenuItem  Header="_Log">
-                        </MenuItem>
-                        <MenuItem  Header="_Contact us">
-                        </MenuItem>
-                        <MenuItem  Header="_About">
-                        </MenuItem>
+                        <MenuItem  Header="_Log"/>
+                        <MenuItem  Header="_Contact us"/>
+                        <MenuItem  Header="_About"/>
                     </MenuItem>
                 </Menu>
             </DockPanel>
             <DockPanel Margin="5,5,5,0">
                 <ToolBar Background="Transparent">
-                    <Button ToolTip="Basic settings" Background="Transparent">
-                        <Image Source="../Resources/Icons/settings.png" Width="25"></Image>
+                    <ToolBar.Resources>
+                        <Style x:Key="btToolBarStyle" TargetType="Button">
+                            <Setter Property="Margin" Value="10,0,10,0"></Setter>
+                            <Setter Property="Background" Value="Transparent"></Setter>
+                        </Style>
+                    </ToolBar.Resources>
+                    <Button ToolTip="Basic settings" Style="{StaticResource btToolBarStyle}">
+                        <Image Source="../Resources/Icons/settings.png" Width="25"/>
                     </Button>
-                    <Separator></Separator>
-                    <Button  ToolTip="Admin settings" Background="Transparent">
-                        <Image Source="../Resources/Icons/adminsetting.jpg" Width="25"></Image>
+                    <Separator/>
+                    <Button  ToolTip="Admin settings" Style="{StaticResource btToolBarStyle}">
+                        <Image Source="../Resources/Icons/adminsetting.jpg" Width="25"/>
                     </Button>
-                    <Separator></Separator>
-                    <Button  ToolTip="PLC Configurations"  Background="Transparent">
-                        <Image Source="../Resources/Icons/plc_2.png" Width="25"></Image>
+                    <Separator/>
+                    <Button  x:Name="btPLCConfig" ToolTip="PLC Configurations"
+                             Style="{StaticResource btToolBarStyle}"
+                             Click="btPLCConfig_Click">
+                        <Image Source="../Resources/Icons/plc_2.png" Width="25"/>
                     </Button>
-                    <Separator></Separator>
-                    <Button  ToolTip="Lightsource configurations"  Background="Transparent" >
-                        <Image Source="../Resources/Icons/light.png" Width="25"></Image>
+                    <Separator/>
+                    <Button  ToolTip="Lightsource configurations"  Style="{StaticResource btToolBarStyle}">
+                        <Image Source="../Resources/Icons/light.png" Width="25"/>
                     </Button>
-                    <Separator></Separator>
-                    <Button  ToolTip="Camera configurations" Background="Transparent">
-                        <Image Source="../Resources/Icons/camera-hozi.png" Width="25"></Image>
+                    <Separator/>
+                    <Button  ToolTip="Camera configurations" Style="{StaticResource btToolBarStyle}">
+                        <Image Source="../Resources/Icons/camera-hozi.png" Width="25"/>
                     </Button>
-                    <Separator></Separator>
-                    <Button ToolTip="Machine solution define" Background="Transparent">
-                        <Image Source="../Resources/Icons/issue.png" Width="25"></Image>
+                    <Separator/>
+                    <Button ToolTip="Machine solution define"  Style="{StaticResource btToolBarStyle}">
+                        <Image Source="../Resources/Icons/issue.png" Width="25"/>
                     </Button>
-                    <Separator></Separator>
+                    <Separator/>
 
-                    <Button x:Name="btModelManager" ToolTip="Model Management" Background="Transparent" >
-                        <Image Source="../Resources/Icons/model_icon.png" Width="25"></Image>
+                    <Button x:Name="btModelManager"
+                            ToolTip="Model Management"
+                            Style="{StaticResource btToolBarStyle}" 
+                            Click="btModelManager_Click">
+                        <Image Source="../Resources/Icons/model_icon.png" Width="25"/>
                     </Button>
-                    <Separator></Separator>
-                    <Label Content="Model:" ></Label>
-                    <ComboBox x:Name="cbModelsName" Width="300" Height="30"></ComboBox>
-                    <Button ToolTip="Run" Background="Transparent">
-                        <Image Source="../Resources/Icons/start.png" Width="25"></Image>
+                    <Separator/>
+                    <Label Content="Model:" />
+                    <ComboBox x:Name="cbModelsName" Width="300" Height="30"/>
+                    <Button ToolTip="Run"  Style="{StaticResource btToolBarStyle}">
+                        <Image Source="../Resources/Icons/start.png" Width="25"/>
                     </Button>
                 </ToolBar>
             </DockPanel>
         </StackPanel>
-        <Grid Grid.Row="1" Margin="5">
+        <Grid Grid.Row="1" Margin="5" Grid.ColumnSpan="2">
             <Grid Margin="5">
 
                 <Grid.ColumnDefinitions>
@@ -117,10 +125,10 @@
                             <Image Source="D:\Heal\Projects\B06\Stencil\Recycle\1.bmp" />
                         </Border>
                     </GroupBox>
-                    <GroupBox x:Name="groupBox1" Grid.Row="1" BorderBrush="Gray" Header="Pannel Position"  >
+                    <GroupBox x:Name="groupBox1" Grid.Row="1" BorderBrush="Gray" Header="Panel Position"  >
                         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                             <StackPanel Orientation="Horizontal" x:Name="stackFovs" HorizontalAlignment="Left">
-                                <Canvas></Canvas>
+                                <Canvas/>
                             </StackPanel>
                         </ScrollViewer>
                     </GroupBox>
@@ -134,32 +142,32 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
                             <GroupBox Header="Model information" BorderBrush="Gray" FontWeight="Bold">
 
                                 <StackPanel Margin="5">
                                     <StackPanel Orientation="Horizontal">
-                                        <Label  Content="Model Name:" Foreground="Gray"></Label>
-                                        <Label  Content="SMT-HPT102SJ2008013" FontSize="15" FontWeight="Bold"></Label>
+                                        <Label  Content="Model Name:" Width="100" Foreground="Gray"/>
+                                        <Label  Content="SMT-HPT102SJ2008013" FontSize="15" FontWeight="Bold"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <Label  Content="Load time:" Foreground="Gray"></Label>
-                                        <Label  Content="11:31:20 30/11/2020" FontSize="15" ></Label>
+                                        <Label  Content="Load time:" Width="100" Foreground="Gray"/>
+                                        <Label  Content="11:31:20 30/11/2020" FontSize="15" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <Label  Content="Gerber file:" Foreground="Gray"></Label>
-                                        <Label  Content="HPT102SJ2008013.gbr" FontSize="15"></Label>
+                                        <Label  Content="Gerber file:" Width="100" Foreground="Gray"/>
+                                        <Label  Content="HPT102SJ2008013.gbr" FontSize="15"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <Label  Content="FOVs:" Foreground="Gray"></Label>
-                                        <Label  Content="111 FOVs" FontSize="15"></Label>
+                                        <Label  Content="FOVs:" Width="100" Foreground="Gray"/>
+                                        <Label  Content="111 FOVs" FontSize="15"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <Label  Content="Cycle Time:" Foreground="Gray"></Label>
-                                        <Label  Content="30.5s" FontSize="15"></Label>
+                                        <Label  Content="Cycle Time:" Width="100" Foreground="Gray"/>
+                                        <Label  Content="30.5s" FontSize="15"/>
                                     </StackPanel>
                                 </StackPanel>
                             </GroupBox>
@@ -170,52 +178,53 @@
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <GroupBox Header="PLC"  FontWeight="Bold" BorderBrush="Gray">
+                                <GroupBox Header="PLC"  FontWeight="Bold">
                                     <Border Background="Green" BorderBrush="White" BorderThickness="0.7" CornerRadius="5" Margin="5">
                                         <Label  Content="OK" 
                                                 HorizontalAlignment="Center" 
                                                 VerticalAlignment="Center"
                                                 FontWeight="Bold" FontSize="15"
-                                                Foreground="White"></Label>
+                                                Foreground="White"/>
                                     </Border>
                                 </GroupBox>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <GroupBox Header="DOOR" FontWeight="Bold" BorderBrush="Gray">
+                                <GroupBox Header="DOOR" FontWeight="Bold">
                                     <Border Background="Green" BorderBrush="White" 
                                                     BorderThickness="0.7" CornerRadius="5" Margin="5">
                                         <Label  Content="Closed" 
                                                 HorizontalAlignment="Center" 
                                                 VerticalAlignment="Center"
                                                 FontWeight="Bold" FontSize="15"
-                                                Foreground="White"></Label>
+                                                Foreground="White"/>
                                     </Border>
                                 </GroupBox>
                             </Grid>
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="1">
-                        <GroupBox Header="Camera View" FontWeight="Bold" BorderBrush="Gray">
+                        <GroupBox Header="Camera View"
+                                  FontWeight="Bold" BorderBrush="Gray">
                             <Border Margin="5" Background="DarkGray">
-                                <Image Source="D:\Heal\Projects\B06\Stencil\Recycle\1.bmp"></Image>
+                                <Image Source="D:\Heal\Projects\B06\Stencil\Recycle\1.bmp"/>
                             </Border>
                         </GroupBox>
                     </Grid>
                     <Grid Grid.Row="2">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="30*"/>
-                                <ColumnDefinition Width="30*"/>
-                                <ColumnDefinition Width="40*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <Border  Margin="5,10,5,0" Background="Gray" CornerRadius="5">
-                                    <Image></Image>
+                                    <Image/>
                                 </Border>
                             </Grid>
                             <Grid Grid.Column="1">
                                 <Border Margin="5,10,5,0" Background="Gray" CornerRadius="5">
-                                    <Image></Image>
+                                    <Image/>
                                 </Border>
                             </Grid>
                             <Grid Grid.Column="2">
@@ -230,38 +239,43 @@
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="3">
-                        <GroupBox Header="Result details" BorderBrush="Gray">
+                        <GroupBox Header="Result details" BorderBrush="Gray" FontWeight="Bold">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="1"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="0">
                                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                                         <StackPanel Margin="5">
                                             <StackPanel Orientation="Horizontal">
-                                                <Label  Content="Model Name:" Foreground="Gray"></Label>
-                                                <Label  Content="SMT-HPT102SJ2008013" FontSize="15" FontWeight="Bold"></Label>
+                                                <Label  Content="Model Name:" Width="100" Foreground="Gray"/>
+                                                <Label  Content="SMT-HPT102SJ2008013" FontSize="15" FontWeight="Bold"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <Label  Content="Load time:" Foreground="Gray"></Label>
-                                                <Label  Content="11:31:20 30/11/2020" FontSize="15" ></Label>
+                                                <Label  Content="FOV Status:" Width="100" Foreground="Gray" VerticalAlignment="Center"/>
+                                                <Label  Content="PASS" FontSize="30" Foreground="Green"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <Label  Content="Gerber file:" Foreground="Gray"></Label>
-                                                <Label  Content="HPT102SJ2008013.gbr" FontSize="15"></Label>
+                                                <Label  Content="Capture Time:" Width="100" Foreground="Gray"/>
+                                                <Label  Content="11:31:20 30/11/2020" FontSize="15" />
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <Label  Content="SN:" Foreground="Gray"></Label>
-                                                <Label  Content="SVM0002353" FontSize="15"></Label>
+                                                <Label  Content="Panel Code:" Width="100" Foreground="Gray"/>
+                                                <Label  Content="SVM0002353" FontSize="15"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <Label  Content="Cycle Time:" Foreground="Gray"></Label>
-                                                <Label  Content="30.5s" FontSize="15"></Label>
+                                                <Label  Content="Cycle Time:" Width="100" Foreground="Gray"/>
+                                                <Label  Content="30.5s" FontSize="15"/>
                                             </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label  Content="FOV No.:" Width="100" Foreground="Gray"/>
+                                                <Label  Content="10" FontSize="15"/>
+                                            </StackPanel>
+
                                         </StackPanel>
                                     </ScrollViewer>
-                                    
+
                                 </Grid>
                                 <Grid Grid.Column="1">
                                     <!--<Label Content="PASS" HorizontalAlignment="Center" 
@@ -272,21 +286,21 @@
                                     </Label>-->
                                 </Grid>
                             </Grid>
-                            
+
                         </GroupBox>
                     </Grid>
                 </Grid>
                 <Grid Grid.Column="2" Margin="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="70"/>
-                        <RowDefinition Height="220"/>
+                        <RowDefinition Height="300"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <GroupBox Header="Running Mode" FontWeight="Bold" >
@@ -297,7 +311,7 @@
                                                 HorizontalAlignment="Center"  
                                                 VerticalAlignment="Center" 
                                                 FontWeight="Bold" FontSize="15"
-                                                Foreground="White"></Label>
+                                                Foreground="White"/>
                                     </Border>
                                 </GroupBox>
                             </Grid>
@@ -310,7 +324,7 @@
                                                 HorizontalAlignment="Center" 
                                                 VerticalAlignment="Center" 
                                                 FontWeight="Bold" FontSize="15"
-                                                Foreground="White"></Label>
+                                                Foreground="White"/>
                                     </Border>
                                 </GroupBox>
                             </Grid>
@@ -319,37 +333,61 @@
                     <Grid Grid.Row="1">
                         <GroupBox  Header="YEILD RATE" BorderBrush="Gray" FontWeight="Bold">
                             <StackPanel Margin="5,15,0,0">
-                                <StackPanel Orientation="Horizontal">
-                                    <RadioButton  Content="Shift" IsChecked="True">
-                                    </RadioButton>
-                                    <RadioButton  Margin="40,0,0,0" Content="Day">
-                                    </RadioButton>
-                                    <RadioButton  Margin="40,0,0,0" Content="Total">
-                                    </RadioButton>
+                                <StackPanel Orientation="Horizontal" Margin="5,10,0,0">
+                                    <Label Content="Model:"/>
+                                    <ComboBox Width="220" Margin="10,0,0,0"/>
                                 </StackPanel>
-                                <Grid Height="140" Margin="10,20, 10,10">
+                                <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                                    <RadioButton Margin="40,0,0,0" Content="Shift" IsChecked="True"/>
+                                    <RadioButton  Margin="40,0,0,0" Content="Day"/>
+                                    <RadioButton  Margin="40,0,0,0" Content="Total"/>
+                                </StackPanel>
+                                <Grid Height="165" Margin="10,20, 10,10">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="70"></ColumnDefinition>
-                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        <ColumnDefinition Width="70"/>
+                                        <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0">
                                         <StackPanel HorizontalAlignment="Left">
-                                            <Label  Content="Pass:" Margin="0,10,0,0"></Label>
-                                            <TextBox Width="70" Background="Transparent" Text="89" TextAlignment="Center" FontSize="20" FontWeight="Bold"></TextBox>
-                                            <Label  Content="Fail:" Margin="0,10,0,0"></Label>
-                                            <TextBox Width="70" Background="Transparent" Text="22" TextAlignment="Center" FontSize="20" FontWeight="Bold"></TextBox>
+                                            <Label  Content="Pass:" Margin="0,10,0,0"/>
+                                            <TextBox x:Name="txtPass"
+                                                     Width="70" Background="Transparent"
+                                                     Text="89" TextAlignment="Center" 
+                                                     FontSize="20" FontWeight="Bold"/>
+                                            <Label  Content="Fail:" Margin="0,10,0,0"/>
+                                            <TextBox x:Name="txtFail" 
+                                                     Width="70" Background="Transparent"
+                                                     Text="22" TextAlignment="Center" 
+                                                     FontSize="20" FontWeight="Bold"/>
                                         </StackPanel>
                                     </Grid>
                                     <Grid Grid.Column="1">
-                                        <Canvas Margin="10,0,0,0">
-                                            <WindowsFormsHost Background="Transparent" Margin="5,0,0,0"
-                                                              Width="210" Height="120">
-                                                <MSChart:Chart x:Name="chartYeildRate">
+                                        <Canvas Margin="25,0,0,0">
+                                            <WindowsFormsHost Background="Transparent"
+                                                              Width="220" Height="160">
+                                                <MSChart:Chart x:Name="chartYeildRate" 
+                                                               BackColor="Transparent">
+                                                    <MSChart:Chart.Series>
+                                                        <MSChart:Series Name="YeildRate" ChartType="Pie">
+                                                            <MSChart:Series.Points>
+                                                                <MSChart:DataPoint 
+                                                                    Color="DeepSkyBlue" 
+                                                                    LegendText="PASS" 
+                                                                    XValue="0">
+                                                                </MSChart:DataPoint>
+                                                                <MSChart:DataPoint 
+                                                                    Color="Red" 
+                                                                    LegendText="FAIL" 
+                                                                    XValue="0">
+                                                                </MSChart:DataPoint>
+                                                            </MSChart:Series.Points>
+                                                        </MSChart:Series>
+                                                    </MSChart:Chart.Series>
                                                     <MSChart:Chart.ChartAreas>
-                                                        <MSChart:ChartArea/>
+                                                        <MSChart:ChartArea BackColor="Transparent"/>
                                                     </MSChart:Chart.ChartAreas>
                                                     <MSChart:Chart.Legends>
-                                                        <MSChart:Legend/>
+                                                        <MSChart:Legend BackColor="Transparent"/>
                                                     </MSChart:Chart.Legends>
                                                 </MSChart:Chart>
                                             </WindowsFormsHost>
@@ -361,19 +399,19 @@
                             </StackPanel>
                         </GroupBox>
                     </Grid>
-                    <Grid Grid.Row="2" Margin="3">
+                    <Grid Grid.Row="2" Margin="0">
                         <GroupBox  Header="Summary" BorderBrush="Gray" FontWeight="Bold">
                             <Grid>
-                                <DataGrid x:Name="dgwAnchors"
+                                <DataGrid x:Name="dgwSummary"
                                           Margin="5"
                                           BorderBrush="Transparent"
                                           IsReadOnly="True" 
                                           AutoGenerateColumns="False" 
                                           >
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Width="1*" Header="Defect"/>
-                                        <DataGridTextColumn Width="2*" Header="Count"/>
-                                        <DataGridTextColumn Width="2*" Header="Rate"/>
+                                        <DataGridTextColumn Width="2*" Header="Defect"  Binding="{Binding Field}"/>
+                                        <DataGridTextColumn Width="1*" Header="Count"  Binding="{Binding Count}"/>
+                                        <DataGridTextColumn Width="1*" Header="Rate"  Binding="{Binding PPM}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </Grid>

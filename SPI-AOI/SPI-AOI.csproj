@@ -153,6 +153,7 @@
     <Compile Include="Models\ShowModel.cs" />
     <Compile Include="Models\Utils.cs" />
     <Compile Include="Utils\LightSrcCtl.cs" />
+    <Compile Include="Utils\MyStruct.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Utils\Convertor.cs" />
     <Compile Include="Utils\FilesManagement.cs" />
@@ -161,6 +162,9 @@
     <Compile Include="Utils\HikCamera.cs" />
     <Compile Include="Utils\LogCtl.cs" />
     <Compile Include="Utils\SLMP.cs" />
+    <Compile Include="Views\MainConfigWindow\PLCBitDefineWindow.xaml.cs">
+      <DependentUpon>PLCBitDefineWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ModelManagement\AutoAdjustWindow.xaml.cs">
       <DependentUpon>AutoAdjustWindow.xaml</DependentUpon>
     </Compile>
@@ -201,6 +205,10 @@
     <Compile Include="Views\WaitingForm.xaml.cs">
       <DependentUpon>WaitingForm.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\MainConfigWindow\PLCBitDefineWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

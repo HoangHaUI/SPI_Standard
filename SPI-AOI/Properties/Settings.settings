@@ -14,16 +14,16 @@
     <Setting Name="PLC_PORT" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1997</Value>
     </Setting>
-    <Setting Name="PLC_BIT_GO_TOP" Type="System.String" Scope="User">
+    <Setting Name="PLC_BIT_GO_UP_TOP" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="PLC_BIT_GO_BOT" Type="System.String" Scope="User">
+    <Setting Name="PLC_BIT_GO_DOWN_TOP" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="PLC_BIT_GO_LEFT" Type="System.String" Scope="User">
+    <Setting Name="PLC_BIT_GO_LEFT_TOP" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="PLC_BIT_GO_RIGHT" Type="System.String" Scope="User">
+    <Setting Name="PLC_BIT_GO_RIGHT_TOP" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PLC_BIT_GO_HOME" Type="System.String" Scope="User">
@@ -88,6 +88,27 @@
     </Setting>
     <Setting Name="LIGHT_COM" Type="System.String" Scope="User">
       <Value Profile="(Default)">COM10</Value>
+    </Setting>
+    <Setting Name="PLC_BIT_GO_UP_BOT" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="PLC_BIT_GO_DOWN_BOT" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="PLC_BIT_GO_LEFT_BOT" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="PLC_BIT_GO_RIGHT_BOT" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="PLC_BIT_GO_UP_CONVEYOR" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="PLC_BIT_GO_DOWN_CONVEYOR" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="PLC_REG_CONVEYOR" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

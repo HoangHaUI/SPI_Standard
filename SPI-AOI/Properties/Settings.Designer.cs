@@ -74,48 +74,48 @@ namespace SPI_AOI.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PLC_BIT_GO_TOP {
+        public string PLC_BIT_GO_UP_TOP {
             get {
-                return ((string)(this["PLC_BIT_GO_TOP"]));
+                return ((string)(this["PLC_BIT_GO_UP_TOP"]));
             }
             set {
-                this["PLC_BIT_GO_TOP"] = value;
+                this["PLC_BIT_GO_UP_TOP"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PLC_BIT_GO_BOT {
+        public string PLC_BIT_GO_DOWN_TOP {
             get {
-                return ((string)(this["PLC_BIT_GO_BOT"]));
+                return ((string)(this["PLC_BIT_GO_DOWN_TOP"]));
             }
             set {
-                this["PLC_BIT_GO_BOT"] = value;
+                this["PLC_BIT_GO_DOWN_TOP"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PLC_BIT_GO_LEFT {
+        public string PLC_BIT_GO_LEFT_TOP {
             get {
-                return ((string)(this["PLC_BIT_GO_LEFT"]));
+                return ((string)(this["PLC_BIT_GO_LEFT_TOP"]));
             }
             set {
-                this["PLC_BIT_GO_LEFT"] = value;
+                this["PLC_BIT_GO_LEFT_TOP"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PLC_BIT_GO_RIGHT {
+        public string PLC_BIT_GO_RIGHT_TOP {
             get {
-                return ((string)(this["PLC_BIT_GO_RIGHT"]));
+                return ((string)(this["PLC_BIT_GO_RIGHT_TOP"]));
             }
             set {
-                this["PLC_BIT_GO_RIGHT"] = value;
+                this["PLC_BIT_GO_RIGHT_TOP"] = value;
             }
         }
         
@@ -368,6 +368,90 @@ namespace SPI_AOI.Properties {
             }
             set {
                 this["LIGHT_COM"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_GO_UP_BOT {
+            get {
+                return ((string)(this["PLC_BIT_GO_UP_BOT"]));
+            }
+            set {
+                this["PLC_BIT_GO_UP_BOT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_GO_DOWN_BOT {
+            get {
+                return ((string)(this["PLC_BIT_GO_DOWN_BOT"]));
+            }
+            set {
+                this["PLC_BIT_GO_DOWN_BOT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_GO_LEFT_BOT {
+            get {
+                return ((string)(this["PLC_BIT_GO_LEFT_BOT"]));
+            }
+            set {
+                this["PLC_BIT_GO_LEFT_BOT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_GO_RIGHT_BOT {
+            get {
+                return ((string)(this["PLC_BIT_GO_RIGHT_BOT"]));
+            }
+            set {
+                this["PLC_BIT_GO_RIGHT_BOT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_GO_UP_CONVEYOR {
+            get {
+                return ((string)(this["PLC_BIT_GO_UP_CONVEYOR"]));
+            }
+            set {
+                this["PLC_BIT_GO_UP_CONVEYOR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_BIT_GO_DOWN_CONVEYOR {
+            get {
+                return ((string)(this["PLC_BIT_GO_DOWN_CONVEYOR"]));
+            }
+            set {
+                this["PLC_BIT_GO_DOWN_CONVEYOR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PLC_REG_CONVEYOR {
+            get {
+                return ((string)(this["PLC_REG_CONVEYOR"]));
+            }
+            set {
+                this["PLC_REG_CONVEYOR"] = value;
             }
         }
     }

@@ -167,60 +167,143 @@ namespace SPI_AOI.Views.ModelManagement
         }
         private void btUp_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            mPLC.Set_Go_Top();
+            if (!mLoaded)
+                return;
+            if (rbTopAxis.IsChecked == true)
+            {
+                mPLC.Set_Go_Up_Top();
+            }
+            if (rbBotAxis.IsChecked == true)
+            {
+                mPLC.Set_Go_Up_Bot();
+            }
         }
 
         private void btLeft_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            mPLC.Set_Go_Left();
+            if (!mLoaded)
+                return;
+            if (rbTopAxis.IsChecked == true)
+            {
+                mPLC.Set_Go_Left_Top();
+            }
+            if (rbBotAxis.IsChecked == true)
+            {
+                mPLC.Set_Go_Left_Bot();
+            }
         }
 
         private void btRight_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            mPLC.Set_Go_Right();
+            if (!mLoaded)
+                return;
+            if (rbTopAxis.IsChecked == true)
+            {
+                mPLC.Set_Go_Right_Top();
+            }
+            if (rbBotAxis.IsChecked == true)
+            {
+                mPLC.Set_Go_Right_Bot();
+            }
         }
 
         private void btDown_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            mPLC.Set_Go_Bot();
+            if (!mLoaded)
+                return;
+            if (rbTopAxis.IsChecked == true)
+            {
+                mPLC.Set_Go_Down_Top();
+            }
+            if (rbBotAxis.IsChecked == true)
+            {
+                mPLC.Set_Go_Down_Bot();
+            }
         }
-
-        private void btHome_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
         private void btDown_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            mPLC.Reset_Go_Bot();
+            if (!mLoaded)
+                return;
+            if (rbTopAxis.IsChecked == true)
+            {
+                mPLC.Reset_Go_Down_Top();
+            }
+            if (rbBotAxis.IsChecked == true)
+            {
+                mPLC.Reset_Go_Down_Bot();
+            }
         }
 
         private void btRight_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            mPLC.Reset_Go_Right();
+            if (!mLoaded)
+                return;
+            if (rbTopAxis.IsChecked == true)
+            {
+                mPLC.Reset_Go_Right_Top();
+            }
+            if (rbBotAxis.IsChecked == true)
+            {
+                mPLC.Reset_Go_Right_Bot();
+            }
         }
 
         private void btLeft_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            mPLC.Reset_Go_Left();
+            if (!mLoaded)
+                return;
+            if (rbTopAxis.IsChecked == true)
+            {
+                mPLC.Reset_Go_Left_Top();
+            }
+            if (rbBotAxis.IsChecked == true)
+            {
+                mPLC.Reset_Go_Left_Bot();
+            }
         }
 
         private void btUp_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            mPLC.Reset_Go_Top();
+            if (!mLoaded)
+                return;
+            if (rbTopAxis.IsChecked == true)
+            {
+                mPLC.Reset_Go_Up_Top();
+            }
+            if (rbBotAxis.IsChecked == true)
+            {
+                mPLC.Reset_Go_Up_Bot();
+            }
         }
 
         private void btHome_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (!mLoaded)
+                return;
             mPLC.Set_Go_Home();
         }
 
         private void slSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            if (!mLoaded)
+                return;
             slSpeed.Value = (int)slSpeed.Value;
-            Console.WriteLine(slSpeed.Value);
+            mPLC.Set_Speed(Convert.ToInt32(slSpeed.Value));
         }
-
+        private void GetPositionAxis()
+        {
+            int xTop = mPLC.Get_X_Top();
+            int yTop = mPLC.Get_Y_Top();
+            int xBot = mPLC.Get_X_Bot();
+            int yBot = mPLC.Get_Y_Bot();
+            lock (mModel)
+            {
+                mModel.HardwareSettings.MarkPosition = 
+                    new System.Drawing.Point(xTop, yTop);
+                mModel.HardwareSettings.ReadCodePosition = 
+                    new System.Drawing.Point(xBot, yBot);
+            }
+        }
         private void nExposureTime_ValueChanged(object sender, EventArgs e)
         {
             if (!mLoaded)
@@ -308,6 +391,7 @@ namespace SPI_AOI.Views.ModelManagement
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            GetPositionAxis();
             mIsTimerRunning = false;
             if(mCamera != null)
             {
@@ -321,6 +405,7 @@ namespace SPI_AOI.Views.ModelManagement
                 }
             }
             mLightSource.Close();
+           
         }
     }
 }
