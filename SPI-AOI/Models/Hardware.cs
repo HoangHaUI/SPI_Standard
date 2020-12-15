@@ -9,19 +9,25 @@ namespace SPI_AOI.Models
 {
     public class Hardware
     {
-        public int LightIntensity { get; set; }
+        public int[] LightIntensity { get; set; }
         public double Gain { get; set; }
-        public  double Gamma { get; set; }
         public double ExposureTime { get; set; }
         public Point MarkPosition { get; set; }
-        public Point ReadCodePosition { get; set; }
+        public List<ReadCodePosition> ReadCodePosition { get; set; }
         public Hardware()
         {
-            this.LightIntensity = 255;
+            this.LightIntensity = new int[4] { 127,127,127,127};
             this.Gain = 0;
-            this.Gamma = 1;
-            this.ExposureTime = 10000;
+            this.ExposureTime = 3000;
             MarkPosition = new Point();
+            ReadCodePosition = new List<ReadCodePosition>();
         }
+    }
+    public class ReadCodePosition
+    {
+        public Point Origin { get; set; }
+        public string Surface { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
     }
 }

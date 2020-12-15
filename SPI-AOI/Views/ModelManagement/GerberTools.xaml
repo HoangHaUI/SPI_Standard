@@ -13,7 +13,11 @@
         Height="900" Width="1600"
         Background="#FFEEEEEE"
         WindowState="Maximized"
-        WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
+        WindowStartupLocation="CenterScreen"
+        Initialized="Window_Initialized"
+        KeyDown="Window_KeyDown"
+        Closing="Window_Closing"
+        KeyUp="Window_KeyUp">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -132,16 +136,6 @@
                             ToolTip="Set Mark 1">
                         <Image Source="../../Resources/Icons/mark2.png"></Image>
                     </Button>
-                    <!--<Button x:Name="btSave" 
-                            Click="btSave_Click" Width="35"
-                            Height="35" Margin="5,0,5,0"
-                            ToolTip="Save model">
-                    </Button>
-                    <Button x:Name="btDowload" 
-                            Click="btDowload_Click" Width="35"
-                            Height="35" Margin="5,0,5,0"
-                            ToolTip="Auto Adjsut XY">
-                    </Button>-->
                 </ToolBar>
             </StackPanel>
         </Grid>

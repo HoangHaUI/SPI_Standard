@@ -9,75 +9,72 @@
       <Value Profile="(Default)">600, 400</Value>
     </Setting>
     <Setting Name="PLC_IP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">127.0.0.1</Value>
+      <Value Profile="(Default)">192.168.3.100</Value>
     </Setting>
     <Setting Name="PLC_PORT" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1997</Value>
+      <Value Profile="(Default)">9999</Value>
     </Setting>
     <Setting Name="PLC_BIT_GO_UP_TOP" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M301</Value>
     </Setting>
     <Setting Name="PLC_BIT_GO_DOWN_TOP" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M300</Value>
     </Setting>
     <Setting Name="PLC_BIT_GO_LEFT_TOP" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M303</Value>
     </Setting>
     <Setting Name="PLC_BIT_GO_RIGHT_TOP" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M302</Value>
     </Setting>
     <Setting Name="PLC_BIT_GO_HOME" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="PLC_REG_SPEED" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="PLC_REG_SPEED_TOP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D208</Value>
     </Setting>
     <Setting Name="PLC_REG_X_TOP" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">D1002</Value>
     </Setting>
     <Setting Name="PLC_REG_Y_TOP" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">D1000</Value>
     </Setting>
     <Setting Name="PLC_REG_X_BOT" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">D1006</Value>
     </Setting>
     <Setting Name="PLC_REG_Y_BOT" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">D1004</Value>
     </Setting>
     <Setting Name="PLC_BIT_ERROR_MACHINE" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M600</Value>
     </Setting>
     <Setting Name="PLC_BIT_ERROR_MACHINE_CONFIRM" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PLC_BIT_HAS_PRODUCT" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M100</Value>
     </Setting>
-    <Setting Name="PLC_BIT_WIRTE_COORDINATES_FINISH" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="PLC_BIT_WIRTE_COORDINATES_FINISH_TOP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M101</Value>
     </Setting>
-    <Setting Name="PLC_BIT_GO_COORDINATES_FINISH" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="PLC_BIT_CAPTURE_FINISH" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="PLC_BIT_GO_COORDINATES_FINISH_TOP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M102</Value>
     </Setting>
     <Setting Name="PLC_BIT_PRODUCT_FAIL" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M112</Value>
     </Setting>
     <Setting Name="PLC_BIT_PRODUCT_PASS" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M113</Value>
     </Setting>
     <Setting Name="PLC_BIT_DOOR_STATUS" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M3</Value>
     </Setting>
     <Setting Name="PLC_BIT_MACHINE_STATUS" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PLC_BIT_SETUP_MODEL" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M110</Value>
     </Setting>
-    <Setting Name="PLC_BIT_CONTROLRUN" Type="System.String" Scope="User">
+    <Setting Name="PLC_BIT_CONTROL_RUN" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PLC_BIT_READ_QRCODE_FAIL" Type="System.String" Scope="User">
@@ -90,25 +87,43 @@
       <Value Profile="(Default)">COM10</Value>
     </Setting>
     <Setting Name="PLC_BIT_GO_UP_BOT" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M321</Value>
     </Setting>
     <Setting Name="PLC_BIT_GO_DOWN_BOT" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M320</Value>
     </Setting>
     <Setting Name="PLC_BIT_GO_LEFT_BOT" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M323</Value>
     </Setting>
     <Setting Name="PLC_BIT_GO_RIGHT_BOT" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M322</Value>
     </Setting>
     <Setting Name="PLC_BIT_GO_UP_CONVEYOR" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M341</Value>
     </Setting>
     <Setting Name="PLC_BIT_GO_DOWN_CONVEYOR" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M340</Value>
     </Setting>
     <Setting Name="PLC_REG_CONVEYOR" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">D1008</Value>
+    </Setting>
+    <Setting Name="PLC_REG_SPEED_BOT" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D228</Value>
+    </Setting>
+    <Setting Name="PLC_REG_SPEED_CONVEYOR" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D246</Value>
+    </Setting>
+    <Setting Name="PLC_BIT_WIRTE_COORDINATES_FINISH_BOT" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M106</Value>
+    </Setting>
+    <Setting Name="PLC_BIT_GO_COORDINATES_FINISH_BOT" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M107</Value>
+    </Setting>
+    <Setting Name="PLC_BIT_GO_COORDINATES_FINISH_CONVEYOR" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M120</Value>
+    </Setting>
+    <Setting Name="PLC_BIT_WIRTE_COORDINATES_FINISH_CONVEYOR" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M121</Value>
     </Setting>
   </Settings>
 </SettingsFile>

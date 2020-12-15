@@ -63,6 +63,22 @@ namespace SPI_AOI.Devices
         {
             return mSLMP.SetDevice(mParam.PLC_BIT_GO_DOWN_BOT, 0);
         }
+        public int Set_Go_Up_Conveyor()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_UP_CONVEYOR, 1);
+        }
+        public int Reset_Go_Up_Conveyor()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_UP_CONVEYOR, 0);
+        }
+        public int Set_Go_Down_Conveyor()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_DOWN_CONVEYOR, 1);
+        }
+        public int Reset_Go_Down_Conveyor()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_DOWN_CONVEYOR, 0);
+        }
         public int Set_Go_Left_Bot()
         {
             return mSLMP.SetDevice(mParam.PLC_BIT_GO_LEFT_BOT, 1);
@@ -83,13 +99,21 @@ namespace SPI_AOI.Devices
         {
             return mSLMP.SetDevice(mParam.PLC_BIT_GO_HOME, 0);
         }
-        public int Set_Speed(int speed)
+        public int Set_Speed_Top(int speed)
         {
-            return mSLMP.SetDevice2(mParam.PLC_REG_SPEED, speed);
+            return mSLMP.SetDevice2(mParam.PLC_REG_SPEED_TOP, speed);
+        }
+        public int Set_Speed_Bot(int speed)
+        {
+            return mSLMP.SetDevice2(mParam.PLC_REG_SPEED_BOT, speed);
+        }
+        public int Set_Speed_Conveyor(int speed)
+        {
+            return mSLMP.SetDevice2(mParam.PLC_REG_SPEED_CONVEYOR, speed);
         }
         public int Get_Speed()
         {
-            return mSLMP.GetDevice2(mParam.PLC_REG_SPEED);
+            return mSLMP.GetDevice2(mParam.PLC_REG_SPEED_TOP);
         }
         public int Set_Setup_Model()
         {
@@ -145,15 +169,15 @@ namespace SPI_AOI.Devices
         }
         public int Set_Write_Coordinates_Finish()
         {
-            return mSLMP.SetDevice(mParam.PLC_BIT_WIRTE_COORDINATES_FINISH, 1);
+            return mSLMP.SetDevice(mParam.PLC_BIT_WIRTE_COORDINATES_FINISH_TOP, 1);
         }
         public int Get_Go_Coordinates_Finish()
         {
-            return mSLMP.GetDevice(mParam.PLC_BIT_GO_COORDINATES_FINISH);
+            return mSLMP.GetDevice(mParam.PLC_BIT_GO_COORDINATES_FINISH_TOP);
         }
         public int Set_Capture_Finish()
         {
-            return mSLMP.SetDevice(mParam.PLC_BIT_CAPTURE_FINISH, 1);
+            return mSLMP.SetDevice(mParam.PLC_BIT_HAS_PRODUCT, 0);
         }
         public int Set_Pass()
         {

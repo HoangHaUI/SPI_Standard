@@ -171,5 +171,14 @@ namespace SPI_AOI.Views.ModelManagement
             btRemoveModel.Opacity = 0.5;
             btExportModel.Opacity = 0.5;
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (mModel != null)
+            {
+                mModel.Dispose();
+                mModel = null;
+            }
+        }
     }
 }

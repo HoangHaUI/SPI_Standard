@@ -690,11 +690,28 @@ namespace SPI_AOI.Views.ModelManagement
                         mSelectRecangle = System.Drawing.Rectangle.Empty;
                         ShowAllLayerImb(ActionMode.Draw_Cad);
                     }
-
                 }
                 else
                 {
                     MessageBox.Show(string.Format("Please link all pad before settings!..."), "Information", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if(imBox.Image != null)
+            {
+                imBox.Image.Dispose();
+                imBox.Image = null;
+            }
+            if(mModel != null)
+            {
+                if(mModel.ImgGerberProcessedBgr != null)
+                {
+                    mModel.ImgGerberProcessedBgr.Dispose();
+                    mModel.ImgGerberProcessedBgr = null;
+                    
                 }
             }
         }

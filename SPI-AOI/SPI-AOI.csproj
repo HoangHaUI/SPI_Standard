@@ -133,6 +133,14 @@
       <HintPath>..\packages\ZedGraph.5.1.7\lib\net35-Client\ZedGraph.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="zxing, Version=0.16.6.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.6\lib\net48\zxing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.6.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.6\lib\net48\zxing.presentation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -162,8 +170,17 @@
     <Compile Include="Utils\HikCamera.cs" />
     <Compile Include="Utils\LogCtl.cs" />
     <Compile Include="Utils\SLMP.cs" />
-    <Compile Include="Views\MainConfigWindow\PLCBitDefineWindow.xaml.cs">
-      <DependentUpon>PLCBitDefineWindow.xaml</DependentUpon>
+    <Compile Include="Views\MainConfigWindow\PLCBitconfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MainConfigWindow\PLCBitconfigForm.Designer.cs">
+      <DependentUpon>PLCBitconfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainConfigWindow\MachineIssueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MainConfigWindow\MachineIssueForm.designer.cs">
+      <DependentUpon>MachineIssueForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\ModelManagement\AutoAdjustWindow.xaml.cs">
       <DependentUpon>AutoAdjustWindow.xaml</DependentUpon>
@@ -205,10 +222,6 @@
     <Compile Include="Views\WaitingForm.xaml.cs">
       <DependentUpon>WaitingForm.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\MainConfigWindow\PLCBitDefineWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -234,8 +247,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ModelManagement\HardwareWindow.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ModelManagement\NewModel.xaml">
       <SubType>Designer</SubType>
@@ -292,6 +305,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Views\MainConfigWindow\PLCBitconfigForm.resx">
+      <DependentUpon>PLCBitconfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MainConfigWindow\MachineIssueForm.resx">
+      <DependentUpon>MachineIssueForm.cs</DependentUpon>
+    </EmbeddedResource>
     <Resource Include="Resources\Icons\mark1.png" />
     <Resource Include="Resources\Icons\mark2.png" />
     <Resource Include="Resources\Icons\pin256.png" />

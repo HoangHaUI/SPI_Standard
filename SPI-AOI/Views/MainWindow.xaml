@@ -86,7 +86,10 @@
                         <Image Source="../Resources/Icons/camera-hozi.png" Width="25"/>
                     </Button>
                     <Separator/>
-                    <Button ToolTip="Machine solution define"  Style="{StaticResource btToolBarStyle}">
+                    <Button x:Name="btMachineIssue" 
+                            ToolTip="Machine solution define" 
+                            Style="{StaticResource btToolBarStyle}"
+                            Click="btMachineIssue_Click">
                         <Image Source="../Resources/Icons/issue.png" Width="25"/>
                     </Button>
                     <Separator/>
@@ -366,7 +369,7 @@
                                             <WindowsFormsHost Background="Transparent"
                                                               Width="220" Height="160">
                                                 <MSChart:Chart x:Name="chartYeildRate" 
-                                                               BackColor="Transparent">
+                                                               >
                                                     <MSChart:Chart.Series>
                                                         <MSChart:Series Name="YeildRate" ChartType="Pie">
                                                             <MSChart:Series.Points>

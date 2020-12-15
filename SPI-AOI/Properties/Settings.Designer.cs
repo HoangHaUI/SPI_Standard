@@ -49,7 +49,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.3.100")]
         public string PLC_IP {
             get {
                 return ((string)(this["PLC_IP"]));
@@ -61,7 +61,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1997")]
+        [global::System.Configuration.DefaultSettingValueAttribute("9999")]
         public int PLC_PORT {
             get {
                 return ((int)(this["PLC_PORT"]));
@@ -73,7 +73,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M301")]
         public string PLC_BIT_GO_UP_TOP {
             get {
                 return ((string)(this["PLC_BIT_GO_UP_TOP"]));
@@ -85,7 +85,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M300")]
         public string PLC_BIT_GO_DOWN_TOP {
             get {
                 return ((string)(this["PLC_BIT_GO_DOWN_TOP"]));
@@ -97,7 +97,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M303")]
         public string PLC_BIT_GO_LEFT_TOP {
             get {
                 return ((string)(this["PLC_BIT_GO_LEFT_TOP"]));
@@ -109,7 +109,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M302")]
         public string PLC_BIT_GO_RIGHT_TOP {
             get {
                 return ((string)(this["PLC_BIT_GO_RIGHT_TOP"]));
@@ -133,19 +133,19 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PLC_REG_SPEED {
+        [global::System.Configuration.DefaultSettingValueAttribute("D208")]
+        public string PLC_REG_SPEED_TOP {
             get {
-                return ((string)(this["PLC_REG_SPEED"]));
+                return ((string)(this["PLC_REG_SPEED_TOP"]));
             }
             set {
-                this["PLC_REG_SPEED"] = value;
+                this["PLC_REG_SPEED_TOP"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D1002")]
         public string PLC_REG_X_TOP {
             get {
                 return ((string)(this["PLC_REG_X_TOP"]));
@@ -157,7 +157,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D1000")]
         public string PLC_REG_Y_TOP {
             get {
                 return ((string)(this["PLC_REG_Y_TOP"]));
@@ -169,7 +169,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D1006")]
         public string PLC_REG_X_BOT {
             get {
                 return ((string)(this["PLC_REG_X_BOT"]));
@@ -181,7 +181,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D1004")]
         public string PLC_REG_Y_BOT {
             get {
                 return ((string)(this["PLC_REG_Y_BOT"]));
@@ -193,7 +193,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M600")]
         public string PLC_BIT_ERROR_MACHINE {
             get {
                 return ((string)(this["PLC_BIT_ERROR_MACHINE"]));
@@ -217,7 +217,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M100")]
         public string PLC_BIT_HAS_PRODUCT {
             get {
                 return ((string)(this["PLC_BIT_HAS_PRODUCT"]));
@@ -229,43 +229,31 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PLC_BIT_WIRTE_COORDINATES_FINISH {
+        [global::System.Configuration.DefaultSettingValueAttribute("M101")]
+        public string PLC_BIT_WIRTE_COORDINATES_FINISH_TOP {
             get {
-                return ((string)(this["PLC_BIT_WIRTE_COORDINATES_FINISH"]));
+                return ((string)(this["PLC_BIT_WIRTE_COORDINATES_FINISH_TOP"]));
             }
             set {
-                this["PLC_BIT_WIRTE_COORDINATES_FINISH"] = value;
+                this["PLC_BIT_WIRTE_COORDINATES_FINISH_TOP"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PLC_BIT_GO_COORDINATES_FINISH {
+        [global::System.Configuration.DefaultSettingValueAttribute("M102")]
+        public string PLC_BIT_GO_COORDINATES_FINISH_TOP {
             get {
-                return ((string)(this["PLC_BIT_GO_COORDINATES_FINISH"]));
+                return ((string)(this["PLC_BIT_GO_COORDINATES_FINISH_TOP"]));
             }
             set {
-                this["PLC_BIT_GO_COORDINATES_FINISH"] = value;
+                this["PLC_BIT_GO_COORDINATES_FINISH_TOP"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PLC_BIT_CAPTURE_FINISH {
-            get {
-                return ((string)(this["PLC_BIT_CAPTURE_FINISH"]));
-            }
-            set {
-                this["PLC_BIT_CAPTURE_FINISH"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M112")]
         public string PLC_BIT_PRODUCT_FAIL {
             get {
                 return ((string)(this["PLC_BIT_PRODUCT_FAIL"]));
@@ -277,7 +265,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M113")]
         public string PLC_BIT_PRODUCT_PASS {
             get {
                 return ((string)(this["PLC_BIT_PRODUCT_PASS"]));
@@ -289,7 +277,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M3")]
         public string PLC_BIT_DOOR_STATUS {
             get {
                 return ((string)(this["PLC_BIT_DOOR_STATUS"]));
@@ -313,7 +301,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M110")]
         public string PLC_BIT_SETUP_MODEL {
             get {
                 return ((string)(this["PLC_BIT_SETUP_MODEL"]));
@@ -326,12 +314,12 @@ namespace SPI_AOI.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PLC_BIT_CONTROLRUN {
+        public string PLC_BIT_CONTROL_RUN {
             get {
-                return ((string)(this["PLC_BIT_CONTROLRUN"]));
+                return ((string)(this["PLC_BIT_CONTROL_RUN"]));
             }
             set {
-                this["PLC_BIT_CONTROLRUN"] = value;
+                this["PLC_BIT_CONTROL_RUN"] = value;
             }
         }
         
@@ -373,7 +361,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M321")]
         public string PLC_BIT_GO_UP_BOT {
             get {
                 return ((string)(this["PLC_BIT_GO_UP_BOT"]));
@@ -385,7 +373,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M320")]
         public string PLC_BIT_GO_DOWN_BOT {
             get {
                 return ((string)(this["PLC_BIT_GO_DOWN_BOT"]));
@@ -397,7 +385,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M323")]
         public string PLC_BIT_GO_LEFT_BOT {
             get {
                 return ((string)(this["PLC_BIT_GO_LEFT_BOT"]));
@@ -409,7 +397,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M322")]
         public string PLC_BIT_GO_RIGHT_BOT {
             get {
                 return ((string)(this["PLC_BIT_GO_RIGHT_BOT"]));
@@ -421,7 +409,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M341")]
         public string PLC_BIT_GO_UP_CONVEYOR {
             get {
                 return ((string)(this["PLC_BIT_GO_UP_CONVEYOR"]));
@@ -433,7 +421,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M340")]
         public string PLC_BIT_GO_DOWN_CONVEYOR {
             get {
                 return ((string)(this["PLC_BIT_GO_DOWN_CONVEYOR"]));
@@ -445,13 +433,85 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D1008")]
         public string PLC_REG_CONVEYOR {
             get {
                 return ((string)(this["PLC_REG_CONVEYOR"]));
             }
             set {
                 this["PLC_REG_CONVEYOR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D228")]
+        public string PLC_REG_SPEED_BOT {
+            get {
+                return ((string)(this["PLC_REG_SPEED_BOT"]));
+            }
+            set {
+                this["PLC_REG_SPEED_BOT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D246")]
+        public string PLC_REG_SPEED_CONVEYOR {
+            get {
+                return ((string)(this["PLC_REG_SPEED_CONVEYOR"]));
+            }
+            set {
+                this["PLC_REG_SPEED_CONVEYOR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("M106")]
+        public string PLC_BIT_WIRTE_COORDINATES_FINISH_BOT {
+            get {
+                return ((string)(this["PLC_BIT_WIRTE_COORDINATES_FINISH_BOT"]));
+            }
+            set {
+                this["PLC_BIT_WIRTE_COORDINATES_FINISH_BOT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("M107")]
+        public string PLC_BIT_GO_COORDINATES_FINISH_BOT {
+            get {
+                return ((string)(this["PLC_BIT_GO_COORDINATES_FINISH_BOT"]));
+            }
+            set {
+                this["PLC_BIT_GO_COORDINATES_FINISH_BOT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("M120")]
+        public string PLC_BIT_GO_COORDINATES_FINISH_CONVEYOR {
+            get {
+                return ((string)(this["PLC_BIT_GO_COORDINATES_FINISH_CONVEYOR"]));
+            }
+            set {
+                this["PLC_BIT_GO_COORDINATES_FINISH_CONVEYOR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("M121")]
+        public string PLC_BIT_WIRTE_COORDINATES_FINISH_CONVEYOR {
+            get {
+                return ((string)(this["PLC_BIT_WIRTE_COORDINATES_FINISH_CONVEYOR"]));
+            }
+            set {
+                this["PLC_BIT_WIRTE_COORDINATES_FINISH_CONVEYOR"] = value;
             }
         }
     }

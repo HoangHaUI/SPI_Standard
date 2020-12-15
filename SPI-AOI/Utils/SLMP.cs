@@ -291,7 +291,7 @@ namespace Heal
                     {
                         result = SendCommand(bcommand);
                         i++;
-                    } while ((result == "-1") && (i < 50));
+                    } while ((result == "-1") && (i < 10));
 
                     if (result == "-1")
                         return -1;

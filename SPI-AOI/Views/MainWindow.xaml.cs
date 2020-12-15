@@ -35,7 +35,7 @@ namespace SPI_AOI.Views
             InitSummary();
             dgwSummary.ItemsSource = mSummary;
             dgwSummary.Items.Refresh();
-            UpdateChartCount(chartYeildRate, txtPass, txtFail, 15, 5);
+            UpdateChartCount(chartYeildRate, txtPass, txtFail, 1532, 45);
         }
         private void OnTimedEvent(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -47,6 +47,7 @@ namespace SPI_AOI.Views
         }
         private void UpdateChartCount(Chart Chart, TextBox TxtPass, TextBox TxtFail, int Pass, int Fail)
         {
+            Chart.BackColor = System.Drawing.Color.Transparent;
             int cvPass = Pass == 0 && Fail == 0 ? 1 : Pass;
             int cvFail = Fail;
             double ratePass = Math.Round((double)cvPass * 100 / (cvPass + cvFail), 1) ;
@@ -93,8 +94,20 @@ namespace SPI_AOI.Views
                 userType == UserManagement.UserType.Designer ||
                 userType == UserManagement.UserType.Engineer)
             {
-                MainConfigWindow.PLCBitDefineWindow mainConfig = new MainConfigWindow.PLCBitDefineWindow();
+                MainConfigWindow.PLCBitconfigForm mainConfig = new MainConfigWindow.PLCBitconfigForm();
                 mainConfig.ShowDialog();
+            }
+        }
+
+        private void btMachineIssue_Click(object sender, RoutedEventArgs e)
+        {
+            var userType = Login();
+            if (userType == UserManagement.UserType.Admin ||
+                userType == UserManagement.UserType.Designer ||
+                userType == UserManagement.UserType.Engineer)
+            {
+                 Heal.UI.MachineIssueForm machineIssueForm = new Heal.UI.MachineIssueForm();
+                machineIssueForm.ShowDialog();
             }
         }
     }

@@ -30,46 +30,48 @@
                 <Grid Grid.Row="1" Margin="0,10,0,0">
                     <Grid x:Name="grSettings">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="160"/>
+                            <RowDefinition Height="150"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions> 
                         <Grid Grid.Row="0">
                             <GroupBox  Header="Move XY Axis:">
                                 <Canvas>
-                                    <RadioButton x:Name="rbConveyor" Content="Conveyor"  IsChecked="True"
-                                                  Canvas.Top="20" Canvas.Left="15" FontSize="15">
+                                    <RadioButton x:Name="rbConveyor" 
+                                                 Content="Conveyor"  
+                                                 IsChecked="True"
+                                                  Canvas.Top="20" Canvas.Left="15" 
+                                                 FontSize="15" Checked="rbConveyor_Checked">
 
                                     </RadioButton>
-                                    <RadioButton x:Name="rbTopAxis" Content="Top Axis"
-                                                Canvas.Top="45" Canvas.Left="15" FontSize="15">
+                                    <RadioButton x:Name="rbTopAxis" 
+                                                 Content="Top Axis"
+                                                Canvas.Top="45" Canvas.Left="15"
+                                                 FontSize="15" Checked="rbTopAxis_Checked">
                                         
                                     </RadioButton>
                                     <RadioButton x:Name="rbBotAxis" Content="Bot Axis"
-                                                  Canvas.Top="70" Canvas.Left="15" FontSize="15">
+                                                  Canvas.Top="70" Canvas.Left="15"
+                                                 FontSize="15" Checked="rbBotAxis_Checked">
 
                                     </RadioButton>
-                                    
-                                    <Button Width="70" Height="25" Content="Read Code"
-                                            Canvas.Top="100" Canvas.Left="15"
-                                            ></Button>
                                     <Button x:Name="btUp" BorderBrush="Transparent"
                                             Background="Transparent" Width="35"
                                             Height="35" 
-                                            Canvas.Top="20"
-                                            Canvas.Left="135"
+                                            Canvas.Top="25"
+                                            Canvas.Left="140"
                                             ToolTip="Axis go up" 
-                                            MouseDown="btUp_MouseDown" 
-                                            MouseUp="btUp_MouseUp">
+                                            PreviewMouseDown="btUp_MouseDown" 
+                                            PreviewMouseUp="btUp_MouseUp">
                                         <Image Source="../../Resources/Icons/arrow-up.png"></Image>
                                     </Button>
                                     <Button x:Name="btLeft"  BorderBrush="Transparent"
                                             Background="Transparent" Width="35"
                                             Height="35" 
                                             Canvas.Top="55" 
-                                            Canvas.Left="100"
+                                            Canvas.Left="110"
                                             ToolTip="Axis go left" 
-                                            MouseDown="btLeft_MouseDown"
-                                            MouseUp="btLeft_MouseUp">
+                                            PreviewMouseDown="btLeft_MouseDown"
+                                            PreviewMouseUp="btLeft_MouseUp">
                                         <Image Source="../../Resources/Icons/arrow-left.png"></Image>
                                     </Button>
                                     <Button  x:Name="btRight" BorderBrush="Transparent" 
@@ -78,36 +80,30 @@
                                              Canvas.Top="55" 
                                              Canvas.Left="170"
                                                 ToolTip="Axis go right" 
-                                             MouseDown="btRight_MouseDown" 
-                                             MouseUp="btRight_MouseUp">
+                                             PreviewMouseDown="btRight_MouseDown" 
+                                             PreviewMouseUp="btRight_MouseUp">
                                         <Image Source="../../Resources/Icons/arrow-right.png"></Image>
                                     </Button>
                                     <Button  x:Name="btDown" BorderBrush="Transparent"
                                              Background="Transparent" 
                                              Width="35" Height="35" 
-                                             Canvas.Top="90" 
-                                             Canvas.Left="135"
+                                             Canvas.Top="85" 
+                                             Canvas.Left="140"
                                              ToolTip="Axis go down" 
-                                             MouseDown="btDown_MouseDown" 
-                                             MouseUp="btDown_MouseUp">
+                                             PreviewMouseDown="btDown_MouseDown" 
+                                             PreviewMouseUp="btDown_MouseUp">
                                         <Image Source="../../Resources/Icons/arrow-down.png"></Image>
                                     </Button>
-                                    <Button  x:Name="btHome" BorderBrush="Transparent" 
-                                             Background="Transparent" Width="35" 
-                                             Height="35" 
-                                             Canvas.Top="10" 
-                                             Canvas.Right="30"
-                                             ToolTip="Go Home" 
-                                             MouseDown="btHome_MouseDown">
-                                        <Image Source="../../Resources/Icons/home.png"></Image>
-                                    </Button>
                                     <Label Content="Speed:"  
-                                           Canvas.Top="50" 
-                                           Canvas.Right="70"></Label>
-                                    <Slider x:Name="slSpeed" Minimum="100" Maximum="20000" 
+                                           Canvas.Top="10" 
+                                           Canvas.Right="60"></Label>
+                                    <Slider x:Name="slSpeed" Minimum="100" Maximum="3000" 
+                                            TickPlacement="BottomRight" 
+                                            TickFrequency="100" 
+                                            IsSnapToTickEnabled="True"
                                             Value="1000" Width="100" 
-                                            Canvas.Top="80"
-                                             Canvas.Right="20"
+                                            Canvas.Top="40"
+                                             Canvas.Right="10"
                                             ValueChanged="slSpeed_ValueChanged"
                                            >
                                     </Slider>
@@ -120,6 +116,48 @@
                                 <GroupBox  Header="Parameter &amp; Teach template">
                                     <StackPanel Margin="5,15,0,0" HorizontalAlignment="Left">
                                         <StackPanel>
+                                            <Label Content="Scan Position:" FontSize="18" FontWeight="Bold"></Label>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="P.ID:"></Label>
+                                            <ComboBox x:Name="cbScanPointID" Width="80"
+                                                      SelectionChanged="cbScanPointID_SelectionChanged"></ComboBox>
+                                            <Button x:Name="btAddScan" Width="80" Content="Add" Margin="10,0,0,0
+                                                    " Click="btAddScan_Click"></Button>
+                                            <Button x:Name="btDelScan" Width="80" Content="Delete" Margin="10,0,0,0
+                                                    " Click="btDelScan_Click"></Button>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                            <Label Content="Width:"></Label>
+                                            <WindowsFormsHost Width="60" Height="20" Margin="5,0,0,5" Background="#FFFFFFFF">
+                                                <wf:NumericUpDown x:Name="nScanWidth" Width="60" 
+                                                                          ValueChanged="nScanWidth_ValueChanged"
+                                                                          Minimum="0"
+                                                                          Maximum="17"
+                                                                          DecimalPlaces="1"
+                                                                          Increment="0.1"
+                                                                          TextAlign="Right"
+                                                                          ></wf:NumericUpDown>
+                                            </WindowsFormsHost>
+                                            <Label Content="mm"></Label>
+                                            <Label Content="Height:" Margin="10,0,0,0"></Label>
+                                            <WindowsFormsHost Width="60" Height="20" Margin="5,0,0,5" Background="#FFFFFFFF">
+                                                <wf:NumericUpDown x:Name="nScanHeight" Width="60" 
+                                                                          ValueChanged="nScanHeight_ValueChanged"
+                                                                          Minimum="0"
+                                                                          Maximum="17"
+                                                                          DecimalPlaces="1"
+                                                                          Increment="0.1"
+                                                                          TextAlign="Right"
+                                                                          ></wf:NumericUpDown>
+                                            </WindowsFormsHost>
+                                            <Label Content="mm"></Label>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                            <Label Content="Code:"></Label>
+                                            <TextBox x:Name="txtCodeScan" Width="255"></TextBox>
+                                        </StackPanel>
+                                        <StackPanel Margin="0,15,0,0">
                                             <Label Content="Camera Parameter:" FontSize="18" FontWeight="Bold"></Label>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
@@ -128,7 +166,7 @@
                                                     <Label  Content="Exposure Time:" Margin="5,0,0,0"></Label>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <WindowsFormsHost Width="110" Height="20" Margin="10,0,0,5" Background="#FF111111">
+                                                    <WindowsFormsHost Width="110" Height="20" Margin="10,0,0,5" Background="#FFFFFFFF">
                                                         <wf:NumericUpDown x:Name="nExposureTime" Width="300"
                                                                           ValueChanged="nExposureTime_ValueChanged"
                                                                           Minimum="50"
@@ -144,7 +182,7 @@
                                                     <Label  Content="Gain:" Margin="5,0,0,0"></Label>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <WindowsFormsHost Width="110" Height="20" Margin="10,0,0,5" Background="#FF111111">
+                                                    <WindowsFormsHost Width="110" Height="20" Margin="10,0,0,5" Background="#FFFFFFFF">
                                                         <wf:NumericUpDown x:Name="nGain" Width="300" 
                                                                           ValueChanged="nGain_ValueChanged"
                                                                           Minimum="0"
@@ -160,32 +198,43 @@
                                         </StackPanel>
 
                                         <StackPanel Orientation="Horizontal">
-                                            <StackPanel>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Label  Content="Gamma:" Margin="5,0,0,0"></Label>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <WindowsFormsHost Width="110" Height="20" Margin="10,0,0,5" Background="#FF111111">
-                                                        <wf:NumericUpDown x:Name="nGamma"
-                                                                          ValueChanged="nGamma_ValueChanged"
-                                                                          Width="300" 
-                                                                          Minimum="0"
-                                                                          Maximum="4"
-                                                                          DecimalPlaces="2"
-                                                                          Increment="0.01"
-                                                                          TextAlign="Right"
-                                                                          ></wf:NumericUpDown>
-                                                    </WindowsFormsHost>
-                                                </StackPanel>
-                                            </StackPanel>
-                                            <StackPanel Margin="30,0,0,0">
+                                            <StackPanel Margin="0,0,0,0">
                                                 <StackPanel Orientation="Horizontal">
                                                     <Label  Content="Light Intensity:" Margin="5,0,0,0"></Label>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <WindowsFormsHost Width="50" Height="20" Margin="10,0,0,5" Background="#FF111111">
-                                                        <wf:NumericUpDown x:Name="nLightIntensity"
-                                                                          ValueChanged="nLightIntensity_ValueChanged"
+                                                    <WindowsFormsHost Width="50" Height="20" Margin="10,0,0,5" Background="#FFFFFFFF">
+                                                        <wf:NumericUpDown x:Name="nLightIntensity1"
+                                                                          ValueChanged="nLightIntensity1_ValueChanged"
+                                                                          Width="50"
+                                                                          Minimum="0"
+                                                                          Maximum="255"
+                                                                          TextAlign="Right"
+                                                                          ></wf:NumericUpDown>
+                                                    </WindowsFormsHost>
+                                                    <WindowsFormsHost Width="50" Height="20" Margin="10,0,0,5" Background="#FFFFFFFF">
+                                                        <wf:NumericUpDown x:Name="nLightIntensity2"
+                                                                          ValueChanged="nLightIntensity2_ValueChanged"
+                                                                          Width="50"
+                                                                          Minimum="0"
+                                                                          Maximum="255"
+                                                                          TextAlign="Right"
+                                                                          ></wf:NumericUpDown>
+                                                    </WindowsFormsHost>
+                                                    <WindowsFormsHost Width="50" Height="20"
+                                                                      Margin="40,0,0,5"
+                                                                      Background="#FFFFFFFF">
+                                                        <wf:NumericUpDown x:Name="nLightIntensity3"
+                                                                          ValueChanged="nLightIntensity3_ValueChanged"
+                                                                          Width="50"
+                                                                          Minimum="0"
+                                                                          Maximum="255"
+                                                                          TextAlign="Right"
+                                                                          ></wf:NumericUpDown>
+                                                    </WindowsFormsHost>
+                                                    <WindowsFormsHost Width="50" Height="20" Margin="10,0,0,5" Background="#FFFFFFFF">
+                                                        <wf:NumericUpDown x:Name="nLightIntensity4"
+                                                                          ValueChanged="nLightIntensity4_ValueChanged"
                                                                           Width="50"
                                                                           Minimum="0"
                                                                           Maximum="255"
@@ -204,7 +253,7 @@
                                                     <Label  Content="Search X:" Margin="5,0,0,0"></Label>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <WindowsFormsHost Width="110" Height="20" Margin="10,0,0,5" Background="#FF111111">
+                                                    <WindowsFormsHost Width="110" Height="20" Margin="10,0,0,5" Background="#FFFFFFFF">
                                                         <wf:NumericUpDown x:Name="nSearchX"
                                                                           ValueChanged="nSearchX_ValueChanged"
                                                                           Width="300" 
@@ -221,7 +270,7 @@
                                                     <Label  Content="Search Y:" Margin="5,0,0,0"></Label>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <WindowsFormsHost Width="110" Height="20" Margin="10,0,0,5" Background="#FF111111">
+                                                    <WindowsFormsHost Width="110" Height="20" Margin="10,0,0,5" Background="#FFFFFFFF">
                                                         <wf:NumericUpDown x:Name="nSearchY"
                                                                           ValueChanged="nSearchY_ValueChanged"
                                                                           Width="300"
@@ -241,7 +290,7 @@
                                                     <Label  Content="Matching Score:" Margin="5,0,0,0"></Label>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <WindowsFormsHost Width="110" Height="20" Margin="10,0,0,5" Background="#FF111111">
+                                                    <WindowsFormsHost Width="110" Height="20" Margin="10,0,0,5" Background="#FFFFFFFF">
                                                         <wf:NumericUpDown x:Name="nMatchingScore"
                                                                           ValueChanged="nMatchingScore_ValueChanged"
                                                                           Width="300"
@@ -261,7 +310,7 @@
                                                     <Label  Content="Gray level:" Margin="5,0,0,0"></Label>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <WindowsFormsHost Width="110" Height="20" Margin="10,0,0,5" Background="#FF111111">
+                                                    <WindowsFormsHost Width="110" Height="20" Margin="10,0,0,5" Background="#FFFFFFFF">
                                                         <wf:NumericUpDown x:Name="nGrayLevel"
                                                                           ValueChanged="nGrayLevel_ValueChanged"
                                                                           Width="300"
@@ -275,13 +324,13 @@
                                             </StackPanel>
 
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="10,30,0,0">
+                                        <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                                             <Label Content="Real Matching score:"></Label>
                                             <Label Content="0.00" x:Name="lbRealScore"></Label>
                                             <Label Content="%" ></Label>
                                         </StackPanel>
                                         <StackPanel Margin="0,0,0,0">
-                                            <Border Background="#FF111111" Margin="5" Width="270" Height="250">
+                                            <Border Background="#FF111111" Margin="5" Width="160" Height="150">
                                                 <Image x:Name="imbBinaryMark">
                                                 </Image>
                                             </Border>

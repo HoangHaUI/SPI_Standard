@@ -10,6 +10,7 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Initialized="Window_Initialized"
+        Closing="Window_Closing"    
         >
     <Border BorderThickness="2" BorderBrush="Gray" CornerRadius="5" Margin="10">
         <Grid>
