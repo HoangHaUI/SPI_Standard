@@ -175,15 +175,15 @@ namespace SPI_AOI.Devices
         
         public int Set_Write_Coordinates_Finish_Top()
         {
-            return mSLMP.SetDevice(mParam.PLC_BIT_WIRTE_COORDINATES_FINISH_TOP, 1);
+            return mSLMP.SetDevice(mParam.PLC_BIT_WRITE_COORDINATES_FINISH_TOP, 1);
         }
         public int Set_Write_Coordinates_Finish_Bot()
         {
-            return mSLMP.SetDevice(mParam.PLC_BIT_WIRTE_COORDINATES_FINISH_BOT, 1);
+            return mSLMP.SetDevice(mParam.PLC_BIT_WRITE_COORDINATES_FINISH_BOT, 1);
         }
         public int Set_Write_Coordinates_Finish_Conveyor()
         {
-            return mSLMP.SetDevice(mParam.PLC_BIT_WIRTE_COORDINATES_FINISH_CONVEYOR, 1);
+            return mSLMP.SetDevice(mParam.PLC_BIT_WRITE_COORDINATES_FINISH_CONVEYOR, 1);
         }
         public int Get_Go_Coordinates_Finish_Top()
         {

@@ -230,12 +230,12 @@ namespace SPI_AOI.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("M101")]
-        public string PLC_BIT_WIRTE_COORDINATES_FINISH_TOP {
+        public string PLC_BIT_WRITE_COORDINATES_FINISH_TOP {
             get {
-                return ((string)(this["PLC_BIT_WIRTE_COORDINATES_FINISH_TOP"]));
+                return ((string)(this["PLC_BIT_WRITE_COORDINATES_FINISH_TOP"]));
             }
             set {
-                this["PLC_BIT_WIRTE_COORDINATES_FINISH_TOP"] = value;
+                this["PLC_BIT_WRITE_COORDINATES_FINISH_TOP"] = value;
             }
         }
         
@@ -470,12 +470,12 @@ namespace SPI_AOI.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("M106")]
-        public string PLC_BIT_WIRTE_COORDINATES_FINISH_BOT {
+        public string PLC_BIT_WRITE_COORDINATES_FINISH_BOT {
             get {
-                return ((string)(this["PLC_BIT_WIRTE_COORDINATES_FINISH_BOT"]));
+                return ((string)(this["PLC_BIT_WRITE_COORDINATES_FINISH_BOT"]));
             }
             set {
-                this["PLC_BIT_WIRTE_COORDINATES_FINISH_BOT"] = value;
+                this["PLC_BIT_WRITE_COORDINATES_FINISH_BOT"] = value;
             }
         }
         
@@ -506,12 +506,12 @@ namespace SPI_AOI.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("M110")]
-        public string PLC_BIT_WIRTE_COORDINATES_FINISH_CONVEYOR {
+        public string PLC_BIT_WRITE_COORDINATES_FINISH_CONVEYOR {
             get {
-                return ((string)(this["PLC_BIT_WIRTE_COORDINATES_FINISH_CONVEYOR"]));
+                return ((string)(this["PLC_BIT_WRITE_COORDINATES_FINISH_CONVEYOR"]));
             }
             set {
-                this["PLC_BIT_WIRTE_COORDINATES_FINISH_CONVEYOR"] = value;
+                this["PLC_BIT_WRITE_COORDINATES_FINISH_CONVEYOR"] = value;
             }
         }
         

@@ -39,10 +39,13 @@
                 <Label Content="Password:"  
                        Margin="0, 50, 0, 0"></Label>
                 <TextBox x:Name="txtUser" Width="130"
+                         TabIndex="0"
                          FontSize="15" Margin="70, 10, 0, 0"
-                         TextChanged="txtUser_TextChanged">
+                         TextChanged="txtUser_TextChanged"
+                         FontWeight="Bold">
                 </TextBox>
                 <PasswordBox x:Name="txtPassWord" Width="130"
+                             TabIndex="1"
                              FontSize="15" Margin="70, 50, 0, 0"
                              PasswordChanged="txtPassWord_PasswordChanged">
                 </PasswordBox>
@@ -65,9 +68,11 @@
                 </DockPanel>
                 <Canvas Grid.Column="1" Background="Transparent">
                     <Button x:Name="btLogin" Margin="70, 0, 0, 0"
+                            TabIndex="2"
                             Content="Login" Width="60" Height="25"
                             Click="btLogin_Click"></Button>
                     <Button x:Name="btCancel" Margin="140, 0, 0, 0"
+                            TabIndex="3"
                             Content="Cancel" Width="60" Height="25"
                             Click="btCancel_Click"></Button>
                 </Canvas>

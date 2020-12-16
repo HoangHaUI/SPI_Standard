@@ -254,10 +254,7 @@
                                                 <Label  Content="Model Name:" Width="100" Foreground="Gray"/>
                                                 <Label  Content="SMT-HPT102SJ2008013" FontSize="15" FontWeight="Bold"/>
                                             </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Label  Content="FOV Status:" Width="100" Foreground="Gray" VerticalAlignment="Center"/>
-                                                <Label  Content="PASS" FontSize="30" Foreground="Green"/>
-                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal"/>
                                             <StackPanel Orientation="Horizontal">
                                                 <Label  Content="Capture Time:" Width="100" Foreground="Gray"/>
                                                 <Label  Content="11:31:20 30/11/2020" FontSize="15" />

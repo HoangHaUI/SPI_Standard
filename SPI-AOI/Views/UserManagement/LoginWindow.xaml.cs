@@ -27,6 +27,7 @@ namespace SPI_AOI.Views.UserManagement
         {
             InitializeComponent();
             UserType = UserType.DontKnow;
+            txtUser.Text = "Admin";
         }
         private void LoadUI()
         {
@@ -113,8 +114,6 @@ namespace SPI_AOI.Views.UserManagement
             else
             {
                 MessageBox.Show("User or password incorrect!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                txtPassWord.Password = string.Empty;
-                txtUser.Text = string.Empty;
             }
 
         }

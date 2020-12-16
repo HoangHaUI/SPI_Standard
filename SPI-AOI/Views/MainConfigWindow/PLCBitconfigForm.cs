@@ -48,8 +48,10 @@ namespace SPI_AOI.Views.MainConfigWindow
             txtBitDownTop.Text = mParam.PLC_BIT_GO_DOWN_TOP;
             txtBitLeftTop.Text = mParam.PLC_BIT_GO_LEFT_TOP;
             txtBitRightTop.Text = mParam.PLC_BIT_GO_RIGHT_TOP;
-            txtBitWriteFinishTop.Text = mParam.PLC_BIT_WIRTE_COORDINATES_FINISH_TOP;
+            txtBitWriteFinishTop.Text = mParam.PLC_BIT_WRITE_COORDINATES_FINISH_TOP;
             txtBitGoFinishTop.Text = mParam.PLC_BIT_GO_COORDINATES_FINISH_TOP;
+            txtBitWriteFinishSetupTop.Text = mParam.PLC_BIT_WRITE_COORDINATES_FINISH_SETUP_TOP;
+            txtBitGoFinishSetupTop.Text = mParam.PLC_BIT_GO_COORDINATES_FINISH_SETUP_TOP;
         }
         private void LoadBotAxis()
         {
@@ -59,16 +61,20 @@ namespace SPI_AOI.Views.MainConfigWindow
             txtBitDownBot.Text = mParam.PLC_BIT_GO_DOWN_BOT;
             txtBitLeftBot.Text = mParam.PLC_BIT_GO_LEFT_BOT;
             txtBitRightBot.Text = mParam.PLC_BIT_GO_RIGHT_BOT;
-            txtBitWriteFinishBot.Text = mParam.PLC_BIT_WIRTE_COORDINATES_FINISH_BOT;
+            txtBitWriteFinishBot.Text = mParam.PLC_BIT_WRITE_COORDINATES_FINISH_BOT;
             txtBitGoFinishBot.Text = mParam.PLC_BIT_GO_COORDINATES_FINISH_BOT;
+            txtBitWriteFinishSetupBot.Text = mParam.PLC_BIT_WRITE_COORDINATES_FINISH_SETUP_BOT;
+            txtBitGoFinishSetupBot.Text = mParam.PLC_BIT_GO_COORDINATES_FINISH_SETUP_BOT;
         }
         private void LoadConveyorAxis()
         {
             txtRegConveyor.Text = mParam.PLC_REG_CONVEYOR;
             txtBitUpConveyor.Text = mParam.PLC_BIT_GO_UP_CONVEYOR;
             txtBitDownConveyor.Text = mParam.PLC_BIT_GO_DOWN_CONVEYOR;
-            txtBitWriteFinishConveyor.Text = mParam.PLC_BIT_WIRTE_COORDINATES_FINISH_CONVEYOR;
+            txtBitWriteFinishConveyor.Text = mParam.PLC_BIT_WRITE_COORDINATES_FINISH_CONVEYOR;
             txtBitGoFinishConveyor.Text = mParam.PLC_BIT_GO_COORDINATES_FINISH_CONVEYOR;
+            txtBitWriteFinishSetupConveyor.Text = mParam.PLC_BIT_WRITE_COORDINATES_FINISH_SETUP_CONVEYOR;
+            txtBitGoFinishSetupConveyor.Text = mParam.PLC_BIT_GO_COORDINATES_FINISH_SETUP_CONVEYOR;
         }
 
         private void txtIP_TextChanged(object sender, EventArgs e)
@@ -219,7 +225,7 @@ namespace SPI_AOI.Views.MainConfigWindow
             if (!mLoaded)
                 return;
             TextBox txt = sender as TextBox;
-            mParam.PLC_BIT_WIRTE_COORDINATES_FINISH_TOP = txt.Text;
+            mParam.PLC_BIT_WRITE_COORDINATES_FINISH_TOP = txt.Text;
             mParam.Save();
         }
 
@@ -291,7 +297,7 @@ namespace SPI_AOI.Views.MainConfigWindow
             if (!mLoaded)
                 return;
             TextBox txt = sender as TextBox;
-            mParam.PLC_BIT_WIRTE_COORDINATES_FINISH_BOT = txt.Text;
+            mParam.PLC_BIT_WRITE_COORDINATES_FINISH_BOT = txt.Text;
             mParam.Save();
         }
 
@@ -336,7 +342,7 @@ namespace SPI_AOI.Views.MainConfigWindow
             if (!mLoaded)
                 return;
             TextBox txt = sender as TextBox;
-            mParam.PLC_BIT_WIRTE_COORDINATES_FINISH_CONVEYOR = txt.Text;
+            mParam.PLC_BIT_WRITE_COORDINATES_FINISH_CONVEYOR = txt.Text;
             mParam.Save();
         }
 
@@ -349,6 +355,58 @@ namespace SPI_AOI.Views.MainConfigWindow
             mParam.Save();
         }
 
-        
+        private void txtBitWriteFinishSetupTop_TextChanged(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            TextBox txt = sender as TextBox;
+            mParam.PLC_BIT_WRITE_COORDINATES_FINISH_SETUP_TOP = txt.Text;
+            mParam.Save();
+        }
+
+        private void txtBitGoFinishSetupTop_TextChanged(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            TextBox txt = sender as TextBox;
+            mParam.PLC_BIT_GO_COORDINATES_FINISH_SETUP_TOP = txt.Text;
+            mParam.Save();
+        }
+
+        private void txtBitWriteFinishSetupBot_TextChanged(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            TextBox txt = sender as TextBox;
+            mParam.PLC_BIT_WRITE_COORDINATES_FINISH_SETUP_BOT = txt.Text;
+            mParam.Save();
+        }
+
+        private void txtBitGoFinishSetupBot_TextChanged(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            TextBox txt = sender as TextBox;
+            mParam.PLC_BIT_GO_COORDINATES_FINISH_SETUP_BOT = txt.Text;
+            mParam.Save();
+        }
+
+        private void txtBitWriteFinishSetupConveyor_TextChanged(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            TextBox txt = sender as TextBox;
+            mParam.PLC_BIT_WRITE_COORDINATES_FINISH_SETUP_CONVEYOR = txt.Text;
+            mParam.Save();
+        }
+
+        private void txtBitGoFinishSetupConveyor_TextChanged(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            TextBox txt = sender as TextBox;
+            mParam.PLC_BIT_GO_COORDINATES_FINISH_SETUP_CONVEYOR = txt.Text;
+            mParam.Save();
+        }
     }
 }

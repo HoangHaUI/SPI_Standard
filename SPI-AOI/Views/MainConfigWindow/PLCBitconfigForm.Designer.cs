@@ -94,6 +94,18 @@
             this.label28 = new System.Windows.Forms.Label();
             this.txtBitErrorMachine = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.txtBitWriteFinishSetupConveyor = new System.Windows.Forms.TextBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.txtBitGoFinishSetupConveyor = new System.Windows.Forms.TextBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.txtBitWriteFinishSetupBot = new System.Windows.Forms.TextBox();
+            this.label35 = new System.Windows.Forms.Label();
+            this.txtBitGoFinishSetupBot = new System.Windows.Forms.TextBox();
+            this.label36 = new System.Windows.Forms.Label();
+            this.txtBitWriteFinishSetupTop = new System.Windows.Forms.TextBox();
+            this.label37 = new System.Windows.Forms.Label();
+            this.txtBitGoFinishSetupTop = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -103,8 +115,12 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtBitGoFinishSetupTop);
+            this.groupBox1.Controls.Add(this.label37);
             this.groupBox1.Controls.Add(this.txtBitGoFinishTop);
+            this.groupBox1.Controls.Add(this.txtBitWriteFinishSetupTop);
             this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.label36);
             this.groupBox1.Controls.Add(this.txtBitWriteFinishTop);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.txtBitRightTop);
@@ -122,7 +138,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(13, 146);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(187, 243);
+            this.groupBox1.Size = new System.Drawing.Size(226, 294);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Top Axis";
@@ -131,7 +147,7 @@
             // 
             this.txtBitGoFinishTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitGoFinishTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitGoFinishTop.Location = new System.Drawing.Point(98, 209);
+            this.txtBitGoFinishTop.Location = new System.Drawing.Point(146, 210);
             this.txtBitGoFinishTop.Name = "txtBitGoFinishTop";
             this.txtBitGoFinishTop.Size = new System.Drawing.Size(64, 20);
             this.txtBitGoFinishTop.TabIndex = 15;
@@ -153,7 +169,7 @@
             // 
             this.txtBitWriteFinishTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitWriteFinishTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitWriteFinishTop.Location = new System.Drawing.Point(98, 183);
+            this.txtBitWriteFinishTop.Location = new System.Drawing.Point(146, 184);
             this.txtBitWriteFinishTop.Name = "txtBitWriteFinishTop";
             this.txtBitWriteFinishTop.Size = new System.Drawing.Size(64, 20);
             this.txtBitWriteFinishTop.TabIndex = 13;
@@ -175,7 +191,7 @@
             // 
             this.txtBitRightTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitRightTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitRightTop.Location = new System.Drawing.Point(98, 157);
+            this.txtBitRightTop.Location = new System.Drawing.Point(146, 158);
             this.txtBitRightTop.Name = "txtBitRightTop";
             this.txtBitRightTop.Size = new System.Drawing.Size(64, 20);
             this.txtBitRightTop.TabIndex = 11;
@@ -197,7 +213,7 @@
             // 
             this.txtBitLeftTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitLeftTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitLeftTop.Location = new System.Drawing.Point(98, 131);
+            this.txtBitLeftTop.Location = new System.Drawing.Point(146, 132);
             this.txtBitLeftTop.Name = "txtBitLeftTop";
             this.txtBitLeftTop.Size = new System.Drawing.Size(64, 20);
             this.txtBitLeftTop.TabIndex = 9;
@@ -219,7 +235,7 @@
             // 
             this.txtBitDownTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitDownTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitDownTop.Location = new System.Drawing.Point(98, 105);
+            this.txtBitDownTop.Location = new System.Drawing.Point(146, 106);
             this.txtBitDownTop.Name = "txtBitDownTop";
             this.txtBitDownTop.Size = new System.Drawing.Size(64, 20);
             this.txtBitDownTop.TabIndex = 7;
@@ -241,7 +257,7 @@
             // 
             this.txtBitUpTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitUpTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitUpTop.Location = new System.Drawing.Point(98, 79);
+            this.txtBitUpTop.Location = new System.Drawing.Point(146, 80);
             this.txtBitUpTop.Name = "txtBitUpTop";
             this.txtBitUpTop.Size = new System.Drawing.Size(64, 20);
             this.txtBitUpTop.TabIndex = 5;
@@ -263,7 +279,7 @@
             // 
             this.txtRegYTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtRegYTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRegYTop.Location = new System.Drawing.Point(98, 53);
+            this.txtRegYTop.Location = new System.Drawing.Point(146, 54);
             this.txtRegYTop.Name = "txtRegYTop";
             this.txtRegYTop.Size = new System.Drawing.Size(64, 20);
             this.txtRegYTop.TabIndex = 3;
@@ -285,7 +301,7 @@
             // 
             this.txtRegXTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtRegXTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRegXTop.Location = new System.Drawing.Point(98, 27);
+            this.txtRegXTop.Location = new System.Drawing.Point(146, 28);
             this.txtRegXTop.Name = "txtRegXTop";
             this.txtRegXTop.Size = new System.Drawing.Size(64, 20);
             this.txtRegXTop.TabIndex = 1;
@@ -305,8 +321,12 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.txtBitGoFinishSetupBot);
+            this.groupBox2.Controls.Add(this.label35);
             this.groupBox2.Controls.Add(this.txtBitGoFinishBot);
+            this.groupBox2.Controls.Add(this.txtBitWriteFinishSetupBot);
             this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.label34);
             this.groupBox2.Controls.Add(this.txtBitWriteFinishBot);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.txtBitRightBot);
@@ -322,9 +342,9 @@
             this.groupBox2.Controls.Add(this.txtRegXBot);
             this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(206, 146);
+            this.groupBox2.Location = new System.Drawing.Point(245, 146);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(187, 243);
+            this.groupBox2.Size = new System.Drawing.Size(226, 294);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Bot Axis";
@@ -333,7 +353,7 @@
             // 
             this.txtBitGoFinishBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitGoFinishBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitGoFinishBot.Location = new System.Drawing.Point(98, 209);
+            this.txtBitGoFinishBot.Location = new System.Drawing.Point(146, 210);
             this.txtBitGoFinishBot.Name = "txtBitGoFinishBot";
             this.txtBitGoFinishBot.Size = new System.Drawing.Size(64, 20);
             this.txtBitGoFinishBot.TabIndex = 15;
@@ -355,7 +375,7 @@
             // 
             this.txtBitWriteFinishBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitWriteFinishBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitWriteFinishBot.Location = new System.Drawing.Point(98, 183);
+            this.txtBitWriteFinishBot.Location = new System.Drawing.Point(146, 184);
             this.txtBitWriteFinishBot.Name = "txtBitWriteFinishBot";
             this.txtBitWriteFinishBot.Size = new System.Drawing.Size(64, 20);
             this.txtBitWriteFinishBot.TabIndex = 13;
@@ -377,7 +397,7 @@
             // 
             this.txtBitRightBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitRightBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitRightBot.Location = new System.Drawing.Point(98, 157);
+            this.txtBitRightBot.Location = new System.Drawing.Point(146, 158);
             this.txtBitRightBot.Name = "txtBitRightBot";
             this.txtBitRightBot.Size = new System.Drawing.Size(64, 20);
             this.txtBitRightBot.TabIndex = 11;
@@ -399,7 +419,7 @@
             // 
             this.txtBitLeftBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitLeftBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitLeftBot.Location = new System.Drawing.Point(98, 131);
+            this.txtBitLeftBot.Location = new System.Drawing.Point(146, 132);
             this.txtBitLeftBot.Name = "txtBitLeftBot";
             this.txtBitLeftBot.Size = new System.Drawing.Size(64, 20);
             this.txtBitLeftBot.TabIndex = 9;
@@ -421,7 +441,7 @@
             // 
             this.txtBitDownBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitDownBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitDownBot.Location = new System.Drawing.Point(98, 105);
+            this.txtBitDownBot.Location = new System.Drawing.Point(146, 106);
             this.txtBitDownBot.Name = "txtBitDownBot";
             this.txtBitDownBot.Size = new System.Drawing.Size(64, 20);
             this.txtBitDownBot.TabIndex = 7;
@@ -443,7 +463,7 @@
             // 
             this.txtBitUpBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitUpBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitUpBot.Location = new System.Drawing.Point(98, 79);
+            this.txtBitUpBot.Location = new System.Drawing.Point(146, 80);
             this.txtBitUpBot.Name = "txtBitUpBot";
             this.txtBitUpBot.Size = new System.Drawing.Size(64, 20);
             this.txtBitUpBot.TabIndex = 5;
@@ -465,7 +485,7 @@
             // 
             this.txtRegYBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtRegYBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRegYBot.Location = new System.Drawing.Point(98, 53);
+            this.txtRegYBot.Location = new System.Drawing.Point(146, 54);
             this.txtRegYBot.Name = "txtRegYBot";
             this.txtRegYBot.Size = new System.Drawing.Size(64, 20);
             this.txtRegYBot.TabIndex = 3;
@@ -487,7 +507,7 @@
             // 
             this.txtRegXBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtRegXBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRegXBot.Location = new System.Drawing.Point(98, 27);
+            this.txtRegXBot.Location = new System.Drawing.Point(146, 28);
             this.txtRegXBot.Name = "txtRegXBot";
             this.txtRegXBot.Size = new System.Drawing.Size(64, 20);
             this.txtRegXBot.TabIndex = 1;
@@ -507,8 +527,12 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.txtBitGoFinishSetupConveyor);
+            this.groupBox3.Controls.Add(this.label33);
             this.groupBox3.Controls.Add(this.txtBitGoFinishConveyor);
+            this.groupBox3.Controls.Add(this.txtBitWriteFinishSetupConveyor);
             this.groupBox3.Controls.Add(this.label17);
+            this.groupBox3.Controls.Add(this.label32);
             this.groupBox3.Controls.Add(this.txtBitWriteFinishConveyor);
             this.groupBox3.Controls.Add(this.label18);
             this.groupBox3.Controls.Add(this.txtBitDownConveyor);
@@ -518,9 +542,9 @@
             this.groupBox3.Controls.Add(this.txtRegConveyor);
             this.groupBox3.Controls.Add(this.label24);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(399, 146);
+            this.groupBox3.Location = new System.Drawing.Point(477, 146);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(187, 243);
+            this.groupBox3.Size = new System.Drawing.Size(226, 294);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Conveyor";
@@ -529,7 +553,7 @@
             // 
             this.txtBitGoFinishConveyor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitGoFinishConveyor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitGoFinishConveyor.Location = new System.Drawing.Point(98, 131);
+            this.txtBitGoFinishConveyor.Location = new System.Drawing.Point(146, 132);
             this.txtBitGoFinishConveyor.Name = "txtBitGoFinishConveyor";
             this.txtBitGoFinishConveyor.Size = new System.Drawing.Size(64, 20);
             this.txtBitGoFinishConveyor.TabIndex = 15;
@@ -551,7 +575,7 @@
             // 
             this.txtBitWriteFinishConveyor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitWriteFinishConveyor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitWriteFinishConveyor.Location = new System.Drawing.Point(98, 105);
+            this.txtBitWriteFinishConveyor.Location = new System.Drawing.Point(146, 106);
             this.txtBitWriteFinishConveyor.Name = "txtBitWriteFinishConveyor";
             this.txtBitWriteFinishConveyor.Size = new System.Drawing.Size(64, 20);
             this.txtBitWriteFinishConveyor.TabIndex = 13;
@@ -573,7 +597,7 @@
             // 
             this.txtBitDownConveyor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitDownConveyor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitDownConveyor.Location = new System.Drawing.Point(98, 79);
+            this.txtBitDownConveyor.Location = new System.Drawing.Point(146, 80);
             this.txtBitDownConveyor.Name = "txtBitDownConveyor";
             this.txtBitDownConveyor.Size = new System.Drawing.Size(64, 20);
             this.txtBitDownConveyor.TabIndex = 7;
@@ -595,7 +619,7 @@
             // 
             this.txtBitUpConveyor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitUpConveyor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitUpConveyor.Location = new System.Drawing.Point(98, 53);
+            this.txtBitUpConveyor.Location = new System.Drawing.Point(146, 54);
             this.txtBitUpConveyor.Name = "txtBitUpConveyor";
             this.txtBitUpConveyor.Size = new System.Drawing.Size(64, 20);
             this.txtBitUpConveyor.TabIndex = 5;
@@ -617,7 +641,7 @@
             // 
             this.txtRegConveyor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtRegConveyor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRegConveyor.Location = new System.Drawing.Point(98, 27);
+            this.txtRegConveyor.Location = new System.Drawing.Point(146, 28);
             this.txtRegConveyor.Name = "txtRegConveyor";
             this.txtRegConveyor.Size = new System.Drawing.Size(64, 20);
             this.txtRegConveyor.TabIndex = 1;
@@ -660,7 +684,7 @@
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.Location = new System.Drawing.Point(13, 12);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(573, 128);
+            this.groupBox4.Size = new System.Drawing.Size(690, 128);
             this.groupBox4.TabIndex = 16;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "General";
@@ -669,7 +693,7 @@
             // 
             this.nPort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.nPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nPort.Location = new System.Drawing.Point(65, 50);
+            this.nPort.Location = new System.Drawing.Point(113, 50);
             this.nPort.Maximum = new decimal(new int[] {
             99999,
             0,
@@ -685,7 +709,7 @@
             // 
             this.label31.AutoSize = true;
             this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label31.Location = new System.Drawing.Point(6, 52);
+            this.label31.Location = new System.Drawing.Point(35, 51);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(29, 13);
             this.label31.TabIndex = 26;
@@ -695,7 +719,7 @@
             // 
             this.txtIP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIP.Location = new System.Drawing.Point(65, 23);
+            this.txtIP.Location = new System.Drawing.Point(113, 23);
             this.txtIP.Name = "txtIP";
             this.txtIP.Size = new System.Drawing.Size(97, 20);
             this.txtIP.TabIndex = 25;
@@ -707,7 +731,7 @@
             // 
             this.label30.AutoSize = true;
             this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label30.Location = new System.Drawing.Point(6, 26);
+            this.label30.Location = new System.Drawing.Point(35, 25);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(20, 13);
             this.label30.TabIndex = 24;
@@ -717,7 +741,7 @@
             // 
             this.txtBitFail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitFail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitFail.Location = new System.Drawing.Point(503, 97);
+            this.txtBitFail.Location = new System.Drawing.Point(609, 96);
             this.txtBitFail.Name = "txtBitFail";
             this.txtBitFail.Size = new System.Drawing.Size(64, 20);
             this.txtBitFail.TabIndex = 23;
@@ -729,7 +753,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.Location = new System.Drawing.Point(396, 100);
+            this.label25.Location = new System.Drawing.Point(480, 100);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(41, 13);
             this.label25.TabIndex = 22;
@@ -739,7 +763,7 @@
             // 
             this.txtBitPass.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitPass.Location = new System.Drawing.Point(503, 71);
+            this.txtBitPass.Location = new System.Drawing.Point(609, 70);
             this.txtBitPass.Name = "txtBitPass";
             this.txtBitPass.Size = new System.Drawing.Size(64, 20);
             this.txtBitPass.TabIndex = 21;
@@ -751,7 +775,7 @@
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.Location = new System.Drawing.Point(396, 74);
+            this.label26.Location = new System.Drawing.Point(480, 74);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(48, 13);
             this.label26.TabIndex = 20;
@@ -761,7 +785,7 @@
             // 
             this.txtBitCaptureFail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitCaptureFail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitCaptureFail.Location = new System.Drawing.Point(503, 45);
+            this.txtBitCaptureFail.Location = new System.Drawing.Point(609, 44);
             this.txtBitCaptureFail.Name = "txtBitCaptureFail";
             this.txtBitCaptureFail.Size = new System.Drawing.Size(64, 20);
             this.txtBitCaptureFail.TabIndex = 19;
@@ -773,7 +797,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(396, 48);
+            this.label19.Location = new System.Drawing.Point(480, 48);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(81, 13);
             this.label19.TabIndex = 18;
@@ -783,7 +807,7 @@
             // 
             this.txtBitReadCodeFail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitReadCodeFail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitReadCodeFail.Location = new System.Drawing.Point(503, 19);
+            this.txtBitReadCodeFail.Location = new System.Drawing.Point(609, 18);
             this.txtBitReadCodeFail.Name = "txtBitReadCodeFail";
             this.txtBitReadCodeFail.Size = new System.Drawing.Size(64, 20);
             this.txtBitReadCodeFail.TabIndex = 17;
@@ -795,7 +819,7 @@
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(396, 22);
+            this.label20.Location = new System.Drawing.Point(480, 22);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(98, 13);
             this.label20.TabIndex = 16;
@@ -805,7 +829,7 @@
             // 
             this.txtBitHasProductBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitHasProductBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitHasProductBot.Location = new System.Drawing.Point(310, 45);
+            this.txtBitHasProductBot.Location = new System.Drawing.Point(378, 46);
             this.txtBitHasProductBot.Name = "txtBitHasProductBot";
             this.txtBitHasProductBot.Size = new System.Drawing.Size(64, 20);
             this.txtBitHasProductBot.TabIndex = 11;
@@ -817,7 +841,7 @@
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(203, 48);
+            this.label23.Location = new System.Drawing.Point(248, 46);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(103, 13);
             this.label23.TabIndex = 10;
@@ -827,7 +851,7 @@
             // 
             this.txtBitDoorStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitDoorStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitDoorStatus.Location = new System.Drawing.Point(310, 71);
+            this.txtBitDoorStatus.Location = new System.Drawing.Point(378, 72);
             this.txtBitDoorStatus.Name = "txtBitDoorStatus";
             this.txtBitDoorStatus.Size = new System.Drawing.Size(64, 20);
             this.txtBitDoorStatus.TabIndex = 5;
@@ -839,7 +863,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.Location = new System.Drawing.Point(203, 74);
+            this.label27.Location = new System.Drawing.Point(248, 72);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(81, 13);
             this.label27.TabIndex = 4;
@@ -849,7 +873,7 @@
             // 
             this.txtBitHasProductTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitHasProductTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitHasProductTop.Location = new System.Drawing.Point(310, 19);
+            this.txtBitHasProductTop.Location = new System.Drawing.Point(378, 20);
             this.txtBitHasProductTop.Name = "txtBitHasProductTop";
             this.txtBitHasProductTop.Size = new System.Drawing.Size(64, 20);
             this.txtBitHasProductTop.TabIndex = 3;
@@ -861,7 +885,7 @@
             // 
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.Location = new System.Drawing.Point(203, 22);
+            this.label28.Location = new System.Drawing.Point(248, 22);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(106, 13);
             this.label28.TabIndex = 2;
@@ -871,7 +895,7 @@
             // 
             this.txtBitErrorMachine.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitErrorMachine.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitErrorMachine.Location = new System.Drawing.Point(310, 97);
+            this.txtBitErrorMachine.Location = new System.Drawing.Point(378, 98);
             this.txtBitErrorMachine.Name = "txtBitErrorMachine";
             this.txtBitErrorMachine.Size = new System.Drawing.Size(64, 20);
             this.txtBitErrorMachine.TabIndex = 1;
@@ -883,11 +907,143 @@
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label29.Location = new System.Drawing.Point(203, 100);
+            this.label29.Location = new System.Drawing.Point(248, 98);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(91, 13);
             this.label29.TabIndex = 0;
             this.label29.Text = "Bit Error Machine:";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label32.Location = new System.Drawing.Point(16, 163);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(111, 13);
+            this.label32.TabIndex = 12;
+            this.label32.Text = "Bit Write Finish Setup:";
+            // 
+            // txtBitWriteFinishSetupConveyor
+            // 
+            this.txtBitWriteFinishSetupConveyor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBitWriteFinishSetupConveyor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBitWriteFinishSetupConveyor.Location = new System.Drawing.Point(146, 161);
+            this.txtBitWriteFinishSetupConveyor.Name = "txtBitWriteFinishSetupConveyor";
+            this.txtBitWriteFinishSetupConveyor.Size = new System.Drawing.Size(64, 20);
+            this.txtBitWriteFinishSetupConveyor.TabIndex = 13;
+            this.txtBitWriteFinishSetupConveyor.Text = "M100";
+            this.txtBitWriteFinishSetupConveyor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtBitWriteFinishSetupConveyor.TextChanged += new System.EventHandler(this.txtBitWriteFinishSetupConveyor_TextChanged);
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label33.Location = new System.Drawing.Point(16, 189);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(100, 13);
+            this.label33.TabIndex = 14;
+            this.label33.Text = "Bit Go Finish Setup:";
+            // 
+            // txtBitGoFinishSetupConveyor
+            // 
+            this.txtBitGoFinishSetupConveyor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBitGoFinishSetupConveyor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBitGoFinishSetupConveyor.Location = new System.Drawing.Point(146, 187);
+            this.txtBitGoFinishSetupConveyor.Name = "txtBitGoFinishSetupConveyor";
+            this.txtBitGoFinishSetupConveyor.Size = new System.Drawing.Size(64, 20);
+            this.txtBitGoFinishSetupConveyor.TabIndex = 15;
+            this.txtBitGoFinishSetupConveyor.Text = "M100";
+            this.txtBitGoFinishSetupConveyor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtBitGoFinishSetupConveyor.TextChanged += new System.EventHandler(this.txtBitGoFinishSetupConveyor_TextChanged);
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label34.Location = new System.Drawing.Point(16, 238);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(111, 13);
+            this.label34.TabIndex = 12;
+            this.label34.Text = "Bit Write Finish Setup:";
+            // 
+            // txtBitWriteFinishSetupBot
+            // 
+            this.txtBitWriteFinishSetupBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBitWriteFinishSetupBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBitWriteFinishSetupBot.Location = new System.Drawing.Point(146, 236);
+            this.txtBitWriteFinishSetupBot.Name = "txtBitWriteFinishSetupBot";
+            this.txtBitWriteFinishSetupBot.Size = new System.Drawing.Size(64, 20);
+            this.txtBitWriteFinishSetupBot.TabIndex = 13;
+            this.txtBitWriteFinishSetupBot.Text = "M100";
+            this.txtBitWriteFinishSetupBot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtBitWriteFinishSetupBot.TextChanged += new System.EventHandler(this.txtBitWriteFinishSetupBot_TextChanged);
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label35.Location = new System.Drawing.Point(16, 264);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(100, 13);
+            this.label35.TabIndex = 14;
+            this.label35.Text = "Bit Go Finish Setup:";
+            // 
+            // txtBitGoFinishSetupBot
+            // 
+            this.txtBitGoFinishSetupBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBitGoFinishSetupBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBitGoFinishSetupBot.Location = new System.Drawing.Point(146, 262);
+            this.txtBitGoFinishSetupBot.Name = "txtBitGoFinishSetupBot";
+            this.txtBitGoFinishSetupBot.Size = new System.Drawing.Size(64, 20);
+            this.txtBitGoFinishSetupBot.TabIndex = 15;
+            this.txtBitGoFinishSetupBot.Text = "M100";
+            this.txtBitGoFinishSetupBot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtBitGoFinishSetupBot.TextChanged += new System.EventHandler(this.txtBitGoFinishSetupBot_TextChanged);
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label36.Location = new System.Drawing.Point(16, 238);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(111, 13);
+            this.label36.TabIndex = 12;
+            this.label36.Text = "Bit Write Finish Setup:";
+            // 
+            // txtBitWriteFinishSetupTop
+            // 
+            this.txtBitWriteFinishSetupTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBitWriteFinishSetupTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBitWriteFinishSetupTop.Location = new System.Drawing.Point(146, 236);
+            this.txtBitWriteFinishSetupTop.Name = "txtBitWriteFinishSetupTop";
+            this.txtBitWriteFinishSetupTop.Size = new System.Drawing.Size(64, 20);
+            this.txtBitWriteFinishSetupTop.TabIndex = 13;
+            this.txtBitWriteFinishSetupTop.Text = "M100";
+            this.txtBitWriteFinishSetupTop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtBitWriteFinishSetupTop.TextChanged += new System.EventHandler(this.txtBitWriteFinishSetupTop_TextChanged);
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label37.Location = new System.Drawing.Point(16, 264);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(100, 13);
+            this.label37.TabIndex = 14;
+            this.label37.Text = "Bit Go Finish Setup:";
+            // 
+            // txtBitGoFinishSetupTop
+            // 
+            this.txtBitGoFinishSetupTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBitGoFinishSetupTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBitGoFinishSetupTop.Location = new System.Drawing.Point(146, 262);
+            this.txtBitGoFinishSetupTop.Name = "txtBitGoFinishSetupTop";
+            this.txtBitGoFinishSetupTop.Size = new System.Drawing.Size(64, 20);
+            this.txtBitGoFinishSetupTop.TabIndex = 15;
+            this.txtBitGoFinishSetupTop.Text = "M100";
+            this.txtBitGoFinishSetupTop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtBitGoFinishSetupTop.TextChanged += new System.EventHandler(this.txtBitGoFinishSetupTop_TextChanged);
             // 
             // PLCBitconfigForm
             // 
@@ -895,7 +1051,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
-            this.ClientSize = new System.Drawing.Size(598, 402);
+            this.ClientSize = new System.Drawing.Size(717, 448);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -989,5 +1145,17 @@
         private System.Windows.Forms.TextBox txtBitReadCodeFail;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.NumericUpDown nPort;
+        private System.Windows.Forms.TextBox txtBitGoFinishSetupTop;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.TextBox txtBitWriteFinishSetupTop;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.TextBox txtBitGoFinishSetupBot;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.TextBox txtBitWriteFinishSetupBot;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.TextBox txtBitGoFinishSetupConveyor;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.TextBox txtBitWriteFinishSetupConveyor;
+        private System.Windows.Forms.Label label32;
     }
 }
