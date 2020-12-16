@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:SPI_AOI"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:MSChart="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
-        xmlns:pie="clr-namespace:PieControls;assembly=PieControls"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="SPI_AOI.Views.MainWindow"
         mc:Ignorable="d"
         Height="1000" Width="1800"
@@ -125,7 +124,7 @@
                     </Grid.RowDefinitions>
                     <GroupBox x:Name="groupBox" Grid.Row="0" Header="Diagram" BorderBrush="Gray" FontWeight="Bold">
                         <Border Background="Black" Margin="5">
-                            <Image Source="D:\Heal\Projects\B06\Stencil\Recycle\1.bmp" />
+                            <Image/>
                         </Border>
                     </GroupBox>
                     <GroupBox x:Name="groupBox1" Grid.Row="1" BorderBrush="Gray" Header="Panel Position"  >
@@ -209,7 +208,7 @@
                         <GroupBox Header="Camera View"
                                   FontWeight="Bold" BorderBrush="Gray">
                             <Border Margin="5" Background="DarkGray">
-                                <Image Source="D:\Heal\Projects\B06\Stencil\Recycle\1.bmp"/>
+                                <Image/>
                             </Border>
                         </GroupBox>
                     </Grid>

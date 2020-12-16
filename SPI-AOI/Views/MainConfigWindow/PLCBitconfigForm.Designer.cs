@@ -86,11 +86,11 @@
             this.label19 = new System.Windows.Forms.Label();
             this.txtBitReadCodeFail = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.txtBitSetupModel = new System.Windows.Forms.TextBox();
+            this.txtBitHasProductBot = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.txtBitDoorStatus = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
-            this.txtBitHasProduct = new System.Windows.Forms.TextBox();
+            this.txtBitHasProductTop = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
             this.txtBitErrorMachine = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
@@ -122,7 +122,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(13, 146);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(187, 244);
+            this.groupBox1.Size = new System.Drawing.Size(187, 243);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Top Axis";
@@ -324,7 +324,7 @@
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(206, 146);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(187, 244);
+            this.groupBox2.Size = new System.Drawing.Size(187, 243);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Bot Axis";
@@ -520,7 +520,7 @@
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(399, 146);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(187, 244);
+            this.groupBox3.Size = new System.Drawing.Size(187, 243);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Conveyor";
@@ -649,11 +649,11 @@
             this.groupBox4.Controls.Add(this.label19);
             this.groupBox4.Controls.Add(this.txtBitReadCodeFail);
             this.groupBox4.Controls.Add(this.label20);
-            this.groupBox4.Controls.Add(this.txtBitSetupModel);
+            this.groupBox4.Controls.Add(this.txtBitHasProductBot);
             this.groupBox4.Controls.Add(this.label23);
             this.groupBox4.Controls.Add(this.txtBitDoorStatus);
             this.groupBox4.Controls.Add(this.label27);
-            this.groupBox4.Controls.Add(this.txtBitHasProduct);
+            this.groupBox4.Controls.Add(this.txtBitHasProductTop);
             this.groupBox4.Controls.Add(this.label28);
             this.groupBox4.Controls.Add(this.txtBitErrorMachine);
             this.groupBox4.Controls.Add(this.label29);
@@ -801,33 +801,33 @@
             this.label20.TabIndex = 16;
             this.label20.Text = "Bit Read Code Fail:";
             // 
-            // txtBitSetupModel
+            // txtBitHasProductBot
             // 
-            this.txtBitSetupModel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBitSetupModel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitSetupModel.Location = new System.Drawing.Point(310, 71);
-            this.txtBitSetupModel.Name = "txtBitSetupModel";
-            this.txtBitSetupModel.Size = new System.Drawing.Size(64, 20);
-            this.txtBitSetupModel.TabIndex = 11;
-            this.txtBitSetupModel.Text = "M100";
-            this.txtBitSetupModel.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtBitSetupModel.TextChanged += new System.EventHandler(this.txtBitSetupModel_TextChanged);
+            this.txtBitHasProductBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBitHasProductBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBitHasProductBot.Location = new System.Drawing.Point(310, 45);
+            this.txtBitHasProductBot.Name = "txtBitHasProductBot";
+            this.txtBitHasProductBot.Size = new System.Drawing.Size(64, 20);
+            this.txtBitHasProductBot.TabIndex = 11;
+            this.txtBitHasProductBot.Text = "M100";
+            this.txtBitHasProductBot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtBitHasProductBot.TextChanged += new System.EventHandler(this.txtBitHasProductBot_TextChanged);
             // 
             // label23
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(203, 74);
+            this.label23.Location = new System.Drawing.Point(203, 48);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(85, 13);
+            this.label23.Size = new System.Drawing.Size(103, 13);
             this.label23.TabIndex = 10;
-            this.label23.Text = "Bit Setup Model:";
+            this.label23.Text = "Bit Has Product Bot:";
             // 
             // txtBitDoorStatus
             // 
             this.txtBitDoorStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBitDoorStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitDoorStatus.Location = new System.Drawing.Point(310, 45);
+            this.txtBitDoorStatus.Location = new System.Drawing.Point(310, 71);
             this.txtBitDoorStatus.Name = "txtBitDoorStatus";
             this.txtBitDoorStatus.Size = new System.Drawing.Size(64, 20);
             this.txtBitDoorStatus.TabIndex = 5;
@@ -839,23 +839,23 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.Location = new System.Drawing.Point(203, 48);
+            this.label27.Location = new System.Drawing.Point(203, 74);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(81, 13);
             this.label27.TabIndex = 4;
             this.label27.Text = "Bit Door Status:";
             // 
-            // txtBitHasProduct
+            // txtBitHasProductTop
             // 
-            this.txtBitHasProduct.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBitHasProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBitHasProduct.Location = new System.Drawing.Point(310, 19);
-            this.txtBitHasProduct.Name = "txtBitHasProduct";
-            this.txtBitHasProduct.Size = new System.Drawing.Size(64, 20);
-            this.txtBitHasProduct.TabIndex = 3;
-            this.txtBitHasProduct.Text = "M100";
-            this.txtBitHasProduct.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtBitHasProduct.TextChanged += new System.EventHandler(this.txtBitHasProduct_TextChanged);
+            this.txtBitHasProductTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBitHasProductTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBitHasProductTop.Location = new System.Drawing.Point(310, 19);
+            this.txtBitHasProductTop.Name = "txtBitHasProductTop";
+            this.txtBitHasProductTop.Size = new System.Drawing.Size(64, 20);
+            this.txtBitHasProductTop.TabIndex = 3;
+            this.txtBitHasProductTop.Text = "M100";
+            this.txtBitHasProductTop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtBitHasProductTop.TextChanged += new System.EventHandler(this.txtBitHasProduct_TextChanged);
             // 
             // label28
             // 
@@ -863,9 +863,9 @@
             this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label28.Location = new System.Drawing.Point(203, 22);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(84, 13);
+            this.label28.Size = new System.Drawing.Size(106, 13);
             this.label28.TabIndex = 2;
-            this.label28.Text = "Bit Has Product:";
+            this.label28.Text = "Bit Has Product Top:";
             // 
             // txtBitErrorMachine
             // 
@@ -969,11 +969,11 @@
         private System.Windows.Forms.TextBox txtRegConveyor;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.TextBox txtBitSetupModel;
+        private System.Windows.Forms.TextBox txtBitHasProductBot;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox txtBitDoorStatus;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.TextBox txtBitHasProduct;
+        private System.Windows.Forms.TextBox txtBitHasProductTop;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.TextBox txtBitErrorMachine;
         private System.Windows.Forms.Label label29;

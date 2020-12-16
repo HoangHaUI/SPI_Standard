@@ -14,13 +14,15 @@ namespace SPI_AOI.Models
         public double ExposureTime { get; set; }
         public Point MarkPosition { get; set; }
         public List<ReadCodePosition> ReadCodePosition { get; set; }
+        public double Conveyor { get; set; }
         public Hardware()
         {
             this.LightIntensity = new int[4] { 127,127,127,127};
             this.Gain = 0;
             this.ExposureTime = 3000;
-            MarkPosition = new Point();
-            ReadCodePosition = new List<ReadCodePosition>();
+            this.MarkPosition = new Point();
+            this.ReadCodePosition = new List<ReadCodePosition>();
+            this.Conveyor = 0;
         }
     }
     public class ReadCodePosition

@@ -97,9 +97,9 @@
                                     <Label Content="Speed:"  
                                            Canvas.Top="10" 
                                            Canvas.Right="60"></Label>
-                                    <Slider x:Name="slSpeed" Minimum="100" Maximum="3000" 
+                                    <Slider x:Name="slSpeed" Minimum="50" Maximum="2000" 
                                             TickPlacement="BottomRight" 
-                                            TickFrequency="100" 
+                                            TickFrequency="50" 
                                             IsSnapToTickEnabled="True"
                                             Value="1000" Width="100" 
                                             Canvas.Top="40"

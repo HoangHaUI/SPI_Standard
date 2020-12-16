@@ -43,6 +43,14 @@ namespace SPI_AOI.Devices
         {
             return mSLMP.SetDevice(mParam.PLC_BIT_GO_RIGHT_TOP, 1);
         }
+        public int Login()
+        {
+            return mSLMP.SetDevice2(mParam.PLC_REG_PASSWORD, 123456);
+        }
+        public int Logout()
+        {
+            return mSLMP.SetDevice2(mParam.PLC_REG_PASSWORD, 0);
+        }
         public int Reset_Go_Right_Top()
         {
             return mSLMP.SetDevice(mParam.PLC_BIT_GO_RIGHT_TOP, 0);
@@ -111,18 +119,19 @@ namespace SPI_AOI.Devices
         {
             return mSLMP.SetDevice2(mParam.PLC_REG_SPEED_CONVEYOR, speed);
         }
+        public int Set_Conveyor(int value)
+        {
+            return mSLMP.SetDevice2(mParam.PLC_REG_CONVEYOR, value);
+        }
+        public int Get_Conveyor()
+        {
+            return mSLMP.GetDevice2(mParam.PLC_REG_CONVEYOR);
+        }
         public int Get_Speed()
         {
             return mSLMP.GetDevice2(mParam.PLC_REG_SPEED_TOP);
         }
-        public int Set_Setup_Model()
-        {
-            return mSLMP.SetDevice(mParam.PLC_BIT_SETUP_MODEL, 1);
-        }
-        public int Reset_Setup_Model()
-        {
-            return mSLMP.SetDevice(mParam.PLC_BIT_SETUP_MODEL, 0);
-        }
+        
         public int Set_X_Top(int value)
         {
             return mSLMP.SetDevice2(mParam.PLC_REG_X_TOP, value);
@@ -163,21 +172,62 @@ namespace SPI_AOI.Devices
         {
             return mSLMP.GetDevice(mParam.PLC_BIT_ERROR_MACHINE_CONFIRM);
         }
-        public int Get_Has_Product()
-        {
-            return mSLMP.GetDevice(mParam.PLC_BIT_HAS_PRODUCT);
-        }
-        public int Set_Write_Coordinates_Finish()
+        
+        public int Set_Write_Coordinates_Finish_Top()
         {
             return mSLMP.SetDevice(mParam.PLC_BIT_WIRTE_COORDINATES_FINISH_TOP, 1);
         }
-        public int Get_Go_Coordinates_Finish()
+        public int Set_Write_Coordinates_Finish_Bot()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_WIRTE_COORDINATES_FINISH_BOT, 1);
+        }
+        public int Set_Write_Coordinates_Finish_Conveyor()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_WIRTE_COORDINATES_FINISH_CONVEYOR, 1);
+        }
+        public int Get_Go_Coordinates_Finish_Top()
         {
             return mSLMP.GetDevice(mParam.PLC_BIT_GO_COORDINATES_FINISH_TOP);
         }
+        public int Get_Go_Coordinates_Finish_Bot()
+        {
+            return mSLMP.GetDevice(mParam.PLC_BIT_GO_COORDINATES_FINISH_BOT);
+        }
+        public int Reset_Go_Coordinates_Finish_Top()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_COORDINATES_FINISH_TOP, 0);
+        }
+        public int Reset_Go_Coordinates_Finish_Bot()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_COORDINATES_FINISH_BOT, 0);
+        }
+        public int Get_Go_Coordinates_Finish_Conveyor()
+        {
+            return mSLMP.GetDevice(mParam.PLC_BIT_GO_COORDINATES_FINISH_CONVEYOR);
+        }
+        public int Reset_Go_Coordinates_Finish_Conveyor()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_COORDINATES_FINISH_CONVEYOR, 0);
+        }
+        public int Get_Has_Product_Top()
+        {
+            return mSLMP.GetDevice(mParam.PLC_BIT_HAS_PRODUCT_TOP);
+        }
+        public int Reset_Has_Product_Top()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_HAS_PRODUCT_TOP, 0);
+        }
+        public int Get_Has_Product_Bot()
+        {
+            return mSLMP.GetDevice(mParam.PLC_BIT_HAS_PRODUCT_BOT);
+        }
+        public int Reset_Has_Product_Bot()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_HAS_PRODUCT_BOT, 0);
+        }
         public int Set_Capture_Finish()
         {
-            return mSLMP.SetDevice(mParam.PLC_BIT_HAS_PRODUCT, 0);
+            return mSLMP.SetDevice(mParam.PLC_BIT_HAS_PRODUCT_TOP, 0);
         }
         public int Set_Pass()
         {
@@ -198,6 +248,42 @@ namespace SPI_AOI.Devices
         public int Get_Start_Stop_Status()
         {
             return mSLMP.GetDevice(mParam.PLC_BIT_MACHINE_STATUS);
+        }
+        public int Set_Write_Coordinates_Finish_Setup_Conveyor()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_WRITE_COORDINATES_FINISH_SETUP_CONVEYOR, 1);
+        }
+        public int Set_Write_Coordinates_Finish_Setup_Top()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_WRITE_COORDINATES_FINISH_SETUP_TOP, 1);
+        }
+        public int Set_Write_Coordinates_Finish_Setup_Bot()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_WRITE_COORDINATES_FINISH_SETUP_BOT, 1);
+        }
+        public int Reset_Go_Coordinates_Finish_Setup_Conveyor()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_COORDINATES_FINISH_SETUP_CONVEYOR, 0);
+        }
+        public int Reset_Go_Coordinates_Finish_Setup_Top()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_COORDINATES_FINISH_SETUP_TOP, 0);
+        }
+        public int Reset_Go_Coordinates_Finish_Setup_Bot()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_GO_COORDINATES_FINISH_SETUP_BOT, 0);
+        }
+        public int Get_Go_Coordinates_Finish_Setup_Conveyor()
+        {
+            return mSLMP.GetDevice(mParam.PLC_BIT_GO_COORDINATES_FINISH_SETUP_CONVEYOR);
+        }
+        public int Get_Go_Coordinates_Finish_Setup_Top()
+        {
+            return mSLMP.GetDevice(mParam.PLC_BIT_GO_COORDINATES_FINISH_SETUP_TOP);
+        }
+        public int Get_Go_Coordinates_Finish_Setup_Bot()
+        {
+            return mSLMP.GetDevice(mParam.PLC_BIT_GO_COORDINATES_FINISH_SETUP_BOT);
         }
     }
 }

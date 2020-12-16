@@ -16,6 +16,7 @@ using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using SPI_AOI.Models;
 using System.Threading;
+using System.Diagnostics;
 
 
 namespace SPI_AOI.Views.ModelManagement
@@ -89,20 +90,49 @@ namespace SPI_AOI.Views.ModelManagement
                 mTimer.Enabled = true;
                 mLoaded = true;
                 this.Dispatcher.Invoke(() => {
-                    grSettings.IsEnabled = true;
-                    nExposureTime.Value = Convert.ToInt32(mModel.HardwareSettings.ExposureTime);
-                    nGain.Value = Convert.ToDecimal(mModel.HardwareSettings.Gain);
-                    nLightIntensity1.Value = Convert.ToDecimal(mModel.HardwareSettings.LightIntensity[0]);
-                    nLightIntensity2.Value = Convert.ToDecimal(mModel.HardwareSettings.LightIntensity[1]);
-                    nLightIntensity3.Value = Convert.ToDecimal(mModel.HardwareSettings.LightIntensity[2]);
-                    nLightIntensity4.Value = Convert.ToDecimal(mModel.HardwareSettings.LightIntensity[3]);
-                    nScanWidth.Value = Convert.ToDecimal(mScanWidth);
-                    nScanHeight.Value = Convert.ToDecimal(mScanHeight);
-                    // teach matching
-                    nSearchX.Value = Convert.ToDecimal(mModel.Gerber.MarkPoint.SearchX);
-                    nSearchY.Value = Convert.ToDecimal(mModel.Gerber.MarkPoint.SearchY);
-                    nMatchingScore.Value = Convert.ToDecimal(mModel.Gerber.MarkPoint.Score);
-                    nGrayLevel.Value = Convert.ToDecimal(mModel.Gerber.MarkPoint.ThresholdValue);
+                LoadIndexReadCodePosition();
+                mPLC.Login();
+                SetConveyor(Convert.ToInt32(mModel.HardwareSettings.Conveyor));
+                mPLC.Set_Write_Coordinates_Finish_Setup_Conveyor();
+                grSettings.IsEnabled = true;
+                WaitingForm wait = new WaitingForm("Moving conveyor...");
+                Thread a = new Thread(() =>{
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
+                        while (mPLC.Get_Go_Coordinates_Finish_Setup_Conveyor() != 1 && sw.ElapsedMilliseconds < 180000)
+                        {
+                            mPLC.Reset_Go_Coordinates_Finish_Setup_Conveyor();
+                            Thread.Sleep(100);
+                        }
+                    wait.KillMe = true;
+                });
+                    a.Start();
+                wait.ShowDialog();
+                if (mModel.HardwareSettings.MarkPosition != null)
+                {
+                    System.Drawing.Point p = mModel.HardwareSettings.MarkPosition;
+                    SetTopAxis(p.X, p.Y);
+                }
+                if (mModel.HardwareSettings.ReadCodePosition.Count > 0)
+                {
+                    var p = mModel.HardwareSettings.ReadCodePosition[0];
+                    SetTopAxis(p.Origin.X, p.Origin.Y);
+                }
+                nExposureTime.Value = Convert.ToInt32(mModel.HardwareSettings.ExposureTime);
+                nGain.Value = Convert.ToDecimal(mModel.HardwareSettings.Gain);
+                nLightIntensity1.Value = Convert.ToDecimal(mModel.HardwareSettings.LightIntensity[0]);
+                nLightIntensity2.Value = Convert.ToDecimal(mModel.HardwareSettings.LightIntensity[1]);
+                nLightIntensity3.Value = Convert.ToDecimal(mModel.HardwareSettings.LightIntensity[2]);
+                nLightIntensity4.Value = Convert.ToDecimal(mModel.HardwareSettings.LightIntensity[3]);
+                nScanWidth.Value = Convert.ToDecimal(mScanWidth);
+                nScanHeight.Value = Convert.ToDecimal(mScanHeight);
+                mPLC.Login();
+                // teach matching
+                nSearchX.Value = Convert.ToDecimal(mModel.Gerber.MarkPoint.SearchX);
+                nSearchY.Value = Convert.ToDecimal(mModel.Gerber.MarkPoint.SearchY);
+                nMatchingScore.Value = Convert.ToDecimal(mModel.Gerber.MarkPoint.Score);
+                nGrayLevel.Value = Convert.ToDecimal(mModel.Gerber.MarkPoint.ThresholdValue);
+                grSettings.IsEnabled = true;
                 });
             });
             threadCheck.Start();
@@ -130,7 +160,7 @@ namespace SPI_AOI.Views.ModelManagement
                         using (Image<Bgr, byte> imgSearchBgr = new Image<Bgr, byte>(rectSearch.Size))
                         {
                             CvInvoke.CvtColor(img, imgSearchBinary, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
-                            CvInvoke.Threshold(imgSearchBinary, imgSearchBinary, threshold, 255, Emgu.CV.CvEnum.ThresholdType.BinaryInv);
+                            CvInvoke.Threshold(imgSearchBinary, imgSearchBinary, threshold, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
                             CvInvoke.CvtColor(imgSearchBinary, imgSearchBgr, Emgu.CV.CvEnum.ColorConversion.Gray2Bgr);
                             Tuple<VectorOfPoint, double> markInfo = Mark.MarkDetection(imgSearchBinary, template);
                             double realScore = markInfo.Item2;
@@ -171,6 +201,7 @@ namespace SPI_AOI.Views.ModelManagement
             mCount++;
             mTimer.Enabled = mIsTimerRunning;
         }
+        
         private void btUp_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (!mLoaded)
@@ -311,21 +342,23 @@ namespace SPI_AOI.Views.ModelManagement
             }
             if (rbBotAxis.IsChecked == true)
             {
-                mPLC.Set_Speed_Bot(Convert.ToInt32(slSpeed.Value));
+                mPLC.Set_Speed_Bot(Convert.ToInt32(slSpeed.Value * 2));
             }
             if (rbConveyor.IsChecked == true)
             {
-                mPLC.Set_Speed_Conveyor(Convert.ToInt32(slSpeed.Value));
+                mPLC.Set_Speed_Conveyor(Convert.ToInt32(slSpeed.Value * 15));
             }
         }
         private void GetPositionAxis()
         {
             int xTop = mPLC.Get_X_Top();
             int yTop = mPLC.Get_Y_Top();
+            int valConveyor = mPLC.Get_Conveyor();
             lock (mModel)
             {
                 mModel.HardwareSettings.MarkPosition =
                     new System.Drawing.Point(xTop, yTop);
+                mModel.HardwareSettings.Conveyor = valConveyor;
             }
         }
         private void nExposureTime_ValueChanged(object sender, EventArgs e)
@@ -501,7 +534,26 @@ namespace SPI_AOI.Views.ModelManagement
                 return;
             mScanHeight = Convert.ToDouble((sender as System.Windows.Forms.NumericUpDown).Value);
         }
-
+        private void SetConveyor(int x)
+        {
+            mPLC.Reset_Go_Coordinates_Finish_Setup_Conveyor();
+            mPLC.Set_Conveyor(x);
+            mPLC.Set_Write_Coordinates_Finish_Setup_Conveyor();
+        }
+        private void SetTopAxis(int x, int y)
+        {
+            mPLC.Reset_Go_Coordinates_Finish_Setup_Top();
+            mPLC.Set_X_Top(x);
+            mPLC.Set_X_Top(y);
+            mPLC.Set_Write_Coordinates_Finish_Setup_Top();
+        }
+        private void SetBotAxis(int x, int y)
+        {
+            mPLC.Reset_Go_Coordinates_Finish_Setup_Bot();
+            mPLC.Set_X_Bot(x);
+            mPLC.Set_X_Bot(y);
+            mPLC.Set_Write_Coordinates_Finish_Setup_Bot();
+        }
         private void cbScanPointID_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(cbScanPointID.SelectedIndex >= 0)
@@ -509,13 +561,11 @@ namespace SPI_AOI.Views.ModelManagement
                 ReadCodePosition readCodeInfo = mModel.HardwareSettings.ReadCodePosition[cbScanPointID.SelectedIndex];
                 if(readCodeInfo.Surface == "TOP")
                 {
-                    mPLC.Set_X_Top(readCodeInfo.Origin.X);
-                    mPLC.Set_X_Top(readCodeInfo.Origin.Y);
+                    SetTopAxis(readCodeInfo.Origin.X, readCodeInfo.Origin.Y);
                 } 
                 else if (readCodeInfo.Surface == "BOT")
                 {
-                    mPLC.Set_X_Bot(readCodeInfo.Origin.X);
-                    mPLC.Set_X_Bot(readCodeInfo.Origin.Y);
+                    SetBotAxis(readCodeInfo.Origin.X, readCodeInfo.Origin.Y);
                 }
                 nScanWidth.Value = Convert.ToDecimal(readCodeInfo.Width);
                 nScanHeight.Value = Convert.ToDecimal(readCodeInfo.Height);
@@ -546,27 +596,41 @@ namespace SPI_AOI.Views.ModelManagement
                 y = mPLC.Get_Y_Top();
                 surface = "TOP";
             }
-            ReadCodePosition readCodeInfo = new ReadCodePosition();
-            readCodeInfo.Origin = new System.Drawing.Point(x, y);
-            readCodeInfo.Surface = surface;
-            readCodeInfo.Height = mScanHeight;
-            readCodeInfo.Width = mScanWidth;
-            lock(mModel)
+            var r = MessageBox.Show(string.Format("Are you want to add\nPoint ({0},{1}) \nSurface {2}\n to read code position?", x, y, surface), "Information", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            if (r == MessageBoxResult.Yes)
             {
-                mModel.HardwareSettings.ReadCodePosition.Add(readCodeInfo);
+                ReadCodePosition readCodeInfo = new ReadCodePosition();
+                readCodeInfo.Origin = new System.Drawing.Point(x, y);
+                readCodeInfo.Surface = surface;
+                readCodeInfo.Height = mScanHeight;
+                readCodeInfo.Width = mScanWidth;
+                lock (mModel)
+                {
+                    mModel.HardwareSettings.ReadCodePosition.Add(readCodeInfo);
+                }
+                LoadIndexReadCodePosition();
+                MessageBox.Show("Add successfully!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            LoadIndexReadCodePosition();
         }
 
         private void btDelScan_Click(object sender, RoutedEventArgs e)
         {
-            if (cbScanPointID.SelectedIndex >= 0)
+            int id = cbScanPointID.SelectedIndex;
+            if (id >= 0)
             {
-                lock (mModel)
+                var p = mModel.HardwareSettings.ReadCodePosition[id];
+                int x = p.Origin.X;
+                int y = p.Origin.Y;
+                string surface = p.Surface;
+                var r = MessageBox.Show(string.Format("Are you want to add\nPoint ({0},{1}) \nSurface {2}\n to read code position?", x, y, surface), "Information", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                if (r == MessageBoxResult.Yes)
                 {
-                    mModel.HardwareSettings.ReadCodePosition.RemoveAt(cbScanPointID.SelectedIndex);
+                    lock (mModel)
+                    {
+                        mModel.HardwareSettings.ReadCodePosition.RemoveAt(id);
+                    }
+                    LoadIndexReadCodePosition();
                 }
-                LoadIndexReadCodePosition();
             }
             
         }

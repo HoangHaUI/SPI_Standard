@@ -31,9 +31,9 @@ namespace SPI_AOI.Views.MainConfigWindow
         {
             txtIP.Text = mParam.PLC_IP;
             nPort.Value = mParam.PLC_PORT;
-            txtBitHasProduct.Text = mParam.PLC_BIT_HAS_PRODUCT;
+            txtBitHasProductTop.Text = mParam.PLC_BIT_HAS_PRODUCT_TOP;
             txtBitDoorStatus.Text = mParam.PLC_BIT_DOOR_STATUS;
-            txtBitSetupModel.Text = mParam.PLC_BIT_SETUP_MODEL;
+            txtBitHasProductBot.Text = mParam.PLC_BIT_HAS_PRODUCT_BOT;
             txtBitErrorMachine.Text = mParam.PLC_BIT_ERROR_MACHINE;
             txtBitReadCodeFail.Text = mParam.PLC_BIT_READ_QRCODE_FAIL;
             txtBitCaptureFail.Text = mParam.PLC_BIT_CAPTURE_FAIL;
@@ -94,10 +94,17 @@ namespace SPI_AOI.Views.MainConfigWindow
             if (!mLoaded)
                 return;
             TextBox txt = sender as TextBox;
-            mParam.PLC_BIT_HAS_PRODUCT = txt.Text;
+            mParam.PLC_BIT_HAS_PRODUCT_TOP = txt.Text;
             mParam.Save();
         }
-
+        private void txtBitHasProductBot_TextChanged(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            TextBox txt = sender as TextBox;
+            mParam.PLC_BIT_HAS_PRODUCT_BOT = txt.Text;
+            mParam.Save();
+        }
         private void txtBitDoorStatus_TextChanged(object sender, EventArgs e)
         {
             if (!mLoaded)
@@ -106,15 +113,7 @@ namespace SPI_AOI.Views.MainConfigWindow
             mParam.PLC_BIT_DOOR_STATUS = txt.Text;
             mParam.Save();
         }
-
-        private void txtBitSetupModel_TextChanged(object sender, EventArgs e)
-        {
-            if (!mLoaded)
-                return;
-            TextBox txt = sender as TextBox;
-            mParam.PLC_BIT_SETUP_MODEL = txt.Text;
-            mParam.Save();
-        }
+        
 
         private void txtBitErrorMachine_TextChanged(object sender, EventArgs e)
         {
@@ -349,5 +348,7 @@ namespace SPI_AOI.Views.MainConfigWindow
             mParam.PLC_BIT_GO_COORDINATES_FINISH_CONVEYOR = txt.Text;
             mParam.Save();
         }
+
+        
     }
 }

@@ -50,7 +50,7 @@
     <Setting Name="PLC_BIT_ERROR_MACHINE_CONFIRM" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="PLC_BIT_HAS_PRODUCT" Type="System.String" Scope="User">
+    <Setting Name="PLC_BIT_HAS_PRODUCT_TOP" Type="System.String" Scope="User">
       <Value Profile="(Default)">M100</Value>
     </Setting>
     <Setting Name="PLC_BIT_WIRTE_COORDINATES_FINISH_TOP" Type="System.String" Scope="User">
@@ -71,8 +71,8 @@
     <Setting Name="PLC_BIT_MACHINE_STATUS" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="PLC_BIT_SETUP_MODEL" Type="System.String" Scope="User">
-      <Value Profile="(Default)">M110</Value>
+    <Setting Name="PLC_BIT_HAS_PRODUCT_BOT" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M105</Value>
     </Setting>
     <Setting Name="PLC_BIT_CONTROL_RUN" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -84,7 +84,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LIGHT_COM" Type="System.String" Scope="User">
-      <Value Profile="(Default)">COM10</Value>
+      <Value Profile="(Default)">COM4</Value>
     </Setting>
     <Setting Name="PLC_BIT_GO_UP_BOT" Type="System.String" Scope="User">
       <Value Profile="(Default)">M321</Value>
@@ -120,10 +120,34 @@
       <Value Profile="(Default)">M107</Value>
     </Setting>
     <Setting Name="PLC_BIT_GO_COORDINATES_FINISH_CONVEYOR" Type="System.String" Scope="User">
-      <Value Profile="(Default)">M120</Value>
+      <Value Profile="(Default)">M140</Value>
     </Setting>
     <Setting Name="PLC_BIT_WIRTE_COORDINATES_FINISH_CONVEYOR" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M110</Value>
+    </Setting>
+    <Setting Name="AUTOSCAN_COM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM4</Value>
+    </Setting>
+    <Setting Name="PLC_REG_PASSWORD" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D0</Value>
+    </Setting>
+    <Setting Name="PLC_BIT_WRITE_COORDINATES_FINISH_SETUP_TOP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M316</Value>
+    </Setting>
+    <Setting Name="PLC_BIT_WRITE_COORDINATES_FINISH_SETUP_BOT" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M336</Value>
+    </Setting>
+    <Setting Name="PLC_BIT_WRITE_COORDINATES_FINISH_SETUP_CONVEYOR" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M354</Value>
+    </Setting>
+    <Setting Name="PLC_BIT_GO_COORDINATES_FINISH_SETUP_TOP" Type="System.String" Scope="User">
       <Value Profile="(Default)">M121</Value>
+    </Setting>
+    <Setting Name="PLC_BIT_GO_COORDINATES_FINISH_SETUP_BOT" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M122</Value>
+    </Setting>
+    <Setting Name="PLC_BIT_GO_COORDINATES_FINISH_SETUP_CONVEYOR" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M120</Value>
     </Setting>
   </Settings>
 </SettingsFile>

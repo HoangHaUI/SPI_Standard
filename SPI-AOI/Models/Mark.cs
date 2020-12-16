@@ -41,8 +41,13 @@ namespace SPI_AOI.Models
                 CvInvoke.FindContours(ImgBinary, contours, null, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
                 for (int i = 0; i < contours.Size; i++)
                 {
-                    double score = CvInvoke.MatchShapes(Template, contours[i], Emgu.CV.CvEnum.ContoursMatchType.I3);
-                    if(score < crScore)
+                    double scoreMatching = CvInvoke.MatchShapes(Template, contours[i], Emgu.CV.CvEnum.ContoursMatchType.I3);
+                    double scoreCurrent = CvInvoke.ContourArea(contours[i]);
+                    double areaTemplate = CvInvoke.ContourArea(Template);
+                    double scoreArea = Math.Min(areaTemplate, scoreCurrent) / Math.Max(areaTemplate, scoreCurrent);
+                    scoreArea = 1 - scoreArea;
+                    double score = Math.Min(scoreMatching, scoreArea);
+                    if (score < crScore)
                     {
                         if(mark != null)
                         {
