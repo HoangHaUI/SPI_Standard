@@ -28,8 +28,22 @@ namespace SPI_AOI.Models
     public class ReadCodePosition
     {
         public Point Origin { get; set; }
-        public string Surface { get; set; }
+        public Surface Surface { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
+        public ReadCodePosition Copy()
+        {
+            ReadCodePosition cp = new ReadCodePosition();
+            cp.Surface = this.Surface;
+            cp.Width = this.Width;
+            cp.Height = this.Height;
+            cp.Origin = new Point(this.Origin.X, this.Origin.Y);
+            return cp;
+        }
+    }
+    public enum Surface
+    {
+        TOP,
+        BOT
     }
 }

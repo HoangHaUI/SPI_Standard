@@ -12,11 +12,7 @@
         WindowStartupLocation="CenterScreen"
         Initialized="Window_Initialized"
         Title="[FII] SPI-AOI" Background="#FFF0F0F0">
-    <Grid x:Name="grMain">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="157*"/>
-            <ColumnDefinition Width="291*"/>
-        </Grid.ColumnDefinitions>
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="85"/>
             <RowDefinition/>
@@ -100,21 +96,22 @@
                         <Image Source="../Resources/Icons/model_icon.png" Width="25"/>
                     </Button>
                     <Separator/>
-                    <Label Content="Model:" />
-                    <ComboBox x:Name="cbModelsName" Width="300" Height="30"/>
-                    <Button ToolTip="Run"  Style="{StaticResource btToolBarStyle}">
+                    <Label Content="Model:"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <ComboBox x:Name="cbModelsName" Width="300" FontSize="15" FontWeight="Bold" Background="#FFDDDDDD" Height="35"/>
+                    <Button ToolTip="Run" Style="{StaticResource btToolBarStyle}">
                         <Image Source="../Resources/Icons/start.png" Width="25"/>
                     </Button>
                 </ToolBar>
             </DockPanel>
         </StackPanel>
         <Grid Grid.Row="1" Margin="5" Grid.ColumnSpan="2">
-            <Grid Margin="5">
+            <Grid Margin="5" x:Name="grMain">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="480"/>
-                    <ColumnDefinition Width="350"/>
+                    <ColumnDefinition x:Name="ColInfo" Width="480"/>
+                    <ColumnDefinition x:Name="ColStatistical" Width="350"/>
+                    <ColumnDefinition x:Name="ColError" Width="0"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0" Margin="3">
@@ -122,9 +119,20 @@
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="200"/>
                     </Grid.RowDefinitions>
-                    <GroupBox x:Name="groupBox" Grid.Row="0" Header="Diagram" BorderBrush="Gray" FontWeight="Bold">
-                        <Border Background="Black" Margin="5">
-                            <Image/>
+                    <GroupBox x:Name="groupBox" Grid.Row="0" Header="Diagram"
+                              BorderBrush="Gray" FontWeight="Bold">
+                        <Border x:Name="bdImage" Background="Gray"
+                                Margin="5" ClipToBounds="True" >
+                            <Grid>
+                                <Image x:Name="imbDiagram" >
+                                </Image>
+                                <Label x:Name="lbProductStatus" Content="PASS" Foreground="Green"
+                                       FontWeight="Bold"
+                                       FontSize="100" 
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"></Label>
+                            </Grid>
+                            
                         </Border>
                     </GroupBox>
                     <GroupBox x:Name="groupBox1" Grid.Row="1" BorderBrush="Gray" Header="Panel Position"  >
@@ -138,7 +146,7 @@
                 <Grid Grid.Column="1" Margin="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="180"/>
-                        <RowDefinition Height="300"/>
+                        <RowDefinition Height="360"/>
                         <RowDefinition Height="100"/>
                         <RowDefinition Height="35*"/>
                     </Grid.RowDefinitions>
@@ -153,23 +161,23 @@
                                 <StackPanel Margin="5">
                                     <StackPanel Orientation="Horizontal">
                                         <Label  Content="Model Name:" Width="100" Foreground="Gray"/>
-                                        <Label  Content="SMT-HPT102SJ2008013" FontSize="15" FontWeight="Bold"/>
+                                        <Label  Content="-----" FontSize="15" FontWeight="Bold"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <Label  Content="Load time:" Width="100" Foreground="Gray"/>
-                                        <Label  Content="11:31:20 30/11/2020" FontSize="15" />
+                                        <Label  Content="-----" FontSize="15" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <Label  Content="Gerber file:" Width="100" Foreground="Gray"/>
-                                        <Label  Content="HPT102SJ2008013.gbr" FontSize="15"/>
+                                        <Label  Content="-----" FontSize="15"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <Label  Content="FOVs:" Width="100" Foreground="Gray"/>
-                                        <Label  Content="111 FOVs" FontSize="15"/>
+                                        <Label  Content="-----" FontSize="15"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <Label  Content="Cycle Time:" Width="100" Foreground="Gray"/>
-                                        <Label  Content="30.5s" FontSize="15"/>
+                                        <Label  Content="-----" FontSize="15"/>
                                     </StackPanel>
                                 </StackPanel>
                             </GroupBox>
@@ -179,10 +187,12 @@
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
+                            
                             <Grid Grid.Row="0">
-                                <GroupBox Header="PLC"  FontWeight="Bold">
-                                    <Border Background="Green" BorderBrush="White" BorderThickness="0.7" CornerRadius="5" Margin="5">
-                                        <Label  Content="OK" 
+                                <GroupBox Header="DOOR" FontWeight="Bold">
+                                    <Border x:Name="bdDoor" Background="Green" BorderBrush="White" 
+                                                    BorderThickness="0.7" CornerRadius="5" Margin="5">
+                                        <Label x:Name="lbDoor"  Content="Closed" 
                                                 HorizontalAlignment="Center" 
                                                 VerticalAlignment="Center"
                                                 FontWeight="Bold" FontSize="15"
@@ -191,10 +201,9 @@
                                 </GroupBox>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <GroupBox Header="DOOR" FontWeight="Bold">
-                                    <Border Background="Green" BorderBrush="White" 
-                                                    BorderThickness="0.7" CornerRadius="5" Margin="5">
-                                        <Label  Content="Closed" 
+                                <GroupBox Header="PLC"  FontWeight="Bold">
+                                    <Border x:Name="bdPLC" Background="Green" BorderBrush="White" BorderThickness="0.7" CornerRadius="5" Margin="5">
+                                        <Label x:Name="lbPLC" Content="OK" 
                                                 HorizontalAlignment="Center" 
                                                 VerticalAlignment="Center"
                                                 FontWeight="Bold" FontSize="15"
@@ -207,8 +216,8 @@
                     <Grid Grid.Row="1">
                         <GroupBox Header="Camera View"
                                   FontWeight="Bold" BorderBrush="Gray">
-                            <Border Margin="5" Background="DarkGray">
-                                <Image/>
+                            <Border Margin="5" Background="Gray">
+                                <Image x:Name="ImbCameraView"/>
                             </Border>
                         </GroupBox>
                     </Grid>
@@ -232,9 +241,9 @@
                             <Grid Grid.Column="2">
                                 <GroupBox Header="FOVs" BorderBrush="Gray" FontWeight="Bold">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <Label Content="30" FontSize="35"/>
+                                        <Label Content="--" FontSize="35"/>
                                         <Label Content="/" FontSize="35"/>
-                                        <Label Content="30" FontSize="35"/>
+                                        <Label Content="--" FontSize="35"/>
                                     </StackPanel>
                                 </GroupBox>
                             </Grid>
@@ -252,24 +261,24 @@
                                         <StackPanel Margin="5">
                                             <StackPanel Orientation="Horizontal">
                                                 <Label  Content="Model Name:" Width="100" Foreground="Gray"/>
-                                                <Label  Content="SMT-HPT102SJ2008013" FontSize="15" FontWeight="Bold"/>
+                                                <Label  Content="-----" FontSize="15" FontWeight="Bold"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal"/>
                                             <StackPanel Orientation="Horizontal">
                                                 <Label  Content="Capture Time:" Width="100" Foreground="Gray"/>
-                                                <Label  Content="11:31:20 30/11/2020" FontSize="15" />
+                                                <Label  Content="-----" FontSize="15" />
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
                                                 <Label  Content="Panel Code:" Width="100" Foreground="Gray"/>
-                                                <Label  Content="SVM0002353" FontSize="15"/>
+                                                <Label  Content="-----" FontSize="15"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
                                                 <Label  Content="Cycle Time:" Width="100" Foreground="Gray"/>
-                                                <Label  Content="30.5s" FontSize="15"/>
+                                                <Label  Content="-----" FontSize="15"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
                                                 <Label  Content="FOV No.:" Width="100" Foreground="Gray"/>
-                                                <Label  Content="10" FontSize="15"/>
+                                                <Label  Content="-----" FontSize="15"/>
                                             </StackPanel>
 
                                         </StackPanel>
@@ -303,10 +312,10 @@
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <GroupBox Header="Running Mode" FontWeight="Bold" >
-                                    <Border Background="Green" BorderBrush="White"
+                                    <Border x:Name="bdRunningMode" Background="Green" BorderBrush="White"
                                             BorderThickness="0.7" CornerRadius="5" 
                                             Margin="5">
-                                        <Label  Content="Control Run" 
+                                        <Label x:Name="lbRunningMode" Content="Control Run" 
                                                 HorizontalAlignment="Center"  
                                                 VerticalAlignment="Center" 
                                                 FontWeight="Bold" FontSize="15"
@@ -316,10 +325,10 @@
                             </Grid>
                             <Grid Grid.Column="1">
                                 <GroupBox Header="Machine Status" FontWeight="Bold" >
-                                    <Border Background="Green"
+                                    <Border x:Name="bdMachineStatus" Background="Green"
                                             BorderBrush="White" BorderThickness="0.7" 
                                             CornerRadius="5" Margin="5">
-                                        <Label  Content="Running" 
+                                        <Label  x:Name="lbMachineStatus" Content="Running" 
                                                 HorizontalAlignment="Center" 
                                                 VerticalAlignment="Center" 
                                                 FontWeight="Bold" FontSize="15"
@@ -415,6 +424,11 @@
                                 </DataGrid>
                             </Grid>
                         </GroupBox>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="3">
+                    <Grid>
+                        
                     </Grid>
                 </Grid>
             </Grid>

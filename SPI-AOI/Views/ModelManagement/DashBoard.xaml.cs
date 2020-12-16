@@ -22,18 +22,13 @@ namespace SPI_AOI.Views.ModelManagement
     public partial class DashBoard : Window
     {
         Model mModel = null;
-        string ModelPath = "Models";
-        string[] mListPathModel = new string[0];
         public DashBoard()
         {
             InitializeComponent();
         }
         private void Window_Initialized(object sender, EventArgs e)
         {
-            if(!Directory.Exists(ModelPath))
-            {
-                Directory.CreateDirectory(ModelPath);
-            }
+            
             ResetDetails();
             btReload_Click(null, null);
             cbModelsName_SelectionChanged(null, null);
@@ -42,30 +37,31 @@ namespace SPI_AOI.Views.ModelManagement
         {
             string selected = Convert.ToString(cbModelsName.SelectedItem);
             cbModelsName.Items.Clear();
-            mListPathModel = Directory.GetFiles(ModelPath, "*.json");
-            for (int i = 0; i < mListPathModel.Length; i++)
+            string[] modelNames = Model.GetModelNames();
+            if(modelNames != null)
             {
-                FileInfo fi = new FileInfo(mListPathModel[i]);
-                
-                cbModelsName.Items.Add(fi.Name.Replace(".json", ""));
+                for (int i = 0; i < modelNames.Length; i++)
+                {
+                    cbModelsName.Items.Add(modelNames[i]);
+                }
             }
-            if (mListPathModel.Contains(selected))
+            if (modelNames.Contains(selected))
             {
                 cbModelsName.SelectedItem = selected;
             }
         }
         private void cbModelsName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (mModel != null)
+            {
+                mModel.Dispose();
+                mModel = null;
+            }
             if (cbModelsName.SelectedIndex > -1)
             {
                 string modelName = cbModelsName.SelectedItem.ToString();
                 int id = cbModelsName.SelectedIndex;
-                if (mModel != null)
-                {
-                    mModel.Dispose();
-                    mModel = null;
-                }
-                mModel = Model.LoadModel(mListPathModel[id]);
+                mModel = Model.LoadModelByName(cbModelsName.SelectedItem.ToString());
                 if (mModel != null)
                 {
                     // insert model to config
@@ -99,14 +95,37 @@ namespace SPI_AOI.Views.ModelManagement
 
         private void btSaveModel_Click(object sender, RoutedEventArgs e)
         {
-            string modelName = mModel.Name;
-            mModel.SaveModel("Models/" + modelName + ".json");
-            MessageBox.Show(string.Format("Save {0} model successfully!", modelName), "SAVE MODEL", MessageBoxButton.OK, MessageBoxImage.Information);
+            if(mModel != null)
+            {
+                string modelName = mModel.Name;
+                mModel.SaveModel();
+                MessageBox.Show(string.Format("Save {0} model successfully!", modelName), "SAVE MODEL", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            
         }
 
         private void btRemoveModel_Click(object sender, RoutedEventArgs e)
         {
-
+            if (mModel != null)
+            {
+                string modelName = mModel.Name;
+                string[] models = Directory.GetFiles("Models/");
+                for (int i = 0; i < models.Length; i++)
+                {
+                    if (models[i].Contains(modelName))
+                    {
+                        var a = MessageBox.Show(string.Format("Are you want to detele {0} model ?", modelName), "DELETE MODEL", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                        if(a == MessageBoxResult.Yes)
+                        {
+                            File.Delete(models[i]);
+                            MessageBox.Show(string.Format("Delete {0} model successfully!", modelName), "DELETE MODEL", MessageBoxButton.OK, MessageBoxImage.Information);
+                            btReload_Click(null, null);
+                        }
+                        return;
+                    }
+                }
+                MessageBox.Show(string.Format("Not found {0} model!", modelName), "DELETE MODELL", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void btImportModel_Click(object sender, RoutedEventArgs e)

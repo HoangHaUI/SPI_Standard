@@ -46,7 +46,7 @@ namespace SPI_AOI.Models
                     double areaTemplate = CvInvoke.ContourArea(Template);
                     double scoreArea = Math.Min(areaTemplate, scoreCurrent) / Math.Max(areaTemplate, scoreCurrent);
                     scoreArea = 1 - scoreArea;
-                    double score = Math.Min(scoreMatching, scoreArea);
+                    double score = Math.Max(scoreMatching, scoreArea);
                     if (score < crScore)
                     {
                         if(mark != null)

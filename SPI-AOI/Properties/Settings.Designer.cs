@@ -610,5 +610,29 @@ namespace SPI_AOI.Properties {
                 this["PLC_BIT_GO_COORDINATES_FINISH_SETUP_CONVEYOR"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double PULSE_PER_MM {
+            get {
+                return ((double)(this["PULSE_PER_MM"]));
+            }
+            set {
+                this["PULSE_PER_MM"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TEST")]
+        public string RUNNING_MODE {
+            get {
+                return ((string)(this["RUNNING_MODE"]));
+            }
+            set {
+                this["RUNNING_MODE"] = value;
+            }
+        }
     }
 }

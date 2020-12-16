@@ -97,9 +97,9 @@
                                     <Label Content="Speed:"  
                                            Canvas.Top="10" 
                                            Canvas.Right="60"></Label>
-                                    <Slider x:Name="slSpeed" Minimum="50" Maximum="2000" 
+                                    <Slider x:Name="slSpeed" Minimum="50" Maximum="3050" 
                                             TickPlacement="BottomRight" 
-                                            TickFrequency="50" 
+                                            TickFrequency="150" 
                                             IsSnapToTickEnabled="True"
                                             Value="1000" Width="100" 
                                             Canvas.Top="40"
@@ -107,6 +107,9 @@
                                             ValueChanged="slSpeed_ValueChanged"
                                            >
                                     </Slider>
+                                    <Button x:Name="btGoXYZ" Width="80" Content="Go XYZ"
+                                            Click="btGoXYZ_Click"
+                                            Height="25" Canvas.Top="80" Canvas.Right="25"></Button>
                                 </Canvas>
                             </GroupBox>
 

@@ -516,19 +516,19 @@ namespace SPI_AOI.Views.ModelManagement
             }
         }
 
-        private void btDowload_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
-            ofd.Filter = "Json file | *.json";
-            if(ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                mModel = Model.LoadModel(ofd.FileName);
-                ShowAllLayerImb(ActionMode.Render);
-                UpdateListImportedFile();
-                UpdateUIModel();
-            }
+        //private void btDowload_Click(object sender, RoutedEventArgs e)
+        //{
+        //    System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+        //    ofd.Filter = "Json file | *.json";
+        //    if(ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        //    {
+        //        mModel = Model.LoadModel(ofd.FileName);
+        //        ShowAllLayerImb(ActionMode.Render);
+        //        UpdateListImportedFile();
+        //        UpdateUIModel();
+        //    }
             
-        }
+        //}
 
         private void btSetLinkPad_Click(object sender, RoutedEventArgs e)
         {
@@ -586,18 +586,18 @@ namespace SPI_AOI.Views.ModelManagement
             }
         }
 
-        private void btSave_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.SaveFileDialog sd = new System.Windows.Forms.SaveFileDialog();
-            sd.DefaultExt = ".json";
-            sd.Filter = "Json file | *.json";
-            if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
+        //private void btSave_Click(object sender, RoutedEventArgs e)
+        //{
+        //    System.Windows.Forms.SaveFileDialog sd = new System.Windows.Forms.SaveFileDialog();
+        //    sd.DefaultExt = ".json";
+        //    sd.Filter = "Json file | *.json";
+        //    if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        //    {
 
-                mModel.SaveModel(sd.FileName);
-                MessageBox.Show(string.Format("Save successfuly!..."), "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-        }
+        //        mModel.SaveModel(sd.FileName);
+        //        MessageBox.Show(string.Format("Save successfuly!..."), "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        //    }
+        //}
 
         private void chbHighlightPadLinked_Click(object sender, RoutedEventArgs e)
         {

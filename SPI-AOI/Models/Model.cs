@@ -31,6 +31,7 @@ namespace SPI_AOI.Models
         public bool ShowOnlyInROI { get; set; }
         public bool HightLineLinkedPad { get; set; }
         public Hardware HardwareSettings { get; set; }
+        private static string ModelPath = "Models";
         public static Model GetNewModel(string ModelName, string Owner, string GerberPath, float DPI, Size FOV)
         {
             Model model = new Model();
@@ -93,8 +94,9 @@ namespace SPI_AOI.Models
                 return 0;
             }
         }
-        public string SaveModel(string Path)
+        public string SaveModel()
         {
+            string modelPath = ModelPath + this.Name + ".json";
             var mgGerberProcessedBgr = this.ImgGerberProcessedBgr;
             this.ImgGerberProcessedBgr = null;
             var orgGerberImage = this.Gerber.OrgGerberImage;
@@ -105,7 +107,7 @@ namespace SPI_AOI.Models
             {
                 
                 string json = JsonConvert.SerializeObject(this);
-                File.WriteAllText(Path, json);
+                File.WriteAllText(modelPath, json);
             }
             catch
             {
@@ -117,9 +119,9 @@ namespace SPI_AOI.Models
                 this.Gerber.OrgGerberImage = orgGerberImage;
                 this.Gerber.ProcessingGerberImage = processingGerberImage;
             }
-            return new FileInfo(Path).FullName;
+            return new FileInfo(modelPath).FullName;
         }
-        public static Model LoadModel(string Path)
+        public static Model LoadModelByPath(string Path)
         {
             Model model = null;
             try
@@ -139,6 +141,34 @@ namespace SPI_AOI.Models
                 }
             }
             return model;
+        }
+        public static Model LoadModelByName(string ModelName)
+        {
+            string Path = GetPathModelByName(ModelName);
+            return LoadModelByPath(Path);
+        }
+        public static string[] GetModelNames()
+        {
+            string[] mListModelNames = Directory.GetFiles(ModelPath, "*.json");
+            for (int i = 0; i < mListModelNames.Length; i++)
+            {
+                FileInfo fi = new FileInfo(mListModelNames[i]);
+                mListModelNames[i] = fi.Name.Replace(".json", "");
+            }
+            return mListModelNames;
+        }
+        private static string GetPathModelByName(string modelName)
+        {
+            string[] mListModelNames = Directory.GetFiles(ModelPath, "*.json");
+            for (int i = 0; i < mListModelNames.Length; i++)
+            {
+                FileInfo fi = new FileInfo(mListModelNames[i]);
+                if (fi.Name.Contains(modelName))
+                {
+                    return fi.FullName;
+                }
+            }
+            return null;
         }
         public void RemoveCadByName(string Name)
         {

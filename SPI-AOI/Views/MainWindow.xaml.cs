@@ -14,6 +14,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
+using SPI_AOI.Models;
+using SPI_AOI.Devices;
+
+
 
 namespace SPI_AOI.Views
 {
@@ -35,14 +39,20 @@ namespace SPI_AOI.Views
             InitSummary();
             dgwSummary.ItemsSource = mSummary;
             dgwSummary.Items.Refresh();
-            UpdateChartCount(chartYeildRate, txtPass, txtFail, 1532, 45);
+            UpdateChartCount(chartYeildRate, txtPass, txtFail, 0, 0);
+            LoadModelsName();
+            UpdateStatus(Utils.LabelMode.PLC, Utils.LabelStatus.READY);
+            UpdateStatus(Utils.LabelMode.DOOR, Utils.LabelStatus.CLOSED);
+            UpdateStatus(Utils.LabelMode.RUNNING_MODE, Utils.LabelStatus.TEST);
+            UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.READY);
+            UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.READY);
+            //ColInfo.Width = new GridLength(0);
+            //ColStatistical.Width = new GridLength(1, GridUnitType.Star);
         }
         private void OnTimedEvent(object sender, System.Timers.ElapsedEventArgs e)
         {
             System.Timers.Timer timer = sender as System.Timers.Timer;
             timer.Enabled = false;
-            
-
             timer.Enabled = mIsRunning;
         }
         private void UpdateChartCount(Chart Chart, TextBox TxtPass, TextBox TxtFail, int Pass, int Fail)
@@ -108,6 +118,144 @@ namespace SPI_AOI.Views
             {
                  Heal.UI.MachineIssueForm machineIssueForm = new Heal.UI.MachineIssueForm();
                 machineIssueForm.ShowDialog();
+            }
+        }
+        private void LoadModelsName()
+        {
+            string selected = Convert.ToString(cbModelsName.SelectedItem);
+            cbModelsName.Items.Clear();
+            string[] modelNames = Model.GetModelNames();
+            if (modelNames != null)
+            {
+                for (int i = 0; i < modelNames.Length; i++)
+                {
+                    cbModelsName.Items.Add(modelNames[i]);
+                }
+            }
+            if (modelNames.Contains(selected))
+            {
+                cbModelsName.SelectedItem = selected;
+            }
+        }
+        private void UpdateBackgroundImage(Border border, Image image)
+        {
+            if (image.Source != null)
+            {
+                border.Background = new SolidColorBrush(Color.FromRgb(0x00, 0x32, 0x00));
+            }
+            else
+            {
+                border.Background = Brushes.Gray;
+            }
+        }
+        private void UpdateStatus(Utils.LabelMode Label, Utils.LabelStatus Status)
+        {
+            SolidColorBrush colorMode = GetColorStatus(Status);
+            string strMode = GetStringStatus(Status);
+            this.Dispatcher.Invoke(() => {
+                switch (Label)
+                {
+                    case Utils.LabelMode.PLC:
+                        bdPLC.Background = colorMode;
+                        lbPLC.Content = strMode;
+                        break;
+                    case Utils.LabelMode.DOOR:
+                        bdDoor.Background = colorMode;
+                        lbDoor.Content = strMode;
+                        break;
+                    case Utils.LabelMode.RUNNING_MODE:
+                        bdRunningMode.Background = colorMode;
+                        lbRunningMode.Content = strMode;
+                        break;
+                    case Utils.LabelMode.MACHINE_STATUS:
+                        bdMachineStatus.Background = colorMode;
+                        lbMachineStatus.Content = strMode;
+                        break;
+                    case Utils.LabelMode.PRODUCT_STATUS:
+                        lbProductStatus.Foreground = colorMode;
+                        lbProductStatus.Content = strMode;
+                        lbProductStatus.Opacity = 1;
+                        if (Status == Utils.LabelStatus.PROCESSING | Status == Utils.LabelStatus.READY)
+                        {
+                            lbProductStatus.Opacity = 0;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            });
+            
+        }
+        private string GetStringStatus(Utils.LabelStatus mode)
+        {
+            switch (mode)
+            {
+                case Utils.LabelStatus.PASS:
+                    return "PASS";
+                case Utils.LabelStatus.FAIL:
+                    return "FAIL";
+                case Utils.LabelStatus.GOOD:
+                    return "GOOD";
+                case Utils.LabelStatus.OK:
+                    return "OK";
+                case Utils.LabelStatus.CLOSED:
+                    return "CLOSED";
+                case Utils.LabelStatus.OPEN:
+                    return "OPEN";
+                case Utils.LabelStatus.RUNNING:
+                    return "RUNNING";
+                case Utils.LabelStatus.CONTROL_RUN:
+                    return "CONTROL RUN";
+                case Utils.LabelStatus.IDLE:
+                    return "IDLE";
+                case Utils.LabelStatus.READY:
+                    return "READY";
+                case Utils.LabelStatus.WAITTING:
+                    return "WAITTING";
+                case Utils.LabelStatus.PROCESSING:
+                    return "PROCESSING";
+                case Utils.LabelStatus.ERROR:
+                    return "ERROR";
+                case Utils.LabelStatus.TEST:
+                    return "TESTING";
+                default:
+                    return "NOT DEFINE";
+            }
+        }
+        private SolidColorBrush GetColorStatus(Utils.LabelStatus mode)
+        {
+            switch (mode)
+            {
+                case Utils.LabelStatus.PASS:
+                    return Brushes.Green;
+                case Utils.LabelStatus.FAIL:
+                    return Brushes.Red;
+                case Utils.LabelStatus.GOOD:
+                    return Brushes.Green;
+                case Utils.LabelStatus.OK:
+                    return Brushes.Green;
+                case Utils.LabelStatus.CLOSED:
+                    return Brushes.Green;
+                case Utils.LabelStatus.OPEN:
+                    return Brushes.Orange;
+                case Utils.LabelStatus.RUNNING:
+                    return Brushes.YellowGreen;
+                case Utils.LabelStatus.CONTROL_RUN:
+                    return Brushes.Green;
+                case Utils.LabelStatus.IDLE:
+                    return Brushes.Gray;
+                case Utils.LabelStatus.READY:
+                    return Brushes.DeepSkyBlue;
+                case Utils.LabelStatus.WAITTING:
+                    return Brushes.Orange;
+                case Utils.LabelStatus.PROCESSING:
+                    return Brushes.Orange;
+                case Utils.LabelStatus.ERROR:
+                    return Brushes.Red;
+                case Utils.LabelStatus.TEST:
+                    return Brushes.Orange;
+                default:
+                    return Brushes.Green;
             }
         }
     }

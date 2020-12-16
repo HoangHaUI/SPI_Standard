@@ -27,7 +27,7 @@ namespace SPI_AOI.Views.ModelManagement
     public partial class HardwareWindow : Window
     {
         Model mModel = null;
-        PadItem mPadMark = null;
+        
         IOT.HikCamera mCamera = Devices.MyCamera.GetInstance();
         System.Timers.Timer mTimer = new System.Timers.Timer(20);
         Devices.DKZ224V4ACCom mLightSource = new Devices.DKZ224V4ACCom(Properties.Settings.Default.LIGHT_COM);
@@ -35,21 +35,57 @@ namespace SPI_AOI.Views.ModelManagement
         bool mIsTimerRunning = false;
         bool mLoaded = false;
         int mCount = 10;
+
+
+        PadItem mPadMark = null;
         double mScanWidth = 10;
         double mScanHeight = 10;
+        List<ReadCodePosition> mReadCodePosition = new List<ReadCodePosition>();
+        double mExposureTime = 0;
+        double mGain = 0;
+        int[] mLightIntensity = new int[4];
+        System.Drawing.Point mMarkPoint = new System.Drawing.Point();
+        double mConveyor = 0;
+        double mMatchingScore = 0;
+        double mGrayLevel = 127;
+        double mSearchX = 5;
+        double mSearchY = 5;
+        
+        float mDPI = 500;
         public HardwareWindow(Model model)
         {
             mModel = model;
-            if(mModel.Gerber.MarkPoint.PadMark[0] > 0)
-            {
-                mPadMark = mModel.Gerber.PadItems[mModel.Gerber.MarkPoint.PadMark[0]];
-            }
+            LoadVariables();
             InitializeComponent();
             LoadUI();
         }
         private void Window_Initialized(object sender, EventArgs e)
         {
             
+        }
+        public void LoadVariables()
+        {
+            if (mModel.Gerber.MarkPoint.PadMark[0] > 0)
+            {
+                mPadMark = mModel.Gerber.PadItems[mModel.Gerber.MarkPoint.PadMark[0]];
+            }
+            var readCode = mModel.HardwareSettings.ReadCodePosition;
+            for (int i = 0; i < readCode.Count; i++)
+            {
+                mReadCodePosition.Add(readCode[i].Copy());
+            }
+            mExposureTime = mModel.HardwareSettings.ExposureTime;
+            mGain = mModel.HardwareSettings.Gain;
+            for (int i = 0; i < 4; i++)
+                mLightIntensity[i] = mModel.HardwareSettings.LightIntensity[i];
+            mMatchingScore = mModel.Gerber.MarkPoint.Score;
+            mGrayLevel = mModel.Gerber.MarkPoint.ThresholdValue;
+            mSearchX = mModel.Gerber.MarkPoint.SearchX;
+            mSearchY = mModel.Gerber.MarkPoint.SearchY;
+            System.Drawing.Point p = mModel.HardwareSettings.MarkPosition;
+            mMarkPoint = new System.Drawing.Point(p.X, p.Y);
+            mConveyor = mModel.HardwareSettings.Conveyor;
+            mDPI = mModel.DPI;
         }
         public void LoadUI()
         {
@@ -85,68 +121,42 @@ namespace SPI_AOI.Views.ModelManagement
                     return;
                 }
                 mCamera.StartGrabbing();
-                mIsTimerRunning = true;
-                mTimer.Elapsed += OnTimedEvent;
-                mTimer.Enabled = true;
-                mLoaded = true;
                 this.Dispatcher.Invoke(() => {
                 LoadIndexReadCodePosition();
                 mPLC.Login();
-                SetConveyor(Convert.ToInt32(mModel.HardwareSettings.Conveyor));
-                mPLC.Set_Write_Coordinates_Finish_Setup_Conveyor();
-                grSettings.IsEnabled = true;
-                WaitingForm wait = new WaitingForm("Moving conveyor...");
-                Thread a = new Thread(() =>{
-                    Stopwatch sw = new Stopwatch();
-                    sw.Start();
-                        while (mPLC.Get_Go_Coordinates_Finish_Setup_Conveyor() != 1 && sw.ElapsedMilliseconds < 180000)
-                        {
-                            mPLC.Reset_Go_Coordinates_Finish_Setup_Conveyor();
-                            Thread.Sleep(100);
-                        }
-                    wait.KillMe = true;
-                });
-                    a.Start();
-                wait.ShowDialog();
-                if (mModel.HardwareSettings.MarkPosition != null)
-                {
-                    System.Drawing.Point p = mModel.HardwareSettings.MarkPosition;
-                    SetTopAxis(p.X, p.Y);
-                }
-                if (mModel.HardwareSettings.ReadCodePosition.Count > 0)
-                {
-                    var p = mModel.HardwareSettings.ReadCodePosition[0];
-                    SetTopAxis(p.Origin.X, p.Origin.Y);
-                }
-                nExposureTime.Value = Convert.ToInt32(mModel.HardwareSettings.ExposureTime);
-                nGain.Value = Convert.ToDecimal(mModel.HardwareSettings.Gain);
-                nLightIntensity1.Value = Convert.ToDecimal(mModel.HardwareSettings.LightIntensity[0]);
-                nLightIntensity2.Value = Convert.ToDecimal(mModel.HardwareSettings.LightIntensity[1]);
-                nLightIntensity3.Value = Convert.ToDecimal(mModel.HardwareSettings.LightIntensity[2]);
-                nLightIntensity4.Value = Convert.ToDecimal(mModel.HardwareSettings.LightIntensity[3]);
+                nExposureTime.Value = Convert.ToInt32(mExposureTime);
+                nGain.Value = Convert.ToDecimal(mGain);
+                nLightIntensity1.Value = Convert.ToDecimal(mLightIntensity[0]);
+                nLightIntensity2.Value = Convert.ToDecimal(mLightIntensity[1]);
+                nLightIntensity3.Value = Convert.ToDecimal(mLightIntensity[2]);
+                nLightIntensity4.Value = Convert.ToDecimal(mLightIntensity[3]);
                 nScanWidth.Value = Convert.ToDecimal(mScanWidth);
                 nScanHeight.Value = Convert.ToDecimal(mScanHeight);
                 mPLC.Login();
                 // teach matching
-                nSearchX.Value = Convert.ToDecimal(mModel.Gerber.MarkPoint.SearchX);
-                nSearchY.Value = Convert.ToDecimal(mModel.Gerber.MarkPoint.SearchY);
-                nMatchingScore.Value = Convert.ToDecimal(mModel.Gerber.MarkPoint.Score);
-                nGrayLevel.Value = Convert.ToDecimal(mModel.Gerber.MarkPoint.ThresholdValue);
+                nSearchX.Value = Convert.ToDecimal(mSearchX);
+                nSearchY.Value = Convert.ToDecimal(mSearchY);
+                nMatchingScore.Value = Convert.ToDecimal(mMatchingScore);
+                nGrayLevel.Value = Convert.ToDecimal(mGrayLevel);
                 grSettings.IsEnabled = true;
                 });
+                mIsTimerRunning = true;
+                mTimer.Elapsed += OnTimedEvent;
+                mTimer.Enabled = true;
+                mLoaded = true;
             });
             threadCheck.Start();
         }
         private void OnTimedEvent(object sender, System.Timers.ElapsedEventArgs e)
         {
             mTimer.Enabled = false;
-            int searchW = Convert.ToInt32(mModel.Gerber.MarkPoint.SearchX * mModel.DPI / 25.4);
-            int searchH = Convert.ToInt32(mModel.Gerber.MarkPoint.SearchY * mModel.DPI / 25.4);
+            int searchW = Convert.ToInt32(mSearchX * mModel.DPI / 25.4);
+            int searchH = Convert.ToInt32(mSearchY * mModel.DPI / 25.4);
             int scanW = Convert.ToInt32(mScanWidth * mModel.DPI / 25.4);
             int scanH = Convert.ToInt32(mScanHeight * mModel.DPI / 25.4);
-            int threshold = Convert.ToInt32(mModel.Gerber.MarkPoint.ThresholdValue);
-            double score = mModel.Gerber.MarkPoint.Score;
-            VectorOfPoint template = mModel.Gerber.PadItems[ mModel.Gerber.MarkPoint.PadMark[0]].Contour;
+            int threshold = Convert.ToInt32(mGrayLevel);
+            double score = mMatchingScore;
+            VectorOfPoint template = mPadMark.Contour;
             using (System.Drawing.Bitmap bm = mCamera.GetOneBitmap(1000))
             {
                 if(bm != null)
@@ -176,7 +186,6 @@ namespace SPI_AOI.Views.ModelManagement
                                     }
                                 }
                             }
-                            
                             img.ROI = System.Drawing.Rectangle.Empty;
                             CvInvoke.Line(img, new System.Drawing.Point(0, img.Height / 2), new System.Drawing.Point(img.Width, img.Height / 2), new MCvScalar(255, 0, 0), 1);
                             CvInvoke.Line(img, new System.Drawing.Point(img.Width / 2, 0), new System.Drawing.Point(img.Width / 2, img.Height), new MCvScalar(255, 0, 0), 1);
@@ -273,6 +282,7 @@ namespace SPI_AOI.Views.ModelManagement
             if (rbTopAxis.IsChecked == true)
             {
                 mPLC.Reset_Go_Down_Top();
+                mMarkPoint = GetTopCoordinates();
             }
             if (rbBotAxis.IsChecked == true)
             {
@@ -281,6 +291,7 @@ namespace SPI_AOI.Views.ModelManagement
             if (rbConveyor.IsChecked == true)
             {
                 mPLC.Reset_Go_Down_Conveyor();
+                mConveyor = GetConveyorCoordinates();
             }
         }
 
@@ -291,6 +302,7 @@ namespace SPI_AOI.Views.ModelManagement
             if (rbTopAxis.IsChecked == true)
             {
                 mPLC.Reset_Go_Right_Top();
+                mMarkPoint = GetTopCoordinates();
             }
             if (rbBotAxis.IsChecked == true)
             {
@@ -305,6 +317,7 @@ namespace SPI_AOI.Views.ModelManagement
             if (rbTopAxis.IsChecked == true)
             {
                 mPLC.Reset_Go_Left_Top();
+                mMarkPoint = GetTopCoordinates();
             }
             if (rbBotAxis.IsChecked == true)
             {
@@ -319,6 +332,7 @@ namespace SPI_AOI.Views.ModelManagement
             if (rbTopAxis.IsChecked == true)
             {
                 mPLC.Reset_Go_Up_Top();
+                mMarkPoint = GetTopCoordinates();
             }
             if (rbBotAxis.IsChecked == true)
             {
@@ -327,6 +341,7 @@ namespace SPI_AOI.Views.ModelManagement
             if (rbConveyor.IsChecked == true)
             {
                 mPLC.Reset_Go_Up_Conveyor();
+                mConveyor = GetConveyorCoordinates();
             }
         }
         
@@ -349,49 +364,28 @@ namespace SPI_AOI.Views.ModelManagement
                 mPLC.Set_Speed_Conveyor(Convert.ToInt32(slSpeed.Value * 15));
             }
         }
-        private void GetPositionAxis()
-        {
-            int xTop = mPLC.Get_X_Top();
-            int yTop = mPLC.Get_Y_Top();
-            int valConveyor = mPLC.Get_Conveyor();
-            lock (mModel)
-            {
-                mModel.HardwareSettings.MarkPosition =
-                    new System.Drawing.Point(xTop, yTop);
-                mModel.HardwareSettings.Conveyor = valConveyor;
-            }
-        }
         private void nExposureTime_ValueChanged(object sender, EventArgs e)
         {
             if (!mLoaded)
                 return;
-            lock(mModel)
-            {
-                mModel.HardwareSettings.ExposureTime = Convert.ToDouble((sender as System.Windows.Forms.NumericUpDown).Value);
-            }
-            mCamera.SetParameter(IOT.KeyName.ExposureTime, Convert.ToInt32(mModel.HardwareSettings.ExposureTime));
+            mExposureTime = Convert.ToDouble((sender as System.Windows.Forms.NumericUpDown).Value);
+            mCamera.SetParameter(IOT.KeyName.ExposureTime, Convert.ToInt32(mExposureTime));
         }
 
         private void nGain_ValueChanged(object sender, EventArgs e)
         {
             if (!mLoaded)
                 return;
-            lock (mModel)
-            {
-                mModel.HardwareSettings.Gain = Convert.ToDouble((sender as System.Windows.Forms.NumericUpDown).Value);
-            }
-            mCamera.SetParameter(IOT.KeyName.Gain, (float)(mModel.HardwareSettings.Gain));
+            mGain = Convert.ToDouble((sender as System.Windows.Forms.NumericUpDown).Value);
+            mCamera.SetParameter(IOT.KeyName.Gain, (float)(mGain));
         }
 
         private void nLightIntensity1_ValueChanged(object sender, EventArgs e)
         {
             if (!mLoaded)
                 return;
-            lock (mModel)
-            {
-                mModel.HardwareSettings.LightIntensity[0] = Convert.ToInt32((sender as System.Windows.Forms.NumericUpDown).Value);
-            }
-            int[] value = mModel.HardwareSettings.LightIntensity;
+            mLightIntensity[0] = Convert.ToInt32((sender as System.Windows.Forms.NumericUpDown).Value);
+            int[] value = mLightIntensity;
             mLightSource.SetFour(value[0], value[1], value[2], value[3]);
         }
 
@@ -400,11 +394,8 @@ namespace SPI_AOI.Views.ModelManagement
         {
             if (!mLoaded)
                 return;
-            lock (mModel)
-            {
-                mModel.HardwareSettings.LightIntensity[1] = Convert.ToInt32((sender as System.Windows.Forms.NumericUpDown).Value);
-            }
-            int[] value = mModel.HardwareSettings.LightIntensity;
+            mLightIntensity[1] = Convert.ToInt32((sender as System.Windows.Forms.NumericUpDown).Value);
+            int[] value = mLightIntensity;
             mLightSource.SetFour(value[0], value[1], value[2], value[3]);
         }
 
@@ -412,11 +403,8 @@ namespace SPI_AOI.Views.ModelManagement
         {
             if (!mLoaded)
                 return;
-            lock (mModel)
-            {
-                mModel.HardwareSettings.LightIntensity[2] = Convert.ToInt32((sender as System.Windows.Forms.NumericUpDown).Value);
-            }
-            int[] value = mModel.HardwareSettings.LightIntensity;
+            mLightIntensity[2] = Convert.ToInt32((sender as System.Windows.Forms.NumericUpDown).Value);
+            int[] value = mLightIntensity;
             mLightSource.SetFour(value[0], value[1], value[2], value[3]);
         }
 
@@ -424,58 +412,88 @@ namespace SPI_AOI.Views.ModelManagement
         {
             if (!mLoaded)
                 return;
-            lock (mModel)
-            {
-                mModel.HardwareSettings.LightIntensity[3] = Convert.ToInt32((sender as System.Windows.Forms.NumericUpDown).Value);
-            }
-            int[] value = mModel.HardwareSettings.LightIntensity;
+            mLightIntensity[3] = Convert.ToInt32((sender as System.Windows.Forms.NumericUpDown).Value);
+            int[] value = mLightIntensity;
             mLightSource.SetFour(value[0], value[1], value[2], value[3]);
         }
         private void nSearchX_ValueChanged(object sender, EventArgs e)
         {
             if (!mLoaded)
                 return;
-            lock (mModel)
-            {
-                mModel.Gerber.MarkPoint.SearchX = Convert.ToDouble((sender as System.Windows.Forms.NumericUpDown).Value);
-            }
+            mSearchX = Convert.ToDouble((sender as System.Windows.Forms.NumericUpDown).Value);
         }
 
         private void nSearchY_ValueChanged(object sender, EventArgs e)
         {
             if (!mLoaded)
                 return;
-            lock (mModel)
-            {
-                mModel.Gerber.MarkPoint.SearchY = Convert.ToDouble((sender as System.Windows.Forms.NumericUpDown).Value);
-            }
+            mSearchY = Convert.ToDouble((sender as System.Windows.Forms.NumericUpDown).Value);
         }
 
         private void nMatchingScore_ValueChanged(object sender, EventArgs e)
         {
             if (!mLoaded)
                 return;
-            lock (mModel)
-            {
-                mModel.Gerber.MarkPoint.Score = Convert.ToDouble((sender as System.Windows.Forms.NumericUpDown).Value);
-            }
+            mMatchingScore = Convert.ToDouble((sender as System.Windows.Forms.NumericUpDown).Value);
         }
 
         private void nGrayLevel_ValueChanged(object sender, EventArgs e)
         {
             if (!mLoaded)
                 return;
-            lock (mModel)
-            {
-                mModel.Gerber.MarkPoint.ThresholdValue = Convert.ToDouble((sender as System.Windows.Forms.NumericUpDown).Value);
-            }
+            mGrayLevel = Convert.ToDouble((sender as System.Windows.Forms.NumericUpDown).Value);
         }
 
+        private bool SearchChanged()
+        {
+            var readCode = mModel.HardwareSettings.ReadCodePosition;
+            if (mReadCodePosition != readCode)
+                return true;
+            if (mExposureTime != mModel.HardwareSettings.ExposureTime)
+                return true;
+            if (mGain != mModel.HardwareSettings.Gain)
+                return true;
+            if (mLightIntensity != mModel.HardwareSettings.LightIntensity)
+                return true;
+            if (mMatchingScore != mModel.Gerber.MarkPoint.Score)
+                return true;
+            if (mGrayLevel != mModel.Gerber.MarkPoint.ThresholdValue)
+                return true;
+            if (mSearchX != mModel.Gerber.MarkPoint.SearchX)
+                return true;
+            if(mSearchY != mModel.Gerber.MarkPoint.SearchY)
+                return true;
+            System.Drawing.Point p = mModel.HardwareSettings.MarkPosition;
+            if (mMarkPoint != p)
+                return true;
+            if (mConveyor != mModel.HardwareSettings.Conveyor)
+                return true;
+            return false;
+        }
+        private void SaveChanged()
+        {
+            mModel.HardwareSettings.ReadCodePosition = new List<ReadCodePosition>();
+            for (int i = 0; i < mReadCodePosition.Count; i++)
+            {
+                mModel.HardwareSettings.ReadCodePosition.Add(mReadCodePosition[i].Copy());
+            }
+            mModel.HardwareSettings.ExposureTime = mExposureTime;
+            mModel.HardwareSettings.Gain = mGain;
+            for (int i = 0; i < 4; i++)
+            {
+                mModel.HardwareSettings.LightIntensity[i] = mLightIntensity[i];
+            }
+            mModel.Gerber.MarkPoint.Score = mMatchingScore;
+            mModel.Gerber.MarkPoint.ThresholdValue = mGrayLevel;
+            mModel.Gerber.MarkPoint.SearchX = mSearchX;
+            mModel.Gerber.MarkPoint.SearchY = mSearchY;
+            mModel.HardwareSettings.MarkPosition = mMarkPoint;
+            mModel.HardwareSettings.Conveyor = mConveyor;
+        }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if(mIsTimerRunning)
             {
-                GetPositionAxis();
                 mIsTimerRunning = false;
                 if (mCamera != null)
                 {
@@ -489,6 +507,14 @@ namespace SPI_AOI.Views.ModelManagement
                     }
                 }
                 mLightSource.Close();
+                if (SearchChanged())
+                {
+                    var r = MessageBox.Show("Are you want to save changed ?", "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    if(r == MessageBoxResult.Yes)
+                    {
+                        SaveChanged();
+                    }
+                }
             }
         }
 
@@ -554,16 +580,26 @@ namespace SPI_AOI.Views.ModelManagement
             mPLC.Set_X_Bot(y);
             mPLC.Set_Write_Coordinates_Finish_Setup_Bot();
         }
+        public System.Drawing.Point GetTopCoordinates()
+        {
+            int x = mPLC.Get_X_Top();
+            int y = mPLC.Get_Y_Top();
+            return new System.Drawing.Point(x, y);
+        }
+        public double GetConveyorCoordinates()
+        {
+            return mPLC.Get_Conveyor();
+        }
         private void cbScanPointID_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(cbScanPointID.SelectedIndex >= 0)
             {
                 ReadCodePosition readCodeInfo = mModel.HardwareSettings.ReadCodePosition[cbScanPointID.SelectedIndex];
-                if(readCodeInfo.Surface == "TOP")
+                if(readCodeInfo.Surface ==  Surface.TOP)
                 {
                     SetTopAxis(readCodeInfo.Origin.X, readCodeInfo.Origin.Y);
                 } 
-                else if (readCodeInfo.Surface == "BOT")
+                else if (readCodeInfo.Surface == Surface.BOT)
                 {
                     SetBotAxis(readCodeInfo.Origin.X, readCodeInfo.Origin.Y);
                 }
@@ -574,7 +610,7 @@ namespace SPI_AOI.Views.ModelManagement
         private void LoadIndexReadCodePosition()
         {
             cbScanPointID.Items.Clear();
-            for (int i = 0; i < mModel.HardwareSettings.ReadCodePosition.Count; i++)
+            for (int i = 0; i < mReadCodePosition.Count; i++)
             {
                 cbScanPointID.Items.Add(i + 1);
             }
@@ -583,18 +619,18 @@ namespace SPI_AOI.Views.ModelManagement
         {
             int x = 0;
             int y = 0;
-            string surface = string.Empty;
+            Surface surface = Surface.TOP;
             if(rbBotAxis.IsChecked == true)
             {
                 x = mPLC.Get_X_Bot();
                 y = mPLC.Get_Y_Bot();
-                surface = "BOT";
+                surface = Surface.BOT;
             }
             if(rbTopAxis.IsChecked == true)
             {
                 x = mPLC.Get_X_Top();
                 y = mPLC.Get_Y_Top();
-                surface = "TOP";
+                surface = Surface.TOP;
             }
             var r = MessageBox.Show(string.Format("Are you want to add\nPoint ({0},{1}) \nSurface {2}\n to read code position?", x, y, surface), "Information", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
             if (r == MessageBoxResult.Yes)
@@ -604,10 +640,7 @@ namespace SPI_AOI.Views.ModelManagement
                 readCodeInfo.Surface = surface;
                 readCodeInfo.Height = mScanHeight;
                 readCodeInfo.Width = mScanWidth;
-                lock (mModel)
-                {
-                    mModel.HardwareSettings.ReadCodePosition.Add(readCodeInfo);
-                }
+                mReadCodePosition.Add(readCodeInfo);
                 LoadIndexReadCodePosition();
                 MessageBox.Show("Add successfully!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -618,21 +651,56 @@ namespace SPI_AOI.Views.ModelManagement
             int id = cbScanPointID.SelectedIndex;
             if (id >= 0)
             {
-                var p = mModel.HardwareSettings.ReadCodePosition[id];
+                var p = mReadCodePosition[id];
                 int x = p.Origin.X;
                 int y = p.Origin.Y;
-                string surface = p.Surface;
+                Surface surface = p.Surface;
                 var r = MessageBox.Show(string.Format("Are you want to add\nPoint ({0},{1}) \nSurface {2}\n to read code position?", x, y, surface), "Information", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                 if (r == MessageBoxResult.Yes)
                 {
-                    lock (mModel)
-                    {
-                        mModel.HardwareSettings.ReadCodePosition.RemoveAt(id);
-                    }
+                    mReadCodePosition.RemoveAt(id);
                     LoadIndexReadCodePosition();
+                    MessageBox.Show(string.Format("Delete successfully!"), "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
+        }
+
+        private void btGoXYZ_Click(object sender, RoutedEventArgs e)
+        {
+            mPLC.Set_Speed_Top(3000);
+            mPLC.Set_Speed_Bot(6000);
+            mPLC.Set_Speed_Conveyor(8000);
+            SetConveyor(Convert.ToInt32(mConveyor));
+            grSettings.IsEnabled = true;
+            WaitingForm wait = new WaitingForm("Moving conveyor...");
+            Stopwatch sw = new Stopwatch();
+            Thread a = new Thread(() => {
+                
+                sw.Start();
+                while (mPLC.Get_Go_Coordinates_Finish_Setup_Conveyor() != 1 && sw.ElapsedMilliseconds < 180000)
+                {
+                    Thread.Sleep(100);
+                }
+                wait.KillMe = true;
+            });
             
+            a.Start();
+            wait.ShowDialog();
+            if (sw.ElapsedMilliseconds > 180000)
+            {
+                MessageBox.Show("Timeout move conveyor!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            mPLC.Reset_Go_Coordinates_Finish_Setup_Conveyor();
+            SetTopAxis(mMarkPoint.X, mMarkPoint.Y);
+            
+            if (mReadCodePosition.Count > 0)
+            {
+                if (mReadCodePosition[0].Surface == Surface.BOT)
+                {
+                    SetTopAxis(mReadCodePosition[0].Origin.X, mReadCodePosition[0].Origin.Y);
+                    
+                }
+            }
         }
     }
 }

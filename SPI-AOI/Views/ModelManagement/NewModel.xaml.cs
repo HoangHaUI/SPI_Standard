@@ -68,8 +68,9 @@ namespace SPI_AOI.Views.ModelManagement
             }
             else
             {
-                mModel.SaveModel("Models/" + modelName + ".json");
+                mModel.SaveModel();
                 mModel.Dispose();
+                MessageBox.Show("Add model successfully!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
             }
         }

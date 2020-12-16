@@ -149,5 +149,11 @@
     <Setting Name="PLC_BIT_GO_COORDINATES_FINISH_SETUP_CONVEYOR" Type="System.String" Scope="User">
       <Value Profile="(Default)">M120</Value>
     </Setting>
+    <Setting Name="PULSE_PER_MM" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="RUNNING_MODE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TEST</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

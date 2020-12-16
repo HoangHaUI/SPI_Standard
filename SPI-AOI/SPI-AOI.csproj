@@ -158,6 +158,7 @@
     <Compile Include="Models\ShowModel.cs" />
     <Compile Include="Models\Utils.cs" />
     <Compile Include="Utils\LightSrcCtl.cs" />
+    <Compile Include="Utils\MyEnum.cs" />
     <Compile Include="Utils\MyStruct.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Utils\Convertor.cs" />
