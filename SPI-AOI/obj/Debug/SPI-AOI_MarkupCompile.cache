@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\Debug\
+F:\Heal\Projects\SPI-AOI\SPI-AOI\obj\Debug\
 SPI_AOI
 none
 false
 DEBUG;TRACE
-D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\App.xaml
-3363812028
+F:\Heal\Projects\SPI-AOI\SPI-AOI\App.xaml
+1558751300
 1-2138471434
-2471262107
-33621167196
-Views\MainWindow.xaml;Views\ModelManagement\GerberTools.xaml;Views\Styles\Base.xaml;
+48-2096286264
+381659599066
+Views\MainWindow.xaml;Views\ModelManagement\AutoAdjustWindow.xaml;Views\ModelManagement\DashBoard.xaml;Views\ModelManagement\FOVCaptureWindow.xaml;Views\ModelManagement\HardwareWindow.xaml;Views\ModelManagement\NewModel.xaml;Views\ModelManagement\SuggestLinkPadWindow.xaml;Views\ModelManagement\AvailabilityLayerWindow.xaml;Views\ModelManagement\GerberTools.xaml;Views\ModelManagement\RotationWindow.xaml;Views\ModelManagement\PadconditionWindow.xaml;Views\ModelManagement\XYMovingWindow.xaml;Views\Styles\Base.xaml;Views\UserManagement\LoginWindow.xaml;Views\WaitingForm.xaml;
 
 True
 

@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="DPI" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">500</Value>
+      <Value Profile="(Default)">791</Value>
     </Setting>
     <Setting Name="FOV" Type="System.Drawing.Size" Scope="User">
-      <Value Profile="(Default)">600, 400</Value>
+      <Value Profile="(Default)">1600, 1600</Value>
     </Setting>
     <Setting Name="PLC_IP" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.3.100</Value>
@@ -26,8 +26,8 @@
     <Setting Name="PLC_BIT_GO_RIGHT_TOP" Type="System.String" Scope="User">
       <Value Profile="(Default)">M302</Value>
     </Setting>
-    <Setting Name="PLC_BIT_GO_HOME" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="PLC_BIT_LOAD_PRODUCT_SETUP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M192</Value>
     </Setting>
     <Setting Name="PLC_REG_SPEED_TOP" Type="System.String" Scope="User">
       <Value Profile="(Default)">D208</Value>
@@ -47,8 +47,8 @@
     <Setting Name="PLC_BIT_ERROR_MACHINE" Type="System.String" Scope="User">
       <Value Profile="(Default)">M600</Value>
     </Setting>
-    <Setting Name="PLC_BIT_ERROR_MACHINE_CONFIRM" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="PLC_BIT_UNLOAD_PRODUCT_SETUP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M193</Value>
     </Setting>
     <Setting Name="PLC_BIT_HAS_PRODUCT_TOP" Type="System.String" Scope="User">
       <Value Profile="(Default)">M100</Value>
@@ -149,11 +149,47 @@
     <Setting Name="PLC_BIT_GO_COORDINATES_FINISH_SETUP_CONVEYOR" Type="System.String" Scope="User">
       <Value Profile="(Default)">M120</Value>
     </Setting>
-    <Setting Name="PULSE_PER_MM" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="PULSE_PER_MM_X_TOP" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="RUNNING_MODE" Type="System.String" Scope="User">
       <Value Profile="(Default)">TEST</Value>
+    </Setting>
+    <Setting Name="PULSE_PER_MM_Y_TOP" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="PLC_REG_CONVEYOR_READ" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D1010</Value>
+    </Setting>
+    <Setting Name="PLC_REG_SPEED_RUN_X_TOP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D218</Value>
+    </Setting>
+    <Setting Name="PLC_REG_SPEED_RUN_Y_TOP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D216</Value>
+    </Setting>
+    <Setting Name="PLC_REG_SPEED_RUN_X_BOT" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D238</Value>
+    </Setting>
+    <Setting Name="PLC_REG_SPEED_RUN_Y_BOT" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D236</Value>
+    </Setting>
+    <Setting Name="PLC_REG_SPEED_RUN_CONVEYOR" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D254</Value>
+    </Setting>
+    <Setting Name="PLC_REG_X_TOP_READ" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D1014</Value>
+    </Setting>
+    <Setting Name="PLC_REG_Y_TOP_READ" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D1012</Value>
+    </Setting>
+    <Setting Name="PLC_REG_X_BOT_READ" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D1018</Value>
+    </Setting>
+    <Setting Name="PLC_REG_Y_BOT_READ" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D1016</Value>
+    </Setting>
+    <Setting Name="Setting" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

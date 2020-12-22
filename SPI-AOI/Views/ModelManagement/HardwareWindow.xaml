@@ -70,19 +70,23 @@
                                             Canvas.Top="55" 
                                             Canvas.Left="110"
                                             ToolTip="Axis go left" 
+                                            Visibility="Hidden"
                                             PreviewMouseDown="btLeft_MouseDown"
                                             PreviewMouseUp="btLeft_MouseUp">
-                                        <Image Source="../../Resources/Icons/arrow-left.png"></Image>
+                                        <Image 
+                                            Source="../../Resources/Icons/arrow-left.png"></Image>
                                     </Button>
                                     <Button  x:Name="btRight" BorderBrush="Transparent" 
                                              Background="Transparent" Width="35" 
                                              Height="35" 
                                              Canvas.Top="55" 
                                              Canvas.Left="170"
+                                             Visibility="Hidden"
                                                 ToolTip="Axis go right" 
                                              PreviewMouseDown="btRight_MouseDown" 
                                              PreviewMouseUp="btRight_MouseUp">
-                                        <Image Source="../../Resources/Icons/arrow-right.png"></Image>
+                                        <Image
+                                            Source="../../Resources/Icons/arrow-right.png"></Image>
                                     </Button>
                                     <Button  x:Name="btDown" BorderBrush="Transparent"
                                              Background="Transparent" 
@@ -95,13 +99,13 @@
                                         <Image Source="../../Resources/Icons/arrow-down.png"></Image>
                                     </Button>
                                     <Label Content="Speed:"  
-                                           Canvas.Top="10" 
+                                           Canvas.Top="5" 
                                            Canvas.Right="60"></Label>
                                     <Slider x:Name="slSpeed" Minimum="50" Maximum="3050" 
                                             TickPlacement="BottomRight" 
                                             TickFrequency="150" 
                                             IsSnapToTickEnabled="True"
-                                            Value="1000" Width="100" 
+                                            Value="2000" Width="100" 
                                             Canvas.Top="40"
                                              Canvas.Right="10"
                                             ValueChanged="slSpeed_ValueChanged"
@@ -109,7 +113,13 @@
                                     </Slider>
                                     <Button x:Name="btGoXYZ" Width="80" Content="Go XYZ"
                                             Click="btGoXYZ_Click"
-                                            Height="25" Canvas.Top="80" Canvas.Right="25"></Button>
+                                            Height="20" Canvas.Top="70" Canvas.Right="10"></Button>
+                                    <Button x:Name="btLoad" Width="50" Content="Load"
+                                            Click="btLoad_Click"
+                                            Height="20" Canvas.Top="95" Canvas.Right="65"></Button>
+                                    <Button x:Name="btUnload" Width="50" Content="Unload"
+                                            Click="btUnload_Click"
+                                            Height="20" Canvas.Top="95" Canvas.Right="10"></Button>
                                 </Canvas>
                             </GroupBox>
 

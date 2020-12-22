@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPI-AOI", "SPI-AOI\SPI-AOI.csproj", "{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}"
 EndProject
@@ -9,20 +9,38 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+		x86|Any CPU = x86|Any CPU
+		x86|x64 = x86|x64
+		x86|x86 = x86|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.Debug|x64.ActiveCfg = Debug|x64
 		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.Debug|x64.Build.0 = Debug|x64
+		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.Debug|x86.Build.0 = Debug|Any CPU
 		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.Release|x64.ActiveCfg = Release|x64
 		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.Release|x64.Build.0 = Release|x64
+		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.Release|x86.ActiveCfg = Release|Any CPU
+		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.Release|x86.Build.0 = Release|Any CPU
+		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.x86|Any CPU.ActiveCfg = x86|Any CPU
+		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.x86|Any CPU.Build.0 = x86|Any CPU
+		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.x86|x64.ActiveCfg = x86|x64
+		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.x86|x64.Build.0 = x86|x64
+		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.x86|x86.ActiveCfg = x86|Any CPU
+		{1BC72312-311B-4C7E-90A9-B5B6DE5AD925}.x86|x86.Build.0 = x86|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D14BADCF-BB80-4577-A677-3847D4339020}
 	EndGlobalSection
 EndGlobal

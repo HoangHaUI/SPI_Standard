@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 using System.IO.Ports;
 using NLog;
 using System.Threading;
+using System.Runtime.InteropServices;
+
 
 namespace Heal
 {
+    
     class DKZ224V4ACCom
     {
         private Logger mLog = Heal.LogCtl.GetInstance();

@@ -252,6 +252,7 @@ namespace SPI_AOI.Views.ModelManagement
             sw.Start();
             
             Image<Bgr, byte> imgLayers = ShowModel.GetLayoutImage(mModel, mode);
+            CvInvoke.Imwrite("imggerber.png", imgLayers);
             if(!thisThread)
             {
                 imBox.Invoke(new Action(() =>

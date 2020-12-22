@@ -87,6 +87,13 @@ namespace SPI_AOI.Views.ModelManagement
             mConveyor = mModel.HardwareSettings.Conveyor;
             mDPI = mModel.DPI;
         }
+        private void ApplyModelSettings()
+        {
+            mCamera.SetParameter(IOT.KeyName.ExposureTime, Convert.ToInt32(mExposureTime));
+            mLightSource.SetFour(mLightIntensity[0], mLightIntensity[1], mLightIntensity[2], mLightIntensity[3]);
+            mLightSource.ActiveFour(1,1,1,1);
+            mCamera.SetParameter(IOT.KeyName.Gain, (float)(mGain));
+        }
         public void LoadUI()
         {
             grSettings.IsEnabled = false;
@@ -143,6 +150,7 @@ namespace SPI_AOI.Views.ModelManagement
                 mIsTimerRunning = true;
                 mTimer.Elapsed += OnTimedEvent;
                 mTimer.Enabled = true;
+                ApplyModelSettings();
                 mLoaded = true;
             });
             threadCheck.Start();
@@ -353,15 +361,15 @@ namespace SPI_AOI.Views.ModelManagement
             slSpeed.Value = (int)slSpeed.Value;
             if (rbTopAxis.IsChecked == true)
             {
-                mPLC.Set_Speed_Top(Convert.ToInt32(slSpeed.Value));
+                mPLC.Set_Speed_Top(Convert.ToInt32(slSpeed.Value * 5));
             }
             if (rbBotAxis.IsChecked == true)
             {
-                mPLC.Set_Speed_Bot(Convert.ToInt32(slSpeed.Value * 2));
+                mPLC.Set_Speed_Bot(Convert.ToInt32(slSpeed.Value * 5));
             }
             if (rbConveyor.IsChecked == true)
             {
-                mPLC.Set_Speed_Conveyor(Convert.ToInt32(slSpeed.Value * 15));
+                mPLC.Set_Speed_Conveyor(Convert.ToInt32(slSpeed.Value * 8));
             }
         }
         private void nExposureTime_ValueChanged(object sender, EventArgs e)
@@ -506,6 +514,7 @@ namespace SPI_AOI.Views.ModelManagement
                         mCamera.Close();
                     }
                 }
+                mLightSource.ActiveFour(0,0,0,0);
                 mLightSource.Close();
                 if (SearchChanged())
                 {
@@ -570,14 +579,14 @@ namespace SPI_AOI.Views.ModelManagement
         {
             mPLC.Reset_Go_Coordinates_Finish_Setup_Top();
             mPLC.Set_X_Top(x);
-            mPLC.Set_X_Top(y);
+            mPLC.Set_Y_Top(y);
             mPLC.Set_Write_Coordinates_Finish_Setup_Top();
         }
         private void SetBotAxis(int x, int y)
         {
             mPLC.Reset_Go_Coordinates_Finish_Setup_Bot();
             mPLC.Set_X_Bot(x);
-            mPLC.Set_X_Bot(y);
+            mPLC.Set_Y_Bot(y);
             mPLC.Set_Write_Coordinates_Finish_Setup_Bot();
         }
         public System.Drawing.Point GetTopCoordinates()
@@ -670,37 +679,51 @@ namespace SPI_AOI.Views.ModelManagement
             mPLC.Set_Speed_Top(3000);
             mPLC.Set_Speed_Bot(6000);
             mPLC.Set_Speed_Conveyor(8000);
-            SetConveyor(Convert.ToInt32(mConveyor));
-            grSettings.IsEnabled = true;
-            WaitingForm wait = new WaitingForm("Moving conveyor...");
-            Stopwatch sw = new Stopwatch();
-            Thread a = new Thread(() => {
-                
-                sw.Start();
-                while (mPLC.Get_Go_Coordinates_Finish_Setup_Conveyor() != 1 && sw.ElapsedMilliseconds < 180000)
-                {
-                    Thread.Sleep(100);
-                }
-                wait.KillMe = true;
-            });
-            
-            a.Start();
-            wait.ShowDialog();
-            if (sw.ElapsedMilliseconds > 180000)
+            int conveyorPulse = mPLC.Get_Conveyor();
+            if(conveyorPulse != mConveyor)
             {
-                MessageBox.Show("Timeout move conveyor!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                SetConveyor(Convert.ToInt32(mConveyor));
+                grSettings.IsEnabled = true;
+                WaitingForm wait = new WaitingForm("Moving conveyor...");
+                Stopwatch sw = new Stopwatch();
+                Thread a = new Thread(() => {
+
+                    sw.Start();
+                    while (mPLC.Get_Go_Coordinates_Finish_Setup_Conveyor() != 1 && sw.ElapsedMilliseconds < 180000)
+                    {
+                        Thread.Sleep(100);
+                    }
+                    wait.KillMe = true;
+                });
+
+                a.Start();
+                wait.ShowDialog();
+
+                if (sw.ElapsedMilliseconds > 180000)
+                {
+                    MessageBox.Show("Timeout move conveyor!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                Thread.Sleep(500);
+                mPLC.Reset_Go_Coordinates_Finish_Setup_Conveyor();
             }
-            mPLC.Reset_Go_Coordinates_Finish_Setup_Conveyor();
             SetTopAxis(mMarkPoint.X, mMarkPoint.Y);
-            
             if (mReadCodePosition.Count > 0)
             {
                 if (mReadCodePosition[0].Surface == Surface.BOT)
                 {
-                    SetTopAxis(mReadCodePosition[0].Origin.X, mReadCodePosition[0].Origin.Y);
-                    
+                    SetBotAxis(mReadCodePosition[0].Origin.X, mReadCodePosition[0].Origin.Y);
                 }
             }
+        }
+
+        private void btLoad_Click(object sender, RoutedEventArgs e)
+        {
+            mPLC.Set_Load_Product();
+        }
+
+        private void btUnload_Click(object sender, RoutedEventArgs e)
+        {
+            mPLC.Set_Unload_Product();
         }
     }
 }

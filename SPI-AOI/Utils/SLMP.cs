@@ -76,7 +76,7 @@ namespace Heal
             {
                 try
                 {
-                    Thread.Sleep(15);
+                    Thread.Sleep(30);
                     TcpClient client = new TcpClient();
                     if(client.ConnectAsync(_ip, _port).Wait(200)){
                         client.SendTimeout = 500;
@@ -111,8 +111,10 @@ namespace Heal
         }
         public int SetDevice2(string Device, int value)
         {
-            int valueL = value & 0xffff;
-            int valueH = value >> 16;
+            uint val = (uint)value;
+            
+            int valueL = Convert.ToUInt16((int) val & 0xffff);
+            int valueH = Convert.ToUInt16((int) (val >> 16 & 0xffff));
             int i = 0;
             for (; i < Device.Length; i++)
             {
@@ -180,7 +182,7 @@ namespace Heal
                 int length = 24;
                 if ((device.Substring(0, 1).ToUpper() == "D") || (device.Substring(0, 1).ToUpper() == "W"))
                 {
-                    if ((value < 65535) && (value >= 0))
+                    if ((value <= 65535) && (value >= 0))
                     {
                         length += 4;
                         bcommand = acommand + length.ToString("X4") + _reserved + _write
@@ -222,7 +224,8 @@ namespace Heal
                     {
                         result = SendCommand(bcommand);
                         i++;
-                    } while ((result == "-1") && (i < 5));
+                        Thread.Sleep(5);
+                    } while ((result == "-1") && (i < 10));
 
                     if (result == "-1")
                         return -1;
@@ -245,7 +248,7 @@ namespace Heal
 
         public int GetDevice(string device)
         {
-            if(string.IsNullOrEmpty(device))
+            if (string.IsNullOrEmpty(device))
             {
                 return -1;
             }

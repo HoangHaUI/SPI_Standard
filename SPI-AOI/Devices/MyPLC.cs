@@ -5,15 +5,44 @@ using System.Text;
 using System.Threading.Tasks;
 using Heal;
 
+
+
+
 namespace SPI_AOI.Devices
 {
     class MyPLC
     {
         private SLMP mSLMP = new SLMP(Properties.Settings.Default.PLC_IP, Properties.Settings.Default.PLC_PORT);
+        
         private Properties.Settings mParam = Properties.Settings.Default;
+        
         public int  Ping()
         {
             return mSLMP.GetPing();
+        }
+        public int SetDevice2(string Device, int value)
+        {
+            return mSLMP.SetDevice2(Device, value);
+        }
+        public int GetDevice2(string Device)
+        {
+            return mSLMP.GetDevice2(Device);
+        }
+        public int SetDevice(string Device, int value)
+        {
+            return mSLMP.SetDevice(Device, value);
+        }
+        public int GetDevice(string Device)
+        {
+            return mSLMP.GetDevice(Device);
+        }
+        public int Set_Load_Product()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_LOAD_PRODUCT_SETUP, 1);
+        }
+        public int Set_Unload_Product()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_UNLOAD_PRODUCT_SETUP, 1);
         }
         public int Set_Go_Up_Top()
         {
@@ -105,19 +134,39 @@ namespace SPI_AOI.Devices
         }
         public int Set_Go_Home()
         {
-            return mSLMP.SetDevice(mParam.PLC_BIT_GO_HOME, 0);
+            return mSLMP.SetDevice(mParam.PLC_BIT_LOAD_PRODUCT_SETUP, 0);
         }
         public int Set_Speed_Top(int speed)
         {
             return mSLMP.SetDevice2(mParam.PLC_REG_SPEED_TOP, speed);
         }
+        public int Set_Speed_Run_X_Top(int speed)
+        {
+            return mSLMP.SetDevice2(mParam.PLC_REG_SPEED_RUN_X_TOP, speed);
+        }
+        public int Set_Speed_Run_X_Bot(int speed)
+        {
+            return mSLMP.SetDevice2(mParam.PLC_REG_SPEED_RUN_X_BOT, speed);
+        }
+        public int Set_Speed_Run_Y_Bot(int speed)
+        {
+            return mSLMP.SetDevice2(mParam.PLC_REG_SPEED_RUN_Y_BOT, speed);
+        }
         public int Set_Speed_Bot(int speed)
         {
             return mSLMP.SetDevice2(mParam.PLC_REG_SPEED_BOT, speed);
         }
+        public int Set_Speed_Run_Y_Top(int speed)
+        {
+            return mSLMP.SetDevice2(mParam.PLC_REG_SPEED_RUN_Y_TOP, speed);
+        }
         public int Set_Speed_Conveyor(int speed)
         {
             return mSLMP.SetDevice2(mParam.PLC_REG_SPEED_CONVEYOR, speed);
+        }
+        public int Set_Speed_Run_Conveyor(int speed)
+        {
+            return mSLMP.SetDevice2(mParam.PLC_REG_SPEED_RUN_CONVEYOR, speed);
         }
         public int Set_Conveyor(int value)
         {
@@ -125,7 +174,7 @@ namespace SPI_AOI.Devices
         }
         public int Get_Conveyor()
         {
-            return mSLMP.GetDevice2(mParam.PLC_REG_CONVEYOR);
+            return mSLMP.GetDevice2(mParam.PLC_REG_CONVEYOR_READ);
         }
         public int Get_Speed()
         {
@@ -134,19 +183,21 @@ namespace SPI_AOI.Devices
         
         public int Set_X_Top(int value)
         {
-            return mSLMP.SetDevice2(mParam.PLC_REG_X_TOP, value);
+            mSLMP.SetDevice2(mParam.PLC_REG_X_TOP, value);
+            return mSLMP.GetDevice2(mParam.PLC_REG_X_TOP);
         }
         public int Set_Y_Top(int value)
         {
-            return mSLMP.SetDevice2(mParam.PLC_REG_Y_TOP, value);
+            mSLMP.SetDevice2(mParam.PLC_REG_Y_TOP, value);
+            return mSLMP.GetDevice2(mParam.PLC_REG_Y_TOP);
         }
         public int Get_X_Top()
         {
-            return mSLMP.GetDevice2(mParam.PLC_REG_X_TOP);
+            return mSLMP.GetDevice2(mParam.PLC_REG_X_TOP_READ);
         }
         public int Get_Y_Top()
         {
-            return mSLMP.GetDevice2(mParam.PLC_REG_Y_TOP);
+            return mSLMP.GetDevice2(mParam.PLC_REG_Y_TOP_READ);
         }
         public int Set_X_Bot(int value)
         {
@@ -158,11 +209,11 @@ namespace SPI_AOI.Devices
         }
         public int Get_X_Bot()
         {
-            return mSLMP.GetDevice2(mParam.PLC_REG_X_BOT);
+            return mSLMP.GetDevice2(mParam.PLC_REG_X_BOT_READ);
         }
         public int Get_Y_Bot()
         {
-            return mSLMP.GetDevice2(mParam.PLC_REG_Y_BOT);
+            return mSLMP.GetDevice2(mParam.PLC_REG_Y_BOT_READ);
         }
         public int Get_Error_Machine()
         {
@@ -170,7 +221,7 @@ namespace SPI_AOI.Devices
         }
         public int Set_Confirm_Error_Machine()
         {
-            return mSLMP.GetDevice(mParam.PLC_BIT_ERROR_MACHINE_CONFIRM);
+            return mSLMP.GetDevice(mParam.PLC_BIT_UNLOAD_PRODUCT_SETUP);
         }
         
         public int Set_Write_Coordinates_Finish_Top()

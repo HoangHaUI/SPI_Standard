@@ -94,9 +94,58 @@ namespace SPI_AOI.Models
                 return 0;
             }
         }
+        public Point[] GetRealMarkPosition(double PPM_X, double PPM_Y)
+        {
+            Point[] mark = new Point[2];
+            Point realMark1 = this.HardwareSettings.MarkPosition;
+            if (this.Gerber.MarkPoint.PadMark.Count == 2)
+            {
+                mark[0] = new Point(realMark1.X, realMark1.Y);
+                PadItem padMark1 = this.Gerber.PadItems[this.Gerber.MarkPoint.PadMark[0]];
+                PadItem padMark2 = this.Gerber.PadItems[this.Gerber.MarkPoint.PadMark[1]];
+                Point ctMark1 = padMark1.Center;
+                Point ctMark2 = padMark2.Center;
+
+                double subx = (ctMark2.X - ctMark1.X) / this.DPI; // inch
+                double suby = (ctMark2.Y - ctMark1.Y ) / this.DPI; // inch
+                double subxMM = subx * 25.4;
+                double subyMM = suby * 25.4;
+                int subxPulse = Convert.ToInt32(subxMM * PPM_X) ;
+                int subyPulse = Convert.ToInt32(subyMM * PPM_Y);
+                mark[1] = new Point(mark[0].X + subxPulse, mark[0].Y + subyPulse);
+            }
+            return mark;
+        }
+        public Point[] GetFOVPosition(double PPM_X, double PPM_Y)
+        {
+            Point[] position = new Point[this.Gerber.FOVs.Count];
+            Point realMark1 = this.HardwareSettings.MarkPosition;
+            for (int i = 0; i < this.Gerber.FOVs.Count; i++)
+            {
+                PadItem padMark1 = this.Gerber.PadItems[this.Gerber.MarkPoint.PadMark[0]];
+                Point ctMark1 = padMark1.Center;
+                Point ctMark2 = this.Gerber.FOVs[i].Anchor;
+
+                double subx = (ctMark2.X - ctMark1.X) / this.DPI; // inch
+                double suby = (ctMark2.Y - ctMark1.Y) / this.DPI; // inch
+                double subxMM = subx * 25.4;
+                double subyMM = suby * 25.4;
+                int subxPulse = Convert.ToInt32(subxMM * PPM_X);
+                int subyPulse = Convert.ToInt32(subyMM * PPM_Y);
+                position[i] = new Point(realMark1.X + subxPulse, realMark1.Y + subyPulse);
+            }
+            return position;
+        }
+        public Rectangle GetRectROIMark()
+        {
+            int searchW = Convert.ToInt32(this.Gerber.MarkPoint.SearchX * this.DPI / 25.4);
+            int searchH = Convert.ToInt32(this.Gerber.MarkPoint.SearchY * this.DPI / 25.4);
+            Rectangle rectSearch = new System.Drawing.Rectangle(2448 / 2 - searchW / 2, 2048 / 2 - searchH / 2, searchW, searchH);
+            return rectSearch;
+        }
         public string SaveModel()
         {
-            string modelPath = ModelPath + this.Name + ".json";
+            string modelPath = ModelPath  + "/" + this.Name + ".json";
             var mgGerberProcessedBgr = this.ImgGerberProcessedBgr;
             this.ImgGerberProcessedBgr = null;
             var orgGerberImage = this.Gerber.OrgGerberImage;
@@ -105,7 +154,6 @@ namespace SPI_AOI.Models
             this.Gerber.ProcessingGerberImage = null;
             try
             {
-                
                 string json = JsonConvert.SerializeObject(this);
                 File.WriteAllText(modelPath, json);
             }

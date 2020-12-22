@@ -77,7 +77,7 @@
                         <Image Source="../Resources/Icons/light.png" Width="25"/>
                     </Button>
                     <Separator/>
-                    <Button  ToolTip="Camera configurations" Style="{StaticResource btToolBarStyle}">
+                    <Button x:Name="btSetupCamera" ToolTip="Camera configurations" Style="{StaticResource btToolBarStyle}" Click="btSetupCamera_Click">
                         <Image Source="../Resources/Icons/camera-hozi.png" Width="25"/>
                     </Button>
                     <Separator/>
@@ -98,8 +98,10 @@
                     <Separator/>
                     <Label Content="Model:"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <ComboBox x:Name="cbModelsName" Width="300" FontSize="15" FontWeight="Bold" Background="#FFDDDDDD" Height="35"/>
-                    <Button ToolTip="Run" Style="{StaticResource btToolBarStyle}">
-                        <Image Source="../Resources/Icons/start.png" Width="25"/>
+                    <Button x:Name="btRun" ToolTip="Run" 
+                            Style="{StaticResource btToolBarStyle}"
+                            Click="btRun_Click">
+                        <Image x:Name="imbBtRun" Source="../Resources/Icons/start.png" Width="25"/>
                     </Button>
                 </ToolBar>
             </DockPanel>
@@ -124,13 +126,23 @@
                         <Border x:Name="bdImage" Background="Gray"
                                 Margin="5" ClipToBounds="True" >
                             <Grid>
-                                <Image x:Name="imbDiagram" >
+                                <Image x:Name="imbDiagram"
+                                       >
                                 </Image>
                                 <Label x:Name="lbProductStatus" Content="PASS" Foreground="Green"
                                        FontWeight="Bold"
                                        FontSize="100" 
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"></Label>
+                                <Border x:Name="bdFOV" Width="420" Height="280" 
+                                        BorderThickness="5" 
+                                        Background="Transparent"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        BorderBrush="Yellow"
+                                        Margin="70,2080,0,0"
+                                        Visibility="Visible">
+                                </Border>
                             </Grid>
                             
                         </Border>
@@ -161,23 +173,23 @@
                                 <StackPanel Margin="5">
                                     <StackPanel Orientation="Horizontal">
                                         <Label  Content="Model Name:" Width="100" Foreground="Gray"/>
-                                        <Label  Content="-----" FontSize="15" FontWeight="Bold"/>
+                                        <Label x:Name="lbModelName" Content="-----" FontSize="15" FontWeight="Bold"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <Label  Content="Load time:" Width="100" Foreground="Gray"/>
-                                        <Label  Content="-----" FontSize="15" />
+                                        <Label x:Name="lbLoadTime" Content="-----" FontSize="15" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <Label  Content="Gerber file:" Width="100" Foreground="Gray"/>
-                                        <Label  Content="-----" FontSize="15"/>
+                                        <Label x:Name="lbGerberFile" Content="-----" FontSize="15"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <Label  Content="FOVs:" Width="100" Foreground="Gray"/>
-                                        <Label  Content="-----" FontSize="15"/>
+                                        <Label x:Name="lbFovs" Content="-----" FontSize="15"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <Label  Content="Cycle Time:" Width="100" Foreground="Gray"/>
-                                        <Label  Content="-----" FontSize="15"/>
+                                        <Label x:Name="lbCircleTime" Content="-----" FontSize="15"/>
                                     </StackPanel>
                                 </StackPanel>
                             </GroupBox>
@@ -230,20 +242,20 @@
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <Border  Margin="5,10,5,0" Background="Gray" CornerRadius="5">
-                                    <Image/>
+                                    <Image x:Name="imbMark1"/>
                                 </Border>
                             </Grid>
                             <Grid Grid.Column="1">
                                 <Border Margin="5,10,5,0" Background="Gray" CornerRadius="5">
-                                    <Image/>
+                                    <Image x:Name="imbMark2"/>
                                 </Border>
                             </Grid>
                             <Grid Grid.Column="2">
                                 <GroupBox Header="FOVs" BorderBrush="Gray" FontWeight="Bold">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <Label Content="--" FontSize="35"/>
+                                        <Label x:Name="lbcountFovs" Content="0" FontSize="35"/>
                                         <Label Content="/" FontSize="35"/>
-                                        <Label Content="--" FontSize="35"/>
+                                        <Label x:Name="lbTotalCountFovs" Content="0" FontSize="35"/>
                                     </StackPanel>
                                 </GroupBox>
                             </Grid>
