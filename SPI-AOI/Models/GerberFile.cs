@@ -16,20 +16,19 @@ namespace SPI_AOI.Models
     public class GerberFile
     {
         public static Logger mLog = Heal.LogCtl.GetInstance();
-        public string ModelID { get; set; }//
+        public string ModelID { get; set; }
         public string GerberID { get; set; }
-        public Color Color { get; set; }//
-        public string FileName { get; set; }//
-        public string FilePath { get; set; }//
-        public byte[] FileData { get; set; }//
+        public Color Color { get; set; }
+        public string FileName { get; set; }
+        public string FilePath { get; set; }
+        public byte[] FileData { get; set; }
         public Image<Gray, byte> OrgGerberImage { get; set; }
         public Image<Gray, byte> ProcessingGerberImage { get; set; }
-        public bool Visible { get; set; }//
-        public double Angle { get; set; }//
-        public SPI_AOI.Utils.StartPoint StartPoint { get; set; }//
-        public Rectangle ROI { get; set; }//
-        public Rectangle SelectPad { get; set; }//
-        public List<Rectangle> RemoveROI { get; set; }
+        public bool Visible { get; set; }
+        public double Angle { get; set; }
+        public SPI_AOI.Utils.StartPoint StartPoint { get; set; }
+        public Rectangle ROI { get; set; }
+        public Rectangle SelectPad { get; set; }
         public Mark MarkPoint { get; set; }
         public List<Fov> FOVs { get; set; }
         public List<PadItem> PadItems { get; set; }
@@ -58,7 +57,6 @@ namespace SPI_AOI.Models
             gerber.FileData = File.ReadAllBytes(fi.FullName);
             gerber.ROI = new Rectangle();
             gerber.SelectPad = Rectangle.Empty;
-            gerber.RemoveROI = new List<Rectangle>();
             gerber.MarkPoint = new Mark(gerber.GerberID);
             gerber.ResetMark();
             gerber.StartPoint = SPI_AOI.Utils.StartPoint.TOP_LEFT;
@@ -68,7 +66,7 @@ namespace SPI_AOI.Models
             return gerber;
             
         }
-        public void LoadGerber(float DPI)
+        public void LoadGerber(float DPI, Size FOV)
         {
             FileInfo fi = new FileInfo(this.FilePath);
             if (!Directory.Exists("TempPath"))
@@ -84,23 +82,20 @@ namespace SPI_AOI.Models
                 return;
             }
             this.OrgGerberImage = renderResults.GerberImage;
-            this.ProcessingGerberImage = this.OrgGerberImage.Copy();
+            SetAngle(this.Angle, FOV, false);
         }
         public void SetROI(Rectangle ROI, Size FOV)
         {
             this.ROI = ROI;
             this.UpdatePadItems();
             this.ResetMark();
-            //this.UpdateFOV(FOV);
-            //this.LinkPadWidthFov(FOV);
         }
         public void SetStartPoint(SPI_AOI.Utils.StartPoint StartPoint, Size FOV)
         {
             this.StartPoint = StartPoint;
             this.ResetMark();
-            //this.UpdateFOV(FOV);
         }
-        public void SetAngle(double Angle, Size FOV)
+        public void SetAngle(double Angle, Size FOV, bool Reload = true)
         {
             this.Angle = Angle;
             if(this.ProcessingGerberImage != null)
@@ -109,32 +104,60 @@ namespace SPI_AOI.Models
                 this.ProcessingGerberImage = null;
             }
             this.ProcessingGerberImage = ImageProcessingUtils.ImageRotation(this.OrgGerberImage.Copy(), new Point(this.OrgGerberImage.Width / 2, this.OrgGerberImage.Height / 2), this.Angle * Math.PI / 180.0);
-            this.UpdatePadItems();
-            this.ResetMark();
-            //this.UpdateFOV(FOV);
-            //this.LinkPadWidthFov(FOV);
+            if(Reload)
+            {
+                this.UpdatePadItems();
+                this.ResetMark();
+            }
+            
         }
         public void ResetMark()
         {
             this.MarkPoint.PadMark[0] = -1;
             this.MarkPoint.PadMark[0] = -1;
         }
+        public List<PadItem> GetPadSelected()
+        {
+            List<PadItem> padSelected = new List<PadItem>();
+            if (this.SelectPad != Rectangle.Empty)
+            {
+                for (int i = 0; i < this.PadItems.Count; i++)
+                {
+                    Rectangle bound = new Rectangle(this.PadItems[i].Center.X, this.PadItems[i].Center.Y, 1, 1);
+                    if (this.SelectPad.Contains(bound))
+                    {
+                        padSelected.Add(this.PadItems[i]);
+                    }
+                }
+            }
+            return padSelected;
+        }
+        public Image<Bgr, byte> GetDiagramImage()
+        {
+            this.ProcessingGerberImage.ROI = this.ROI;
+            Image<Bgr, byte> Img = new Image<Bgr, byte>(this.ProcessingGerberImage.Size);
+            using (Image<Gray, byte> imgTemp = this.ProcessingGerberImage.Copy())
+            using (Image<Bgr, byte> imgAdd = new Image<Bgr, byte>(Img.Size.Width, Img.Size.Height, new Bgr(0, 50, 0)))
+            {
+                CvInvoke.BitwiseNot(imgTemp, imgTemp);
+                CvInvoke.CvtColor(this.ProcessingGerberImage, Img, Emgu.CV.CvEnum.ColorConversion.Gray2Bgr);
+                CvInvoke.Add(Img, imgAdd, Img, mask: imgTemp);
+            }
+            return Img;
+        }
         public Point GetCenterPadsSelected()
         {
-            if(this.SelectPad == Rectangle.Empty)
+            if (this.SelectPad == Rectangle.Empty)
             {
                 return new Point();
             }
+            List<PadItem> padSelected = GetPadSelected();
             List<Point> centerEachPad = new List<Point>();
-            for (int i = 0; i < this.PadItems.Count; i++)
+            for (int i = 0; i < padSelected.Count; i++)
             {
-                Rectangle bound =  new Rectangle(this.PadItems[i].Center.X, this.PadItems[i].Center.Y, 1,1);
-                if (this.SelectPad.Contains(bound))
-                {
-                    centerEachPad.Add(new Point(bound.X + bound.Width / 2, bound.Y + bound.Height / 2));
-                }
+                centerEachPad.Add(padSelected[i].Center);
             }
-            if(centerEachPad .Count > 0)
+            if (centerEachPad.Count > 0)
             {
                 long x = 0;
                 long y = 0;
@@ -154,7 +177,19 @@ namespace SPI_AOI.Models
         }
         public void UpdateFOV(Size FOV)
         {
-            this.FOVs = Fov.GetFov(this.GerberID, this.ProcessingGerberImage, this.ROI, FOV, this.StartPoint);
+            using (Image<Gray, byte> searchFOVImage = new Image<Gray, byte>(ProcessingGerberImage.Size))
+            using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
+            {
+                for (int i = 0; i < this.PadItems.Count; i++)
+                {
+                    if(!this.MarkPoint.PadMark.Contains(i) && this.PadItems[i].Enable)
+                    {
+                        contours.Push(this.PadItems[i].Contour);
+                    }
+                }
+                CvInvoke.DrawContours(searchFOVImage, contours, -1, new MCvScalar(255), -1);
+                this.FOVs = Fov.GetFov(this.GerberID, searchFOVImage, this.ROI, FOV, this.StartPoint);
+            }
         }
         public Image<Bgr, byte> GetFOVDiagram(Size FOV, int IndexHightLight)
         {
@@ -195,6 +230,12 @@ namespace SPI_AOI.Models
                     }
                 }
             }
+            List<PadItem> padsNotLink = new List<PadItem>();
+            for (int i = 0; i < this.PadItems.Count; i++)
+            {
+                if(this.PadItems[i].FOVs.Count == 0)
+                    padsNotLink.Add(this.PadItems[i]);
+            }
         }
         public void ClearLinkCadItem()
         {
@@ -216,7 +257,6 @@ namespace SPI_AOI.Models
                 this.OrgGerberImage.Dispose();
                 this.OrgGerberImage = null;
             }
-            RemoveROI.Clear();
             FOVs.Clear();
             PadItems.Clear();
         }

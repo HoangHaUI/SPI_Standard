@@ -422,6 +422,37 @@ namespace SPI_AOI.Views.ModelManagement
                 MessageBox.Show(string.Format("Please insert gerber file..."), "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+        private void btRemovePad_Click(object sender, RoutedEventArgs e)
+        {
+            if (mModel.Gerber is GerberFile)
+            {
+                List<PadItem> padSelectedLink = mModel.GetPadsInRect(mSelectRecangle, true);
+                List<PadItem> padSelectedNotLink = mModel.GetPadsInRect(mSelectRecangle);
+                if(padSelectedLink.Count > 0 || padSelectedNotLink .Count > 0)
+                {
+                    var r = MessageBox.Show(string.Format("Are you want to delete pads ?"), 
+                        "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    if(r == MessageBoxResult.Yes)
+                    {
+                        foreach (var item in padSelectedLink)
+                        {
+                            item.Enable = false;
+                        }
+                        foreach (var item in padSelectedNotLink)
+                        {
+                            item.Enable = false;
+                        }
+                        ShowAllLayerImb(ActionMode.Update_Color_Gerber);
+                        mSelectRecangle = System.Drawing.Rectangle.Empty;
+                        imBox.Refresh();
+                    }
+                }
+            }
+            else
+            {
+               
+            }
+        }
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.LeftCtrl || e.Key == Key.Right)
@@ -499,16 +530,35 @@ namespace SPI_AOI.Views.ModelManagement
 
         private void btLinkPad_Click(object sender, RoutedEventArgs e)
         {
+            
             if (mModel.Gerber is GerberFile || mModel.Cad.Count > 0)
             {
                 mModel.ClearLinkPad();
                 foreach (var item in mModel.Cad)
                 {
-                    Thread pr = new Thread(() => {
-                        mModel.AutoLinkPad(item);
-                        ShowAllLayerImb(ActionMode.Update_Color_Gerber);
-                    });
-                    pr.Start();
+                    AutoLinkPadWindow autoLinkWD = new AutoLinkPadWindow();
+                    autoLinkWD.ShowDialog();
+                    if(autoLinkWD.ModeLinkPad != Utils.AutoLinkMode.NotLink)
+                    {
+                        int mode = 0;
+                        if (autoLinkWD.ModeLinkPad == Utils.AutoLinkMode.RnC)
+                        {
+                            mode = 0;
+                        }
+                        if (autoLinkWD.ModeLinkPad == Utils.AutoLinkMode.TwoPad)
+                        {
+                            mode = 1;
+                        }
+                        if (autoLinkWD.ModeLinkPad == Utils.AutoLinkMode.All)
+                        {
+                            mode = 2;
+                        }
+                        Thread pr = new Thread(() => {
+                            mModel.AutoLinkPad(item, mode);
+                            ShowAllLayerImb(ActionMode.Update_Color_Gerber);
+                        });
+                        pr.Start();
+                    }
                 }
             }
             else
@@ -516,21 +566,6 @@ namespace SPI_AOI.Views.ModelManagement
                 MessageBox.Show(string.Format("Please insert gerber file..."), "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-
-        //private void btDowload_Click(object sender, RoutedEventArgs e)
-        //{
-        //    System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
-        //    ofd.Filter = "Json file | *.json";
-        //    if(ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-        //    {
-        //        mModel = Model.LoadModel(ofd.FileName);
-        //        ShowAllLayerImb(ActionMode.Render);
-        //        UpdateListImportedFile();
-        //        UpdateUIModel();
-        //    }
-            
-        //}
-
         private void btSetLinkPad_Click(object sender, RoutedEventArgs e)
         {
             if (mModel.Gerber is GerberFile || mModel.Cad.Count > 0)
@@ -586,19 +621,6 @@ namespace SPI_AOI.Views.ModelManagement
                 mCtrlPress = false;
             }
         }
-
-        //private void btSave_Click(object sender, RoutedEventArgs e)
-        //{
-        //    System.Windows.Forms.SaveFileDialog sd = new System.Windows.Forms.SaveFileDialog();
-        //    sd.DefaultExt = ".json";
-        //    sd.Filter = "Json file | *.json";
-        //    if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-        //    {
-
-        //        mModel.SaveModel(sd.FileName);
-        //        MessageBox.Show(string.Format("Save successfuly!..."), "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-        //    }
-        //}
 
         private void chbHighlightPadLinked_Click(object sender, RoutedEventArgs e)
         {
@@ -716,5 +738,7 @@ namespace SPI_AOI.Views.ModelManagement
                 }
             }
         }
+
+        
     }
 }

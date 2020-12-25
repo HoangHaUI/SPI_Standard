@@ -14,6 +14,7 @@ namespace SPI_AOI.Models
     public class PadItem
     {
         public string GerberID { get; set; }
+        public bool Enable { get; set; }
         public int NoID { get; set; }
         public Rectangle  Bouding { get; set; }
         public VectorOfPoint Contour { get; set; }
@@ -54,7 +55,7 @@ namespace SPI_AOI.Models
                         cntPoint[k].Y += ROI.Y;
                     }
                     pad.Contour = new VectorOfPoint(cntPoint);
-                    pad.AreaThresh = new StandardThreshold(5,10);
+                    pad.AreaThresh = new StandardThreshold(5, 10);
                     pad.VolumeThresh = new StandardThreshold(5, 10);
                     pad.ShiftXThresh = new StandardThreshold(5, 10);
                     pad.ShiftYThresh = new StandardThreshold(5, 10);
@@ -62,6 +63,7 @@ namespace SPI_AOI.Models
                     pad.CadFileID = string.Empty;
                     pad.CadItemIndex = -1;
                     pad.NoID = i;
+                    pad.Enable = true;
                     padItems.Add(pad);
                 }
             }

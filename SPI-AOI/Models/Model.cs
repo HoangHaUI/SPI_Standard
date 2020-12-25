@@ -21,6 +21,9 @@ namespace SPI_AOI.Models
         public DateTime CreateTime { get; set; }
         public float DPI { get; set; }
         public Size FOV { get; set; }
+        public double PulseXPerPixel { get; set; }
+        public double PulseYPerPixel { get; set; }
+        public double PCBThickness { get; set; }
         public GerberFile Gerber { get; set; }
         public List<CadFile> Cad { get; set; }
         public Image<Bgr, byte> ImgGerberProcessedBgr { get; set; }
@@ -32,7 +35,7 @@ namespace SPI_AOI.Models
         public bool HightLineLinkedPad { get; set; }
         public Hardware HardwareSettings { get; set; }
         private static string ModelPath = "Models";
-        public static Model GetNewModel(string ModelName, string Owner, string GerberPath, float DPI, Size FOV)
+        public static Model GetNewModel(string ModelName, string Owner, string GerberPath, float DPI, Size FOV, double PXPP, double PYPP, double PCBThickness)
         {
             Model model = new Model();
             model.ID = Utils.GetNewID();
@@ -45,6 +48,9 @@ namespace SPI_AOI.Models
             model.ShowOnlyInROI = true;
             model.HightLineLinkedPad = true;
             model.DPI = DPI;
+            model.PulseXPerPixel = PXPP;
+            model.PulseYPerPixel = PYPP;
+            model.PCBThickness = PCBThickness;
             model.FOV = FOV;
             model.GetNewGerber(GerberPath);
             model.Cad = new List<CadFile>();
@@ -94,7 +100,20 @@ namespace SPI_AOI.Models
                 return 0;
             }
         }
-        public Point[] GetRealMarkPosition(double PPM_X, double PPM_Y)
+        public Image<Bgr, byte> GetDiagramImage()
+        {
+            return this.Gerber.GetDiagramImage();
+        }
+        public Point[] GetAngchorsDiagram()
+        {
+            Point[] anchors = new Point[ this.Gerber.FOVs.Count];
+            for (int i = 0; i < anchors.Length; i++)
+            {
+                anchors[i] = new Point(this.Gerber.FOVs[i].Anchor.X - this.Gerber.ROI.X, this.Gerber.FOVs[i].Anchor.Y - this.Gerber.ROI.Y);
+            }
+            return anchors;
+        }
+        public Point[] GetRealMarkPosition()
         {
             Point[] mark = new Point[2];
             Point realMark1 = this.HardwareSettings.MarkPosition;
@@ -106,17 +125,16 @@ namespace SPI_AOI.Models
                 Point ctMark1 = padMark1.Center;
                 Point ctMark2 = padMark2.Center;
 
-                double subx = (ctMark2.X - ctMark1.X) / this.DPI; // inch
-                double suby = (ctMark2.Y - ctMark1.Y ) / this.DPI; // inch
-                double subxMM = subx * 25.4;
-                double subyMM = suby * 25.4;
-                int subxPulse = Convert.ToInt32(subxMM * PPM_X) ;
-                int subyPulse = Convert.ToInt32(subyMM * PPM_Y);
+                double subx = (ctMark2.X - ctMark1.X);
+                double suby = (ctMark2.Y - ctMark1.Y);
+                
+                int subxPulse = Convert.ToInt32(subx * this.PulseXPerPixel) ;
+                int subyPulse = Convert.ToInt32(suby * this.PulseYPerPixel);
                 mark[1] = new Point(mark[0].X + subxPulse, mark[0].Y + subyPulse);
             }
             return mark;
         }
-        public Point[] GetFOVPosition(double PPM_X, double PPM_Y)
+        public Point[] GetFOVPosition()
         {
             Point[] position = new Point[this.Gerber.FOVs.Count];
             Point realMark1 = this.HardwareSettings.MarkPosition;
@@ -125,14 +143,9 @@ namespace SPI_AOI.Models
                 PadItem padMark1 = this.Gerber.PadItems[this.Gerber.MarkPoint.PadMark[0]];
                 Point ctMark1 = padMark1.Center;
                 Point ctMark2 = this.Gerber.FOVs[i].Anchor;
-
-                double subx = (ctMark2.X - ctMark1.X) / this.DPI; // inch
-                double suby = (ctMark2.Y - ctMark1.Y) / this.DPI; // inch
-                double subxMM = subx * 25.4;
-                double subyMM = suby * 25.4;
-                int subxPulse = Convert.ToInt32(subxMM * PPM_X);
-                int subyPulse = Convert.ToInt32(subyMM * PPM_Y);
-                position[i] = new Point(realMark1.X + subxPulse, realMark1.Y + subyPulse);
+                double subx = (ctMark2.X - ctMark1.X);
+                double suby = (ctMark2.Y - ctMark1.Y);
+                position[i] = new Point(realMark1.X + Convert.ToInt32(subx * this.PulseXPerPixel) , realMark1.Y + Convert.ToInt32(suby * this.PulseYPerPixel));
             }
             return position;
         }
@@ -185,7 +198,7 @@ namespace SPI_AOI.Models
             {
                 if (model.Gerber != null)
                 {
-                    model.Gerber.LoadGerber(model.DPI);
+                    model.Gerber.LoadGerber(model.DPI, model.FOV);
                 }
             }
             return model;
@@ -421,9 +434,9 @@ namespace SPI_AOI.Models
             return suggest;
         }
         
-        public void AutoLinkPad(CadFile Cad, int Width = 800, int Height = 800)
+        public void AutoLinkPad(CadFile Cad, int Mode, int Width = 800, int Height = 800)
         {
-
+            
             List<Tuple<Point, int>> padsList = new List<Tuple<Point, int>>();
             for (int i = 0; i < this.Gerber.PadItems.Count; i++)
             {
@@ -469,6 +482,8 @@ namespace SPI_AOI.Models
                     padsList.Add(new Tuple<Point, int>(this.Gerber.PadItems[i].Center, i));
                 }
             }
+            if (Mode < 1)
+                return;
             // filter only has two pad
             foreach (var itemtl in cadItemNotLink)
             {
@@ -535,13 +550,12 @@ namespace SPI_AOI.Models
             // reset pads and cad list
             padsList.Clear();
             cadItemNotLink.Clear();
+            if (Mode < 2)
+                return;
             //get all pad
             for (int i = 0; i < this.Gerber.PadItems.Count; i++)
             {
-                //if (string.IsNullOrEmpty(this.Gerber.PadItems[i].CadFileID))
-                //{
-                    padsList.Add(new Tuple<Point, int>(this.Gerber.PadItems[i].Center, i));
-                //}
+                padsList.Add(new Tuple<Point, int>(this.Gerber.PadItems[i].Center, i));
             }
             for (int i = 0; i < Cad.CadItems.Count; i++)
             {
@@ -565,10 +579,6 @@ namespace SPI_AOI.Models
                 int limit = arSorted.Length > 1000 ? 1000 : arSorted.Length;
                 List<int> idGot = new List<int>();
                 //double deviationDist = Math.Max(d1, d2) > 0.05 * this.DPI ? 0.1 * Math.Min(d1, d2) : 0.03 * this.DPI;
-                if(item.Name == "U50")
-                {
-                    Console.WriteLine();
-                }
                 for (int i = 0; i < limit - 1; i++)
                 {
                     if (!string.IsNullOrEmpty(this.Gerber.PadItems[arSorted[i].Item2].CadFileID))

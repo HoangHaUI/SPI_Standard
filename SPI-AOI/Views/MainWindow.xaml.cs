@@ -32,6 +32,7 @@ namespace SPI_AOI.Views
         System.Timers.Timer mTimer = new System.Timers.Timer(20);
         Properties.Settings mParam = Properties.Settings.Default;
         List<Utils.SummaryInfo> mSummary = new List<Utils.SummaryInfo>();
+        Utils.FOVDisplayInfo mFOVDisplay = new Utils.FOVDisplayInfo();
         MyPLC mPLC = new MyPLC();
         IOT.HikCamera mCamera = null;
         DKZ224V4ACCom mLight = null;
@@ -69,7 +70,6 @@ namespace SPI_AOI.Views
             int val = mPLC.Get_Has_Product_Top();
             if(val == 1)
             {
-                Console.WriteLine("Go now");
                 mIsIdle = false;
                 Processing();
                 mIsIdle = true;
@@ -81,7 +81,7 @@ namespace SPI_AOI.Views
         }
         private void CaptureMark()
         {
-            System.Drawing.Point[] markPoint = mModel.GetRealMarkPosition(mParam.PULSE_PER_MM_X_TOP, mParam.PULSE_PER_MM_Y_TOP);
+            System.Drawing.Point[] markPoint = mModel.GetRealMarkPosition();
             for (int i = 0; i < markPoint.Length; i++)
             {
                 System.Drawing.Point mark = markPoint[i];
@@ -114,7 +114,6 @@ namespace SPI_AOI.Views
                     if (bm != null)
                     {
                         System.Drawing.Rectangle ROI = mModel.GetRectROIMark();
-                        Console.WriteLine(ROI);
                         using (Image<Bgr, byte> img = new Image<Bgr, byte>(bm))
                         {
                             CvInvoke.Imwrite("turn_" + (i + 1).ToString() + ".png", img);
@@ -142,7 +141,7 @@ namespace SPI_AOI.Views
         private void CaptureFOV()
         {
             bool activeLight = false;
-            System.Drawing.Point[] fovs = mModel.GetFOVPosition(mParam.PULSE_PER_MM_X_TOP, mParam.PULSE_PER_MM_Y_TOP);
+            System.Drawing.Point[] fovs = mModel.GetFOVPosition();
             for (int i = 0; i < fovs.Length; i++)
             {
                 System.Drawing.Point fov = fovs[i];
@@ -180,32 +179,36 @@ namespace SPI_AOI.Views
                     {
                         using (Image<Bgr, byte> img = new Image<Bgr, byte>(bm))
                         {
+
                             this.Dispatcher.Invoke(() => {
                                 BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(img.Bitmap);
                                 ImbCameraView.Source = bms;
                                 lbcountFovs.Content = (i + 1).ToString();
                             });
-
                         }
                     }
                 }
             }
             mLight.ActiveFour(0, 0, 0, 0);
         }
+        
         private void Processing()
         {
             UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.PROCESSING);
             CaptureMark();
             CaptureFOV();
             Thread.Sleep(1000);
-            this.Dispatcher.Invoke(() => {
-                bdFOV.Visibility = Visibility.Hidden;
-            });
             UpdateChartCount(chartYeildRate, txtPass, txtFail, 1, 0);
             UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PASS);
             UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.IDLE);
         }
-        
+        public void SetImageToImb(Image imb, System.Drawing.Bitmap bm)
+        {
+            this.Dispatcher.Invoke(() => {
+                BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(bm);
+                imb.Source = bms;
+            });
+        }
         private void UpdateChartCount(Chart Chart, TextBox TxtPass, TextBox TxtFail, int Pass, int Fail)
         {
             Chart.BackColor = System.Drawing.Color.Transparent;
@@ -287,17 +290,6 @@ namespace SPI_AOI.Views
             if (modelNames.Contains(selected))
             {
                 cbModelsName.SelectedItem = selected;
-            }
-        }
-        private void UpdateBackgroundImage(Border border, Image image)
-        {
-            if (image.Source != null)
-            {
-                border.Background = new SolidColorBrush(Color.FromRgb(0x00, 0x32, 0x00));
-            }
-            else
-            {
-                border.Background = Brushes.Gray;
             }
         }
         private void UpdateStatus(Utils.LabelMode Label, Utils.LabelStatus Status)
@@ -433,113 +425,175 @@ namespace SPI_AOI.Views
             });
             
         }
+        private void UpdateFOVDisplay()
+        {
+            if(mModel != null && mIsRunning)
+            {
+                using (Image<Bgr, byte> imgDigram = mModel.GetDiagramImage())
+                {
+                    System.Drawing.Point[] anchors = mModel.GetAngchorsDiagram();
+                    double imgWidth = imgDigram.Width;
+                    double imgHeight = imgDigram.Height;
+                    double fovWidth = mModel.FOV.Width;
+                    double fovHeight = mModel.FOV.Height;
+                    double imbWidth = imbDiagram.ActualWidth;
+                    double imbHeight = imbDiagram.ActualHeight;
+                    double bdImbWidth = bdImbDiagram.ActualWidth;
+                    double bdImbHeight = bdImbDiagram.ActualHeight;
+                    double scaleWidth = imbWidth / imgWidth;
+                    double scaleHeight = imbHeight / imgHeight;
+                    double showDisplayWidth = fovWidth * scaleWidth;
+                    double showDisplayHeight = fovHeight * scaleHeight;
+                    lock(mFOVDisplay)
+                    {
+                        mFOVDisplay.StartPoint = new System.Windows.Point[anchors.Length];
+                        mFOVDisplay.Witdh = showDisplayWidth;
+                        mFOVDisplay.Height = showDisplayHeight;
+                        for (int i = 0; i < mFOVDisplay.StartPoint.Length; i++)
+                        {
+                            mFOVDisplay.StartPoint[i] = new Point(
+                                anchors[i].X * scaleWidth - mFOVDisplay.Witdh / 2 +( bdImbWidth - imbWidth) / 2,
+                                anchors[i].Y * scaleHeight - mFOVDisplay.Height / 2 + (bdImbHeight - imbHeight) / 2
+                                );
+                        }
+                    }
+                }
+            }
+        }
+        private void SetDisplayFOV(int id)
+        {
+            this.Dispatcher.Invoke(() => {
+                if (id == -1)
+                {
+                    bdFOV.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    bdFOV.Width = mFOVDisplay.Witdh;
+                    bdFOV.Height = mFOVDisplay.Height;
+                    bdFOV.Margin = new Thickness(mFOVDisplay.StartPoint[id].X, mFOVDisplay.StartPoint[id].Y, 0, 0);
+                    bdFOV.Visibility = Visibility.Visible;
+                }
+            });
+            
+        }
         private void StartRunMode()
         {
             string modelName = cbModelsName.SelectedItem.ToString();
-            mModel = Model.LoadModelByName(modelName);
-            if (mModel == null)
-            {
-                MessageBox.Show(string.Format("Cant load {0} model", modelName), "Error", MessageBoxButton.OK);
-                ReleaseDevice();
-                return;
-            }
-            int ping = mPLC.Ping();
-            if (ping != 0)
-            {
-                MessageBox.Show(string.Format("Cant ping to PLC  IP :{0}:{1}...", mParam.PLC_IP, mParam.PLC_PORT), "Error", MessageBoxButton.OK);
-                ReleaseDevice();
-                UpdateStatus(Utils.LabelMode.PLC, Utils.LabelStatus.FAIL);
-                return;
-            }
-            UpdateStatus(Utils.LabelMode.PLC, Utils.LabelStatus.OK);
-            mCamera = MyCamera.GetInstance();
-            if (mCamera == null)
-            {
-                MessageBox.Show(string.Format("Not found camera!"), "Error", MessageBoxButton.OK);
-                ReleaseDevice();
-                return;
-            }
-            int stOpenCamera = mCamera.Open();
-            if (stOpenCamera != 0)
-            {
-                MessageBox.Show(string.Format("Cant open the camera!"), "Error", MessageBoxButton.OK);
-                ReleaseDevice();
-                return;
-            }
-            mCamera.StartGrabbing();
-            mCamera.SetParameter(IOT.KeyName.ExposureTime, (float)mModel.HardwareSettings.ExposureTime);
-            mCamera.SetParameter(IOT.KeyName.Gain, (float)mModel.HardwareSettings.Gain);
-            mLight = new DKZ224V4ACCom(mParam.LIGHT_COM);
-            int stOpenLightCtl = mLight.Open();
-            if (stOpenLightCtl != 0)
-            {
-                MessageBox.Show(string.Format("Cant connect to light source controller!"), "Error", MessageBoxButton.OK);
-                ReleaseDevice();
-                return;
-            }
-            int[] intensity = mModel.HardwareSettings.LightIntensity;
-            mLight.SetFour(intensity[0], intensity[1], intensity[2], intensity[3]);
-            mLight.ActiveFour(0, 0, 0, 0);
-            mPLC.Logout();
-            int conveyorPulse = mPLC.Get_Conveyor();
-            Console.WriteLine("Readed : {0} => to {1}", conveyorPulse, mModel.HardwareSettings.Conveyor);
-            if (conveyorPulse != mModel.HardwareSettings.Conveyor)
-            {
-                mPLC.Set_Speed_Run_Conveyor(25000);
-                
-                mPLC.Set_Conveyor(Convert.ToInt32(mModel.HardwareSettings.Conveyor));
-                mPLC.Set_Write_Coordinates_Finish_Conveyor();
-                WaitingForm wait = new WaitingForm("Moving conveyor...");
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-                Thread a = new Thread(() =>
+            WaitingForm wait = new WaitingForm("Load model...");
+            Thread startThread = new Thread(() => {
+                mModel = Model.LoadModelByName(modelName);
+                if (mModel == null)
                 {
+                    ReleaseResource();
+                    wait.KillMe = true;
+                    MessageBox.Show(string.Format("Cant load {0} model", modelName), "Error", MessageBoxButton.OK);
+                    return;
+                }
+                using (Image<Bgr, byte> imgDigram = mModel.GetDiagramImage())
+                {
+                    SetImageToImb(imbDiagram, imgDigram.Bitmap);
+                    UpdateFOVDisplay();
+                    SetDisplayFOV(-1);
+                }
+                wait.LabelContent = "Connecting to PLC...";
+                int ping = mPLC.Ping();
+                if (ping != 0)
+                {
+                   
+                    ReleaseResource();
+                    wait.KillMe = true;
+                    UpdateStatus(Utils.LabelMode.PLC, Utils.LabelStatus.FAIL);
+                    MessageBox.Show(string.Format("Cant ping to PLC  IP :{0}:{1}...", mParam.PLC_IP, mParam.PLC_PORT), "Error", MessageBoxButton.OK);
+                    return;
+                }
+                UpdateStatus(Utils.LabelMode.PLC, Utils.LabelStatus.OK);
+                wait.LabelContent = "Connecting to Camera...";
+                mCamera = MyCamera.GetInstance();
+                if (mCamera == null)
+                {
+
+                    ReleaseResource();
+                    wait.KillMe = true;
+                    MessageBox.Show(string.Format("Not found camera!"), "Error", MessageBoxButton.OK);
+                    return;
+                }
+                int stOpenCamera = mCamera.Open();
+                if (stOpenCamera != 0)
+                {
+
+                    ReleaseResource();
+                    MessageBox.Show(string.Format("Cant open the camera!"), "Error", MessageBoxButton.OK);
+                    return;
+                }
+                mCamera.StartGrabbing();
+                mCamera.SetParameter(IOT.KeyName.ExposureTime, (float)mModel.HardwareSettings.ExposureTime);
+                mCamera.SetParameter(IOT.KeyName.Gain, (float)mModel.HardwareSettings.Gain);
+                wait.LabelContent = "Connecting to Lightsource...";
+                mLight = new DKZ224V4ACCom(mParam.LIGHT_COM);
+                int stOpenLightCtl = mLight.Open();
+                if (stOpenLightCtl != 0)
+                {
+
+                    ReleaseResource();
+                    MessageBox.Show(string.Format("Cant connect to light source controller!"), "Error", MessageBoxButton.OK);
+                    return;
+                }
+                int[] intensity = mModel.HardwareSettings.LightIntensity;
+                mLight.SetFour(intensity[0], intensity[1], intensity[2], intensity[3]);
+                mLight.ActiveFour(0, 0, 0, 0);
+                mPLC.Logout();
+                int conveyorPulse = mPLC.Get_Conveyor();
+                if (conveyorPulse != mModel.HardwareSettings.Conveyor)
+                {
+                    wait.LabelContent = "Moving Conveyor...";
+                    mPLC.Set_Speed_Run_Conveyor(25000);
+
+                    mPLC.Set_Conveyor(Convert.ToInt32(mModel.HardwareSettings.Conveyor));
+                    mPLC.Set_Write_Coordinates_Finish_Conveyor();
+
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
                     int val = mPLC.Get_Go_Coordinates_Finish_Conveyor();
-                    while (val != 1 && sw.ElapsedMilliseconds < 180000)
+                    while (val != 1 && sw.ElapsedMilliseconds < 120000)
                     {
                         Thread.Sleep(100);
                         val = mPLC.Get_Go_Coordinates_Finish_Conveyor();
                     }
-                    wait.KillMe = true;
-                });
-
-                a.Start();
-                wait.ShowDialog();
-
-                if (sw.ElapsedMilliseconds > 180000)
-                {
-                    MessageBox.Show("Timeout move conveyor, please try again!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                    ReleaseDevice();
-                    return;
+                    
+                    if (sw.ElapsedMilliseconds > 120000)
+                    {
+                        MessageBox.Show("Timeout move conveyor, please try again!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                        ReleaseResource();
+                        wait.KillMe = true;
+                        return;
+                    }
+                    Thread.Sleep(500);
+                    mPLC.Reset_Go_Coordinates_Finish_Conveyor();
                 }
-                Thread.Sleep(500);
-                mPLC.Reset_Go_Coordinates_Finish_Conveyor();
-            }
-            mPLC.Set_Speed_Run_X_Top(200000);
-            mPLC.Set_Speed_Run_Y_Top(200000);
-            FileInfo fi = new FileInfo("icon/stop.png");
-            Console.WriteLine(fi.FullName);
-            imbBtRun.Source = new BitmapImage(new Uri(fi.FullName));
-            if(mParam.RUNNING_MODE == "TEST")
-            {
-                UpdateStatus(Utils.LabelMode.RUNNING_MODE, Utils.LabelStatus.TEST);
-            }
-            else
-            {
-                UpdateStatus(Utils.LabelMode.RUNNING_MODE, Utils.LabelStatus.CONTROL_RUN);
-            }
-            UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.IDLE);
-            LoadDetails();
-            mIsIdle = true;
-            mIsRunning = true;
-            mTimer.Elapsed += OnTimedEvent;
-            mTimer.Enabled = true;
-            //using (Image<Gray, byte> img = mModel.Gerber.ProcessingGerberImage.Copy())
-            //{
-            //    //img.ROI = mModel.Gerber.ROI;
-            //    CvInvoke.Imwrite("gerber.png", img);
-            //imbDiagram.Source = new BitmapImage(new Uri(@"F:\Heal\Projects\Camera calibration\test.png"));
-            //}
+                wait.LabelContent = "Init Parameter...";
+                mPLC.Set_Speed_Run_X_Top(200000);
+                mPLC.Set_Speed_Run_Y_Top(200000);
+                FileInfo fi = new FileInfo("icon/stop.png");
+                imbBtRun.Source = new BitmapImage(new Uri(fi.FullName));
+                if (mParam.RUNNING_MODE == "TEST")
+                {
+                    UpdateStatus(Utils.LabelMode.RUNNING_MODE, Utils.LabelStatus.TEST);
+                }
+                else
+                {
+                    UpdateStatus(Utils.LabelMode.RUNNING_MODE, Utils.LabelStatus.CONTROL_RUN);
+                }
+                UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.IDLE);
+                LoadDetails();
+                mIsIdle = true;
+                mIsRunning = true;
+                mTimer.Elapsed += OnTimedEvent;
+                mTimer.Enabled = true;
+                wait.KillMe = true;
+            });
+            startThread.Start();
+            wait.ShowDialog();
         }
         private void StopRunMode()
         {
@@ -554,17 +608,17 @@ namespace SPI_AOI.Views
                 UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.READY);
                 UpdateStatus(Utils.LabelMode.PLC, Utils.LabelStatus.READY);
                 mLight.ActiveFour(0, 0, 0, 0);
-                ReleaseDevice();
+                ReleaseResource();
                 ResetDetails();
-               
-                
+                mModel.Dispose();
+                mModel = null;
             }
            else
             {
                 MessageBox.Show(string.Format("Cant stop because the machine is a progress..."), "Error", MessageBoxButton.OK);
             }
         }
-        private void ReleaseDevice()
+        private void ReleaseResource()
         {
             if(mModel != null)
             {
@@ -591,6 +645,10 @@ namespace SPI_AOI.Views
                     mLight = null;
                 }
             }
+            this.Dispatcher.Invoke(() =>
+            {
+                imbDiagram.Source = null ;
+            });
             
         }
         private void btRun_Click(object sender, RoutedEventArgs e)

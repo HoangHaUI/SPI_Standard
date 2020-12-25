@@ -32,4 +32,11 @@ namespace SPI_AOI.Utils
         MACHINE_STATUS,
         PRODUCT_STATUS
     }
+    public enum AutoLinkMode
+    {
+        RnC,
+        TwoPad,
+        All,
+        NotLink
+    }
 }

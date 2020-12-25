@@ -15,43 +15,85 @@ namespace SPI_AOI.Models
 {
     public class ShowModel
     {
-        //private static void RemovePad(Model model)
-        //{
-        //    for (int i = 0; i < model.Gerber.RemoveROI.Count; i++)
-        //    {
-        //        CvInvoke.Rectangle(model.ImgGerberProcessed, model.Gerber.RemoveROI[i], new MCvScalar(0), -1);
-        //    }
-        //}
         private static void DrawColor(Model model)
         {
-            model.ImgGerberProcessedBgr = new Image<Bgr, byte>(model.Gerber.ProcessingGerberImage.Size);
             Color cl = model.Gerber.Color;
+            Rectangle ROI = model.Gerber.ROI;
+            model.ImgGerberProcessedBgr = new Image<Bgr, byte>(model.Gerber.ProcessingGerberImage.Size);
+            model.ImgGerberProcessedBgr.ROI = model.Gerber.ROI;
+            model.Gerber.ProcessingGerberImage.ROI = model.Gerber.ROI;
+            Size imgSize = model.ImgGerberProcessedBgr.Size;
+            using (Image<Bgr, byte> imgAddLayerColor = new Image<Bgr, byte>(imgSize.Width, imgSize.Height, new Bgr(cl)))
+            using (Image<Bgr, byte> imgAddHightLightColor = new Image<Bgr, byte>(imgSize.Width, imgSize.Height, new Bgr(255, 0, 0)))
+            using (Image<Gray, byte> imgMask = new Image<Gray, byte>(imgSize))
             using (VectorOfVectorOfPoint contoursLinked = new VectorOfVectorOfPoint())
             using (VectorOfVectorOfPoint contoursNoneLink = new VectorOfVectorOfPoint())
+            using (VectorOfVectorOfPoint contoursRemove = new VectorOfVectorOfPoint())
             {
+
                 for (int i = 0; i < model.Gerber.PadItems.Count; i++)
                 {
                     var item = model.Gerber.PadItems[i];
-                    if (!string.IsNullOrEmpty(item.CadFileID) && item.CadItemIndex != -1)
+                    if (item.Enable)
                     {
-                        contoursLinked.Push(item.Contour);
+                        if (!string.IsNullOrEmpty(item.CadFileID) && item.CadItemIndex != -1)
+                        {
+                            Point[] cnts = item.Contour.ToArray();
+                            for (int k = 0; k < cnts.Length; k++)
+                            {
+                                cnts[k].X -= ROI.X;
+                                cnts[k].Y -= ROI.Y;
+                            }
+                            contoursLinked.Push(new VectorOfPoint(cnts));
+                        }
+                        else
+                        {
+                            Point[] cnts = item.Contour.ToArray();
+                            for (int k = 0; k < cnts.Length; k++)
+                            {
+                                cnts[k].X -= ROI.X;
+                                cnts[k].Y -= ROI.Y;
+                            }
+                            contoursNoneLink.Push(new VectorOfPoint(cnts));
+                        }
                     }
+
                     else
                     {
-                            contoursNoneLink.Push(item.Contour);
+                        Point[] cnts = item.Contour.ToArray();
+                        for (int k = 0; k < cnts.Length; k++)
+                        {
+                            cnts[k].X -= ROI.X;
+                            cnts[k].Y -= ROI.Y;
+                        }
+                        contoursRemove.Push(new VectorOfPoint(cnts));
                     }
                 }
                 if (model.HightLineLinkedPad)
                 {
-                    CvInvoke.DrawContours(model.ImgGerberProcessedBgr, contoursLinked, -1, new MCvScalar(255, 0, 0), -1);
+                    if (contoursLinked.Size < contoursNoneLink.Size)
+                    {
+                        CvInvoke.Add(model.ImgGerberProcessedBgr, imgAddLayerColor, model.ImgGerberProcessedBgr, mask: model.Gerber.ProcessingGerberImage);
+                        CvInvoke.DrawContours(imgMask, contoursLinked, -1, new MCvScalar(255), -1);
+                        CvInvoke.Subtract(model.ImgGerberProcessedBgr, imgAddLayerColor, model.ImgGerberProcessedBgr, mask: imgMask);
+                        CvInvoke.Add(model.ImgGerberProcessedBgr, imgAddHightLightColor, model.ImgGerberProcessedBgr, mask: imgMask);
+                    }
+                    else
+                    {
+                        CvInvoke.Add(model.ImgGerberProcessedBgr, imgAddHightLightColor, model.ImgGerberProcessedBgr, mask: model.Gerber.ProcessingGerberImage);
+                        CvInvoke.DrawContours(imgMask, contoursNoneLink, -1, new MCvScalar(255), -1);
+                        CvInvoke.Subtract(model.ImgGerberProcessedBgr, imgAddHightLightColor, model.ImgGerberProcessedBgr, mask: imgMask);
+                        CvInvoke.Add(model.ImgGerberProcessedBgr, imgAddLayerColor, model.ImgGerberProcessedBgr, mask: imgMask);
+                    }
                 }
                 else
                 {
-                    CvInvoke.DrawContours(model.ImgGerberProcessedBgr, contoursLinked, -1, new MCvScalar(cl.B, cl.G, cl.R), -1);
+                    CvInvoke.Add(model.ImgGerberProcessedBgr, imgAddLayerColor, model.ImgGerberProcessedBgr, mask: model.Gerber.ProcessingGerberImage);
                 }
-                CvInvoke.DrawContours(model.ImgGerberProcessedBgr, contoursNoneLink, -1, new MCvScalar(cl.B, cl.G, cl.R), -1);
+                CvInvoke.DrawContours(model.ImgGerberProcessedBgr, contoursRemove, -1, new MCvScalar(0,0,0), -1);
             }
-
+            model.ImgGerberProcessedBgr.ROI = Rectangle.Empty;
+            model.Gerber.ProcessingGerberImage.ROI = Rectangle.Empty;
         }
         private static void HightLightSelectPad(Image<Bgr, byte> ImgDraw , Model model)
         {
@@ -61,7 +103,7 @@ namespace SPI_AOI.Models
                 {
                     Rectangle bound = CvInvoke.BoundingRectangle(model.Gerber.PadItems[i].Contour);
 
-                    if (model.Gerber.SelectPad.Contains(bound))
+                    if (model.Gerber.SelectPad.Contains(bound) && model.Gerber.PadItems[i].Enable)
                     {
                         contours.Push(model.Gerber.PadItems[i].Contour);
                     }
@@ -88,7 +130,8 @@ namespace SPI_AOI.Models
         }
         public static Image<Bgr, byte> GetLayoutImage(Model model , ActionMode mode)
         {
-            
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             Image<Bgr, byte> img = null;
             if (model.Gerber is GerberFile)
             {
@@ -113,7 +156,7 @@ namespace SPI_AOI.Models
                             break;
                     }
                 }
-                
+                Console.WriteLine(sw.ElapsedMilliseconds);
                 if (model.Gerber.Visible)
                 {
                     img = model.ImgGerberProcessedBgr.Copy();
@@ -180,7 +223,7 @@ namespace SPI_AOI.Models
                     HightLightMarkPoint(img, model);
                 }
             }
-
+            
             return img;
         }
         public Image<Gray, byte> RotateImage(Image<Gray, byte> ImgInput, double Angle)

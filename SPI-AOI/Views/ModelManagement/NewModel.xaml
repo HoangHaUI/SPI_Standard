@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SPI_AOI.Views.ModelManagement"
         mc:Ignorable="d"
         Title="New Model"
-        Height="220" Width="360"
+        Height="258.704" Width="371.672"
         Background="#FFEEEEEE"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
@@ -26,13 +26,19 @@
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" Margin="20, 0, 0, 0">
                     <Label >Model Name:</Label>
-                    <TextBox x:Name="txtModelName" Width="212"
+                    <TextBox x:Name="txtModelName" Width="212" Margin="7,0,0,0"
+                             Height="22" FontSize="15" FontWeight="Bold" 
+                             TextChanged="txtModelName_TextChanged"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="20, 10, 0, 0">
+                    <Label >PCB Thickness:</Label>
+                    <TextBox x:Name="txtThickness" Width="212"
                              Height="22" FontSize="15" FontWeight="Bold" 
                              TextChanged="txtModelName_TextChanged"></TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="20, 10, 0, 0">
                     <Label >Gerber file:</Label>
-                    <TextBox x:Name="txtGerberPath" Width="180" Margin="14,0,0,0"
+                    <TextBox x:Name="txtGerberPath" Width="180" Margin="20,0,0,0"
                              Height="22" IsEnabled="False" 
                              TextChanged="txtGerberPath_TextChanged"></TextBox>
                     <Button x:Name="btBrowser"  Width="23" Height="23"
@@ -40,15 +46,16 @@
                         ...
                     </Button>
                 </StackPanel>
+                
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
             <StackPanel  Orientation="Vertical">
-                <StackPanel Orientation="Horizontal" Margin="185, 20, 0, 0">
-                    <Button x:Name="btAdd"  Width="50" Height="23"
+                <StackPanel Orientation="Horizontal" Margin="152, 20, 0, 0">
+                    <Button x:Name="btAdd"  Width="70" Height="23"
                             Content="Add" Click="btAdd_Click">
                     </Button>
-                    <Button x:Name="btCancel" Margin="30,0,0,0" Width="50"
+                    <Button x:Name="btCancel" Margin="30,0,0,0" Width="70"
                             Height="23" Content="Cancel" Click="btCancel_Click">
                     </Button>
                 </StackPanel>

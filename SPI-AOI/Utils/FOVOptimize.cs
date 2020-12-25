@@ -82,7 +82,7 @@ namespace SPI_AOI.Utils
                 }
                 else
                 {
-                    CvInvoke.Rectangle(imgbgr, fov, new MCvScalar(255,0,0), 2);
+                    CvInvoke.Rectangle(imgbgr, fov, new MCvScalar(255,0,0), 5);
                 }
                 CvInvoke.PutText(imgbgr, (i).ToString(), Anchors[i], Emgu.CV.CvEnum.FontFace.HersheyComplex, 3, new MCvScalar(0, 255, 0), 3);
                 if (i > 0)

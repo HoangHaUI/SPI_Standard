@@ -76,9 +76,10 @@ namespace Heal
             {
                 try
                 {
-                    Thread.Sleep(30);
+                    Thread.Sleep(10);
                     TcpClient client = new TcpClient();
-                    if(client.ConnectAsync(_ip, _port).Wait(200)){
+                    if (client.ConnectAsync(_ip, _port).Wait(500))
+                    {
                         client.SendTimeout = 500;
                         client.ReceiveTimeout = 500;
                         NetworkStream stream = client.GetStream();
@@ -96,7 +97,8 @@ namespace Heal
                         }
                         result = result.Substring(0, index);
                         return result;
-                    }else
+                    }
+                    else
                         return "-1";
 
                 }
@@ -105,9 +107,7 @@ namespace Heal
                     mLog.Error(ex.Message);
                     return "-1";
                 }
-
             }
-
         }
         public int SetDevice2(string Device, int value)
         {
@@ -128,11 +128,11 @@ namespace Heal
             int nextIndex = currentIndex + 1;
             string DeviceH = ext + nextIndex.ToString();
             string DeviceL = ext + currentIndex.ToString();
-            int sta = SetDevice(DeviceH, valueH);
-            if (sta != -1)
+            SLMPResult sta = SetDevice(DeviceH, valueH);
+            if (sta.Status == SLMPStatus.SUCCESSFULLY)
             {
                 sta = SetDevice(DeviceL, valueL);
-                if (sta != -1)
+                if (sta.Status == SLMPStatus.SUCCESSFULLY)
                 {
                     return 0;
                 }
@@ -148,7 +148,7 @@ namespace Heal
         }
         public int GetDevice2(string Device)
         {
-            int value = 0;
+            int value = -1;
             int i = 0;
             for (; i < Device.Length; i++)
             {
@@ -164,14 +164,22 @@ namespace Heal
             string DeviceL = ext + currentIndex.ToString();
             int valueL = 0;
             int valueH = 0;
-            valueH = GetDevice(DeviceH);
-            valueL = GetDevice(DeviceL);
-            valueH = valueH << 16;
-            value = valueH | valueL;
+            SLMPResult staH = GetDevice(DeviceH);
+            SLMPResult staL = GetDevice(DeviceL);
+            if(staH.Status == SLMPStatus.SUCCESSFULLY && staL.Status == SLMPStatus.SUCCESSFULLY)
+            {
+                valueH = staH.Value;
+                valueL = staL.Value;
+                valueH = valueH << 16;
+                value = valueH | valueL;
+            }
             return value;
         }
-        public int SetDevice(string device, int value)
+        public SLMPResult SetDevice(string device, int value)
         {
+            SLMPResult slmpResult = new SLMPResult();
+            slmpResult.Status = SLMPStatus.FAIL;
+            slmpResult.Value = 0;
             string acommand = string.Empty;
             string ccommand = string.Empty;
             string bcommand = string.Empty;
@@ -182,7 +190,7 @@ namespace Heal
                 int length = 24;
                 if ((device.Substring(0, 1).ToUpper() == "D") || (device.Substring(0, 1).ToUpper() == "W"))
                 {
-                    if ((value <= 65535) && (value >= 0))
+                    if ((value < 655535) && (value >= 0))
                     {
                         length += 4;
                         bcommand = acommand + length.ToString("X4") + _reserved + _write
@@ -191,7 +199,7 @@ namespace Heal
                             + "0001" + value.ToString("X4");
                     }
                     else
-                        return -1;
+                        return slmpResult;
 
                 }
                 else if (device.Substring(0, 2).ToUpper() == "SD")
@@ -213,46 +221,39 @@ namespace Heal
                             + "0001" + value.ToString("X1");
                     }
                     else
-                        return -1;
+                        return slmpResult;
                 }
 
                 try
                 {
-                    int i = 0;
                     string result;
-                    do
-                    {
-                        result = SendCommand(bcommand);
-                        i++;
-                        Thread.Sleep(5);
-                    } while ((result == "-1") && (i < 10));
+
+                    result = SendCommand(bcommand);
 
                     if (result == "-1")
-                        return -1;
+                        return slmpResult;
                     if (Convert.ToInt32(result.Substring(ccommand.Length + 4)) == 0)
-                        return 1;
+                    {
+                        slmpResult.Status = SLMPStatus.SUCCESSFULLY;
+                        slmpResult.Value = 0;
+                    }
                     else
-                        return -1;
+                        return slmpResult;
                 }
                 catch (Exception ex)
                 {
                     mLog.Error(ex.Message);
-                    return -1;
+                    return slmpResult;
                 }
             }
-            else
-            {
-                return -1;
-            }
+            return slmpResult;
         }
 
-        public int GetDevice(string device)
+        public SLMPResult GetDevice(string device)
         {
-            if (string.IsNullOrEmpty(device))
-            {
-                return -1;
-            }
-            int value = -1;
+            SLMPResult slmpResult = new SLMPResult();
+            slmpResult.Status = SLMPStatus.FAIL;
+            slmpResult.Value = 0;
             string acommand = string.Empty;
             string ccommand = string.Empty;
             string bcommand = string.Empty;
@@ -283,9 +284,6 @@ namespace Heal
                        _read + _bit + device.Substring(0, 1).ToUpper() + (char)0x2A
                        + Convert.ToInt32(device.Substring(1).ToUpper()).ToString("D6") + "0001";
                 }
-
-
-
                 try
                 {
                     int i = 0;
@@ -294,27 +292,45 @@ namespace Heal
                     {
                         result = SendCommand(bcommand);
                         i++;
-                    } while ((result == "-1") && (i < 10));
+                    } while ((result == "-1") && (i < 3));
 
                     if (result == "-1")
-                        return -1;
+                    {
+                        slmpResult.Value = 0;
+                        slmpResult.Status = SLMPStatus.TIME_OUT;
+                    }
                     if (Convert.ToInt32(result.Substring(ccommand.Length + 4, 4), 16) == 0)
-                        value = Convert.ToInt32(result.Substring(ccommand.Length + 8), 16);
+                    {
+                        slmpResult.Value = Convert.ToInt32(result.Substring(ccommand.Length + 8), 16);
+                        slmpResult.Status = SLMPStatus.SUCCESSFULLY;
+                    }
 
                 }
                 catch (Exception ex)
                 {
                     mLog.Error(ex.Message);
-                    //Console.WriteLine(ex.ToString());
+                    slmpResult.Value = 0;
+                    slmpResult.Status = SLMPStatus.FAIL;
                 }
 
             }
-            return value;
+
+            return slmpResult;
         }
 
     }
 
 
-
+    public class SLMPResult
+    {
+        public SLMPStatus Status { get; set; }
+        public int Value { get; set; }
+    }
+    public enum SLMPStatus
+    {
+        SUCCESSFULLY,
+        FAIL,
+        TIME_OUT
+    }
 
 }

@@ -9,6 +9,8 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="SPI_AOI.Views.MainWindow"
         mc:Ignorable="d"
         Height="1000" Width="1800"
+    MinWidth="1800"
+    MinHeight="1000"
         WindowStartupLocation="CenterScreen"
         Initialized="Window_Initialized"
         Title="[FII] SPI-AOI" Background="#FFF0F0F0">
@@ -96,7 +98,7 @@
                         <Image Source="../Resources/Icons/model_icon.png" Width="25"/>
                     </Button>
                     <Separator/>
-                    <Label Content="Model:"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="Select Model:"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <ComboBox x:Name="cbModelsName" Width="300" FontSize="15" FontWeight="Bold" Background="#FFDDDDDD" Height="35"/>
                     <Button x:Name="btRun" ToolTip="Run" 
                             Style="{StaticResource btToolBarStyle}"
@@ -123,7 +125,7 @@
                     </Grid.RowDefinitions>
                     <GroupBox x:Name="groupBox" Grid.Row="0" Header="Diagram"
                               BorderBrush="Gray" FontWeight="Bold">
-                        <Border x:Name="bdImage" Background="Gray"
+                        <Border x:Name="bdImbDiagram" Background="Gray"
                                 Margin="5" ClipToBounds="True" >
                             <Grid>
                                 <Image x:Name="imbDiagram"
@@ -131,17 +133,17 @@
                                 </Image>
                                 <Label x:Name="lbProductStatus" Content="PASS" Foreground="Green"
                                        FontWeight="Bold"
-                                       FontSize="100" 
+                                       FontSize="120" 
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"></Label>
                                 <Border x:Name="bdFOV" Width="420" Height="280" 
-                                        BorderThickness="5" 
+                                        BorderThickness="3" 
                                         Background="Transparent"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         BorderBrush="Yellow"
                                         Margin="70,2080,0,0"
-                                        Visibility="Visible">
+                                        Visibility="Hidden">
                                 </Border>
                             </Grid>
                             
@@ -355,7 +357,8 @@
                             <StackPanel Margin="5,15,0,0">
                                 <StackPanel Orientation="Horizontal" Margin="5,10,0,0">
                                     <Label Content="Model:"/>
-                                    <ComboBox Width="220" Margin="10,0,0,0"/>
+                                    <ComboBox Width="200" Margin="10,0,0,0"/>
+                                    <Button Width="26" Height="26" Margin="10,0,0,0"></Button>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                                     <RadioButton Margin="40,0,0,0" Content="Shift" IsChecked="True"/>

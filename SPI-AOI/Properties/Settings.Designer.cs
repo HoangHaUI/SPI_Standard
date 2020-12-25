@@ -25,19 +25,19 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("791")]
-        public float DPI {
+        [global::System.Configuration.DefaultSettingValueAttribute("790")]
+        public float DPI_DEFAULT {
             get {
-                return ((float)(this["DPI"]));
+                return ((float)(this["DPI_DEFAULT"]));
             }
             set {
-                this["DPI"] = value;
+                this["DPI_DEFAULT"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1600, 1600")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1400, 1200")]
         public global::System.Drawing.Size FOV {
             get {
                 return ((global::System.Drawing.Size)(this["FOV"]));
@@ -349,7 +349,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("COM4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM10")]
         public string LIGHT_COM {
             get {
                 return ((string)(this["LIGHT_COM"]));
@@ -518,12 +518,12 @@ namespace SPI_AOI.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("COM4")]
-        public string AUTOSCAN_COM {
+        public string SCANER_COM {
             get {
-                return ((string)(this["AUTOSCAN_COM"]));
+                return ((string)(this["SCANER_COM"]));
             }
             set {
-                this["AUTOSCAN_COM"] = value;
+                this["SCANER_COM"] = value;
             }
         }
         
@@ -769,13 +769,217 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Setting {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LIGHT_DEFAULT_INTENSITY_CH1 {
             get {
-                return ((string)(this["Setting"]));
+                return ((int)(this["LIGHT_DEFAULT_INTENSITY_CH1"]));
             }
             set {
-                this["Setting"] = value;
+                this["LIGHT_DEFAULT_INTENSITY_CH1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LIGHT_DEFAULT_INTENSITY_CH2 {
+            get {
+                return ((int)(this["LIGHT_DEFAULT_INTENSITY_CH2"]));
+            }
+            set {
+                this["LIGHT_DEFAULT_INTENSITY_CH2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LIGHT_DEFAULT_INTENSITY_CH3 {
+            get {
+                return ((int)(this["LIGHT_DEFAULT_INTENSITY_CH3"]));
+            }
+            set {
+                this["LIGHT_DEFAULT_INTENSITY_CH3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LIGHT_DEFAULT_INTENSITY_CH4 {
+            get {
+                return ((int)(this["LIGHT_DEFAULT_INTENSITY_CH4"]));
+            }
+            set {
+                this["LIGHT_DEFAULT_INTENSITY_CH4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Admin")]
+        public string USER_LOGIN {
+            get {
+                return ((string)(this["USER_LOGIN"]));
+            }
+            set {
+                this["USER_LOGIN"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3.636363636363")]
+        public double DPI_SCALE {
+            get {
+                return ((double)(this["DPI_SCALE"]));
+            }
+            set {
+                this["DPI_SCALE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.2")]
+        public double THICKNESS_DEFAULT {
+            get {
+                return ((double)(this["THICKNESS_DEFAULT"]));
+            }
+            set {
+                this["THICKNESS_DEFAULT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3.2")]
+        public double PULSE_X_PER_PIXEL_DEFAULT {
+            get {
+                return ((double)(this["PULSE_X_PER_PIXEL_DEFAULT"]));
+            }
+            set {
+                this["PULSE_X_PER_PIXEL_DEFAULT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3.2")]
+        public double PULSE_Y_PER_PIXEL_DEFAULT {
+            get {
+                return ((double)(this["PULSE_Y_PER_PIXEL_DEFAULT"]));
+            }
+            set {
+                this["PULSE_Y_PER_PIXEL_DEFAULT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.02")]
+        public double SCALE_PULSE_X {
+            get {
+                return ((double)(this["SCALE_PULSE_X"]));
+            }
+            set {
+                this["SCALE_PULSE_X"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.02")]
+        public double SCALE_PULSE_Y {
+            get {
+                return ((double)(this["SCALE_PULSE_Y"]));
+            }
+            set {
+                this["SCALE_PULSE_Y"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.45")]
+        public string CAMERA_X_AXIS_ANGLE {
+            get {
+                return ((string)(this["CAMERA_X_AXIS_ANGLE"]));
+            }
+            set {
+                this["CAMERA_X_AXIS_ANGLE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.02")]
+        public string XY_AXIS_ANGLE {
+            get {
+                return ((string)(this["XY_AXIS_ANGLE"]));
+            }
+            set {
+                this["XY_AXIS_ANGLE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("39900")]
+        public int PLC_LIMIT_X_TOP {
+            get {
+                return ((int)(this["PLC_LIMIT_X_TOP"]));
+            }
+            set {
+                this["PLC_LIMIT_X_TOP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("39900")]
+        public int PLC_LIMIT_Y_TOP {
+            get {
+                return ((int)(this["PLC_LIMIT_Y_TOP"]));
+            }
+            set {
+                this["PLC_LIMIT_Y_TOP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("39900")]
+        public int PLC_LIMIT_X_BOT {
+            get {
+                return ((int)(this["PLC_LIMIT_X_BOT"]));
+            }
+            set {
+                this["PLC_LIMIT_X_BOT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("39900")]
+        public int PLC_LIMIT_Y_BOT {
+            get {
+                return ((int)(this["PLC_LIMIT_Y_BOT"]));
+            }
+            set {
+                this["PLC_LIMIT_Y_BOT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2147483")]
+        public int PLC_LIMIT_CONVEYOR {
+            get {
+                return ((int)(this["PLC_LIMIT_CONVEYOR"]));
+            }
+            set {
+                this["PLC_LIMIT_CONVEYOR"] = value;
             }
         }
     }

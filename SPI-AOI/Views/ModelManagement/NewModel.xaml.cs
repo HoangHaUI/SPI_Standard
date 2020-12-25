@@ -56,11 +56,26 @@ namespace SPI_AOI.Views.ModelManagement
 
         private void btAdd_Click(object sender, RoutedEventArgs e)
         {
+            string user = mParam.USER_LOGIN;
             string modelName = txtModelName.Text;
             string gerberPath = txtGerberPath.Text;
-            float dpi = mParam.DPI;
+            double pcbThickness = 0;
+            try
+            {
+                pcbThickness = Convert.ToDouble(txtThickness.Text);
+            }
+            catch
+            {
+                MessageBox.Show("PCB Thickness incorrect!", 
+                    "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            double dev = pcbThickness - mParam.THICKNESS_DEFAULT;
+            double pulseXPerPixel = -dev * mParam.SCALE_PULSE_X + mParam.PULSE_X_PER_PIXEL_DEFAULT;
+            double pulseYPerPixel = -dev * mParam.SCALE_PULSE_Y + mParam.PULSE_Y_PER_PIXEL_DEFAULT;
+            float dpi = (float) (mParam.DPI_DEFAULT + mParam.DPI_SCALE * dev);
             System.Drawing.Size fov = mParam.FOV;
-            mModel = Model.GetNewModel(modelName, "Admin", gerberPath, dpi, fov);
+            mModel = Model.GetNewModel(modelName, user, gerberPath, dpi, fov, pulseXPerPixel, pulseYPerPixel, pcbThickness);
             if (mModel == null)
             {
                 MessageBox.Show("Gerber file incorrect!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -84,8 +99,9 @@ namespace SPI_AOI.Views.ModelManagement
         
         private void EnableBtAdd()
         {
-            btAdd.IsEnabled = txtModelName.Text != null && txtModelName.Text != string.Empty && txtModelName.Text != "" &&
-                txtGerberPath.Text != null && txtGerberPath.Text != string.Empty && txtGerberPath.Text != "[Import File]";
+            btAdd.IsEnabled =   !string.IsNullOrEmpty(txtModelName.Text) &&
+                                !string.IsNullOrEmpty(txtGerberPath.Text) &&
+                                !string.IsNullOrEmpty(txtThickness.Text);
         }
     }
 }

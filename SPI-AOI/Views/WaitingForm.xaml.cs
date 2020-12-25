@@ -20,10 +20,26 @@ namespace SPI_AOI.Views
     public partial class WaitingForm : Window
     {
         private bool mKillMe = false;
-        public WaitingForm(string Content="Processing...")
+        private string mContent = "Processing...";
+        public string LabelContent
+        {
+            get
+            {
+                return mContent;
+            }
+            set
+            {
+                mContent = value;
+                this.Dispatcher.Invoke(() => {
+                    lbStatus.Content = mContent;
+                });
+            }
+        }
+        public WaitingForm(string Content = "Processing...")
         {
             InitializeComponent();
-            lbStatus.Content = Content;
+            this.LabelContent = Content;
+
         }
         public bool KillMe
         {
