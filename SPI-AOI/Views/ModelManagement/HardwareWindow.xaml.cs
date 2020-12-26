@@ -17,6 +17,7 @@ using Emgu.CV.Util;
 using SPI_AOI.Models;
 using System.Threading;
 using System.Diagnostics;
+using NLog;
 
 
 namespace SPI_AOI.Views.ModelManagement
@@ -27,16 +28,14 @@ namespace SPI_AOI.Views.ModelManagement
     public partial class HardwareWindow : Window
     {
         Model mModel = null;
-        
+        Logger mLog = Heal.LogCtl.GetInstance();
         IOT.HikCamera mCamera = Devices.MyCamera.GetInstance();
-        System.Timers.Timer mTimer = new System.Timers.Timer(20);
+        System.Timers.Timer mTimer = new System.Timers.Timer(10);
         Devices.DKZ224V4ACCom mLightSource = new Devices.DKZ224V4ACCom(Properties.Settings.Default.LIGHT_COM);
         Devices.MyPLC mPLC = new Devices.MyPLC();
         bool mIsTimerRunning = false;
         bool mLoaded = false;
         int mCount = 10;
-
-
         PadItem mPadMark = null;
         double mScanWidth = 10;
         double mScanHeight = 10;
@@ -45,12 +44,12 @@ namespace SPI_AOI.Views.ModelManagement
         double mGain = 0;
         int[] mLightIntensity = new int[4];
         System.Drawing.Point mMarkPoint = new System.Drawing.Point();
+        System.Drawing.Point mMarkPointOnImage = new System.Drawing.Point();
         double mConveyor = 0;
         double mMatchingScore = 0;
         double mGrayLevel = 127;
         double mSearchX = 5;
         double mSearchY = 5;
-        
         float mDPI = 500;
         public HardwareWindow(Model model)
         {
@@ -190,7 +189,12 @@ namespace SPI_AOI.Views.ModelManagement
                                     if (markInfo.Item1 != null)
                                     {
                                         contours.Push(markInfo.Item1);
-                                        CvInvoke.DrawContours(imgSearchBgr, contours, 0, new MCvScalar(0, 0, 255), 1);
+                                        CvInvoke.DrawContours(imgSearchBgr, contours, 0, new MCvScalar(0, 255, 0), 1);
+                                        Moments mm = CvInvoke.Moments(markInfo.Item1);
+                                        if (mm.M00 != 0)
+                                        {
+                                            mMarkPointOnImage = new System.Drawing.Point(Convert.ToInt32(mm.M10 / mm.M00), Convert.ToInt32(mm.M01 / mm.M00));
+                                        }
                                     }
                                 }
                             }
@@ -210,8 +214,11 @@ namespace SPI_AOI.Views.ModelManagement
                                 BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(img.Bitmap);
                                 imbCameraShow.Source = bms;
                             });
+                            if(markInfo.Item1 != null)
+                            {
+                                markInfo.Item1.Dispose();
+                            }
                         }
-                        
                     }
                 }
             }
@@ -480,6 +487,8 @@ namespace SPI_AOI.Views.ModelManagement
         }
         private void SaveChanged()
         {
+            mMarkPoint = GetTopCoordinates();
+            mConveyor = GetConveyorCoordinates();
             mModel.HardwareSettings.ReadCodePosition = new List<ReadCodePosition>();
             for (int i = 0; i < mReadCodePosition.Count; i++)
             {
@@ -495,33 +504,50 @@ namespace SPI_AOI.Views.ModelManagement
             mModel.Gerber.MarkPoint.ThresholdValue = mGrayLevel;
             mModel.Gerber.MarkPoint.SearchX = mSearchX;
             mModel.Gerber.MarkPoint.SearchY = mSearchY;
-            mModel.HardwareSettings.MarkPosition = mMarkPoint;
+            
             mModel.HardwareSettings.Conveyor = mConveyor;
+
+
+            int searchW = Convert.ToInt32(mSearchX * mModel.DPI / 25.4);
+            int searchH = Convert.ToInt32(mSearchY * mModel.DPI / 25.4);
+            
+            int subX = searchW / 2 - mMarkPointOnImage.X;
+            int subY = searchH / 2 - mMarkPointOnImage.Y;
+            System.Drawing.Point markPulse = new System.Drawing.Point(
+                mMarkPoint.X + Convert.ToInt32(-subX * mModel.PulseXPerPixel),
+                mMarkPoint.Y + Convert.ToInt32(-subY * mModel.PulseYPerPixel)
+                );
+            mModel.HardwareSettings.MarkPosition = markPulse;
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if(mIsTimerRunning)
             {
-                mIsTimerRunning = false;
-                if (mCamera != null)
-                {
-                    if (mCamera.IsGrab)
-                    {
-                        mCamera.StopGrabbing();
-                    }
-                    if (mCamera.IsOpen)
-                    {
-                        mCamera.Close();
-                    }
-                }
-                mLightSource.ActiveFour(0,0,0,0);
-                mLightSource.Close();
                 if (SearchChanged())
                 {
                     var r = MessageBox.Show("Are you want to save changed ?", "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                     if(r == MessageBoxResult.Yes)
                     {
                         SaveChanged();
+                        mIsTimerRunning = false;
+                        if (mCamera != null)
+                        {
+                            if (mCamera.IsGrab)
+                            {
+                                mCamera.StopGrabbing();
+                            }
+                            if (mCamera.IsOpen)
+                            {
+                                mCamera.Close();
+                            }
+                        }
+                        mLightSource.ActiveFour(0, 0, 0, 0);
+                        mLightSource.Close();
+                        btUnload_Click(null, null);
+                    }
+                    else if(r == MessageBoxResult.Cancel)
+                    {
+                        e.Cancel = true;
                     }
                 }
             }
@@ -680,7 +706,8 @@ namespace SPI_AOI.Views.ModelManagement
             mPLC.Set_Speed_Bot(6000);
             mPLC.Set_Speed_Conveyor(8000);
             int conveyorPulse = mPLC.Get_Conveyor();
-            if(conveyorPulse != mConveyor)
+            mLog.Info(string.Format("Current Pulse conveyor {0} => {1}", conveyorPulse, mConveyor));
+            if (conveyorPulse != mConveyor)
             {
                 SetConveyor(Convert.ToInt32(mConveyor));
                 grSettings.IsEnabled = true;
@@ -724,6 +751,11 @@ namespace SPI_AOI.Views.ModelManagement
         private void btUnload_Click(object sender, RoutedEventArgs e)
         {
             mPLC.Set_Unload_Product();
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            
         }
     }
 }

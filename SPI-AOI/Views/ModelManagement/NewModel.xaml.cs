@@ -70,12 +70,14 @@ namespace SPI_AOI.Views.ModelManagement
                     "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            double dev = pcbThickness - mParam.THICKNESS_DEFAULT;
-            double pulseXPerPixel = -dev * mParam.SCALE_PULSE_X + mParam.PULSE_X_PER_PIXEL_DEFAULT;
-            double pulseYPerPixel = -dev * mParam.SCALE_PULSE_Y + mParam.PULSE_Y_PER_PIXEL_DEFAULT;
-            float dpi = (float) (mParam.DPI_DEFAULT + mParam.DPI_SCALE * dev);
+            double dev = mParam.THICKNESS_DEFAULT - pcbThickness ;
+            double pulseXPerPixel = dev * mParam.SCALE_PULSE_X + mParam.PULSE_X_PER_PIXEL_DEFAULT;
+            double pulseYPerPixel = dev * mParam.SCALE_PULSE_Y + mParam.PULSE_Y_PER_PIXEL_DEFAULT;
+            double angleXAxisCamera = mParam.CAMERA_X_AXIS_ANGLE;
+            double angleXYAxis = mParam.XY_AXIS_ANGLE;
+            float dpi = (float)(mParam.DPI_DEFAULT + (mParam.DPI_SCALE * -dev));
             System.Drawing.Size fov = mParam.FOV;
-            mModel = Model.GetNewModel(modelName, user, gerberPath, dpi, fov, pulseXPerPixel, pulseYPerPixel, pcbThickness);
+            mModel = Model.GetNewModel(modelName, user, gerberPath, dpi, fov, pulseXPerPixel, pulseYPerPixel, angleXAxisCamera, angleXYAxis, pcbThickness);
             if (mModel == null)
             {
                 MessageBox.Show("Gerber file incorrect!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -95,8 +97,6 @@ namespace SPI_AOI.Views.ModelManagement
             mModel.Dispose();
             Close();
         }
-
-        
         private void EnableBtAdd()
         {
             btAdd.IsEnabled =   !string.IsNullOrEmpty(txtModelName.Text) &&

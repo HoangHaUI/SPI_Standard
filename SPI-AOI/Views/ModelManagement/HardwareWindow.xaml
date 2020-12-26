@@ -9,7 +9,7 @@
         Title="Hardware Settings" Height="900" Width="1600" Background="#FFEEEEEE"
         Initialized="Window_Initialized"
         Closing="Window_Closing"
-        WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" SizeChanged="Window_SizeChanged">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>

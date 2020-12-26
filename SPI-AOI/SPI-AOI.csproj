@@ -153,6 +153,7 @@
     <Compile Include="Devices\LightSource.cs" />
     <Compile Include="Devices\MyCamera.cs" />
     <Compile Include="Devices\MyPLC.cs" />
+    <Compile Include="Devices\PLCComm.cs" />
     <Compile Include="Models\CadFile.cs" />
     <Compile Include="Models\CadItem.cs" />
     <Compile Include="Models\Fov.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Models\PadItem.cs" />
     <Compile Include="Models\ShowModel.cs" />
     <Compile Include="Models\Utils.cs" />
+    <Compile Include="Utils\CalibrateLoader.cs" />
     <Compile Include="Utils\LightSrcCtl.cs" />
     <Compile Include="Utils\MyEnum.cs" />
     <Compile Include="Utils\MyStruct.cs" />

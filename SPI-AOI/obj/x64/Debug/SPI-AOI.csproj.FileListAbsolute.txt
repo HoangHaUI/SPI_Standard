@@ -294,8 +294,9 @@ F:\Heal\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI-AOI.csproj.GenerateResource.C
 F:\Heal\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI-AOI.exe
 F:\Heal\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI-AOI.pdb
 F:\Heal\Projects\SPI-AOI\SPI-AOI\bin\x64\Debug\SPI-AOI.pdb
-F:\Heal\Projects\SPI-AOI\SPI-AOI\bin\x64\Debug\ActUtlTypeLib.dll
-F:\Heal\Projects\SPI-AOI\SPI-AOI\bin\x64\Debug\MXLabelMemLib.dll
-F:\Heal\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI-AOI.csprojResolveAssemblyReference.cache
 D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\ModelManagement\AutoLinkPadWindow.g.cs
 D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\ModelManagement\AutoLinkPadWindow.baml
+F:\Heal\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\ModelManagement\AutoLinkPadWindow.g.cs
+F:\Heal\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\ModelManagement\AutoLinkPadWindow.baml
+F:\Heal\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI-AOI.csprojAssemblyReference.cache
+F:\Heal\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI-AOI.csproj.CopyComplete

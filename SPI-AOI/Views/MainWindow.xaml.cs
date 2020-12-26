@@ -21,6 +21,7 @@ using System.Diagnostics;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
+using NLog;
 
 namespace SPI_AOI.Views
 {
@@ -31,9 +32,11 @@ namespace SPI_AOI.Views
     {
         System.Timers.Timer mTimer = new System.Timers.Timer(20);
         Properties.Settings mParam = Properties.Settings.Default;
+        Logger mLog = Heal.LogCtl.GetInstance();
         List<Utils.SummaryInfo> mSummary = new List<Utils.SummaryInfo>();
         Utils.FOVDisplayInfo mFOVDisplay = new Utils.FOVDisplayInfo();
-        MyPLC mPLC = new MyPLC();
+        Heal.CalibrateInfo mCalibImage = new Heal.CalibrateInfo();
+        PLCComm mPlcComm = new PLCComm();
         IOT.HikCamera mCamera = null;
         DKZ224V4ACCom mLight = null;
         bool mIsRunning = false;
@@ -44,7 +47,6 @@ namespace SPI_AOI.Views
         {
             InitializeComponent();
         }
-        
         private void Window_Initialized(object sender, EventArgs e)
         {
             InitSummary();
@@ -57,6 +59,10 @@ namespace SPI_AOI.Views
             UpdateStatus(Utils.LabelMode.RUNNING_MODE, Utils.LabelStatus.TEST);
             UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.READY);
             UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.READY);
+            mCalibImage = Heal.CalibrateLoader.GetCalibrationInfo(@"F:\Heal\Projects\SPI-AOI\Calibrate\matrix.txt",
+                @"F:\Heal\Projects\SPI-AOI\Calibrate\dis.txt", 
+                new System.Drawing.Size(2448, 2048), 
+                new System.Drawing.Rectangle(0, 0, 2448, 2048));
             //ColInfo.Width = new GridLength(0);
             //ColStatistical.Width = new GridLength(1, GridUnitType.Star);
         }
@@ -67,46 +73,42 @@ namespace SPI_AOI.Views
             mIsInTimer = true;
             System.Timers.Timer timer = sender as System.Timers.Timer;
             timer.Enabled = false;
-            int val = mPLC.Get_Has_Product_Top();
+            int val = mPlcComm.Get_Has_Product_Top();
             if(val == 1)
             {
                 mIsIdle = false;
                 Processing();
                 mIsIdle = true;
-                mPLC.Reset_Has_Product_Top();
-                mPLC.Set_Pass();
+                mPlcComm.Reset_Has_Product_Top();
+                mPlcComm.Set_Pass();
             }
             mIsInTimer = false;
             timer.Enabled = mIsRunning;
         }
-        private void CaptureMark()
+        private int CaptureMark()
         {
-            System.Drawing.Point[] markPoint = mModel.GetRealMarkPosition();
+            System.Drawing.Point[] markPoint = mModel.GetPLCMarkPosition();
+            bool captureError = false;
             for (int i = 0; i < markPoint.Length; i++)
             {
                 System.Drawing.Point mark = markPoint[i];
                 int x = mark.X;
                 int y = mark.Y;
-                int setX = 0;
-                int setY = 0;
-                do
+                mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "Mark " + (i+1).ToString(), x, y));
+                bool ret = mPlcComm.SetXYTop(x, y);
+                if (!ret)
                 {
-                    setX = mPLC.Set_X_Top(x);
+                    captureError = false;
+                    break;
                 }
-                while (setX != x);
-                do
+                mPlcComm.Set_Write_Coordinates_Finish_Top();
+                ret = mPlcComm.GoFinishTop();
+                if (!ret)
                 {
-                    setY = mPLC.Set_Y_Top(y);
+                    captureError = false;
+                    break;
                 }
-                while (setY != y);
-                mPLC.Set_Write_Coordinates_Finish_Top();
-                int goFinish = 0;
-                do
-                {
-                    goFinish = mPLC.Get_Go_Coordinates_Finish_Top();
-                }
-                while (goFinish != 1);
-                mPLC.Reset_Go_Coordinates_Finish_Top();
+                mPlcComm.Reset_Go_Coordinates_Finish_Top();
                 mLight.ActiveFour(1, 1, 1, 1);
                 Thread.Sleep(50);
                 using (System.Drawing.Bitmap bm = mCamera.GetOneBitmap(1000))
@@ -116,9 +118,7 @@ namespace SPI_AOI.Views
                         System.Drawing.Rectangle ROI = mModel.GetRectROIMark();
                         using (Image<Bgr, byte> img = new Image<Bgr, byte>(bm))
                         {
-                            CvInvoke.Imwrite("turn_" + (i + 1).ToString() + ".png", img);
                             img.ROI = ROI;
-                            
                            this.Dispatcher.Invoke(() => {
                             BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(img.Bitmap);
                                 if(i == 0)
@@ -129,84 +129,138 @@ namespace SPI_AOI.Views
                                 {
                                     imbMark2.Source = bms;
                                 }
-
                             });
-                                
                         }
+                    }
+                    else
+                    {
+                        mLog.Info(string.Format("Cant Capture image in Mark : {0}", i + 1));
                     }
                 }
                 mLight.ActiveFour(0, 0, 0, 0);
             }
+            if (captureError)
+            {
+                return -1;
+            }
+            return 0;
         }
-        private void CaptureFOV()
+        private int CaptureFOV()
         {
             bool activeLight = false;
-            System.Drawing.Point[] fovs = mModel.GetFOVPosition();
-            for (int i = 0; i < fovs.Length; i++)
+            bool captureError = false;
+            System.Drawing.Point[] xyAxisPosition = mModel.GetPulseXYFOVs();
+            System.Drawing.Point[] Fovs = mModel.GetAnchorsFOV();
+            mModel.Gerber.ProcessingGerberImage.ROI = mModel.Gerber.ROI;
+            using (Image<Bgr, byte> imgGraft = new Image<Bgr, byte>(mModel.Gerber.ROI.Size))
+            using (Image<Gray, byte> imgGerber = mModel.Gerber.ProcessingGerberImage.Copy())
             {
-                System.Drawing.Point fov = fovs[i];
-                int x = fov.X;
-                int y = fov.Y;
-                int setX = 0;
-                int setY = 0;
-                do
+                for (int i = 0; i < xyAxisPosition.Length; i++)
                 {
-                    setX = mPLC.Set_X_Top(x);
-                }
-                while (setX != x);
-                do
-                {
-                    setY = mPLC.Set_Y_Top(y);
-                }
-                while (setY != y);
-                mPLC.Set_Write_Coordinates_Finish_Top();
-                int goFinish = 0;
-                do
-                {
-                    goFinish = mPLC.Get_Go_Coordinates_Finish_Top();
-                }
-                while (goFinish != 1);
-                mPLC.Reset_Go_Coordinates_Finish_Top();
-                if(!activeLight)
-                {
-                    mLight.ActiveFour(1, 1, 1, 1);
-                    Thread.Sleep(50);
-                    activeLight = true;
-                }
-                using (System.Drawing.Bitmap bm = mCamera.GetOneBitmap(1000))
-                {
-                    if (bm != null)
+                    System.Drawing.Point fov = xyAxisPosition[i];
+                    int x = fov.X;
+                    int y = fov.Y;
+                    mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "FOV " + (i + 1).ToString(), x, y));
+                    bool ret = mPlcComm.SetXYTop(x, y);
+                    if(!ret)
                     {
-                        using (Image<Bgr, byte> img = new Image<Bgr, byte>(bm))
+                        captureError = false;
+                        break;
+                    }
+                    mPlcComm.Set_Write_Coordinates_Finish_Top();
+                    ret = mPlcComm.GoFinishTop();
+                    if (!ret)
+                    {
+                        captureError = false;
+                        break;
+                    }
+                    mPlcComm.Reset_Go_Coordinates_Finish_Top();
+                    if (!activeLight)
+                    {
+                        mLight.ActiveFour(1, 1, 1, 1);
+                        Thread.Sleep(50);
+                        activeLight = true;
+                    }
+                    using (System.Drawing.Bitmap bm = mCamera.GetOneBitmap(1000))
+                    {
+                        if (bm != null)
                         {
+                            SetDisplayFOV(i);
+                            using (Image<Bgr, byte> imgCap = new Image<Bgr, byte>(bm))
+                            {
+                                var modelFov = mModel.FOV;
+                                using (Image<Bgr, byte> imgRotated = ImageProcessingUtils.ImageRotation(imgCap, new System.Drawing.Point(imgCap.Width / 2, imgCap.Height / 2), -mModel.AngleAxisCamera * Math.PI / 180.0))
+                                using (Image<Bgr, byte> imgUndis = new Image<Bgr, byte>(imgRotated.Size))
+                                {
+                                    CvInvoke.Undistort(imgRotated, imgUndis, mCalibImage.CameraMatrix, mCalibImage.DistCoeffs, mCalibImage.NewCameraMatrix);
+                                    System.Drawing.Rectangle ROI = new System.Drawing.Rectangle(
+                                        imgUndis.Width / 2 - modelFov.Width / 2, imgUndis.Height / 2 - modelFov.Height / 2,
+                                        modelFov.Width, modelFov.Height);
+                                    System.Drawing.Rectangle ROIGerber = new System.Drawing.Rectangle(
+                                        Fovs[i].X - modelFov.Width / 2, Fovs[i].Y - modelFov.Height / 2,
+                                        modelFov.Width, modelFov.Height);
+                                    imgUndis.ROI = ROI;
+                                    imgGerber.ROI = ROIGerber;
+                                    CvInvoke.Imwrite("turn_" + i.ToString() + "_img.png", imgUndis);
+                                    CvInvoke.Imwrite("turn_" + i.ToString() + "_gerber.png", imgGerber);
+                                    imgGerber.ROI = System.Drawing.Rectangle.Empty;
+                                    this.Dispatcher.Invoke(() => {
+                                        BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(imgUndis.Bitmap);
+                                        ImbCameraView.Source = bms;
+                                        lbcountFovs.Content = (i + 1).ToString();
+                                    });
+                                }
 
-                            this.Dispatcher.Invoke(() => {
-                                BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(img.Bitmap);
-                                ImbCameraView.Source = bms;
-                                lbcountFovs.Content = (i + 1).ToString();
-                            });
+                                    
+                            }
+                        }
+                        else
+                        {
+                            mLog.Info(string.Format("Cant Capture image in FOV : {0}", i + 1));
                         }
                     }
                 }
             }
+            mModel.Gerber.ProcessingGerberImage.ROI = System.Drawing.Rectangle.Empty;
+            SetDisplayFOV(-1);
             mLight.ActiveFour(0, 0, 0, 0);
+            if (captureError)
+            {
+                return -1;
+            }
+            return 0;
         }
         
         private void Processing()
         {
+            ResetUI();
             UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.PROCESSING);
+            UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PROCESSING);
             CaptureMark();
             CaptureFOV();
-            Thread.Sleep(1000);
-            UpdateChartCount(chartYeildRate, txtPass, txtFail, 1, 0);
+            //Thread.Sleep(1000);
+            UpdateChartCount(chartYeildRate, txtPass, txtFail, 564, 6);
             UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PASS);
             UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.IDLE);
         }
         public void SetImageToImb(Image imb, System.Drawing.Bitmap bm)
         {
             this.Dispatcher.Invoke(() => {
-                BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(bm);
+
+                BitmapSource bms = null;
+                if(bm != null)
+                    bms = Utils.Convertor.Bitmap2BitmapSource(bm);
                 imb.Source = bms;
+            });
+        }
+        public void ResetUI()
+        {
+            SetImageToImb(imbMark1, null);
+            SetImageToImb(imbMark2, null);
+            SetImageToImb(ImbCameraView, null);
+            UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.READY);
+            this.Dispatcher.Invoke(() => {
+                lbcountFovs.Content = "--";
             });
         }
         private void UpdateChartCount(Chart Chart, TextBox TxtPass, TextBox TxtFail, int Pass, int Fail)
@@ -409,7 +463,7 @@ namespace SPI_AOI.Views
                 lbLoadTime.Content = DateTime.Now.ToString("HH:mm:ss   dd/MM/yyyy");
                 lbFovs.Content = mModel.Gerber.FOVs.Count.ToString() + " FOVs";
                 lbGerberFile.Content = mModel.Gerber.FileName;
-                lbCircleTime.Content = "30.5 seconds";
+                lbCircleTime.Content = "20.0 seconds";
                 lbTotalCountFovs.Content = mModel.Gerber.FOVs.Count.ToString();
             });
         }
@@ -425,13 +479,17 @@ namespace SPI_AOI.Views
             });
             
         }
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdateFOVDisplay();
+        }
         private void UpdateFOVDisplay()
         {
-            if(mModel != null && mIsRunning)
+            if(mModel != null)
             {
                 using (Image<Bgr, byte> imgDigram = mModel.GetDiagramImage())
                 {
-                    System.Drawing.Point[] anchors = mModel.GetAngchorsDiagram();
+                    System.Drawing.Point[] anchors = mModel.GetAnchorsDiagram();
                     double imgWidth = imgDigram.Width;
                     double imgHeight = imgDigram.Height;
                     double fovWidth = mModel.FOV.Width;
@@ -446,12 +504,14 @@ namespace SPI_AOI.Views
                     double showDisplayHeight = fovHeight * scaleHeight;
                     lock(mFOVDisplay)
                     {
+                        mFOVDisplay = new Utils.FOVDisplayInfo();
                         mFOVDisplay.StartPoint = new System.Windows.Point[anchors.Length];
                         mFOVDisplay.Witdh = showDisplayWidth;
                         mFOVDisplay.Height = showDisplayHeight;
                         for (int i = 0; i < mFOVDisplay.StartPoint.Length; i++)
                         {
-                            mFOVDisplay.StartPoint[i] = new Point(
+                            mFOVDisplay.StartPoint[i] = new Point
+                                (
                                 anchors[i].X * scaleWidth - mFOVDisplay.Witdh / 2 +( bdImbWidth - imbWidth) / 2,
                                 anchors[i].Y * scaleHeight - mFOVDisplay.Height / 2 + (bdImbHeight - imbHeight) / 2
                                 );
@@ -475,7 +535,6 @@ namespace SPI_AOI.Views
                     bdFOV.Visibility = Visibility.Visible;
                 }
             });
-            
         }
         private void StartRunMode()
         {
@@ -497,7 +556,7 @@ namespace SPI_AOI.Views
                     SetDisplayFOV(-1);
                 }
                 wait.LabelContent = "Connecting to PLC...";
-                int ping = mPLC.Ping();
+                int ping = mPlcComm.Ping();
                 if (ping != 0)
                 {
                    
@@ -542,23 +601,23 @@ namespace SPI_AOI.Views
                 int[] intensity = mModel.HardwareSettings.LightIntensity;
                 mLight.SetFour(intensity[0], intensity[1], intensity[2], intensity[3]);
                 mLight.ActiveFour(0, 0, 0, 0);
-                mPLC.Logout();
-                int conveyorPulse = mPLC.Get_Conveyor();
+                mPlcComm.Logout();
+                int conveyorPulse = mPlcComm.Get_Conveyor();
                 if (conveyorPulse != mModel.HardwareSettings.Conveyor)
                 {
                     wait.LabelContent = "Moving Conveyor...";
-                    mPLC.Set_Speed_Run_Conveyor(25000);
+                    mPlcComm.Set_Speed_Run_Conveyor(25000);
 
-                    mPLC.Set_Conveyor(Convert.ToInt32(mModel.HardwareSettings.Conveyor));
-                    mPLC.Set_Write_Coordinates_Finish_Conveyor();
+                    mPlcComm.Set_Conveyor(Convert.ToInt32(mModel.HardwareSettings.Conveyor));
+                    mPlcComm.Set_Write_Coordinates_Finish_Conveyor();
 
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
-                    int val = mPLC.Get_Go_Coordinates_Finish_Conveyor();
+                    int val = mPlcComm.Get_Go_Coordinates_Finish_Conveyor();
                     while (val != 1 && sw.ElapsedMilliseconds < 120000)
                     {
-                        Thread.Sleep(100);
-                        val = mPLC.Get_Go_Coordinates_Finish_Conveyor();
+                        Thread.Sleep(50);
+                        val = mPlcComm.Get_Go_Coordinates_Finish_Conveyor();
                     }
                     
                     if (sw.ElapsedMilliseconds > 120000)
@@ -568,14 +627,13 @@ namespace SPI_AOI.Views
                         wait.KillMe = true;
                         return;
                     }
-                    Thread.Sleep(500);
-                    mPLC.Reset_Go_Coordinates_Finish_Conveyor();
+                    Thread.Sleep(5);
+                    mPlcComm.Reset_Go_Coordinates_Finish_Conveyor();
                 }
                 wait.LabelContent = "Init Parameter...";
-                mPLC.Set_Speed_Run_X_Top(200000);
-                mPLC.Set_Speed_Run_Y_Top(200000);
-                FileInfo fi = new FileInfo("icon/stop.png");
-                imbBtRun.Source = new BitmapImage(new Uri(fi.FullName));
+                mPlcComm.Set_Speed_Run_X_Top(200000);
+                mPlcComm.Set_Speed_Run_Y_Top(200000);
+                SetButtonRun(Utils.RunMode.START);
                 if (mParam.RUNNING_MODE == "TEST")
                 {
                     UpdateStatus(Utils.LabelMode.RUNNING_MODE, Utils.LabelStatus.TEST);
@@ -584,6 +642,7 @@ namespace SPI_AOI.Views
                 {
                     UpdateStatus(Utils.LabelMode.RUNNING_MODE, Utils.LabelStatus.CONTROL_RUN);
                 }
+                UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.READY);
                 UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.IDLE);
                 LoadDetails();
                 mIsIdle = true;
@@ -600,23 +659,40 @@ namespace SPI_AOI.Views
             if(mIsIdle)
             {
                 mIsRunning = false;
-                this.Dispatcher.Invoke(() => {
-                    
-                    FileInfo fi = new FileInfo("icon/start.png");
-                    imbBtRun.Source = new BitmapImage(new Uri(fi.FullName));
-                    });
+                
                 UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.READY);
                 UpdateStatus(Utils.LabelMode.PLC, Utils.LabelStatus.READY);
+                ResetUI();
                 mLight.ActiveFour(0, 0, 0, 0);
                 ReleaseResource();
                 ResetDetails();
-                mModel.Dispose();
-                mModel = null;
+                SetDisplayFOV(-1);
+                SetButtonRun(Utils.RunMode.STOP);
             }
            else
             {
                 MessageBox.Show(string.Format("Cant stop because the machine is a progress..."), "Error", MessageBoxButton.OK);
             }
+        }
+        private void SetButtonRun(Utils.RunMode mode)
+        {
+            if(mode == Utils.RunMode.START)
+            {
+                this.Dispatcher.Invoke(() => {
+                    FileInfo fi = new FileInfo("icon/stop.png");
+                    imbBtRun.Source = new BitmapImage(new Uri(fi.FullName));
+                    btRun.ToolTip = "Stop";
+                });
+            }
+            else
+            {
+                this.Dispatcher.Invoke(() => {
+                    FileInfo fi = new FileInfo("icon/start.png");
+                    imbBtRun.Source = new BitmapImage(new Uri(fi.FullName));
+                    btRun.ToolTip = "Run";
+                });
+            }
+            
         }
         private void ReleaseResource()
         {
@@ -671,5 +747,7 @@ namespace SPI_AOI.Views
         {
 
         }
+
+        
     }
 }

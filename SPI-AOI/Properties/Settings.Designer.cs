@@ -12,7 +12,7 @@ namespace SPI_AOI.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -349,7 +349,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("COM10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM4")]
         public string LIGHT_COM {
             get {
                 return ((string)(this["LIGHT_COM"]));
@@ -517,7 +517,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("COM4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM3")]
         public string SCANER_COM {
             get {
                 return ((string)(this["SCANER_COM"]));
@@ -613,18 +613,6 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double PULSE_PER_MM_X_TOP {
-            get {
-                return ((double)(this["PULSE_PER_MM_X_TOP"]));
-            }
-            set {
-                this["PULSE_PER_MM_X_TOP"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("TEST")]
         public string RUNNING_MODE {
             get {
@@ -632,18 +620,6 @@ namespace SPI_AOI.Properties {
             }
             set {
                 this["RUNNING_MODE"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public double PULSE_PER_MM_Y_TOP {
-            get {
-                return ((double)(this["PULSE_PER_MM_Y_TOP"]));
-            }
-            set {
-                this["PULSE_PER_MM_Y_TOP"] = value;
             }
         }
         
@@ -769,7 +745,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("255")]
         public int LIGHT_DEFAULT_INTENSITY_CH1 {
             get {
                 return ((int)(this["LIGHT_DEFAULT_INTENSITY_CH1"]));
@@ -781,7 +757,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("160")]
         public int LIGHT_DEFAULT_INTENSITY_CH2 {
             get {
                 return ((int)(this["LIGHT_DEFAULT_INTENSITY_CH2"]));
@@ -805,7 +781,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
         public int LIGHT_DEFAULT_INTENSITY_CH4 {
             get {
                 return ((int)(this["LIGHT_DEFAULT_INTENSITY_CH4"]));
@@ -853,7 +829,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3.2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3.219493670886076")]
         public double PULSE_X_PER_PIXEL_DEFAULT {
             get {
                 return ((double)(this["PULSE_X_PER_PIXEL_DEFAULT"]));
@@ -865,7 +841,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3.2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3.229119257")]
         public double PULSE_Y_PER_PIXEL_DEFAULT {
             get {
                 return ((double)(this["PULSE_Y_PER_PIXEL_DEFAULT"]));
@@ -877,7 +853,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.02")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.015214561")]
         public double SCALE_PULSE_X {
             get {
                 return ((double)(this["SCALE_PULSE_X"]));
@@ -889,7 +865,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.02")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.015214561")]
         public double SCALE_PULSE_Y {
             get {
                 return ((double)(this["SCALE_PULSE_Y"]));
@@ -901,10 +877,10 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.45")]
-        public string CAMERA_X_AXIS_ANGLE {
+        [global::System.Configuration.DefaultSettingValueAttribute("0.45011422")]
+        public double CAMERA_X_AXIS_ANGLE {
             get {
-                return ((string)(this["CAMERA_X_AXIS_ANGLE"]));
+                return ((double)(this["CAMERA_X_AXIS_ANGLE"]));
             }
             set {
                 this["CAMERA_X_AXIS_ANGLE"] = value;
@@ -913,10 +889,10 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.02")]
-        public string XY_AXIS_ANGLE {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double XY_AXIS_ANGLE {
             get {
-                return ((string)(this["XY_AXIS_ANGLE"]));
+                return ((double)(this["XY_AXIS_ANGLE"]));
             }
             set {
                 this["XY_AXIS_ANGLE"] = value;
@@ -925,7 +901,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("39900")]
+        [global::System.Configuration.DefaultSettingValueAttribute("40100")]
         public int PLC_LIMIT_X_TOP {
             get {
                 return ((int)(this["PLC_LIMIT_X_TOP"]));
@@ -937,7 +913,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("39900")]
+        [global::System.Configuration.DefaultSettingValueAttribute("40100")]
         public int PLC_LIMIT_Y_TOP {
             get {
                 return ((int)(this["PLC_LIMIT_Y_TOP"]));
@@ -949,7 +925,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("39900")]
+        [global::System.Configuration.DefaultSettingValueAttribute("40100")]
         public int PLC_LIMIT_X_BOT {
             get {
                 return ((int)(this["PLC_LIMIT_X_BOT"]));
@@ -961,7 +937,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("39900")]
+        [global::System.Configuration.DefaultSettingValueAttribute("40100")]
         public int PLC_LIMIT_Y_BOT {
             get {
                 return ((int)(this["PLC_LIMIT_Y_BOT"]));
@@ -980,6 +956,42 @@ namespace SPI_AOI.Properties {
             }
             set {
                 this["PLC_LIMIT_CONVEYOR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3000")]
+        public int CAMERA_EXPOSURE_TIME {
+            get {
+                return ((int)(this["CAMERA_EXPOSURE_TIME"]));
+            }
+            set {
+                this["CAMERA_EXPOSURE_TIME"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("M2996")]
+        public string PLC_BIT_RESET_AFTER_LOGOUT {
+            get {
+                return ((string)(this["PLC_BIT_RESET_AFTER_LOGOUT"]));
+            }
+            set {
+                this["PLC_BIT_RESET_AFTER_LOGOUT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D292")]
+        public string PLC_REG_PENAL_POSITION {
+            get {
+                return ((string)(this["PLC_REG_PENAL_POSITION"]));
+            }
+            set {
+                this["PLC_REG_PENAL_POSITION"] = value;
             }
         }
     }

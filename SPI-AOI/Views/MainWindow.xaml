@@ -13,7 +13,7 @@
     MinHeight="1000"
         WindowStartupLocation="CenterScreen"
         Initialized="Window_Initialized"
-        Title="[FII] SPI-AOI" Background="#FFF0F0F0">
+        Title="[FII] SPI-AOI" Background="#FFF0F0F0" SizeChanged="Window_SizeChanged">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="85"/>
@@ -255,7 +255,7 @@
                             <Grid Grid.Column="2">
                                 <GroupBox Header="FOVs" BorderBrush="Gray" FontWeight="Bold">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <Label x:Name="lbcountFovs" Content="0" FontSize="35"/>
+                                        <Label x:Name="lbcountFovs" Content="--" FontSize="35"/>
                                         <Label Content="/" FontSize="35"/>
                                         <Label x:Name="lbTotalCountFovs" Content="0" FontSize="35"/>
                                     </StackPanel>

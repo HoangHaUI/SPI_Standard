@@ -23,6 +23,8 @@ namespace SPI_AOI.Models
         public Size FOV { get; set; }
         public double PulseXPerPixel { get; set; }
         public double PulseYPerPixel { get; set; }
+        public double AngleAxisCamera { get; set; }
+        public double AngleXYAxis { get; set; }
         public double PCBThickness { get; set; }
         public GerberFile Gerber { get; set; }
         public List<CadFile> Cad { get; set; }
@@ -34,8 +36,12 @@ namespace SPI_AOI.Models
         public bool ShowOnlyInROI { get; set; }
         public bool HightLineLinkedPad { get; set; }
         public Hardware HardwareSettings { get; set; }
+
         private static string ModelPath = "Models";
-        public static Model GetNewModel(string ModelName, string Owner, string GerberPath, float DPI, Size FOV, double PXPP, double PYPP, double PCBThickness)
+        public static Model GetNewModel(
+            string ModelName, string Owner, string GerberPath, 
+            float DPI, Size FOV, double PXPP, double PYPP, 
+            double AngleXAxisCamera, double AngleXYAxis, double PCBThickness)
         {
             Model model = new Model();
             model.ID = Utils.GetNewID();
@@ -50,6 +56,8 @@ namespace SPI_AOI.Models
             model.DPI = DPI;
             model.PulseXPerPixel = PXPP;
             model.PulseYPerPixel = PYPP;
+            model.AngleAxisCamera = AngleXAxisCamera;
+            model.AngleXYAxis = AngleXYAxis;
             model.PCBThickness = PCBThickness;
             model.FOV = FOV;
             model.GetNewGerber(GerberPath);
@@ -104,7 +112,7 @@ namespace SPI_AOI.Models
         {
             return this.Gerber.GetDiagramImage();
         }
-        public Point[] GetAngchorsDiagram()
+        public Point[] GetAnchorsDiagram()
         {
             Point[] anchors = new Point[ this.Gerber.FOVs.Count];
             for (int i = 0; i < anchors.Length; i++)
@@ -113,7 +121,26 @@ namespace SPI_AOI.Models
             }
             return anchors;
         }
-        public Point[] GetRealMarkPosition()
+        private Point GetPLCPoint(Point PlcRefPoint, Point RefPoint, Point TranfPoint)
+        {
+            Point point = new Point();
+            Point ctMark1 = RefPoint;
+            Point ctMark2 = TranfPoint;
+
+            double subx = (ctMark2.X - ctMark1.X);
+            double suby = (ctMark2.Y - ctMark1.Y);
+
+            double subxPulse = subx * this.PulseXPerPixel;
+            double subyPulse = suby * this.PulseYPerPixel;
+            double devPulseX = Math.Sin(this.AngleXYAxis * Math.PI / 180.0) * subxPulse;
+            double devPulseY = Math.Sin(-this.AngleXYAxis * Math.PI / 180.0) * subyPulse;
+
+            int disX = Convert.ToInt32(subxPulse + devPulseX);
+            int disY = Convert.ToInt32(subyPulse + devPulseY);
+            point = new Point(PlcRefPoint.X + disX, PlcRefPoint.Y + disY);
+            return point;
+        }
+        public Point[] GetPLCMarkPosition()
         {
             Point[] mark = new Point[2];
             Point realMark1 = this.HardwareSettings.MarkPosition;
@@ -124,17 +151,11 @@ namespace SPI_AOI.Models
                 PadItem padMark2 = this.Gerber.PadItems[this.Gerber.MarkPoint.PadMark[1]];
                 Point ctMark1 = padMark1.Center;
                 Point ctMark2 = padMark2.Center;
-
-                double subx = (ctMark2.X - ctMark1.X);
-                double suby = (ctMark2.Y - ctMark1.Y);
-                
-                int subxPulse = Convert.ToInt32(subx * this.PulseXPerPixel) ;
-                int subyPulse = Convert.ToInt32(suby * this.PulseYPerPixel);
-                mark[1] = new Point(mark[0].X + subxPulse, mark[0].Y + subyPulse);
+                mark[1] = GetPLCPoint(realMark1, ctMark1, ctMark2);
             }
             return mark;
         }
-        public Point[] GetFOVPosition()
+        public Point[] GetPulseXYFOVs()
         {
             Point[] position = new Point[this.Gerber.FOVs.Count];
             Point realMark1 = this.HardwareSettings.MarkPosition;
@@ -143,11 +164,28 @@ namespace SPI_AOI.Models
                 PadItem padMark1 = this.Gerber.PadItems[this.Gerber.MarkPoint.PadMark[0]];
                 Point ctMark1 = padMark1.Center;
                 Point ctMark2 = this.Gerber.FOVs[i].Anchor;
-                double subx = (ctMark2.X - ctMark1.X);
-                double suby = (ctMark2.Y - ctMark1.Y);
-                position[i] = new Point(realMark1.X + Convert.ToInt32(subx * this.PulseXPerPixel) , realMark1.Y + Convert.ToInt32(suby * this.PulseYPerPixel));
+
+                position[i] = GetPLCPoint(realMark1, ctMark1, ctMark2);
             }
             return position;
+        }
+        public Point[] GetAnchorsFOV(bool setROI = true)
+        {
+            Point[] fovs = new Point[this.Gerber.FOVs.Count];
+            for (int i = 0; i < fovs.Length; i++)
+            {
+                Point anchor = this.Gerber.FOVs[i].Anchor;
+                if (setROI)
+                {
+                    Rectangle ROI = this.Gerber.ROI;
+                    fovs[i] = new Point(anchor.X - ROI.X, anchor.Y - ROI.Y);
+                }
+                else
+                {
+                    fovs[i] = new Point(anchor.X, anchor.Y);
+                }
+            }
+            return fovs;
         }
         public Rectangle GetRectROIMark()
         {

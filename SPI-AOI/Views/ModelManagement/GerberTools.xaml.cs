@@ -250,9 +250,7 @@ namespace SPI_AOI.Views.ModelManagement
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            
             Image<Bgr, byte> imgLayers = ShowModel.GetLayoutImage(mModel, mode);
-            CvInvoke.Imwrite("imggerber.png", imgLayers);
             if(!thisThread)
             {
                 imBox.Invoke(new Action(() =>
@@ -739,6 +737,25 @@ namespace SPI_AOI.Views.ModelManagement
             }
         }
 
-        
+        private void btSaveGerber_Click(object sender, RoutedEventArgs e)
+        {
+            using (System.Windows.Forms.SaveFileDialog sdf = new System.Windows.Forms.SaveFileDialog())
+            {
+                sdf.DefaultExt = "png";
+                sdf.Filter = "Png Image|*.png|JPeg Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif";
+                if (sdf.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    try
+                    {
+                        CvInvoke.Imwrite(sdf.FileName, mModel.Gerber.ProcessingGerberImage);
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+
+        }
     }
 }

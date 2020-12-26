@@ -39,4 +39,9 @@ namespace SPI_AOI.Utils
         All,
         NotLink
     }
+    public enum RunMode
+    {
+        START,
+        STOP
+    }
 }

@@ -36,6 +36,7 @@ namespace SPI_AOI.Models
         {
             VectorOfPoint mark = null;
             double crScore = 1;
+            double areaTemplate = CvInvoke.ContourArea(Template);
             using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
             {
                 CvInvoke.FindContours(ImgBinary, contours, null, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
@@ -43,7 +44,6 @@ namespace SPI_AOI.Models
                 {
                     double scoreMatching = CvInvoke.MatchShapes(Template, contours[i], Emgu.CV.CvEnum.ContoursMatchType.I3);
                     double scoreCurrent = CvInvoke.ContourArea(contours[i]);
-                    double areaTemplate = CvInvoke.ContourArea(Template);
                     double scoreArea = Math.Min(areaTemplate, scoreCurrent) / Math.Max(areaTemplate, scoreCurrent);
                     scoreArea = 1 - scoreArea;
                     double score = Math.Max(scoreMatching, scoreArea);
