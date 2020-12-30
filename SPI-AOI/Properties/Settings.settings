@@ -69,19 +69,16 @@
       <Value Profile="(Default)">M3</Value>
     </Setting>
     <Setting Name="PLC_BIT_MACHINE_STATUS" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M163</Value>
     </Setting>
     <Setting Name="PLC_BIT_HAS_PRODUCT_BOT" Type="System.String" Scope="User">
       <Value Profile="(Default)">M105</Value>
     </Setting>
-    <Setting Name="PLC_BIT_CONTROL_RUN" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="PLC_BIT_READ_QRCODE_FAIL" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M502</Value>
     </Setting>
     <Setting Name="PLC_BIT_CAPTURE_FAIL" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">M500</Value>
     </Setting>
     <Setting Name="LIGHT_COM" Type="System.String" Scope="User">
       <Value Profile="(Default)">COM4</Value>
@@ -149,8 +146,8 @@
     <Setting Name="PLC_BIT_GO_COORDINATES_FINISH_SETUP_CONVEYOR" Type="System.String" Scope="User">
       <Value Profile="(Default)">M120</Value>
     </Setting>
-    <Setting Name="RUNNING_MODE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">TEST</Value>
+    <Setting Name="RUNNING_MODE" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="PLC_REG_CONVEYOR_READ" Type="System.String" Scope="User">
       <Value Profile="(Default)">D1010</Value>
@@ -244,6 +241,42 @@
     </Setting>
     <Setting Name="PLC_REG_PENAL_POSITION" Type="System.String" Scope="User">
       <Value Profile="(Default)">D292</Value>
+    </Setting>
+    <Setting Name="CAMERA_MATRIX_FILE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Heal\Projects\SPI-AOI\Calibrate\matrix.txt</Value>
+    </Setting>
+    <Setting Name="CAMERA_DISTCOEFFS_FILE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Heal\Projects\SPI-AOI\Calibrate\dis.txt</Value>
+    </Setting>
+    <Setting Name="IMAGE_SIZE" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">2448, 2048</Value>
+    </Setting>
+    <Setting Name="SAVE_IMAGE_PATH" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Save</Value>
+    </Setting>
+    <Setting Name="SAVE_IMAGE_HOURS" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">120</Value>
+    </Setting>
+    <Setting Name="LIGHT_MODE" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="CAMERA_GAIN" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="RUN_X_TOP_SPEED" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">200000</Value>
+    </Setting>
+    <Setting Name="RUN_Y_TOP_SPEED" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">200000</Value>
+    </Setting>
+    <Setting Name="RUN_CONVEYOR_SPEED" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">30000</Value>
+    </Setting>
+    <Setting Name="RUN_Y_BOT_SPEED" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">50000</Value>
+    </Setting>
+    <Setting Name="RUN_X_BOT_SPEED" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">50000</Value>
     </Setting>
   </Settings>
 </SettingsFile>

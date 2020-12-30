@@ -78,7 +78,8 @@ namespace SPI_AOI.Devices
         }
         public int Logout()
         {
-            return mSLMP.SetDevice2(mParam.PLC_REG_PASSWORD, 0);
+            mSLMP.SetDevice2(mParam.PLC_REG_PASSWORD, 0);
+            return mSLMP.SetDevice(mParam.PLC_BIT_RESET_AFTER_LOGOUT, 1).Value;
         }
         public int Reset_Go_Right_Top()
         {
@@ -175,6 +176,18 @@ namespace SPI_AOI.Devices
         public int Get_Conveyor()
         {
             return mSLMP.GetDevice2(mParam.PLC_REG_CONVEYOR_READ);
+        }
+        public int Get_Machine_Status()
+        {
+            return mSLMP.GetDevice(mParam.PLC_BIT_MACHINE_STATUS).Value;
+        }
+        public int Get_PanelPosition_Status()
+        {
+            return mSLMP.GetDevice2(mParam.PLC_REG_PENAL_POSITION);
+        }
+        public int Get_Door_Status()
+        {
+            return mSLMP.GetDevice(mParam.PLC_BIT_DOOR_STATUS).Value;
         }
         public int Get_Speed()
         {

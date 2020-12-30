@@ -150,10 +150,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DB\Ctl.cs" />
+    <Compile Include="DB\Result.cs" />
+    <Compile Include="DB\SQLiteConn.cs" />
+    <Compile Include="DB\Table\Result.cs" />
     <Compile Include="Devices\LightSource.cs" />
     <Compile Include="Devices\MyCamera.cs" />
     <Compile Include="Devices\MyPLC.cs" />
     <Compile Include="Devices\PLCComm.cs" />
+    <Compile Include="Events\Preprocessing.cs" />
     <Compile Include="Models\CadFile.cs" />
     <Compile Include="Models\CadItem.cs" />
     <Compile Include="Models\Fov.cs" />
@@ -167,6 +172,7 @@
     <Compile Include="Utils\CalibrateLoader.cs" />
     <Compile Include="Utils\LightSrcCtl.cs" />
     <Compile Include="Utils\MyEnum.cs" />
+    <Compile Include="Utils\MyState.cs" />
     <Compile Include="Utils\MyStruct.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Utils\Convertor.cs" />
@@ -176,6 +182,18 @@
     <Compile Include="Utils\HikCamera.cs" />
     <Compile Include="Utils\LogCtl.cs" />
     <Compile Include="Utils\SLMP.cs" />
+    <Compile Include="Views\MainConfigWindow\AlgorithmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MainConfigWindow\AlgorithmSettings.Designer.cs">
+      <DependentUpon>AlgorithmSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainConfigWindow\IOConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MainConfigWindow\IOConfigForm.Designer.cs">
+      <DependentUpon>IOConfigForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainConfigWindow\PLCBitconfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -318,7 +336,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\Icons\PanelPosition.jpg" />
     <Resource Include="Resources\Icons\x_red2.png" />
+    <EmbeddedResource Include="Views\MainConfigWindow\AlgorithmSettings.resx">
+      <DependentUpon>AlgorithmSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MainConfigWindow\IOConfigForm.resx">
+      <DependentUpon>IOConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\MainConfigWindow\PLCBitconfigForm.resx">
       <DependentUpon>PLCBitconfigForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -9,11 +9,11 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="SPI_AOI.Views.MainWindow"
         mc:Ignorable="d"
         Height="1000" Width="1800"
-    MinWidth="1800"
-    MinHeight="1000"
+        MinWidth="1800"
+        MinHeight="1000"
         WindowStartupLocation="CenterScreen"
         Initialized="Window_Initialized"
-        Title="[FII] SPI-AOI" Background="#FFF0F0F0" SizeChanged="Window_SizeChanged">
+        Title="[FII] SPI-AOI" Background="#FFF0F0F0" SizeChanged="Window_SizeChanged" Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="85"/>
@@ -23,18 +23,22 @@
             <DockPanel x:Name="dpnMenu" Margin="10" >
                 <Menu x:Name="MenuStrip" FontSize="15" DockPanel.Dock="Top">
                     <MenuItem  Header="_Menu">
-                        <MenuItem Header="_New">
+                        <MenuItem Header="_Model Management">
                             <MenuItem.Icon>
-                                <Image Source="../Resources/Icons/newfile.png"/>
+                                <Image Source="../Resources/Icons/model_icon.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem  Header="_Open">
+                        <MenuItem  Header="_Program Setting">
                             <MenuItem.Icon>
-                                <Image Source="../Resources/Icons/openfile.png"/>
+                                <Image Source="../Resources/Icons/settings.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem  Header="_CLose"/>
-                        <MenuItem  x:Name="btExit" Header="_Exit">
+                        <MenuItem  Header="_IO Configuration">
+                            <MenuItem.Icon>
+                                <Image Source="../Resources/Icons/ioconfiguration.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem  x:Name="btExit" Click="btExit_Click"  Header="_Exit">
                             <MenuItem.Icon>
                                 <Image Source="../Resources/Icons/exit.png"/>
                             </MenuItem.Icon>
@@ -61,8 +65,16 @@
                             <Setter Property="Background" Value="Transparent"></Setter>
                         </Style>
                     </ToolBar.Resources>
-                    <Button ToolTip="Basic settings" Style="{StaticResource btToolBarStyle}">
+                    <Button x:Name="btAlgorithmSettings" Click="btAlgorithmSettings_Click"
+                        ToolTip="Basic settings" Style="{StaticResource btToolBarStyle}">
                         <Image Source="../Resources/Icons/settings.png" Width="25"/>
+                    </Button>
+                    <Separator/>
+                    <Button x:Name="btIOConfig" Click="btIOConfig_Click"
+                        ToolTip="IO Settings"
+                             Style="{StaticResource btToolBarStyle}">
+                        <Image Source="../Resources/Icons/ioconfiguration.png" 
+                               Width="25"/>
                     </Button>
                     <Separator/>
                     <Button  ToolTip="Admin settings" Style="{StaticResource btToolBarStyle}">
@@ -146,15 +158,44 @@
                                         Visibility="Hidden">
                                 </Border>
                             </Grid>
-                            
+
                         </Border>
                     </GroupBox>
                     <GroupBox x:Name="groupBox1" Grid.Row="1" BorderBrush="Gray" Header="Panel Position"  >
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <StackPanel Orientation="Horizontal" x:Name="stackFovs" HorizontalAlignment="Left">
-                                <Canvas/>
-                            </StackPanel>
-                        </ScrollViewer>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="520"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="1">
+                                <Image Source="../Resources/Icons/PanelPosition.jpg"></Image>
+                                <Rectangle x:Name="rectPosition3"
+                                    Width="80" Height="48" 
+                                    Fill="Aqua" Opacity="1"
+                                           Margin="360,66,0,0" VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           StrokeThickness="2"
+                                           Stroke="Orange"
+                                           Visibility="Hidden"></Rectangle>
+                                <Rectangle x:Name="rectPosition2"
+                                    Width="80" Height="48" 
+                                    Fill="Aqua" Opacity="1"
+                                           Margin="215,66,0,0" VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           StrokeThickness="2"
+                                           Stroke="Orange"
+                                           Visibility="Hidden"></Rectangle>
+                                <Rectangle x:Name="rectPosition1"
+                                    Width="80" Height="48" 
+                                    Fill="Aqua" Opacity="1"
+                                           Margin="60,66,0,0" VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           StrokeThickness="2"
+                                           Stroke="Orange"
+                                           Visibility="Hidden"></Rectangle>
+                            </Grid>
+                        </Grid>
                     </GroupBox>
                 </Grid>
                 <Grid Grid.Column="1" Margin="3">
@@ -201,7 +242,7 @@
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
-                            
+
                             <Grid Grid.Row="0">
                                 <GroupBox Header="DOOR" FontWeight="Bold">
                                     <Border x:Name="bdDoor" Background="Green" BorderBrush="White" 
@@ -264,7 +305,7 @@
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="3">
-                        <GroupBox Header="Result details" BorderBrush="Gray" FontWeight="Bold">
+                        <GroupBox Header="Result details" BorderBrush="Gray" FontWeight="Bold" Visibility="Hidden">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
@@ -291,7 +332,7 @@
                                                 <Label  Content="-----" FontSize="15"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <Label  Content="FOV No.:" Width="100" Foreground="Gray"/>
+                                                <Label  Content="Running mode:" Width="100" Foreground="Gray"/>
                                                 <Label  Content="-----" FontSize="15"/>
                                             </StackPanel>
 
@@ -357,13 +398,16 @@
                             <StackPanel Margin="5,15,0,0">
                                 <StackPanel Orientation="Horizontal" Margin="5,10,0,0">
                                     <Label Content="Model:"/>
-                                    <ComboBox Width="200" Margin="10,0,0,0"/>
-                                    <Button Width="26" Height="26" Margin="10,0,0,0"></Button>
+                                    <ComboBox x:Name="cbModelStatistical" Width="200" Margin="10,0,0,0" SelectionChanged="cbModelStatistical_SelectionChanged"/>
+                                    <Button x:Name="btReloadModelStatistical"  Width="26" Height="26" Margin="10,0,0,0"
+                                             Click="btReloadModelStatistical_Click">
+                                        <Image Source="../Resources/Icons/refresh.ico"></Image>
+                                    </Button>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                                    <RadioButton Margin="40,0,0,0" Content="Shift" IsChecked="True"/>
-                                    <RadioButton  Margin="40,0,0,0" Content="Day"/>
-                                    <RadioButton  Margin="40,0,0,0" Content="Total"/>
+                                    <RadioButton x:Name="rbShift" Margin="40,0,0,0" Content="Shift" Checked="rbShift_Checked" />
+                                    <RadioButton x:Name="rbDay"  Margin="40,0,0,0" Content="Day" Checked="rbDay_Checked"/>
+                                    <RadioButton x:Name="rbTotal"  Margin="40,0,0,0" Content="Total" IsChecked="True" Checked="rbTotal_Checked"/>
                                 </StackPanel>
                                 <Grid Height="165" Margin="10,20, 10,10">
                                     <Grid.ColumnDefinitions>
@@ -443,7 +487,7 @@
                 </Grid>
                 <Grid Grid.Column="3">
                     <Grid>
-                        
+
                     </Grid>
                 </Grid>
             </Grid>

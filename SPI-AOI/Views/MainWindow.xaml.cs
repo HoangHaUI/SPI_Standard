@@ -31,42 +31,53 @@ namespace SPI_AOI.Views
     public partial class MainWindow : Window
     {
         System.Timers.Timer mTimer = new System.Timers.Timer(20);
+        System.Timers.Timer mTimerCheckStatus = new System.Timers.Timer(50);
         Properties.Settings mParam = Properties.Settings.Default;
         Logger mLog = Heal.LogCtl.GetInstance();
         List<Utils.SummaryInfo> mSummary = new List<Utils.SummaryInfo>();
         Utils.FOVDisplayInfo mFOVDisplay = new Utils.FOVDisplayInfo();
-        Heal.CalibrateInfo mCalibImage = new Heal.CalibrateInfo();
+        CalibrateInfo mCalibImage = CalibrateLoader.GetIntance();
+        DB.Result mMyDBResult = new DB.Result();
         PLCComm mPlcComm = new PLCComm();
         IOT.HikCamera mCamera = null;
         DKZ224V4ACCom mLight = null;
         bool mIsRunning = false;
-        bool mIsIdle = false;
+        bool mIsProcessing = false;
         bool mIsInTimer = false;
+        bool mIsInCheckTimer = false;
+        bool mPingPLCOK = true;
+        bool mIsCheck = true;
+        bool mIsLoaded = false;
         Model mModel = null;
         public MainWindow()
         {
             InitializeComponent();
+            LoadUI();
+            mIsLoaded = true;
         }
         private void Window_Initialized(object sender, EventArgs e)
         {
             InitSummary();
             dgwSummary.ItemsSource = mSummary;
             dgwSummary.Items.Refresh();
-            UpdateChartCount(chartYeildRate, txtPass, txtFail, 0, 0);
             LoadModelsName();
             UpdateStatus(Utils.LabelMode.PLC, Utils.LabelStatus.READY);
             UpdateStatus(Utils.LabelMode.DOOR, Utils.LabelStatus.CLOSED);
-            UpdateStatus(Utils.LabelMode.RUNNING_MODE, Utils.LabelStatus.TEST);
+            UpdateRunningMode();
             UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.READY);
             UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.READY);
-            mCalibImage = Heal.CalibrateLoader.GetCalibrationInfo(@"F:\Heal\Projects\SPI-AOI\Calibrate\matrix.txt",
-                @"F:\Heal\Projects\SPI-AOI\Calibrate\dis.txt", 
-                new System.Drawing.Size(2448, 2048), 
-                new System.Drawing.Rectangle(0, 0, 2448, 2048));
+            UpdatePanelPosition(0);
+            mTimerCheckStatus.Elapsed += OnCheckStatusEvent;
+            mTimerCheckStatus.Enabled = true;
             //ColInfo.Width = new GridLength(0);
             //ColStatistical.Width = new GridLength(1, GridUnitType.Star);
+            //mMyDBResult.InsertNewImage("sdvajshdasd", DateTime.Now, "now", new System.Drawing.Rectangle(1,2,3,5), new System.Drawing.Rectangle(4,3,2,1), "Image");
         }
-        private void OnTimedEvent(object sender, System.Timers.ElapsedEventArgs e)
+        public void LoadUI()
+        {
+            btReloadModelStatistical_Click(null, null);
+        }
+        private void OnMainEvent(object sender, System.Timers.ElapsedEventArgs e)
         {
             if (mIsInTimer)
                 return;
@@ -76,16 +87,17 @@ namespace SPI_AOI.Views
             int val = mPlcComm.Get_Has_Product_Top();
             if(val == 1)
             {
-                mIsIdle = false;
+                mIsProcessing = true;
                 Processing();
-                mIsIdle = true;
+                mIsProcessing = false; 
                 mPlcComm.Reset_Has_Product_Top();
                 mPlcComm.Set_Pass();
             }
             mIsInTimer = false;
             timer.Enabled = mIsRunning;
         }
-        private int CaptureMark()
+        
+        private int CaptureMark(string SavePath, bool LightStrobe)
         {
             System.Drawing.Point[] markPoint = mModel.GetPLCMarkPosition();
             bool captureError = false;
@@ -109,8 +121,12 @@ namespace SPI_AOI.Views
                     break;
                 }
                 mPlcComm.Reset_Go_Coordinates_Finish_Top();
-                mLight.ActiveFour(1, 1, 1, 1);
-                Thread.Sleep(50);
+                if(LightStrobe)
+                {
+                    mLight.ActiveFour(1, 1, 1, 1);
+                    Thread.Sleep(20);
+                }
+                
                 using (System.Drawing.Bitmap bm = mCamera.GetOneBitmap(1000))
                 {
                     if (bm != null)
@@ -118,6 +134,8 @@ namespace SPI_AOI.Views
                         System.Drawing.Rectangle ROI = mModel.GetRectROIMark();
                         using (Image<Bgr, byte> img = new Image<Bgr, byte>(bm))
                         {
+                            string fileName = string.Format("{0}//Mark_{1}_{2}_{3}_{4}_{5}.png", SavePath, i + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height);
+                            CvInvoke.Imwrite(fileName, img);
                             img.ROI = ROI;
                            this.Dispatcher.Invoke(() => {
                             BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(img.Bitmap);
@@ -137,7 +155,10 @@ namespace SPI_AOI.Views
                         mLog.Info(string.Format("Cant Capture image in Mark : {0}", i + 1));
                     }
                 }
-                mLight.ActiveFour(0, 0, 0, 0);
+                if(LightStrobe)
+                {
+                    mLight.ActiveFour(0, 0, 0, 0);
+                }
             }
             if (captureError)
             {
@@ -145,9 +166,8 @@ namespace SPI_AOI.Views
             }
             return 0;
         }
-        private int CaptureFOV()
+        private int CaptureFOV(string SavePath, bool LightStrobe)
         {
-            bool activeLight = false;
             bool captureError = false;
             System.Drawing.Point[] xyAxisPosition = mModel.GetPulseXYFOVs();
             System.Drawing.Point[] Fovs = mModel.GetAnchorsFOV();
@@ -175,34 +195,37 @@ namespace SPI_AOI.Views
                         break;
                     }
                     mPlcComm.Reset_Go_Coordinates_Finish_Top();
-                    if (!activeLight)
+                    if (LightStrobe)
                     {
                         mLight.ActiveFour(1, 1, 1, 1);
-                        Thread.Sleep(50);
-                        activeLight = true;
+                        Thread.Sleep(30);
                     }
                     using (System.Drawing.Bitmap bm = mCamera.GetOneBitmap(1000))
                     {
                         if (bm != null)
                         {
                             SetDisplayFOV(i);
-                            using (Image<Bgr, byte> imgCap = new Image<Bgr, byte>(bm))
+                            
+                            Image<Bgr, byte> imgCap = new Image<Bgr, byte>(bm);
                             {
                                 var modelFov = mModel.FOV;
+                                System.Drawing.Rectangle ROI = new System.Drawing.Rectangle(
+                                imgCap.Width / 2 - modelFov.Width / 2, imgCap.Height / 2 - modelFov.Height / 2,
+                                modelFov.Width, modelFov.Height);
+                                System.Drawing.Rectangle ROIGerber = new System.Drawing.Rectangle(
+                                    Fovs[i].X - modelFov.Width / 2, Fovs[i].Y - modelFov.Height / 2,
+                                    modelFov.Width, modelFov.Height);
+                                
                                 using (Image<Bgr, byte> imgRotated = ImageProcessingUtils.ImageRotation(imgCap, new System.Drawing.Point(imgCap.Width / 2, imgCap.Height / 2), -mModel.AngleAxisCamera * Math.PI / 180.0))
                                 using (Image<Bgr, byte> imgUndis = new Image<Bgr, byte>(imgRotated.Size))
                                 {
                                     CvInvoke.Undistort(imgRotated, imgUndis, mCalibImage.CameraMatrix, mCalibImage.DistCoeffs, mCalibImage.NewCameraMatrix);
-                                    System.Drawing.Rectangle ROI = new System.Drawing.Rectangle(
-                                        imgUndis.Width / 2 - modelFov.Width / 2, imgUndis.Height / 2 - modelFov.Height / 2,
-                                        modelFov.Width, modelFov.Height);
-                                    System.Drawing.Rectangle ROIGerber = new System.Drawing.Rectangle(
-                                        Fovs[i].X - modelFov.Width / 2, Fovs[i].Y - modelFov.Height / 2,
-                                        modelFov.Width, modelFov.Height);
                                     imgUndis.ROI = ROI;
                                     imgGerber.ROI = ROIGerber;
-                                    CvInvoke.Imwrite("turn_" + i.ToString() + "_img.png", imgUndis);
-                                    CvInvoke.Imwrite("turn_" + i.ToString() + "_gerber.png", imgGerber);
+                                    string fileName = string.Format("{0}//Image_{1}_ROI({2}_{3}_{4}_{5})_ROI_GERBER({6}_{7}_{8},{9}).png", 
+                                        SavePath, i + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height,
+                                        ROIGerber.X, ROIGerber.Y, ROIGerber.Width, ROIGerber.Height);
+                                    CvInvoke.Imwrite(fileName, imgUndis);
                                     imgGerber.ROI = System.Drawing.Rectangle.Empty;
                                     this.Dispatcher.Invoke(() => {
                                         BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(imgUndis.Bitmap);
@@ -210,8 +233,6 @@ namespace SPI_AOI.Views
                                         lbcountFovs.Content = (i + 1).ToString();
                                     });
                                 }
-
-                                    
                             }
                         }
                         else
@@ -219,11 +240,14 @@ namespace SPI_AOI.Views
                             mLog.Info(string.Format("Cant Capture image in FOV : {0}", i + 1));
                         }
                     }
+                    if(LightStrobe)
+                    {
+                        mLight.ActiveFour(0, 0, 0, 0);
+                    }
                 }
             }
             mModel.Gerber.ProcessingGerberImage.ROI = System.Drawing.Rectangle.Empty;
-            SetDisplayFOV(-1);
-            mLight.ActiveFour(0, 0, 0, 0);
+            
             if (captureError)
             {
                 return -1;
@@ -233,15 +257,125 @@ namespace SPI_AOI.Views
         
         private void Processing()
         {
+            string date = DateTime.Now.ToString("yyyy_MM_dd");
+            string time = DateTime.Now.ToString("HH_mm_ss");
+            string sn = "NOT FOUND";
+            string savePath = mParam.SAVE_IMAGE_PATH + "\\" + date + "\\TIME(" + time + ")_._SN(" + sn + ")";
+            if(!Directory.Exists(savePath))
+            {
+                Directory.CreateDirectory(savePath);
+            }
+            bool lightStrobe = Convert.ToBoolean(mParam.LIGHT_MODE);
             ResetUI();
             UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.PROCESSING);
             UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PROCESSING);
-            CaptureMark();
-            CaptureFOV();
-            //Thread.Sleep(1000);
-            UpdateChartCount(chartYeildRate, txtPass, txtFail, 564, 6);
-            UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PASS);
-            UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.IDLE);
+            if(!lightStrobe)
+            {
+                mLight.ActiveFour(1, 1, 1, 1);
+                Thread.Sleep(30);
+            }
+            int capMarkStatus = CaptureMark(savePath, lightStrobe);
+            if(capMarkStatus != -1)
+            {
+                int capFOVStatus = CaptureFOV(savePath, lightStrobe);
+                if(capFOVStatus != -1)
+                {
+                    // capture fail
+
+                }
+                if (!lightStrobe)
+                {
+                    mLight.ActiveFour(0, 0, 0, 0);
+                }
+                if(mParam.RUNNING_MODE == 0)
+                {
+                    // control run or test
+
+                }
+                else if(mParam.RUNNING_MODE == 2)
+                {
+                    // bypass
+                    UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PASS);
+                }
+            }
+            
+            SetDisplayFOV(-1);
+            UpdateChartCount(chartYeildRate, txtPass, txtFail, 10, 1);
+        }
+        private void OnCheckStatusEvent(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (mIsInCheckTimer)
+                return;
+            mIsInCheckTimer = true;
+            mTimerCheckStatus.Enabled = false;
+            int ping = mPlcComm.Ping();
+            if (ping != 0)
+            {
+                UpdateStatus(Utils.LabelMode.PLC, Utils.LabelStatus.FAIL);
+                string msg = string.Format("Ping PLC failed, IP :{0}:{1}...", mParam.PLC_IP, mParam.PLC_PORT);
+                mLog.Error(msg);
+                mTimerCheckStatus.Interval = 1000 * 60;
+                if(mPingPLCOK)
+                {
+                    MessageBox.Show(msg, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    mPingPLCOK = false;
+                }
+            }
+            else
+            {
+                mTimerCheckStatus.Interval = 100;
+                mPingPLCOK = true;
+                Thread.Sleep(20);
+                if (!mIsCheck)
+                    return;
+                int valDoor = mPlcComm.Get_Door_Status();
+                UpdateStatus(Utils.LabelMode.PLC, Utils.LabelStatus.OK);
+                if (valDoor == 0)
+                {
+                    UpdateStatus(Utils.LabelMode.DOOR, Utils.LabelStatus.CLOSED);
+                }
+                else if (valDoor == 1)
+                {
+                    UpdateStatus(Utils.LabelMode.DOOR, Utils.LabelStatus.OPEN);
+                }
+                else
+                {
+                    UpdateStatus(Utils.LabelMode.DOOR, Utils.LabelStatus.WARNING);
+                }
+                Thread.Sleep(20);
+                if (!mIsCheck)
+                    return;
+                int valPanelPosition = mPlcComm.Get_PanelPosition_Status();
+                if (valPanelPosition >= 0 && valPanelPosition < 8)
+                {
+                    UpdatePanelPosition(valPanelPosition);
+                }
+                Thread.Sleep(20);
+                if (!mIsCheck)
+                    return;
+                int valMachineStatus = mPlcComm.Get_Machine_Status();
+                if (valMachineStatus == 0)
+                {
+                    UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.STOP);
+                }
+                else
+                {
+                    if (valMachineStatus == 1 && mIsProcessing)
+                    {
+                        UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.PROCESSING);
+                    }
+                    else if (!mIsProcessing && valPanelPosition == 0)
+                    {
+                        UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.IDLE);
+                    }
+                    else if (!mIsProcessing && valPanelPosition > 0 && valPanelPosition < 8)
+                    {
+                        UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.RUNNING);
+                    }
+                }
+            }
+            mIsInCheckTimer = false;
+            mTimerCheckStatus.Enabled = mIsCheck;
         }
         public void SetImageToImb(Image imb, System.Drawing.Bitmap bm)
         {
@@ -263,14 +397,80 @@ namespace SPI_AOI.Views
                 lbcountFovs.Content = "--";
             });
         }
+
+        private void btReloadModelStatistical_Click(object sender, RoutedEventArgs e)
+        {
+            string[] modelNames = mMyDBResult.GetModelName();
+            this.Dispatcher.Invoke(() =>
+            {
+                string selected = "_____________";
+                if (cbModelStatistical.SelectedIndex >= 0)
+                {
+                    selected = cbModelStatistical.SelectedItem.ToString();
+                }
+                cbModelStatistical.Items.Clear();
+                for (int i = 0; i < modelNames.Length; i++)
+                {
+                    cbModelStatistical.Items.Add(modelNames[i]);
+                }
+                if (cbModelStatistical.Items.Contains(selected))
+                {
+                    cbModelStatistical.SelectedItem = selected;
+                }
+            });
+            UpdateCountStatistical();
+        }
+        public void UpdateCountStatistical()
+        {
+            if (cbModelStatistical.SelectedIndex >= 0)
+            {
+                string modelName = cbModelStatistical.SelectedItem.ToString();
+                DateTime now = DateTime.Now;
+                DateTime endTime = now;
+                DateTime startTime = now;
+                if(rbShift.IsChecked == true)
+                {
+                    DateTime lastDay = now - new TimeSpan(24);
+                    DateTime endLastDay = new DateTime(lastDay.Year, lastDay.Month, lastDay.Day, 19, 30, 0);
+                    TimeSpan subTime = now - endLastDay;
+                    if (subTime.Hours < 12)
+                    {
+                        startTime = endLastDay;
+                    }
+                    else if (endLastDay.Hour >= 12 && endLastDay.Hour < 24)
+                    {
+                        startTime = new DateTime(now.Year, now.Month, now.Day, 7, 30, 0);
+                    }
+                    else
+                    {
+                        startTime = new DateTime(now.Year, now.Month, now.Day, 19, 30, 0);
+                    }
+                }
+                else if(rbDay.IsChecked == true)
+                {
+                    startTime = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
+                }
+                else if(rbTotal.IsChecked == true)
+                {
+                    startTime = new DateTime(2020, 1, 1, 0, 0, 0);
+                }
+                int pass = mMyDBResult.CountPass(modelName, startTime, endTime);
+                int fail = mMyDBResult.CountFail(modelName, startTime, endTime);
+                UpdateChartCount(chartYeildRate, txtPass, txtFail, pass, fail);
+            }
+            else
+            {
+                UpdateChartCount(chartYeildRate, txtPass, txtFail, 0, 0);
+            }
+        }
         private void UpdateChartCount(Chart Chart, TextBox TxtPass, TextBox TxtFail, int Pass, int Fail)
         {
             Chart.BackColor = System.Drawing.Color.Transparent;
             int cvPass = Pass == 0 && Fail == 0 ? 1 : Pass;
             int cvFail = Fail;
-            double ratePass = Math.Round((double)cvPass * 100 / (cvPass + cvFail), 1) ;
+            double ratePass = Math.Round((double)cvPass * 100 / (cvPass + cvFail), 1);
             double rateFail = Math.Round((double)cvFail * 100 / (cvPass + cvFail), 1);
-            this.Dispatcher.Invoke(()=> {
+            this.Dispatcher.Invoke(() => {
                 TxtPass.Text = Pass.ToString();
                 TxtFail.Text = Fail.ToString();
                 Chart.Series["YeildRate"].Points[0].SetValueXY(ratePass.ToString() + "%", cvPass);
@@ -300,12 +500,19 @@ namespace SPI_AOI.Views
                 userType == UserManagement.UserType.Designer ||
                 userType == UserManagement.UserType.Engineer)
             {
+                mIsCheck = false;
                 ModelManagement.DashBoard dbWD = new ModelManagement.DashBoard();
                 dbWD.ShowDialog();
+                mIsCheck = true;
+                mTimerCheckStatus.Elapsed += OnCheckStatusEvent;
+                mTimerCheckStatus.Enabled = true;
             }
             LoadModelsName();
         }
+        private void UpdateResult()
+        {
 
+        }
         private void btPLCConfig_Click(object sender, RoutedEventArgs e)
         {
             var userType = Login();
@@ -346,10 +553,28 @@ namespace SPI_AOI.Views
                 cbModelsName.SelectedItem = selected;
             }
         }
+        private void UpdateRunningMode()
+        {
+            switch (mParam.RUNNING_MODE)
+            {
+                case 0:
+                    UpdateStatus(Utils.LabelMode.RUNNING_MODE, Utils.LabelStatus.CONTROL_RUN);
+                    break;
+                case 1:
+                    UpdateStatus(Utils.LabelMode.RUNNING_MODE, Utils.LabelStatus.TEST);
+                    break;
+                case 2:
+                    UpdateStatus(Utils.LabelMode.RUNNING_MODE, Utils.LabelStatus.BY_PASS);
+                    break;
+                default:
+                    break;
+            }
+
+        }
         private void UpdateStatus(Utils.LabelMode Label, Utils.LabelStatus Status)
         {
-            SolidColorBrush colorMode = GetColorStatus(Status);
-            string strMode = GetStringStatus(Status);
+            SolidColorBrush colorMode = Utils.MyState.GetColorStatus(Status);
+            string strMode = Utils.MyState.GetStringStatus(Status);
             this.Dispatcher.Invoke(() => {
                 switch (Label)
                 {
@@ -384,78 +609,7 @@ namespace SPI_AOI.Views
             });
             
         }
-        private string GetStringStatus(Utils.LabelStatus mode)
-        {
-            switch (mode)
-            {
-                case Utils.LabelStatus.PASS:
-                    return "PASS";
-                case Utils.LabelStatus.FAIL:
-                    return "FAIL";
-                case Utils.LabelStatus.GOOD:
-                    return "GOOD";
-                case Utils.LabelStatus.OK:
-                    return "OK";
-                case Utils.LabelStatus.CLOSED:
-                    return "CLOSED";
-                case Utils.LabelStatus.OPEN:
-                    return "OPEN";
-                case Utils.LabelStatus.RUNNING:
-                    return "RUNNING";
-                case Utils.LabelStatus.CONTROL_RUN:
-                    return "CONTROL RUN";
-                case Utils.LabelStatus.IDLE:
-                    return "IDLE";
-                case Utils.LabelStatus.READY:
-                    return "READY";
-                case Utils.LabelStatus.WAITTING:
-                    return "WAITTING";
-                case Utils.LabelStatus.PROCESSING:
-                    return "PROCESSING";
-                case Utils.LabelStatus.ERROR:
-                    return "ERROR";
-                case Utils.LabelStatus.TEST:
-                    return "TESTING";
-                default:
-                    return "NOT DEFINE";
-            }
-        }
-        private SolidColorBrush GetColorStatus(Utils.LabelStatus mode)
-        {
-            switch (mode)
-            {
-                case Utils.LabelStatus.PASS:
-                    return Brushes.Green;
-                case Utils.LabelStatus.FAIL:
-                    return Brushes.Red;
-                case Utils.LabelStatus.GOOD:
-                    return Brushes.Green;
-                case Utils.LabelStatus.OK:
-                    return Brushes.Green;
-                case Utils.LabelStatus.CLOSED:
-                    return Brushes.Green;
-                case Utils.LabelStatus.OPEN:
-                    return Brushes.Orange;
-                case Utils.LabelStatus.RUNNING:
-                    return Brushes.YellowGreen;
-                case Utils.LabelStatus.CONTROL_RUN:
-                    return Brushes.Green;
-                case Utils.LabelStatus.IDLE:
-                    return Brushes.Gray;
-                case Utils.LabelStatus.READY:
-                    return Brushes.DeepSkyBlue;
-                case Utils.LabelStatus.WAITTING:
-                    return Brushes.Orange;
-                case Utils.LabelStatus.PROCESSING:
-                    return Brushes.Orange;
-                case Utils.LabelStatus.ERROR:
-                    return Brushes.Red;
-                case Utils.LabelStatus.TEST:
-                    return Brushes.Orange;
-                default:
-                    return Brushes.Green;
-            }
-        }
+        
         private void LoadDetails()
         {
             this.Dispatcher.Invoke(() => {
@@ -478,6 +632,22 @@ namespace SPI_AOI.Views
                 lbTotalCountFovs.Content = "0";
             });
             
+        }
+        private void UpdatePanelPosition(bool Position1, bool Position2, bool Position3)
+        {
+            this.Dispatcher.Invoke(() => {
+                rectPosition1.Visibility = Position1 ? Visibility.Visible : Visibility.Hidden;
+                rectPosition2.Visibility = Position2 ? Visibility.Visible : Visibility.Hidden;
+                rectPosition3.Visibility = Position3 ? Visibility.Visible : Visibility.Hidden;
+            });
+
+        }
+        private void UpdatePanelPosition(int Val)
+        {
+            int val1 = (Val >> 2) % 2;
+            int val2 = (Val >> 1) % 2;
+            int val3 = Val % 2;
+            UpdatePanelPosition(val3 == 1, val2 == 1, val1 == 1);
         }
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -546,7 +716,7 @@ namespace SPI_AOI.Views
                 {
                     ReleaseResource();
                     wait.KillMe = true;
-                    MessageBox.Show(string.Format("Cant load {0} model", modelName), "Error", MessageBoxButton.OK);
+                    MessageBox.Show(string.Format("Cant load {0} model", modelName), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 using (Image<Bgr, byte> imgDigram = mModel.GetDiagramImage())
@@ -559,22 +729,22 @@ namespace SPI_AOI.Views
                 int ping = mPlcComm.Ping();
                 if (ping != 0)
                 {
-                   
                     ReleaseResource();
                     wait.KillMe = true;
                     UpdateStatus(Utils.LabelMode.PLC, Utils.LabelStatus.FAIL);
-                    MessageBox.Show(string.Format("Cant ping to PLC  IP :{0}:{1}...", mParam.PLC_IP, mParam.PLC_PORT), "Error", MessageBoxButton.OK);
+                    MessageBox.Show(string.Format("Cant ping to PLC  IP  {0}:{1}", mParam.PLC_IP, mParam.PLC_PORT), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                UpdateStatus(Utils.LabelMode.PLC, Utils.LabelStatus.OK);
+                mPingPLCOK = true;
+                OnCheckStatusEvent(mIsInCheckTimer, null);
                 wait.LabelContent = "Connecting to Camera...";
                 mCamera = MyCamera.GetInstance();
                 if (mCamera == null)
                 {
-
                     ReleaseResource();
                     wait.KillMe = true;
-                    MessageBox.Show(string.Format("Not found camera!"), "Error", MessageBoxButton.OK);
+                    MessageBox.Show(string.Format("Not found camera!"), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
                     return;
                 }
                 int stOpenCamera = mCamera.Open();
@@ -582,7 +752,8 @@ namespace SPI_AOI.Views
                 {
 
                     ReleaseResource();
-                    MessageBox.Show(string.Format("Cant open the camera!"), "Error", MessageBoxButton.OK);
+                    wait.KillMe = true;
+                    MessageBox.Show(string.Format("Cant open the camera!"), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 mCamera.StartGrabbing();
@@ -595,7 +766,8 @@ namespace SPI_AOI.Views
                 {
 
                     ReleaseResource();
-                    MessageBox.Show(string.Format("Cant connect to light source controller!"), "Error", MessageBoxButton.OK);
+                    MessageBox.Show(string.Format("Cant connect to light source controller!"), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    wait.KillMe = true;
                     return;
                 }
                 int[] intensity = mModel.HardwareSettings.LightIntensity;
@@ -606,21 +778,20 @@ namespace SPI_AOI.Views
                 if (conveyorPulse != mModel.HardwareSettings.Conveyor)
                 {
                     wait.LabelContent = "Moving Conveyor...";
-                    mPlcComm.Set_Speed_Run_Conveyor(25000);
-
+                    mPlcComm.Set_Speed_Run_Conveyor(mParam.RUN_CONVEYOR_SPEED);
                     mPlcComm.Set_Conveyor(Convert.ToInt32(mModel.HardwareSettings.Conveyor));
                     mPlcComm.Set_Write_Coordinates_Finish_Conveyor();
 
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
                     int val = mPlcComm.Get_Go_Coordinates_Finish_Conveyor();
-                    while (val != 1 && sw.ElapsedMilliseconds < 120000)
+                    while (val != 1 && sw.ElapsedMilliseconds < 180000)
                     {
                         Thread.Sleep(50);
                         val = mPlcComm.Get_Go_Coordinates_Finish_Conveyor();
                     }
                     
-                    if (sw.ElapsedMilliseconds > 120000)
+                    if (sw.ElapsedMilliseconds > 180000)
                     {
                         MessageBox.Show("Timeout move conveyor, please try again!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                         ReleaseResource();
@@ -631,23 +802,13 @@ namespace SPI_AOI.Views
                     mPlcComm.Reset_Go_Coordinates_Finish_Conveyor();
                 }
                 wait.LabelContent = "Init Parameter...";
-                mPlcComm.Set_Speed_Run_X_Top(200000);
-                mPlcComm.Set_Speed_Run_Y_Top(200000);
+                mPlcComm.Set_Speed_Run_X_Top(mParam.RUN_X_TOP_SPEED);
+                mPlcComm.Set_Speed_Run_Y_Top(mParam.RUN_Y_TOP_SPEED);
                 SetButtonRun(Utils.RunMode.START);
-                if (mParam.RUNNING_MODE == "TEST")
-                {
-                    UpdateStatus(Utils.LabelMode.RUNNING_MODE, Utils.LabelStatus.TEST);
-                }
-                else
-                {
-                    UpdateStatus(Utils.LabelMode.RUNNING_MODE, Utils.LabelStatus.CONTROL_RUN);
-                }
                 UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.READY);
-                UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.IDLE);
                 LoadDetails();
-                mIsIdle = true;
                 mIsRunning = true;
-                mTimer.Elapsed += OnTimedEvent;
+                mTimer.Elapsed += OnMainEvent;
                 mTimer.Enabled = true;
                 wait.KillMe = true;
             });
@@ -656,23 +817,13 @@ namespace SPI_AOI.Views
         }
         private void StopRunMode()
         {
-            if(mIsIdle)
-            {
-                mIsRunning = false;
-                
-                UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.READY);
-                UpdateStatus(Utils.LabelMode.PLC, Utils.LabelStatus.READY);
-                ResetUI();
-                mLight.ActiveFour(0, 0, 0, 0);
-                ReleaseResource();
-                ResetDetails();
-                SetDisplayFOV(-1);
-                SetButtonRun(Utils.RunMode.STOP);
-            }
-           else
-            {
-                MessageBox.Show(string.Format("Cant stop because the machine is a progress..."), "Error", MessageBoxButton.OK);
-            }
+            mIsRunning = false;
+            ResetUI();
+            mLight.ActiveFour(0, 0, 0, 0);
+            ReleaseResource();
+            ResetDetails();
+            SetDisplayFOV(-1);
+            SetButtonRun(Utils.RunMode.STOP);
         }
         private void SetButtonRun(Utils.RunMode mode)
         {
@@ -725,7 +876,6 @@ namespace SPI_AOI.Views
             {
                 imbDiagram.Source = null ;
             });
-            
         }
         private void btRun_Click(object sender, RoutedEventArgs e)
         {
@@ -742,12 +892,68 @@ namespace SPI_AOI.Views
             }
             
         }
-
         private void btSetupCamera_Click(object sender, RoutedEventArgs e)
         {
 
         }
+        private void btIOConfig_Click(object sender, RoutedEventArgs e)
+        {
+            var userType = Login();
+            if (userType == UserManagement.UserType.Admin ||
+                userType == UserManagement.UserType.Designer ||
+                userType == UserManagement.UserType.Engineer)
+            {
+                Views.MainConfigWindow.IOConfigForm ioForm = new Views.MainConfigWindow.IOConfigForm();
+                ioForm.ShowDialog();
+                mCalibImage = CalibrateLoader.UpdateInstance();
+            }
+        }
+        private void btAlgorithmSettings_Click(object sender, RoutedEventArgs e)
+        {
+            var userType = Login();
+            if (userType == UserManagement.UserType.Admin ||
+                userType == UserManagement.UserType.Designer ||
+                userType == UserManagement.UserType.Engineer)
+            {
+                Views.MainConfigWindow.AlgorithmSettings algorithmForm = new Views.MainConfigWindow.AlgorithmSettings();
+                algorithmForm.ShowDialog();
+                UpdateRunningMode();
+            }
+        }
 
-        
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            mIsCheck = false;
+            mTimerCheckStatus.Enabled = false;
+            Thread.Sleep(500);
+        }
+
+        private void btExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void rbShift_Checked(object sender, RoutedEventArgs e)
+        {
+            if (mIsLoaded)
+                UpdateCountStatistical();
+        }
+
+        private void rbDay_Checked(object sender, RoutedEventArgs e)
+        {
+            if (mIsLoaded)
+                UpdateCountStatistical();
+        }
+
+        private void rbTotal_Checked(object sender, RoutedEventArgs e)
+        {
+            if(mIsLoaded)
+                UpdateCountStatistical();
+        }
+
+        private void cbModelStatistical_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateCountStatistical();
+        }
     }
 }

@@ -106,6 +106,38 @@
             this.label28 = new System.Windows.Forms.Label();
             this.txtBitErrorMachine = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
+            this.txtSpeedRunXTop = new System.Windows.Forms.TextBox();
+            this.label38 = new System.Windows.Forms.Label();
+            this.txtSpeedRunYTop = new System.Windows.Forms.TextBox();
+            this.label39 = new System.Windows.Forms.Label();
+            this.txtSpeedRunYBot = new System.Windows.Forms.TextBox();
+            this.label40 = new System.Windows.Forms.Label();
+            this.txtSpeedRunXBot = new System.Windows.Forms.TextBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.txtSpeedRunConveyor = new System.Windows.Forms.TextBox();
+            this.label43 = new System.Windows.Forms.Label();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.label42 = new System.Windows.Forms.Label();
+            this.txtRegReadYTop = new System.Windows.Forms.TextBox();
+            this.label44 = new System.Windows.Forms.Label();
+            this.txtRegReadXTop = new System.Windows.Forms.TextBox();
+            this.label45 = new System.Windows.Forms.Label();
+            this.txtRegSpeedYTop = new System.Windows.Forms.TextBox();
+            this.label46 = new System.Windows.Forms.Label();
+            this.txtRegSpeedXTop = new System.Windows.Forms.TextBox();
+            this.label47 = new System.Windows.Forms.Label();
+            this.txtRegSpeedYBot = new System.Windows.Forms.TextBox();
+            this.txtRegSpeedXBot = new System.Windows.Forms.TextBox();
+            this.txtRegReadYBot = new System.Windows.Forms.TextBox();
+            this.txtRegReadXBot = new System.Windows.Forms.TextBox();
+            this.txtRegSpeedConveyor = new System.Windows.Forms.TextBox();
+            this.txtRegReadConveyor = new System.Windows.Forms.TextBox();
+            this.label48 = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
+            this.label51 = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
+            this.label53 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -115,6 +147,18 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtRegSpeedYTop);
+            this.groupBox1.Controls.Add(this.label46);
+            this.groupBox1.Controls.Add(this.txtRegSpeedXTop);
+            this.groupBox1.Controls.Add(this.label47);
+            this.groupBox1.Controls.Add(this.txtRegReadYTop);
+            this.groupBox1.Controls.Add(this.label44);
+            this.groupBox1.Controls.Add(this.txtRegReadXTop);
+            this.groupBox1.Controls.Add(this.label45);
+            this.groupBox1.Controls.Add(this.txtSpeedRunYTop);
+            this.groupBox1.Controls.Add(this.label39);
+            this.groupBox1.Controls.Add(this.txtSpeedRunXTop);
+            this.groupBox1.Controls.Add(this.label38);
             this.groupBox1.Controls.Add(this.txtBitGoFinishSetupTop);
             this.groupBox1.Controls.Add(this.label37);
             this.groupBox1.Controls.Add(this.txtBitGoFinishTop);
@@ -136,9 +180,9 @@
             this.groupBox1.Controls.Add(this.txtRegXTop);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(13, 146);
+            this.groupBox1.Location = new System.Drawing.Point(13, 203);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(226, 294);
+            this.groupBox1.Size = new System.Drawing.Size(226, 458);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Top Axis";
@@ -365,6 +409,18 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label48);
+            this.groupBox2.Controls.Add(this.label49);
+            this.groupBox2.Controls.Add(this.label50);
+            this.groupBox2.Controls.Add(this.label51);
+            this.groupBox2.Controls.Add(this.txtRegSpeedYBot);
+            this.groupBox2.Controls.Add(this.txtRegSpeedXBot);
+            this.groupBox2.Controls.Add(this.txtRegReadYBot);
+            this.groupBox2.Controls.Add(this.txtRegReadXBot);
+            this.groupBox2.Controls.Add(this.txtSpeedRunYBot);
+            this.groupBox2.Controls.Add(this.label40);
+            this.groupBox2.Controls.Add(this.txtSpeedRunXBot);
+            this.groupBox2.Controls.Add(this.label41);
             this.groupBox2.Controls.Add(this.txtBitGoFinishSetupBot);
             this.groupBox2.Controls.Add(this.label35);
             this.groupBox2.Controls.Add(this.txtBitGoFinishBot);
@@ -386,9 +442,9 @@
             this.groupBox2.Controls.Add(this.txtRegXBot);
             this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(245, 146);
+            this.groupBox2.Location = new System.Drawing.Point(245, 203);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(226, 294);
+            this.groupBox2.Size = new System.Drawing.Size(226, 458);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Bot Axis";
@@ -615,6 +671,12 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label52);
+            this.groupBox3.Controls.Add(this.label53);
+            this.groupBox3.Controls.Add(this.txtRegSpeedConveyor);
+            this.groupBox3.Controls.Add(this.txtRegReadConveyor);
+            this.groupBox3.Controls.Add(this.txtSpeedRunConveyor);
+            this.groupBox3.Controls.Add(this.label43);
             this.groupBox3.Controls.Add(this.txtBitGoFinishSetupConveyor);
             this.groupBox3.Controls.Add(this.label33);
             this.groupBox3.Controls.Add(this.txtBitGoFinishConveyor);
@@ -630,9 +692,9 @@
             this.groupBox3.Controls.Add(this.txtRegConveyor);
             this.groupBox3.Controls.Add(this.label24);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(477, 146);
+            this.groupBox3.Location = new System.Drawing.Point(477, 203);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(226, 294);
+            this.groupBox3.Size = new System.Drawing.Size(226, 458);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Conveyor";
@@ -793,6 +855,8 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.textBox5);
+            this.groupBox4.Controls.Add(this.label42);
             this.groupBox4.Controls.Add(this.nPort);
             this.groupBox4.Controls.Add(this.label31);
             this.groupBox4.Controls.Add(this.txtIP);
@@ -816,7 +880,7 @@
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.Location = new System.Drawing.Point(13, 12);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(690, 128);
+            this.groupBox4.Size = new System.Drawing.Size(690, 170);
             this.groupBox4.TabIndex = 16;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "General";
@@ -1045,13 +1109,349 @@
             this.label29.TabIndex = 0;
             this.label29.Text = "Bit Error Machine:";
             // 
+            // txtSpeedRunXTop
+            // 
+            this.txtSpeedRunXTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSpeedRunXTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSpeedRunXTop.Location = new System.Drawing.Point(146, 395);
+            this.txtSpeedRunXTop.Name = "txtSpeedRunXTop";
+            this.txtSpeedRunXTop.Size = new System.Drawing.Size(64, 20);
+            this.txtSpeedRunXTop.TabIndex = 17;
+            this.txtSpeedRunXTop.Text = "M100";
+            this.txtSpeedRunXTop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label38.Location = new System.Drawing.Point(16, 397);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(94, 13);
+            this.label38.TabIndex = 16;
+            this.label38.Text = "Speed Running X:";
+            // 
+            // txtSpeedRunYTop
+            // 
+            this.txtSpeedRunYTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSpeedRunYTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSpeedRunYTop.Location = new System.Drawing.Point(146, 421);
+            this.txtSpeedRunYTop.Name = "txtSpeedRunYTop";
+            this.txtSpeedRunYTop.Size = new System.Drawing.Size(64, 20);
+            this.txtSpeedRunYTop.TabIndex = 19;
+            this.txtSpeedRunYTop.Text = "M100";
+            this.txtSpeedRunYTop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label39.Location = new System.Drawing.Point(16, 423);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(94, 13);
+            this.label39.TabIndex = 18;
+            this.label39.Text = "Speed Running Y:";
+            // 
+            // txtSpeedRunYBot
+            // 
+            this.txtSpeedRunYBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSpeedRunYBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSpeedRunYBot.Location = new System.Drawing.Point(146, 421);
+            this.txtSpeedRunYBot.Name = "txtSpeedRunYBot";
+            this.txtSpeedRunYBot.Size = new System.Drawing.Size(64, 20);
+            this.txtSpeedRunYBot.TabIndex = 23;
+            this.txtSpeedRunYBot.Text = "M100";
+            this.txtSpeedRunYBot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.Location = new System.Drawing.Point(16, 423);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(94, 13);
+            this.label40.TabIndex = 22;
+            this.label40.Text = "Speed Running Y:";
+            // 
+            // txtSpeedRunXBot
+            // 
+            this.txtSpeedRunXBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSpeedRunXBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSpeedRunXBot.Location = new System.Drawing.Point(146, 395);
+            this.txtSpeedRunXBot.Name = "txtSpeedRunXBot";
+            this.txtSpeedRunXBot.Size = new System.Drawing.Size(64, 20);
+            this.txtSpeedRunXBot.TabIndex = 21;
+            this.txtSpeedRunXBot.Text = "M100";
+            this.txtSpeedRunXBot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label41.Location = new System.Drawing.Point(16, 397);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(94, 13);
+            this.label41.TabIndex = 20;
+            this.label41.Text = "Speed Running X:";
+            // 
+            // txtSpeedRunConveyor
+            // 
+            this.txtSpeedRunConveyor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSpeedRunConveyor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSpeedRunConveyor.Location = new System.Drawing.Point(146, 265);
+            this.txtSpeedRunConveyor.Name = "txtSpeedRunConveyor";
+            this.txtSpeedRunConveyor.Size = new System.Drawing.Size(64, 20);
+            this.txtSpeedRunConveyor.TabIndex = 21;
+            this.txtSpeedRunConveyor.Text = "M100";
+            this.txtSpeedRunConveyor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label43.Location = new System.Drawing.Point(16, 267);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(84, 13);
+            this.label43.TabIndex = 20;
+            this.label43.Text = "Speed Running:";
+            // 
+            // textBox5
+            // 
+            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox5.Location = new System.Drawing.Point(378, 124);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(64, 20);
+            this.textBox5.TabIndex = 29;
+            this.textBox5.Text = "M100";
+            this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label42.Location = new System.Drawing.Point(248, 124);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(92, 13);
+            this.label42.TabIndex = 28;
+            this.label42.Text = "Bit Panel Position:";
+            // 
+            // txtRegReadYTop
+            // 
+            this.txtRegReadYTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtRegReadYTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRegReadYTop.Location = new System.Drawing.Point(146, 314);
+            this.txtRegReadYTop.Name = "txtRegReadYTop";
+            this.txtRegReadYTop.Size = new System.Drawing.Size(64, 20);
+            this.txtRegReadYTop.TabIndex = 23;
+            this.txtRegReadYTop.Text = "M100";
+            this.txtRegReadYTop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label44.Location = new System.Drawing.Point(16, 316);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(88, 13);
+            this.label44.TabIndex = 22;
+            this.label44.Text = "Register Read Y:";
+            // 
+            // txtRegReadXTop
+            // 
+            this.txtRegReadXTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtRegReadXTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRegReadXTop.Location = new System.Drawing.Point(146, 288);
+            this.txtRegReadXTop.Name = "txtRegReadXTop";
+            this.txtRegReadXTop.Size = new System.Drawing.Size(64, 20);
+            this.txtRegReadXTop.TabIndex = 21;
+            this.txtRegReadXTop.Text = "M100";
+            this.txtRegReadXTop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label45.Location = new System.Drawing.Point(16, 290);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(88, 13);
+            this.label45.TabIndex = 20;
+            this.label45.Text = "Register Read X:";
+            // 
+            // txtRegSpeedYTop
+            // 
+            this.txtRegSpeedYTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtRegSpeedYTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRegSpeedYTop.Location = new System.Drawing.Point(146, 366);
+            this.txtRegSpeedYTop.Name = "txtRegSpeedYTop";
+            this.txtRegSpeedYTop.Size = new System.Drawing.Size(64, 20);
+            this.txtRegSpeedYTop.TabIndex = 27;
+            this.txtRegSpeedYTop.Text = "M100";
+            this.txtRegSpeedYTop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label46.Location = new System.Drawing.Point(16, 368);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(93, 13);
+            this.label46.TabIndex = 26;
+            this.label46.Text = "Register Speed Y:";
+            // 
+            // txtRegSpeedXTop
+            // 
+            this.txtRegSpeedXTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtRegSpeedXTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRegSpeedXTop.Location = new System.Drawing.Point(146, 340);
+            this.txtRegSpeedXTop.Name = "txtRegSpeedXTop";
+            this.txtRegSpeedXTop.Size = new System.Drawing.Size(64, 20);
+            this.txtRegSpeedXTop.TabIndex = 25;
+            this.txtRegSpeedXTop.Text = "M100";
+            this.txtRegSpeedXTop.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label47.Location = new System.Drawing.Point(16, 342);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(93, 13);
+            this.label47.TabIndex = 24;
+            this.label47.Text = "Register Speed X:";
+            // 
+            // txtRegSpeedYBot
+            // 
+            this.txtRegSpeedYBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtRegSpeedYBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRegSpeedYBot.Location = new System.Drawing.Point(146, 368);
+            this.txtRegSpeedYBot.Name = "txtRegSpeedYBot";
+            this.txtRegSpeedYBot.Size = new System.Drawing.Size(64, 20);
+            this.txtRegSpeedYBot.TabIndex = 35;
+            this.txtRegSpeedYBot.Text = "M100";
+            this.txtRegSpeedYBot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtRegSpeedXBot
+            // 
+            this.txtRegSpeedXBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtRegSpeedXBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRegSpeedXBot.Location = new System.Drawing.Point(146, 342);
+            this.txtRegSpeedXBot.Name = "txtRegSpeedXBot";
+            this.txtRegSpeedXBot.Size = new System.Drawing.Size(64, 20);
+            this.txtRegSpeedXBot.TabIndex = 33;
+            this.txtRegSpeedXBot.Text = "M100";
+            this.txtRegSpeedXBot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtRegReadYBot
+            // 
+            this.txtRegReadYBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtRegReadYBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRegReadYBot.Location = new System.Drawing.Point(146, 316);
+            this.txtRegReadYBot.Name = "txtRegReadYBot";
+            this.txtRegReadYBot.Size = new System.Drawing.Size(64, 20);
+            this.txtRegReadYBot.TabIndex = 31;
+            this.txtRegReadYBot.Text = "M100";
+            this.txtRegReadYBot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtRegReadXBot
+            // 
+            this.txtRegReadXBot.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtRegReadXBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRegReadXBot.Location = new System.Drawing.Point(146, 290);
+            this.txtRegReadXBot.Name = "txtRegReadXBot";
+            this.txtRegReadXBot.Size = new System.Drawing.Size(64, 20);
+            this.txtRegReadXBot.TabIndex = 29;
+            this.txtRegReadXBot.Text = "M100";
+            this.txtRegReadXBot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtRegSpeedConveyor
+            // 
+            this.txtRegSpeedConveyor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtRegSpeedConveyor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRegSpeedConveyor.Location = new System.Drawing.Point(146, 239);
+            this.txtRegSpeedConveyor.Name = "txtRegSpeedConveyor";
+            this.txtRegSpeedConveyor.Size = new System.Drawing.Size(64, 20);
+            this.txtRegSpeedConveyor.TabIndex = 35;
+            this.txtRegSpeedConveyor.Text = "M100";
+            this.txtRegSpeedConveyor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtRegReadConveyor
+            // 
+            this.txtRegReadConveyor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtRegReadConveyor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRegReadConveyor.Location = new System.Drawing.Point(146, 213);
+            this.txtRegReadConveyor.Name = "txtRegReadConveyor";
+            this.txtRegReadConveyor.Size = new System.Drawing.Size(64, 20);
+            this.txtRegReadConveyor.TabIndex = 33;
+            this.txtRegReadConveyor.Text = "M100";
+            this.txtRegReadConveyor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label48.Location = new System.Drawing.Point(16, 370);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(93, 13);
+            this.label48.TabIndex = 39;
+            this.label48.Text = "Register Speed Y:";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label49.Location = new System.Drawing.Point(16, 344);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(93, 13);
+            this.label49.TabIndex = 38;
+            this.label49.Text = "Register Speed X:";
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label50.Location = new System.Drawing.Point(16, 318);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(88, 13);
+            this.label50.TabIndex = 37;
+            this.label50.Text = "Register Read Y:";
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label51.Location = new System.Drawing.Point(16, 292);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(88, 13);
+            this.label51.TabIndex = 36;
+            this.label51.Text = "Register Read X:";
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label52.Location = new System.Drawing.Point(16, 241);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(83, 13);
+            this.label52.TabIndex = 40;
+            this.label52.Text = "Register Speed:";
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label53.Location = new System.Drawing.Point(16, 215);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(78, 13);
+            this.label53.TabIndex = 39;
+            this.label53.Text = "Register Read:";
+            // 
             // PLCBitconfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
-            this.ClientSize = new System.Drawing.Size(717, 448);
+            this.ClientSize = new System.Drawing.Size(717, 671);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -1157,5 +1557,37 @@
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.TextBox txtBitWriteFinishSetupConveyor;
         private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.TextBox txtSpeedRunYTop;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.TextBox txtSpeedRunXTop;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.TextBox txtSpeedRunYBot;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.TextBox txtSpeedRunXBot;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.TextBox txtSpeedRunConveyor;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.TextBox txtRegSpeedYTop;
+        private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.TextBox txtRegSpeedXTop;
+        private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.TextBox txtRegReadYTop;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.TextBox txtRegReadXTop;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.TextBox txtRegSpeedYBot;
+        private System.Windows.Forms.TextBox txtRegSpeedXBot;
+        private System.Windows.Forms.TextBox txtRegReadYBot;
+        private System.Windows.Forms.TextBox txtRegReadXBot;
+        private System.Windows.Forms.TextBox txtRegSpeedConveyor;
+        private System.Windows.Forms.TextBox txtRegReadConveyor;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.Label label53;
     }
 }

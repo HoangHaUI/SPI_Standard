@@ -22,7 +22,9 @@ namespace SPI_AOI.Utils
         PROCESSING,
         ERROR,
         TEST,
-
+        BY_PASS,
+        WARNING,
+        STOP
     }
     enum LabelMode
     {
@@ -43,5 +45,20 @@ namespace SPI_AOI.Utils
     {
         START,
         STOP
+    }
+    public enum RunningMode
+    {
+        CONTROL_RUN,
+        TESTING,
+        BY_PASS
+    }
+    public enum VIStatus
+    {
+        PASS,
+        FAIL,
+        GOOD,
+        BAD,
+        NONE,
+
     }
 }

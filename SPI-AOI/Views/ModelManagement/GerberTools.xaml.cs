@@ -70,7 +70,11 @@ namespace SPI_AOI.Views.ModelManagement
                 mImportedFiles.Add(mModel.Gerber);
                 for (int i = 0; i < mModel.Gerber.PadItems.Count; i++)
                 {
-                    mPads.Add(mModel.Gerber.PadItems[i]);
+                    if(mModel.Gerber.PadItems[i].Enable)
+                    {
+                        mPads.Add(mModel.Gerber.PadItems[i]);
+                    }
+                    
                 }
             }
             for (int i = 0; i < mModel.Cad.Count; i++)
@@ -332,6 +336,7 @@ namespace SPI_AOI.Views.ModelManagement
                         mModel.SetROI(mSelectRecangle);
                         mSelectRecangle = System.Drawing.Rectangle.Empty;
                         ShowAllLayerImb(ActionMode.Render);
+                        UpdateListImportedFile();
                     }
                     else
                     {
@@ -443,6 +448,7 @@ namespace SPI_AOI.Views.ModelManagement
                         ShowAllLayerImb(ActionMode.Update_Color_Gerber);
                         mSelectRecangle = System.Drawing.Rectangle.Empty;
                         imBox.Refresh();
+                        UpdateListImportedFile();
                     }
                 }
             }

@@ -20,7 +20,7 @@ namespace SPI_AOI.Devices
                 setX = Set_X_Top(X);
                 if (setX == X)
                     break;
-                Thread.Sleep(5);
+                Thread.Sleep(3);
             }
             if (setX != X)
             {
@@ -31,7 +31,7 @@ namespace SPI_AOI.Devices
                 setY = Set_Y_Top(Y);
                 if (setY == Y)
                     break;
-                Thread.Sleep(5);
+                Thread.Sleep(3);
             }
             if (setY != Y)
             {
@@ -49,7 +49,7 @@ namespace SPI_AOI.Devices
                 val = Get_Go_Coordinates_Finish_Top();
                 if (val == 1 || sw.ElapsedMilliseconds == 5000)
                     break;
-                Thread.Sleep(5);
+                Thread.Sleep(3);
             }
             if (val != 1)
             {

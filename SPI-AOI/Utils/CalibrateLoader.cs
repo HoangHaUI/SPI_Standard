@@ -10,10 +10,27 @@ using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
 
 
-namespace Heal
+namespace SPI_AOI
 {
     class CalibrateLoader
     {
+        private static Properties.Settings mParam = new Properties.Settings();
+        private static CalibrateInfo mCalibrate = null;
+        public static CalibrateInfo GetIntance()
+        {
+            if(mCalibrate == null)
+            {
+                mCalibrate = UpdateInstance();
+            }
+            return mCalibrate;
+        }
+        public static CalibrateInfo UpdateInstance()
+        {
+            return CalibrateLoader.GetCalibrationInfo(mParam.CAMERA_MATRIX_FILE,
+                mParam.CAMERA_DISTCOEFFS_FILE,
+                mParam.IMAGE_SIZE,
+               new System.Drawing.Rectangle(0, 0, mParam.IMAGE_SIZE.Width, mParam.IMAGE_SIZE.Height));
+        }
         public static CalibrateInfo GetCalibrationInfo (string MatrixPath, string DistCoeffsPath, Size SizePattern, Rectangle ROI)
         {
             CalibrateInfo info = new CalibrateInfo();

@@ -52,6 +52,12 @@ namespace SPI_AOI.Views.MainConfigWindow
             txtBitGoFinishTop.Text = mParam.PLC_BIT_GO_COORDINATES_FINISH_TOP;
             txtBitWriteFinishSetupTop.Text = mParam.PLC_BIT_WRITE_COORDINATES_FINISH_SETUP_TOP;
             txtBitGoFinishSetupTop.Text = mParam.PLC_BIT_GO_COORDINATES_FINISH_SETUP_TOP;
+            txtRegReadXTop.Text = mParam.PLC_REG_X_TOP_READ;
+            txtRegReadYTop.Text = mParam.PLC_REG_Y_TOP_READ;
+            txtRegSpeedXTop.Text = mParam.PLC_REG_SPEED_RUN_X_TOP;
+            txtRegSpeedYTop.Text = mParam.PLC_REG_SPEED_RUN_Y_TOP;
+            txtSpeedRunXTop.Text = mParam.RUN_X_TOP_SPEED.ToString();
+            txtSpeedRunYTop.Text = mParam.RUN_Y_TOP_SPEED.ToString();
         }
         private void LoadBotAxis()
         {
@@ -65,6 +71,12 @@ namespace SPI_AOI.Views.MainConfigWindow
             txtBitGoFinishBot.Text = mParam.PLC_BIT_GO_COORDINATES_FINISH_BOT;
             txtBitWriteFinishSetupBot.Text = mParam.PLC_BIT_WRITE_COORDINATES_FINISH_SETUP_BOT;
             txtBitGoFinishSetupBot.Text = mParam.PLC_BIT_GO_COORDINATES_FINISH_SETUP_BOT;
+            txtRegReadXBot.Text = mParam.PLC_REG_X_BOT_READ;
+            txtRegReadYBot.Text = mParam.PLC_REG_Y_BOT_READ;
+            txtRegSpeedXBot.Text = mParam.PLC_REG_SPEED_RUN_X_BOT;
+            txtRegSpeedYBot.Text = mParam.PLC_REG_SPEED_RUN_Y_BOT;
+            txtSpeedRunXBot.Text = mParam.RUN_X_BOT_SPEED.ToString();
+            txtSpeedRunYBot.Text = mParam.RUN_Y_BOT_SPEED.ToString();
         }
         private void LoadConveyorAxis()
         {

@@ -32,6 +32,7 @@ namespace SPI_AOI.Views.ModelManagement
         IOT.HikCamera mCamera = Devices.MyCamera.GetInstance();
         System.Timers.Timer mTimer = new System.Timers.Timer(10);
         Devices.DKZ224V4ACCom mLightSource = new Devices.DKZ224V4ACCom(Properties.Settings.Default.LIGHT_COM);
+        CalibrateInfo mCalibImage = CalibrateLoader.GetIntance();
         Devices.MyPLC mPLC = new Devices.MyPLC();
         bool mIsTimerRunning = false;
         bool mLoaded = false;
@@ -138,7 +139,7 @@ namespace SPI_AOI.Views.ModelManagement
                 nLightIntensity4.Value = Convert.ToDecimal(mLightIntensity[3]);
                 nScanWidth.Value = Convert.ToDecimal(mScanWidth);
                 nScanHeight.Value = Convert.ToDecimal(mScanHeight);
-                mPLC.Login();
+                
                 // teach matching
                 nSearchX.Value = Convert.ToDecimal(mSearchX);
                 nSearchY.Value = Convert.ToDecimal(mSearchY);
@@ -168,8 +169,10 @@ namespace SPI_AOI.Views.ModelManagement
             {
                 if(bm != null)
                 {
+                    using (Image<Bgr, byte> imgDis = new Image<Bgr, byte>(bm))
                     using (Image<Bgr, byte> img = new Image<Bgr, byte>(bm))
                     {
+                        CvInvoke.Undistort(imgDis, img, mCalibImage.CameraMatrix, mCalibImage.DistCoeffs, mCalibImage.NewCameraMatrix);
                         System.Drawing.Rectangle rectSearch = new System.Drawing.Rectangle(img.Width / 2 - searchW / 2, img.Height / 2 - searchH / 2, searchW, searchH);
                         System.Drawing.Rectangle rectScan = new System.Drawing.Rectangle(img.Width / 2 - scanW / 2, img.Height / 2 - scanH / 2, scanW, scanH);
                         img.ROI = rectSearch;
@@ -230,6 +233,7 @@ namespace SPI_AOI.Views.ModelManagement
         {
             if (!mLoaded)
                 return;
+            mPLC.Login();
             if (rbTopAxis.IsChecked == true)
             {
                 mPLC.Set_Go_Up_Top();
@@ -248,6 +252,7 @@ namespace SPI_AOI.Views.ModelManagement
         {
             if (!mLoaded)
                 return;
+            mPLC.Login();
             if (rbTopAxis.IsChecked == true)
             {
                 mPLC.Set_Go_Left_Top();
@@ -263,6 +268,7 @@ namespace SPI_AOI.Views.ModelManagement
         {
             if (!mLoaded)
                 return;
+            mPLC.Login();
             if (rbTopAxis.IsChecked == true)
             {
                 mPLC.Set_Go_Right_Top();
@@ -277,6 +283,7 @@ namespace SPI_AOI.Views.ModelManagement
         {
             if (!mLoaded)
                 return;
+            mPLC.Login();
             if (rbTopAxis.IsChecked == true)
             {
                 mPLC.Set_Go_Down_Top();
@@ -529,26 +536,27 @@ namespace SPI_AOI.Views.ModelManagement
                     if(r == MessageBoxResult.Yes)
                     {
                         SaveChanged();
-                        mIsTimerRunning = false;
-                        if (mCamera != null)
-                        {
-                            if (mCamera.IsGrab)
-                            {
-                                mCamera.StopGrabbing();
-                            }
-                            if (mCamera.IsOpen)
-                            {
-                                mCamera.Close();
-                            }
-                        }
-                        mLightSource.ActiveFour(0, 0, 0, 0);
-                        mLightSource.Close();
-                        btUnload_Click(null, null);
                     }
                     else if(r == MessageBoxResult.Cancel)
                     {
                         e.Cancel = true;
+                        return;
                     }
+                    mIsTimerRunning = false;
+                    if (mCamera != null)
+                    {
+                        if (mCamera.IsGrab)
+                        {
+                            mCamera.StopGrabbing();
+                        }
+                        if (mCamera.IsOpen)
+                        {
+                            mCamera.Close();
+                        }
+                    }
+                    mLightSource.ActiveFour(0, 0, 0, 0);
+                    mLightSource.Close();
+                    btUnload_Click(null, null);
                 }
             }
         }
@@ -702,9 +710,11 @@ namespace SPI_AOI.Views.ModelManagement
 
         private void btGoXYZ_Click(object sender, RoutedEventArgs e)
         {
+            mPLC.Login();
             mPLC.Set_Speed_Top(3000);
             mPLC.Set_Speed_Bot(6000);
             mPLC.Set_Speed_Conveyor(8000);
+            
             int conveyorPulse = mPLC.Get_Conveyor();
             mLog.Info(string.Format("Current Pulse conveyor {0} => {1}", conveyorPulse, mConveyor));
             if (conveyorPulse != mConveyor)
@@ -745,11 +755,13 @@ namespace SPI_AOI.Views.ModelManagement
 
         private void btLoad_Click(object sender, RoutedEventArgs e)
         {
+            mPLC.Login();
             mPLC.Set_Load_Product();
         }
 
         private void btUnload_Click(object sender, RoutedEventArgs e)
         {
+            mPLC.Login();
             mPLC.Set_Unload_Product();
         }
 

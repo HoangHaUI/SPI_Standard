@@ -130,8 +130,8 @@ namespace SPI_AOI.Models
         }
         public static Image<Bgr, byte> GetLayoutImage(Model model , ActionMode mode)
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+            //Stopwatch sw = new Stopwatch();
+            //sw.Start();
             Image<Bgr, byte> img = null;
             if (model.Gerber is GerberFile)
             {
@@ -156,7 +156,7 @@ namespace SPI_AOI.Models
                             break;
                     }
                 }
-                Console.WriteLine(sw.ElapsedMilliseconds);
+                //Console.WriteLine(sw.ElapsedMilliseconds);
                 if (model.Gerber.Visible)
                 {
                     img = model.ImgGerberProcessedBgr.Copy();

@@ -1,0 +1,288 @@
+2020-12-29 09:51:13.1869|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2020-12-29 09:51:18.2223|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:293)|
+2020-12-29 10:46:57.7953|Info|Moving TOP Axis, Position Name : Mark 1,  X = 999, Y = 27123(MainWindow.xaml.cs:102)|
+2020-12-29 10:46:59.4723|Info|Moving TOP Axis, Position Name : Mark 2,  X = 999, Y = 39875(MainWindow.xaml.cs:102)|
+2020-12-29 10:47:00.5003|Info|Moving TOP Axis, Position Name : FOV 1,  X = 3977, Y = 37172(MainWindow.xaml.cs:176)|
+2020-12-29 10:47:01.7874|Info|Moving TOP Axis, Position Name : FOV 2,  X = 8581, Y = 37111(MainWindow.xaml.cs:176)|
+2020-12-29 10:47:02.6734|Info|Moving TOP Axis, Position Name : FOV 3,  X = 10204, Y = 35448(MainWindow.xaml.cs:176)|
+2020-12-29 10:47:03.4631|Info|Moving TOP Axis, Position Name : FOV 4,  X = 6871, Y = 33869(MainWindow.xaml.cs:176)|
+2020-12-29 10:47:04.3127|Info|Moving TOP Axis, Position Name : FOV 5,  X = 2348, Y = 34124(MainWindow.xaml.cs:176)|
+2020-12-29 10:47:05.2122|Info|Moving TOP Axis, Position Name : FOV 6,  X = 2557, Y = 30246(MainWindow.xaml.cs:176)|
+2020-12-29 10:47:06.0887|Info|Moving TOP Axis, Position Name : FOV 7,  X = 7068, Y = 30158(MainWindow.xaml.cs:176)|
+2020-12-29 10:47:06.9899|Info|Moving TOP Axis, Position Name : FOV 8,  X = 10522, Y = 31569(MainWindow.xaml.cs:176)|
+2020-12-29 10:48:04.4028|Info|Moving TOP Axis, Position Name : Mark 1,  X = 999, Y = 27123(MainWindow.xaml.cs:102)|
+2020-12-29 10:48:05.3492|Info|Moving TOP Axis, Position Name : Mark 2,  X = 999, Y = 39875(MainWindow.xaml.cs:102)|
+2020-12-29 10:48:06.5137|Info|Moving TOP Axis, Position Name : FOV 1,  X = 3977, Y = 37172(MainWindow.xaml.cs:176)|
+2020-12-29 10:48:07.4298|Info|Moving TOP Axis, Position Name : FOV 2,  X = 8581, Y = 37111(MainWindow.xaml.cs:176)|
+2020-12-29 10:48:08.2947|Info|Moving TOP Axis, Position Name : FOV 3,  X = 10204, Y = 35448(MainWindow.xaml.cs:176)|
+2020-12-29 10:48:09.1040|Info|Moving TOP Axis, Position Name : FOV 4,  X = 6871, Y = 33869(MainWindow.xaml.cs:176)|
+2020-12-29 10:48:09.9917|Info|Moving TOP Axis, Position Name : FOV 5,  X = 2348, Y = 34124(MainWindow.xaml.cs:176)|
+2020-12-29 10:48:10.9109|Info|Moving TOP Axis, Position Name : FOV 6,  X = 2557, Y = 30246(MainWindow.xaml.cs:176)|
+2020-12-29 10:48:11.7833|Info|Moving TOP Axis, Position Name : FOV 7,  X = 7068, Y = 30158(MainWindow.xaml.cs:176)|
+2020-12-29 10:48:12.6171|Info|Moving TOP Axis, Position Name : FOV 8,  X = 10522, Y = 31569(MainWindow.xaml.cs:176)|
+2020-12-29 10:49:17.6803|Info|Moving TOP Axis, Position Name : Mark 1,  X = 999, Y = 27123(MainWindow.xaml.cs:102)|
+2020-12-29 10:49:18.8000|Info|Moving TOP Axis, Position Name : Mark 2,  X = 999, Y = 39875(MainWindow.xaml.cs:102)|
+2020-12-29 10:49:19.8379|Info|Moving TOP Axis, Position Name : FOV 1,  X = 3977, Y = 37172(MainWindow.xaml.cs:176)|
+2020-12-29 10:49:20.7962|Info|Moving TOP Axis, Position Name : FOV 2,  X = 8581, Y = 37111(MainWindow.xaml.cs:176)|
+2020-12-29 10:49:21.6980|Info|Moving TOP Axis, Position Name : FOV 3,  X = 10204, Y = 35448(MainWindow.xaml.cs:176)|
+2020-12-29 10:49:22.5583|Info|Moving TOP Axis, Position Name : FOV 4,  X = 6871, Y = 33869(MainWindow.xaml.cs:176)|
+2020-12-29 10:49:23.4085|Info|Moving TOP Axis, Position Name : FOV 5,  X = 2348, Y = 34124(MainWindow.xaml.cs:176)|
+2020-12-29 10:49:24.2474|Info|Moving TOP Axis, Position Name : FOV 6,  X = 2557, Y = 30246(MainWindow.xaml.cs:176)|
+2020-12-29 10:49:25.1012|Info|Moving TOP Axis, Position Name : FOV 7,  X = 7068, Y = 30158(MainWindow.xaml.cs:176)|
+2020-12-29 10:49:25.9830|Info|Moving TOP Axis, Position Name : FOV 8,  X = 10522, Y = 31569(MainWindow.xaml.cs:176)|
+2020-12-29 10:52:16.5059|Info|Moving TOP Axis, Position Name : Mark 1,  X = 999, Y = 27123(MainWindow.xaml.cs:102)|
+2020-12-29 10:52:17.6465|Info|Moving TOP Axis, Position Name : Mark 2,  X = 999, Y = 39875(MainWindow.xaml.cs:102)|
+2020-12-29 10:52:18.6508|Info|Moving TOP Axis, Position Name : FOV 1,  X = 3977, Y = 37172(MainWindow.xaml.cs:176)|
+2020-12-29 10:52:19.6193|Info|Moving TOP Axis, Position Name : FOV 2,  X = 8581, Y = 37111(MainWindow.xaml.cs:176)|
+2020-12-29 10:52:20.5565|Info|Moving TOP Axis, Position Name : FOV 3,  X = 10204, Y = 35448(MainWindow.xaml.cs:176)|
+2020-12-29 10:52:21.3889|Info|Moving TOP Axis, Position Name : FOV 4,  X = 6871, Y = 33869(MainWindow.xaml.cs:176)|
+2020-12-29 10:52:22.2061|Info|Moving TOP Axis, Position Name : FOV 5,  X = 2348, Y = 34124(MainWindow.xaml.cs:176)|
+2020-12-29 10:52:23.0959|Info|Moving TOP Axis, Position Name : FOV 6,  X = 2557, Y = 30246(MainWindow.xaml.cs:176)|
+2020-12-29 10:52:23.9653|Info|Moving TOP Axis, Position Name : FOV 7,  X = 7068, Y = 30158(MainWindow.xaml.cs:176)|
+2020-12-29 10:52:24.8353|Info|Moving TOP Axis, Position Name : FOV 8,  X = 10522, Y = 31569(MainWindow.xaml.cs:176)|
+2020-12-29 10:52:55.8888|Info|Moving TOP Axis, Position Name : Mark 1,  X = 999, Y = 27123(MainWindow.xaml.cs:102)|
+2020-12-29 10:52:56.8436|Info|Moving TOP Axis, Position Name : Mark 2,  X = 999, Y = 39875(MainWindow.xaml.cs:102)|
+2020-12-29 10:52:57.8419|Info|Moving TOP Axis, Position Name : FOV 1,  X = 3977, Y = 37172(MainWindow.xaml.cs:176)|
+2020-12-29 10:52:58.7646|Info|Moving TOP Axis, Position Name : FOV 2,  X = 8581, Y = 37111(MainWindow.xaml.cs:176)|
+2020-12-29 10:52:59.6369|Info|Moving TOP Axis, Position Name : FOV 3,  X = 10204, Y = 35448(MainWindow.xaml.cs:176)|
+2020-12-29 10:53:00.4545|Info|Moving TOP Axis, Position Name : FOV 4,  X = 6871, Y = 33869(MainWindow.xaml.cs:176)|
+2020-12-29 10:53:01.3455|Info|Moving TOP Axis, Position Name : FOV 5,  X = 2348, Y = 34124(MainWindow.xaml.cs:176)|
+2020-12-29 10:53:02.2625|Info|Moving TOP Axis, Position Name : FOV 6,  X = 2557, Y = 30246(MainWindow.xaml.cs:176)|
+2020-12-29 10:53:03.1671|Info|Moving TOP Axis, Position Name : FOV 7,  X = 7068, Y = 30158(MainWindow.xaml.cs:176)|
+2020-12-29 10:53:04.0448|Info|Moving TOP Axis, Position Name : FOV 8,  X = 10522, Y = 31569(MainWindow.xaml.cs:176)|
+2020-12-29 10:53:44.8159|Info|Moving TOP Axis, Position Name : Mark 1,  X = 999, Y = 27123(MainWindow.xaml.cs:102)|
+2020-12-29 10:53:45.7762|Info|Moving TOP Axis, Position Name : Mark 2,  X = 999, Y = 39875(MainWindow.xaml.cs:102)|
+2020-12-29 10:53:46.7936|Info|Moving TOP Axis, Position Name : FOV 1,  X = 3977, Y = 37172(MainWindow.xaml.cs:176)|
+2020-12-29 10:53:47.7114|Info|Moving TOP Axis, Position Name : FOV 2,  X = 8581, Y = 37111(MainWindow.xaml.cs:176)|
+2020-12-29 10:53:48.6118|Info|Moving TOP Axis, Position Name : FOV 3,  X = 10204, Y = 35448(MainWindow.xaml.cs:176)|
+2020-12-29 10:53:49.4360|Info|Moving TOP Axis, Position Name : FOV 4,  X = 6871, Y = 33869(MainWindow.xaml.cs:176)|
+2020-12-29 10:53:50.2556|Info|Moving TOP Axis, Position Name : FOV 5,  X = 2348, Y = 34124(MainWindow.xaml.cs:176)|
+2020-12-29 10:53:51.1098|Info|Moving TOP Axis, Position Name : FOV 6,  X = 2557, Y = 30246(MainWindow.xaml.cs:176)|
+2020-12-29 10:53:51.9636|Info|Moving TOP Axis, Position Name : FOV 7,  X = 7068, Y = 30158(MainWindow.xaml.cs:176)|
+2020-12-29 10:53:52.8843|Info|Moving TOP Axis, Position Name : FOV 8,  X = 10522, Y = 31569(MainWindow.xaml.cs:176)|
+2020-12-29 10:56:53.8435|Info|Moving TOP Axis, Position Name : Mark 1,  X = 999, Y = 27123(MainWindow.xaml.cs:102)|
+2020-12-29 10:56:54.7889|Info|Moving TOP Axis, Position Name : Mark 2,  X = 999, Y = 39875(MainWindow.xaml.cs:102)|
+2020-12-29 10:56:55.7812|Info|Moving TOP Axis, Position Name : FOV 1,  X = 3977, Y = 37172(MainWindow.xaml.cs:176)|
+2020-12-29 10:56:56.7067|Info|Moving TOP Axis, Position Name : FOV 2,  X = 8581, Y = 37111(MainWindow.xaml.cs:176)|
+2020-12-29 10:56:57.5871|Info|Moving TOP Axis, Position Name : FOV 3,  X = 10204, Y = 35448(MainWindow.xaml.cs:176)|
+2020-12-29 10:56:58.4217|Info|Moving TOP Axis, Position Name : FOV 4,  X = 6871, Y = 33869(MainWindow.xaml.cs:176)|
+2020-12-29 10:56:59.2973|Info|Moving TOP Axis, Position Name : FOV 5,  X = 2348, Y = 34124(MainWindow.xaml.cs:176)|
+2020-12-29 10:57:00.1271|Info|Moving TOP Axis, Position Name : FOV 6,  X = 2557, Y = 30246(MainWindow.xaml.cs:176)|
+2020-12-29 10:57:00.9748|Info|Moving TOP Axis, Position Name : FOV 7,  X = 7068, Y = 30158(MainWindow.xaml.cs:176)|
+2020-12-29 10:57:01.8415|Info|Moving TOP Axis, Position Name : FOV 8,  X = 10522, Y = 31569(MainWindow.xaml.cs:176)|
+2020-12-29 11:06:14.0621|Info|Moving TOP Axis, Position Name : Mark 1,  X = 999, Y = 27123(MainWindow.xaml.cs:102)|
+2020-12-29 11:06:15.2060|Info|Moving TOP Axis, Position Name : Mark 2,  X = 999, Y = 39875(MainWindow.xaml.cs:102)|
+2020-12-29 11:06:16.2589|Info|Moving TOP Axis, Position Name : FOV 1,  X = 3977, Y = 37172(MainWindow.xaml.cs:176)|
+2020-12-29 11:06:17.2353|Info|Moving TOP Axis, Position Name : FOV 2,  X = 8581, Y = 37111(MainWindow.xaml.cs:176)|
+2020-12-29 11:06:18.1201|Info|Moving TOP Axis, Position Name : FOV 3,  X = 10204, Y = 35448(MainWindow.xaml.cs:176)|
+2020-12-29 11:06:18.9179|Info|Moving TOP Axis, Position Name : FOV 4,  X = 6871, Y = 33869(MainWindow.xaml.cs:176)|
+2020-12-29 11:06:19.8006|Info|Moving TOP Axis, Position Name : FOV 5,  X = 2348, Y = 34124(MainWindow.xaml.cs:176)|
+2020-12-29 11:06:20.7138|Info|Moving TOP Axis, Position Name : FOV 6,  X = 2557, Y = 30246(MainWindow.xaml.cs:176)|
+2020-12-29 11:06:21.5825|Info|Moving TOP Axis, Position Name : FOV 7,  X = 7068, Y = 30158(MainWindow.xaml.cs:176)|
+2020-12-29 11:06:22.4731|Info|Moving TOP Axis, Position Name : FOV 8,  X = 10522, Y = 31569(MainWindow.xaml.cs:176)|
+2020-12-29 11:12:35.6427|Info|Moving TOP Axis, Position Name : Mark 1,  X = 999, Y = 27123(MainWindow.xaml.cs:102)|
+2020-12-29 11:12:36.7478|Info|Moving TOP Axis, Position Name : Mark 2,  X = 999, Y = 39875(MainWindow.xaml.cs:102)|
+2020-12-29 11:12:37.7775|Info|Moving TOP Axis, Position Name : FOV 1,  X = 3977, Y = 37172(MainWindow.xaml.cs:176)|
+2020-12-29 11:12:38.7153|Info|Moving TOP Axis, Position Name : FOV 2,  X = 8581, Y = 37111(MainWindow.xaml.cs:176)|
+2020-12-29 11:12:39.6128|Info|Moving TOP Axis, Position Name : FOV 3,  X = 10204, Y = 35448(MainWindow.xaml.cs:176)|
+2020-12-29 11:12:40.3892|Info|Moving TOP Axis, Position Name : FOV 4,  X = 6871, Y = 33869(MainWindow.xaml.cs:176)|
+2020-12-29 11:12:41.2684|Info|Moving TOP Axis, Position Name : FOV 5,  X = 2348, Y = 34124(MainWindow.xaml.cs:176)|
+2020-12-29 11:12:42.1899|Info|Moving TOP Axis, Position Name : FOV 6,  X = 2557, Y = 30246(MainWindow.xaml.cs:176)|
+2020-12-29 11:12:43.0974|Info|Moving TOP Axis, Position Name : FOV 7,  X = 7068, Y = 30158(MainWindow.xaml.cs:176)|
+2020-12-29 11:12:44.0233|Info|Moving TOP Axis, Position Name : FOV 8,  X = 10522, Y = 31569(MainWindow.xaml.cs:176)|
+2020-12-29 11:33:15.7213|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:34:19.7201|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:35:22.7219|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:36:25.7206|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:37:28.7216|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:38:31.7216|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:39:34.7215|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:40:37.7201|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:41:40.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:42:43.7217|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:43:46.7209|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:44:49.7215|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:45:52.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:46:55.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:47:58.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:49:01.7211|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:50:04.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:51:07.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:52:10.7214|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:53:13.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:54:16.7201|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:55:19.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:56:22.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:57:25.7216|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:58:28.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 11:59:31.7216|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:00:34.7202|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:01:37.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:02:40.7201|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:03:43.7203|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:04:46.7213|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:05:49.7216|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:06:52.7201|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:07:55.7208|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:08:58.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:10:01.7203|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:11:04.7213|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:12:07.7208|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:13:10.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:14:13.7207|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:15:16.7228|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:16:19.7218|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:17:22.7208|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:18:25.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:19:28.7215|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:20:31.7209|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:21:34.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:22:37.7208|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:23:40.7203|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:24:43.7217|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:25:46.7217|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:26:49.7216|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:27:52.7208|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:28:55.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:29:58.7212|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:31:01.7203|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:32:04.7218|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:33:07.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:34:10.7203|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:35:13.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:36:16.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:37:19.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:38:22.7223|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:39:25.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:40:28.7219|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:41:31.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:42:34.7201|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:43:37.7201|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:44:40.7207|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:45:43.7212|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:46:46.7219|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:47:49.7215|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:48:52.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:49:55.7219|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:50:58.7213|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:52:01.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:53:04.7205|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:54:07.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:55:10.7212|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:56:13.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:57:16.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:58:19.7203|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 12:59:22.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:00:25.7203|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:01:28.7203|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:02:31.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:03:34.7206|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:04:37.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:05:40.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:06:43.7206|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:07:46.7214|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:08:49.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:09:52.7202|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:10:55.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:11:58.7213|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:13:01.7201|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:14:04.7217|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:15:07.7211|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:16:10.7219|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:17:13.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:18:16.7212|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:19:19.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:20:22.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:21:25.7212|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:22:28.7203|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:23:31.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:24:34.7214|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:25:37.7206|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:26:40.7215|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:27:43.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:28:46.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:29:49.7214|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:30:52.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:31:55.7221|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:32:58.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:34:01.7212|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:35:04.7214|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:36:07.7213|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:37:10.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:38:13.7215|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:39:16.7203|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:40:19.7216|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:41:22.7217|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:42:25.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:43:28.7214|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:44:31.7211|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:45:34.7215|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:46:37.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:47:40.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:48:43.7202|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:49:46.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:50:49.7201|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:51:52.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:52:55.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:53:58.7219|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:55:01.7213|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:56:04.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:57:07.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:58:10.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 13:59:13.7224|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:00:16.7217|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:01:19.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:02:22.7203|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:03:25.7205|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:04:28.7215|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:05:31.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:06:34.7214|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:07:37.7206|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:08:40.7211|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:09:43.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:10:46.7208|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:11:49.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:12:52.7203|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:13:55.7200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:14:58.7216|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:16:58.7232|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:18:06.2211|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:19:09.2213|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:20:12.2232|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:21:15.2206|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:22:18.2215|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:23:21.2219|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:24:24.2210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:25:27.2216|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:26:30.2202|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:27:33.2216|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:28:36.2212|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:29:39.2210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:30:42.2213|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:31:45.2222|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:32:48.2206|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:33:51.2210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:34:54.2200|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:35:57.2208|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:37:00.2216|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:38:03.2220|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 14:39:06.2204|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:290)|
+2020-12-29 15:44:18.9778|Error|SQL logic error
+unrecognized token: "64C571F6"(Ctl.cs:30)|
+2020-12-29 15:44:43.9482|Error|SQL logic error
+unrecognized token: "28D94084"(Ctl.cs:30)|
+2020-12-29 15:46:37.7616|Error|SQL logic error
+1 values for 6 columns(Ctl.cs:30)|
+2020-12-29 16:14:10.2268|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:309)|
+2020-12-29 16:17:56.7212|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:309)|
+2020-12-29 16:19:02.7210|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:309)|
+2020-12-29 17:03:44.2238|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:307)|
+2020-12-29 17:04:10.7205|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:307)|
+2020-12-29 17:05:16.7205|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:307)|
+2020-12-29 17:08:55.7257|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:313)|
+2020-12-29 17:09:44.7211|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:313)|
+2020-12-29 17:10:33.2241|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:313)|
+2020-12-29 17:11:39.2215|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:313)|
+2020-12-29 17:12:44.2229|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:313)|
+2020-12-29 17:13:49.2229|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:313)|

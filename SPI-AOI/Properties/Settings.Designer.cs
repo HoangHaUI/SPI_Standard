@@ -289,7 +289,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M163")]
         public string PLC_BIT_MACHINE_STATUS {
             get {
                 return ((string)(this["PLC_BIT_MACHINE_STATUS"]));
@@ -313,19 +313,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PLC_BIT_CONTROL_RUN {
-            get {
-                return ((string)(this["PLC_BIT_CONTROL_RUN"]));
-            }
-            set {
-                this["PLC_BIT_CONTROL_RUN"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M502")]
         public string PLC_BIT_READ_QRCODE_FAIL {
             get {
                 return ((string)(this["PLC_BIT_READ_QRCODE_FAIL"]));
@@ -337,7 +325,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("M500")]
         public string PLC_BIT_CAPTURE_FAIL {
             get {
                 return ((string)(this["PLC_BIT_CAPTURE_FAIL"]));
@@ -613,10 +601,10 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("TEST")]
-        public string RUNNING_MODE {
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int RUNNING_MODE {
             get {
-                return ((string)(this["RUNNING_MODE"]));
+                return ((int)(this["RUNNING_MODE"]));
             }
             set {
                 this["RUNNING_MODE"] = value;
@@ -992,6 +980,150 @@ namespace SPI_AOI.Properties {
             }
             set {
                 this["PLC_REG_PENAL_POSITION"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Heal\\Projects\\SPI-AOI\\Calibrate\\matrix.txt")]
+        public string CAMERA_MATRIX_FILE {
+            get {
+                return ((string)(this["CAMERA_MATRIX_FILE"]));
+            }
+            set {
+                this["CAMERA_MATRIX_FILE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Heal\\Projects\\SPI-AOI\\Calibrate\\dis.txt")]
+        public string CAMERA_DISTCOEFFS_FILE {
+            get {
+                return ((string)(this["CAMERA_DISTCOEFFS_FILE"]));
+            }
+            set {
+                this["CAMERA_DISTCOEFFS_FILE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2448, 2048")]
+        public global::System.Drawing.Size IMAGE_SIZE {
+            get {
+                return ((global::System.Drawing.Size)(this["IMAGE_SIZE"]));
+            }
+            set {
+                this["IMAGE_SIZE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Save")]
+        public string SAVE_IMAGE_PATH {
+            get {
+                return ((string)(this["SAVE_IMAGE_PATH"]));
+            }
+            set {
+                this["SAVE_IMAGE_PATH"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("120")]
+        public int SAVE_IMAGE_HOURS {
+            get {
+                return ((int)(this["SAVE_IMAGE_HOURS"]));
+            }
+            set {
+                this["SAVE_IMAGE_HOURS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LIGHT_MODE {
+            get {
+                return ((int)(this["LIGHT_MODE"]));
+            }
+            set {
+                this["LIGHT_MODE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double CAMERA_GAIN {
+            get {
+                return ((double)(this["CAMERA_GAIN"]));
+            }
+            set {
+                this["CAMERA_GAIN"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200000")]
+        public int RUN_X_TOP_SPEED {
+            get {
+                return ((int)(this["RUN_X_TOP_SPEED"]));
+            }
+            set {
+                this["RUN_X_TOP_SPEED"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200000")]
+        public int RUN_Y_TOP_SPEED {
+            get {
+                return ((int)(this["RUN_Y_TOP_SPEED"]));
+            }
+            set {
+                this["RUN_Y_TOP_SPEED"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30000")]
+        public int RUN_CONVEYOR_SPEED {
+            get {
+                return ((int)(this["RUN_CONVEYOR_SPEED"]));
+            }
+            set {
+                this["RUN_CONVEYOR_SPEED"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50000")]
+        public int RUN_Y_BOT_SPEED {
+            get {
+                return ((int)(this["RUN_Y_BOT_SPEED"]));
+            }
+            set {
+                this["RUN_Y_BOT_SPEED"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50000")]
+        public int RUN_X_BOT_SPEED {
+            get {
+                return ((int)(this["RUN_X_BOT_SPEED"]));
+            }
+            set {
+                this["RUN_X_BOT_SPEED"] = value;
             }
         }
     }
