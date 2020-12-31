@@ -645,18 +645,11 @@ namespace SPI_AOI.Models
             if (Rect != Rectangle.Empty)
             {
                 //gerber layer
-                using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
+                var a = GetPadsInRect(Rect, true);
+                var b = GetPadsInRect(Rect, false);
+                if(a.Count + b.Count > 0)
                 {
-                    CvInvoke.FindContours(this.Gerber.ProcessingGerberImage, contours, null, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
-                    for (int i = 0; i < contours.Size; i++)
-                    {
-                        Rectangle bound = CvInvoke.BoundingRectangle(contours[i]);
-                        if (Rect.Contains(bound))
-                        {
-                            listObj.Add(this.Gerber);
-                            break;
-                        }
-                    }
+                    listObj.Add(this.Gerber);
                 }
                 // cad layer
                 foreach (var item in this.Cad)

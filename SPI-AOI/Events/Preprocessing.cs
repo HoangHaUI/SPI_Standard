@@ -27,7 +27,6 @@ namespace SPI_AOI.Events
             using (Image<Bgr, byte> imgUndis = new Image<Bgr, byte>(imgRotated.Size))
             {
                 CvInvoke.Undistort(imgRotated, imgUndis, mCalibImage.CameraMatrix, mCalibImage.DistCoeffs, mCalibImage.NewCameraMatrix);
-                
                 imgUndis.ROI = ROI;
                 string fileName = string.Format("{0}//Image_{1}_ROI({2}_{3}_{4}_{5})_ROI_GERBER({6}_{7}_{8},{9}).png",
                     SavePath, Index + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height,

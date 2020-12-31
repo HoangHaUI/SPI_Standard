@@ -81,7 +81,7 @@
       <Value Profile="(Default)">M500</Value>
     </Setting>
     <Setting Name="LIGHT_COM" Type="System.String" Scope="User">
-      <Value Profile="(Default)">COM4</Value>
+      <Value Profile="(Default)">COM5</Value>
     </Setting>
     <Setting Name="PLC_BIT_GO_UP_BOT" Type="System.String" Scope="User">
       <Value Profile="(Default)">M321</Value>
@@ -123,7 +123,7 @@
       <Value Profile="(Default)">M110</Value>
     </Setting>
     <Setting Name="SCANER_COM" Type="System.String" Scope="User">
-      <Value Profile="(Default)">COM3</Value>
+      <Value Profile="(Default)">COM6</Value>
     </Setting>
     <Setting Name="PLC_REG_PASSWORD" Type="System.String" Scope="User">
       <Value Profile="(Default)">D0</Value>
