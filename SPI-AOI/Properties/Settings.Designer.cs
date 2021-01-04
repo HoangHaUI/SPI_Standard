@@ -25,7 +25,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("790")]
+        [global::System.Configuration.DefaultSettingValueAttribute("783")]
         public float DPI_DEFAULT {
             get {
                 return ((float)(this["DPI_DEFAULT"]));
@@ -817,7 +817,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3.219493670886076")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3.412917271")]
         public double PULSE_X_PER_PIXEL_DEFAULT {
             get {
                 return ((double)(this["PULSE_X_PER_PIXEL_DEFAULT"]));
@@ -829,7 +829,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3.229119257")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3.237371889")]
         public double PULSE_Y_PER_PIXEL_DEFAULT {
             get {
                 return ((double)(this["PULSE_Y_PER_PIXEL_DEFAULT"]));

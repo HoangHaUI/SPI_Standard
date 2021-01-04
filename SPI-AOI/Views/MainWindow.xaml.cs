@@ -500,12 +500,8 @@ namespace SPI_AOI.Views
                 userType == UserManagement.UserType.Designer ||
                 userType == UserManagement.UserType.Engineer)
             {
-                mIsCheck = false;
                 ModelManagement.DashBoard dbWD = new ModelManagement.DashBoard();
                 dbWD.ShowDialog();
-                mIsCheck = true;
-                mTimerCheckStatus.Elapsed += OnCheckStatusEvent;
-                mTimerCheckStatus.Enabled = true;
             }
             LoadModelsName();
         }
@@ -810,6 +806,7 @@ namespace SPI_AOI.Views
                 mIsRunning = true;
                 mTimer.Elapsed += OnMainEvent;
                 mTimer.Enabled = true;
+                mIsInTimer = false;
                 wait.KillMe = true;
             });
             startThread.Start();
