@@ -243,10 +243,10 @@
       <Value Profile="(Default)">D292</Value>
     </Setting>
     <Setting Name="CAMERA_MATRIX_FILE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Heal\Projects\SPI-AOI\Calibrate\matrix.txt</Value>
+      <Value Profile="(Default)">..\..\..\..\Calibrate\matrix.txt</Value>
     </Setting>
     <Setting Name="CAMERA_DISTCOEFFS_FILE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Heal\Projects\SPI-AOI\Calibrate\dis.txt</Value>
+      <Value Profile="(Default)">..\..\..\..\Calibrate\dis.txt</Value>
     </Setting>
     <Setting Name="IMAGE_SIZE" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">2448, 2048</Value>

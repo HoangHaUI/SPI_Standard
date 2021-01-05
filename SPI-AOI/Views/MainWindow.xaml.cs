@@ -300,7 +300,7 @@ namespace SPI_AOI.Views
             }
             
             SetDisplayFOV(-1);
-            UpdateChartCount(chartYeildRate, txtPass, txtFail, 10, 1);
+            UpdateCountStatistical();
         }
         private void OnCheckStatusEvent(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -951,6 +951,18 @@ namespace SPI_AOI.Views
         private void cbModelStatistical_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateCountStatistical();
+        }
+
+        private void btLightCtl_Click(object sender, RoutedEventArgs e)
+        {
+            var userType = Login();
+            if (userType == UserManagement.UserType.Admin ||
+                userType == UserManagement.UserType.Designer ||
+                userType == UserManagement.UserType.Engineer)
+            {
+                Views.MainConfigWindow.LightCtlForm lightForm = new Views.MainConfigWindow.LightCtlForm();
+                lightForm.ShowDialog();
+            }
         }
     }
 }

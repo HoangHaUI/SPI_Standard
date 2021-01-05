@@ -87,7 +87,9 @@
                         <Image Source="../Resources/Icons/plc_2.png" Width="25"/>
                     </Button>
                     <Separator/>
-                    <Button  ToolTip="Lightsource configurations"  Style="{StaticResource btToolBarStyle}">
+                    <Button x:Name="btLightCtl" ToolTip="Lightsource configurations" 
+                             Click="btLightCtl_Click"
+                             Style="{StaticResource btToolBarStyle}">
                         <Image Source="../Resources/Icons/light.png" Width="25"/>
                     </Button>
                     <Separator/>

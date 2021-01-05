@@ -300,7 +300,7 @@
                                         <StackPanel Orientation="Horizontal">
                                             <StackPanel>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Label  Content="Matching Score:" Margin="5,0,0,0"></Label>
+                                                    <Label  Content="Min Score:" Margin="5,0,0,0"></Label>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
                                                     <WindowsFormsHost Width="110" Height="20" Margin="10,0,0,5" Background="#FFFFFFFF">
@@ -337,16 +337,23 @@
                                             </StackPanel>
 
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
-                                            <Label Content="Real Matching score:"></Label>
-                                            <Label Content="0.00" x:Name="lbRealScore"></Label>
-                                            <Label Content="%" ></Label>
-                                        </StackPanel>
-                                        <StackPanel Margin="0,0,0,0">
-                                            <Border Background="#FF111111" Margin="5" Width="160" Height="150">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,10,0,0">
+                                            <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <Label Content="Matching score:"></Label>
+                                                <Label Content="0.00" FontSize="30" FontWeight="Bold" x:Name="lbRealScore" HorizontalContentAlignment="Center"></Label>
+                                            </StackPanel>
+                                            <Border Background="#FF111111" Margin="20,5,5,5" Width="100" Height="100">
                                                 <Image x:Name="imbBinaryMark">
                                                 </Image>
                                             </Border>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical" Margin="10,30,10,0">
+                                            <!--<Button x:Name="btAutoAdjust"
+                                                    Width="120" Height="30" Content="Auto Adjust FOVs"
+                                                    ></Button>-->
+                                            <Button x:Name="btApply" Click="btApply_Click" Margin="20,0,0,0"
+                                                    Width="200" Height="30" Content="Apply"
+                                                    ></Button>
                                         </StackPanel>
                                     </StackPanel>
                                 </GroupBox>

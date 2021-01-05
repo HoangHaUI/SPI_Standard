@@ -37,8 +37,10 @@ namespace SPI_AOI
             Rectangle roi = ROI;
             info.CameraMatrix = new Matrix<double>(3, 3);
             info.DistCoeffs = new Matrix<double>(8, 1);
-            string[] matrixStr = File.ReadAllLines(MatrixPath);
-            string disStr = File.ReadAllText(DistCoeffsPath);
+            FileInfo fi = new FileInfo(MatrixPath);
+            string[] matrixStr = File.ReadAllLines(fi.FullName);
+            fi = new FileInfo(DistCoeffsPath);
+            string disStr = File.ReadAllText(fi.FullName);
             for (int i = 0; i < matrixStr.Length; i++)
             {
                 string[] val = matrixStr[i].Split(' ');

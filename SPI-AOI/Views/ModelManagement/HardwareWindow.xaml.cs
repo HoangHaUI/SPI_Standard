@@ -769,5 +769,10 @@ namespace SPI_AOI.Views.ModelManagement
         {
             
         }
+
+        private void btApply_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

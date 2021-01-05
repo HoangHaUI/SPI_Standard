@@ -14,7 +14,9 @@ namespace SPI_AOI.Models
         public string ID { get; set; }
         public int NO { get; set; }
         public Point Anchor { get; set; }
+        public Rectangle ROI { get; set; }
         public List<int> PadItems { get; set; }
+        private static Properties.Settings mParam = Properties.Settings.Default;
         public static List<Fov> GetFov(string ID, Image<Gray, byte> ImgGerber, Rectangle ROI, Size FOV,  SPI_AOI.Utils.StartPoint StartPoint)
         {
             List<Fov> fovs = new List<Fov>();
@@ -25,6 +27,7 @@ namespace SPI_AOI.Models
                 fov.ID = ID;
                 fov.NO = i;
                 fov.Anchor = anchors[i];
+                fov.ROI = new Rectangle(mParam.IMAGE_SIZE.Width - FOV.Width / 2, mParam.IMAGE_SIZE.Width - FOV.Width / 2, FOV.Width, FOV.Height);
                 fov.PadItems = new List<int>();
                 fovs.Add(fov);
             }
