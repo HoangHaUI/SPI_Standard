@@ -71,7 +71,7 @@ namespace SPI_AOI.Views
             mTimerCheckStatus.Enabled = true;
             //ColInfo.Width = new GridLength(0);
             //ColStatistical.Width = new GridLength(1, GridUnitType.Star);
-            //mMyDBResult.InsertNewImage("sdvajshdasd", DateTime.Now, "now", new System.Drawing.Rectangle(1,2,3,5), new System.Drawing.Rectangle(4,3,2,1), "Image");
+            //mMyDBResult.InsertNewImage("sdvajshdasd", DateTime.Now, "now", new System.Drawing.Rectangle(1, 2, 3, 5), new System.Drawing.Rectangle(4, 3, 2, 1), "Image");
         }
         public void LoadUI()
         {
@@ -97,7 +97,7 @@ namespace SPI_AOI.Views
             timer.Enabled = mIsRunning;
         }
         
-        private int CaptureMark(string SavePath, bool LightStrobe)
+        private int CaptureMark(string ID, string SavePath, bool LightStrobe)
         {
             System.Drawing.Point[] markPoint = mModel.GetPLCMarkPosition();
             bool captureError = false;
@@ -107,57 +107,36 @@ namespace SPI_AOI.Views
                 int x = mark.X;
                 int y = mark.Y;
                 mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "Mark " + (i+1).ToString(), x, y));
-                bool ret = mPlcComm.SetXYTop(x, y);
-                if (!ret)
+                using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, mark, LightStrobe))
                 {
-                    captureError = false;
-                    break;
-                }
-                mPlcComm.Set_Write_Coordinates_Finish_Top();
-                ret = mPlcComm.GoFinishTop();
-                if (!ret)
-                {
-                    captureError = false;
-                    break;
-                }
-                mPlcComm.Reset_Go_Coordinates_Finish_Top();
-                if(LightStrobe)
-                {
-                    mLight.ActiveFour(1, 1, 1, 1);
-                    Thread.Sleep(20);
-                }
-                
-                using (System.Drawing.Bitmap bm = mCamera.GetOneBitmap(1000))
-                {
-                    if (bm != null)
+                    if (image != null)
                     {
                         System.Drawing.Rectangle ROI = mModel.GetRectROIMark();
-                        using (Image<Bgr, byte> img = new Image<Bgr, byte>(bm))
-                        {
-                            string fileName = string.Format("{0}//Mark_{1}_{2}_{3}_{4}_{5}.png", SavePath, i + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height);
-                            CvInvoke.Imwrite(fileName, img);
-                            img.ROI = ROI;
-                           this.Dispatcher.Invoke(() => {
-                            BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(img.Bitmap);
-                                if(i == 0)
-                                {
-                                    imbMark1.Source = bms;
-                                }
-                                else
-                                {
-                                    imbMark2.Source = bms;
-                                }
-                            });
-                        }
+                        string fileName = string.Format("{0}//Mark_{1}_{2}_{3}_{4}_{5}.png", SavePath, i + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height);
+                        CvInvoke.Imwrite(fileName, image);
+                        image.ROI = ROI;
+                        this.Dispatcher.Invoke(() => {
+                        BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(image.Bitmap);
+                            if(i == 0)
+                            {
+                                imbMark1.Source = bms;
+                            }
+                            else
+                            {
+                                imbMark2.Source = bms;
+                            }
+                        });
+                        Thread isDB = new Thread(() => {
+                            mMyDBResult.InsertNewImage(ID, DateTime.Now, fileName, ROI, new System.Drawing.Rectangle(), "MARK");
+                        });
+                        isDB.Start();
                     }
                     else
                     {
                         mLog.Info(string.Format("Cant Capture image in Mark : {0}", i + 1));
+                        captureError = true;
+                        break;
                     }
-                }
-                if(LightStrobe)
-                {
-                    mLight.ActiveFour(0, 0, 0, 0);
                 }
             }
             if (captureError)
@@ -166,7 +145,7 @@ namespace SPI_AOI.Views
             }
             return 0;
         }
-        private int CaptureFOV(string SavePath, bool LightStrobe)
+        private int CaptureFOV(string ID, string SavePath, bool LightStrobe)
         {
             bool captureError = false;
             System.Drawing.Point[] xyAxisPosition = mModel.GetPulseXYFOVs();
@@ -181,73 +160,58 @@ namespace SPI_AOI.Views
                     int x = fov.X;
                     int y = fov.Y;
                     mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "FOV " + (i + 1).ToString(), x, y));
-                    bool ret = mPlcComm.SetXYTop(x, y);
-                    if(!ret)
+                    using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, fov, LightStrobe))
                     {
-                        captureError = false;
-                        break;
-                    }
-                    mPlcComm.Set_Write_Coordinates_Finish_Top();
-                    ret = mPlcComm.GoFinishTop();
-                    if (!ret)
-                    {
-                        captureError = false;
-                        break;
-                    }
-                    mPlcComm.Reset_Go_Coordinates_Finish_Top();
-                    if (LightStrobe)
-                    {
-                        mLight.ActiveFour(1, 1, 1, 1);
-                        Thread.Sleep(30);
-                    }
-                    using (System.Drawing.Bitmap bm = mCamera.GetOneBitmap(1000))
-                    {
-                        if (bm != null)
+                        if(image != null)
                         {
-                            SetDisplayFOV(i);
-                            
-                            Image<Bgr, byte> imgCap = new Image<Bgr, byte>(bm);
+                            using (Image<Bgr, byte> imgRotated = ImageProcessingUtils.ImageRotation(image, new System.Drawing.Point(image.Width / 2, image.Height / 2), -mModel.AngleAxisCamera * Math.PI / 180.0))
                             {
+                                SetDisplayFOV(i);
                                 var modelFov = mModel.FOV;
+
                                 System.Drawing.Rectangle ROI = new System.Drawing.Rectangle(
-                                imgCap.Width / 2 - modelFov.Width / 2, imgCap.Height / 2 - modelFov.Height / 2,
+                                image.Width / 2 - modelFov.Width / 2, image.Height / 2 - modelFov.Height / 2,
                                 modelFov.Width, modelFov.Height);
+
                                 System.Drawing.Rectangle ROIGerber = new System.Drawing.Rectangle(
                                     Fovs[i].X - modelFov.Width / 2, Fovs[i].Y - modelFov.Height / 2,
                                     modelFov.Width, modelFov.Height);
-                                
-                                using (Image<Bgr, byte> imgRotated = ImageProcessingUtils.ImageRotation(imgCap, new System.Drawing.Point(imgCap.Width / 2, imgCap.Height / 2), -mModel.AngleAxisCamera * Math.PI / 180.0))
-                                using (Image<Bgr, byte> imgUndis = new Image<Bgr, byte>(imgRotated.Size))
+
+                                imgRotated.ROI = ROI;
+                                imgGerber.ROI = ROIGerber;
+                                string fileName = string.Format("{0}//Image_{1}_ROI({2}_{3}_{4}_{5})_ROI_GERBER({6}_{7}_{8},{9}).png",
+                                    SavePath, i + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height,
+                                    ROIGerber.X, ROIGerber.Y, ROIGerber.Width, ROIGerber.Height);
+                                CvInvoke.Imwrite(fileName, imgRotated);
+                                if(mParam.Debug)
                                 {
-                                    CvInvoke.Undistort(imgRotated, imgUndis, mCalibImage.CameraMatrix, mCalibImage.DistCoeffs, mCalibImage.NewCameraMatrix);
-                                    imgUndis.ROI = ROI;
-                                    imgGerber.ROI = ROIGerber;
-                                    string fileName = string.Format("{0}//Image_{1}_ROI({2}_{3}_{4}_{5})_ROI_GERBER({6}_{7}_{8},{9}).png", 
-                                        SavePath, i + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height,
-                                        ROIGerber.X, ROIGerber.Y, ROIGerber.Width, ROIGerber.Height);
-                                    CvInvoke.Imwrite(fileName, imgUndis);
-                                    imgGerber.ROI = System.Drawing.Rectangle.Empty;
-                                    this.Dispatcher.Invoke(() => {
-                                        BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(imgUndis.Bitmap);
-                                        ImbCameraView.Source = bms;
-                                        lbcountFovs.Content = (i + 1).ToString();
-                                    });
+                                    string fileNameGerber = string.Format("{0}//Image_{1}_ROI({2}_{3}_{4}_{5})_ROI_GERBER({6}_{7}_{8},{9})_gerber.png",
+                                    SavePath, i + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height,
+                                    ROIGerber.X, ROIGerber.Y, ROIGerber.Width, ROIGerber.Height);
+                                    CvInvoke.Imwrite(fileNameGerber, imgRotated);
                                 }
+                                imgGerber.ROI = System.Drawing.Rectangle.Empty;
+                                this.Dispatcher.Invoke(() => {
+                                    BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(imgRotated.Bitmap);
+                                    ImbCameraView.Source = bms;
+                                    lbcountFovs.Content = (i + 1).ToString();
+                                });
+                                Thread isDB = new Thread(() => {
+                                    mMyDBResult.InsertNewImage(ID, DateTime.Now, fileName, ROI, ROIGerber, "FOV");
+                                });
+                                isDB.Start();
                             }
                         }
                         else
                         {
                             mLog.Info(string.Format("Cant Capture image in FOV : {0}", i + 1));
+                            captureError = true;
+                            break;
                         }
-                    }
-                    if(LightStrobe)
-                    {
-                        mLight.ActiveFour(0, 0, 0, 0);
                     }
                 }
             }
             mModel.Gerber.ProcessingGerberImage.ROI = System.Drawing.Rectangle.Empty;
-            
             if (captureError)
             {
                 return -1;
@@ -261,44 +225,72 @@ namespace SPI_AOI.Views
             string time = DateTime.Now.ToString("HH_mm_ss");
             string sn = "NOT FOUND";
             string savePath = mParam.SAVE_IMAGE_PATH + "\\" + date + "\\TIME(" + time + ")_._SN(" + sn + ")";
+            string ID = mMyDBResult.GetNewID();
             if(!Directory.Exists(savePath))
             {
                 Directory.CreateDirectory(savePath);
             }
-            bool lightStrobe = Convert.ToBoolean(mParam.LIGHT_MODE);
+            bool lightStrobe = !Convert.ToBoolean(mParam.LIGHT_MODE);
             ResetUI();
             UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.PROCESSING);
             UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PROCESSING);
-            if(!lightStrobe)
+            mLight.SetFour(mModel.HardwareSettings.LightIntensity[0],
+                mModel.HardwareSettings.LightIntensity[1],
+                mModel.HardwareSettings.LightIntensity[2],
+                mModel.HardwareSettings.LightIntensity[3]);
+            if (!lightStrobe)
             {
                 mLight.ActiveFour(1, 1, 1, 1);
-                Thread.Sleep(30);
             }
-            int capMarkStatus = CaptureMark(savePath, lightStrobe);
+            int capMarkStatus = CaptureMark(ID,savePath, lightStrobe);
             if(capMarkStatus != -1)
             {
-                int capFOVStatus = CaptureFOV(savePath, lightStrobe);
+                mLight.SetFour(mParam.LIGHT_VI_DEFAULT_INTENSITY_CH1,
+                mParam.LIGHT_VI_DEFAULT_INTENSITY_CH2,
+                mParam.LIGHT_VI_DEFAULT_INTENSITY_CH3,
+                mParam.LIGHT_VI_DEFAULT_INTENSITY_CH4);
+                int capFOVStatus = CaptureFOV(ID, savePath, lightStrobe);
                 if(capFOVStatus != -1)
                 {
                     // capture fail
-
                 }
+                bool pass = false;
                 if (!lightStrobe)
                 {
                     mLight.ActiveFour(0, 0, 0, 0);
                 }
-                if(mParam.RUNNING_MODE == 0)
+               
+                if (mParam.RUNNING_MODE == 0 || mParam.RUNNING_MODE == 1)
                 {
-                    // control run or test
-
+                    // control run || test
+                    pass = true;
+                    
                 }
                 else if(mParam.RUNNING_MODE == 2)
                 {
                     // bypass
+                    pass = true;
                     UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PASS);
                 }
+                // insert db
+                string runningMode = "CONTROL_RUN";
+                switch (mParam.RUNNING_MODE)
+                {
+                    case 0:
+                        runningMode = Utils.LabelStatus.CONTROL_RUN.ToString();
+                        break;
+                    case 1:
+                        runningMode = Utils.LabelStatus.TEST.ToString();
+                        break;
+                    case 2:
+                        runningMode = Utils.LabelStatus.BY_PASS.ToString();
+                        break;
+                    default:
+                        break;
+                }
+                string viResult = pass ? "PASS" : "FAIL";
+                mMyDBResult.InsertNewProduct(ID, mModel.Name, DateTime.Now, "NOT FOUND", runningMode, viResult);
             }
-            
             SetDisplayFOV(-1);
             UpdateCountStatistical();
         }
@@ -341,6 +333,7 @@ namespace SPI_AOI.Views
                 else
                 {
                     UpdateStatus(Utils.LabelMode.DOOR, Utils.LabelStatus.WARNING);
+                    mPingPLCOK = false;
                 }
                 Thread.Sleep(20);
                 if (!mIsCheck)
@@ -401,6 +394,7 @@ namespace SPI_AOI.Views
         private void btReloadModelStatistical_Click(object sender, RoutedEventArgs e)
         {
             string[] modelNames = mMyDBResult.GetModelName();
+            string[] modelMachine = Model.GetModelNames();
             this.Dispatcher.Invoke(() =>
             {
                 string selected = "_____________";
@@ -413,6 +407,11 @@ namespace SPI_AOI.Views
                 {
                     cbModelStatistical.Items.Add(modelNames[i]);
                 }
+                for (int i = 0; i < modelMachine.Length; i++)
+                {
+                    if(!cbModelStatistical.Items.Contains(modelMachine[i]))
+                        cbModelStatistical.Items.Add(modelMachine[i]);
+                }
                 if (cbModelStatistical.Items.Contains(selected))
                 {
                     cbModelStatistical.SelectedItem = selected;
@@ -422,9 +421,16 @@ namespace SPI_AOI.Views
         }
         public void UpdateCountStatistical()
         {
-            if (cbModelStatistical.SelectedIndex >= 0)
+            int selectId = -1;
+            this.Dispatcher.Invoke(() => {
+                selectId = cbModelStatistical.SelectedIndex;
+            });
+            if (selectId >= 0)
             {
-                string modelName = cbModelStatistical.SelectedItem.ToString();
+                string modelName = string.Empty;
+                this.Dispatcher.Invoke(() => {
+                    modelName = cbModelStatistical.SelectedItem.ToString();
+                });
                 DateTime now = DateTime.Now;
                 DateTime endTime = now;
                 DateTime startTime = now;
@@ -465,12 +471,12 @@ namespace SPI_AOI.Views
         }
         private void UpdateChartCount(Chart Chart, TextBox TxtPass, TextBox TxtFail, int Pass, int Fail)
         {
-            Chart.BackColor = System.Drawing.Color.Transparent;
             int cvPass = Pass == 0 && Fail == 0 ? 1 : Pass;
             int cvFail = Fail;
             double ratePass = Math.Round((double)cvPass * 100 / (cvPass + cvFail), 1);
             double rateFail = Math.Round((double)cvFail * 100 / (cvPass + cvFail), 1);
             this.Dispatcher.Invoke(() => {
+                Chart.BackColor = System.Drawing.Color.Transparent;
                 TxtPass.Text = Pass.ToString();
                 TxtFail.Text = Fail.ToString();
                 Chart.Series["YeildRate"].Points[0].SetValueXY(ratePass.ToString() + "%", cvPass);

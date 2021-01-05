@@ -187,7 +187,11 @@ namespace SPI_AOI.Devices
         }
         public int Get_Door_Status()
         {
-            return mSLMP.GetDevice(mParam.PLC_BIT_DOOR_STATUS).Value;
+            SLMPResult result = mSLMP.GetDevice(mParam.PLC_BIT_DOOR_STATUS);
+            if (result.Status == SLMPStatus.SUCCESSFULLY)
+                return result.Value;
+            else
+                return -1;
         }
         public int Get_Speed()
         {

@@ -42,10 +42,13 @@ namespace SPI_AOI.Views.MainConfigWindow
                     mIsOpen = true;
                     ActiveUI();
                     int[] values = mLight.GetStatus();
-                    nIntensityCH1.Value = values[0];
-                    nIntensityCH2.Value = values[1];
-                    nIntensityCH3.Value = values[2];
-                    nIntensityCH4.Value = values[3];
+                    if(values != null)
+                    {
+                        nIntensityCH1.Value = values[0];
+                        nIntensityCH2.Value = values[1];
+                        nIntensityCH3.Value = values[2];
+                        nIntensityCH4.Value = values[3];
+                    }
                 }
             }
            
@@ -140,6 +143,11 @@ namespace SPI_AOI.Views.MainConfigWindow
             NumericUpDown num = sender as NumericUpDown;
             int value = (int)num.Value;
             mLight.SetOne(4, value);
+        }
+
+        private void LightCtlForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            btClose_Click(null, null);
         }
     }
 }

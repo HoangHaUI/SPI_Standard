@@ -179,17 +179,17 @@
     <Setting Name="PLC_REG_Y_BOT_READ" Type="System.String" Scope="User">
       <Value Profile="(Default)">D1016</Value>
     </Setting>
-    <Setting Name="LIGHT_DEFAULT_INTENSITY_CH1" Type="System.Int32" Scope="User">
+    <Setting Name="LIGHT_SETUP_DEFAULT_INTENSITY_CH1" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">255</Value>
     </Setting>
-    <Setting Name="LIGHT_DEFAULT_INTENSITY_CH2" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">160</Value>
+    <Setting Name="LIGHT_SETUP_DEFAULT_INTENSITY_CH2" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
-    <Setting Name="LIGHT_DEFAULT_INTENSITY_CH3" Type="System.Int32" Scope="User">
+    <Setting Name="LIGHT_SETUP_DEFAULT_INTENSITY_CH3" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="LIGHT_DEFAULT_INTENSITY_CH4" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">60</Value>
+    <Setting Name="LIGHT_SETUP_DEFAULT_INTENSITY_CH4" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">65</Value>
     </Setting>
     <Setting Name="USER_LOGIN" Type="System.String" Scope="User">
       <Value Profile="(Default)">Admin</Value>
@@ -198,7 +198,7 @@
       <Value Profile="(Default)">3.636363636363</Value>
     </Setting>
     <Setting Name="THICKNESS_DEFAULT" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1.2</Value>
+      <Value Profile="(Default)">1.65</Value>
     </Setting>
     <Setting Name="PULSE_X_PER_PIXEL_DEFAULT" Type="System.Double" Scope="User">
       <Value Profile="(Default)">3.412917271</Value>
@@ -233,8 +233,8 @@
     <Setting Name="PLC_LIMIT_CONVEYOR" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2147483</Value>
     </Setting>
-    <Setting Name="CAMERA_EXPOSURE_TIME" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3000</Value>
+    <Setting Name="CAMERA_SETUP_EXPOSURE_TIME" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2000</Value>
     </Setting>
     <Setting Name="PLC_BIT_RESET_AFTER_LOGOUT" Type="System.String" Scope="User">
       <Value Profile="(Default)">M2996</Value>
@@ -277,6 +277,24 @@
     </Setting>
     <Setting Name="RUN_X_BOT_SPEED" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">50000</Value>
+    </Setting>
+    <Setting Name="LIGHT_VI_DEFAULT_INTENSITY_CH1" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">255</Value>
+    </Setting>
+    <Setting Name="LIGHT_VI_DEFAULT_INTENSITY_CH2" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">75</Value>
+    </Setting>
+    <Setting Name="LIGHT_VI_DEFAULT_INTENSITY_CH3" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="LIGHT_VI_DEFAULT_INTENSITY_CH4" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
+    <Setting Name="CAMERA_VI_EXPOSURE_TIME" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">6000</Value>
+    </Setting>
+    <Setting Name="Debug" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

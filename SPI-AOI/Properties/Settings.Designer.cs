@@ -734,48 +734,48 @@ namespace SPI_AOI.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("255")]
-        public int LIGHT_DEFAULT_INTENSITY_CH1 {
+        public int LIGHT_SETUP_DEFAULT_INTENSITY_CH1 {
             get {
-                return ((int)(this["LIGHT_DEFAULT_INTENSITY_CH1"]));
+                return ((int)(this["LIGHT_SETUP_DEFAULT_INTENSITY_CH1"]));
             }
             set {
-                this["LIGHT_DEFAULT_INTENSITY_CH1"] = value;
+                this["LIGHT_SETUP_DEFAULT_INTENSITY_CH1"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("160")]
-        public int LIGHT_DEFAULT_INTENSITY_CH2 {
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int LIGHT_SETUP_DEFAULT_INTENSITY_CH2 {
             get {
-                return ((int)(this["LIGHT_DEFAULT_INTENSITY_CH2"]));
+                return ((int)(this["LIGHT_SETUP_DEFAULT_INTENSITY_CH2"]));
             }
             set {
-                this["LIGHT_DEFAULT_INTENSITY_CH2"] = value;
+                this["LIGHT_SETUP_DEFAULT_INTENSITY_CH2"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int LIGHT_DEFAULT_INTENSITY_CH3 {
+        public int LIGHT_SETUP_DEFAULT_INTENSITY_CH3 {
             get {
-                return ((int)(this["LIGHT_DEFAULT_INTENSITY_CH3"]));
+                return ((int)(this["LIGHT_SETUP_DEFAULT_INTENSITY_CH3"]));
             }
             set {
-                this["LIGHT_DEFAULT_INTENSITY_CH3"] = value;
+                this["LIGHT_SETUP_DEFAULT_INTENSITY_CH3"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("60")]
-        public int LIGHT_DEFAULT_INTENSITY_CH4 {
+        [global::System.Configuration.DefaultSettingValueAttribute("65")]
+        public int LIGHT_SETUP_DEFAULT_INTENSITY_CH4 {
             get {
-                return ((int)(this["LIGHT_DEFAULT_INTENSITY_CH4"]));
+                return ((int)(this["LIGHT_SETUP_DEFAULT_INTENSITY_CH4"]));
             }
             set {
-                this["LIGHT_DEFAULT_INTENSITY_CH4"] = value;
+                this["LIGHT_SETUP_DEFAULT_INTENSITY_CH4"] = value;
             }
         }
         
@@ -805,7 +805,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.65")]
         public double THICKNESS_DEFAULT {
             get {
                 return ((double)(this["THICKNESS_DEFAULT"]));
@@ -949,13 +949,13 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3000")]
-        public int CAMERA_EXPOSURE_TIME {
+        [global::System.Configuration.DefaultSettingValueAttribute("2000")]
+        public int CAMERA_SETUP_EXPOSURE_TIME {
             get {
-                return ((int)(this["CAMERA_EXPOSURE_TIME"]));
+                return ((int)(this["CAMERA_SETUP_EXPOSURE_TIME"]));
             }
             set {
-                this["CAMERA_EXPOSURE_TIME"] = value;
+                this["CAMERA_SETUP_EXPOSURE_TIME"] = value;
             }
         }
         
@@ -1124,6 +1124,78 @@ namespace SPI_AOI.Properties {
             }
             set {
                 this["RUN_X_BOT_SPEED"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("255")]
+        public int LIGHT_VI_DEFAULT_INTENSITY_CH1 {
+            get {
+                return ((int)(this["LIGHT_VI_DEFAULT_INTENSITY_CH1"]));
+            }
+            set {
+                this["LIGHT_VI_DEFAULT_INTENSITY_CH1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("75")]
+        public int LIGHT_VI_DEFAULT_INTENSITY_CH2 {
+            get {
+                return ((int)(this["LIGHT_VI_DEFAULT_INTENSITY_CH2"]));
+            }
+            set {
+                this["LIGHT_VI_DEFAULT_INTENSITY_CH2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LIGHT_VI_DEFAULT_INTENSITY_CH3 {
+            get {
+                return ((int)(this["LIGHT_VI_DEFAULT_INTENSITY_CH3"]));
+            }
+            set {
+                this["LIGHT_VI_DEFAULT_INTENSITY_CH3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int LIGHT_VI_DEFAULT_INTENSITY_CH4 {
+            get {
+                return ((int)(this["LIGHT_VI_DEFAULT_INTENSITY_CH4"]));
+            }
+            set {
+                this["LIGHT_VI_DEFAULT_INTENSITY_CH4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("6000")]
+        public int CAMERA_VI_EXPOSURE_TIME {
+            get {
+                return ((int)(this["CAMERA_VI_EXPOSURE_TIME"]));
+            }
+            set {
+                this["CAMERA_VI_EXPOSURE_TIME"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Debug {
+            get {
+                return ((bool)(this["Debug"]));
+            }
+            set {
+                this["Debug"] = value;
             }
         }
     }

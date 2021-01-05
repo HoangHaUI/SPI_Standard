@@ -212,6 +212,9 @@
     <Compile Include="Views\MainConfigWindow\MachineIssueForm.designer.cs">
       <DependentUpon>MachineIssueForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\ModelManagement\AutoAdjustFOVWindow.xaml.cs">
+      <DependentUpon>AutoAdjustFOVWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ModelManagement\AutoAdjustWindow.xaml.cs">
       <DependentUpon>AutoAdjustWindow.xaml</DependentUpon>
     </Compile>
@@ -261,6 +264,7 @@
     <Compile Include="Views\WaitingForm.xaml.cs">
       <DependentUpon>WaitingForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VI\CaptureImage.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -273,6 +277,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ModelManagement\AutoAdjustFOVWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ModelManagement\AutoAdjustWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
