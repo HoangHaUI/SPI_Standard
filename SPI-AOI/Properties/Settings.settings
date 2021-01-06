@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="DPI_DEFAULT" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">783</Value>
+      <Value Profile="(Default)">785.6</Value>
     </Setting>
     <Setting Name="FOV" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">1400, 1200</Value>
@@ -201,10 +201,10 @@
       <Value Profile="(Default)">1.65</Value>
     </Setting>
     <Setting Name="PULSE_X_PER_PIXEL_DEFAULT" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">3.412917271</Value>
+      <Value Profile="(Default)">3.230980752</Value>
     </Setting>
     <Setting Name="PULSE_Y_PER_PIXEL_DEFAULT" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">3.237371889</Value>
+      <Value Profile="(Default)">3.23752057</Value>
     </Setting>
     <Setting Name="SCALE_PULSE_X" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.015214561</Value>

@@ -177,18 +177,19 @@ namespace SPI_AOI.Views
                                     Fovs[i].X - modelFov.Width / 2, Fovs[i].Y - modelFov.Height / 2,
                                     modelFov.Width, modelFov.Height);
 
-                                imgRotated.ROI = ROI;
+                                
                                 imgGerber.ROI = ROIGerber;
                                 string fileName = string.Format("{0}//Image_{1}_ROI({2}_{3}_{4}_{5})_ROI_GERBER({6}_{7}_{8},{9}).png",
                                     SavePath, i + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height,
                                     ROIGerber.X, ROIGerber.Y, ROIGerber.Width, ROIGerber.Height);
                                 CvInvoke.Imwrite(fileName, imgRotated);
-                                if(mParam.Debug)
+                                imgRotated.ROI = ROI;
+                                if (mParam.Debug)
                                 {
                                     string fileNameGerber = string.Format("{0}//Image_{1}_ROI({2}_{3}_{4}_{5})_ROI_GERBER({6}_{7}_{8},{9})_gerber.png",
                                     SavePath, i + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height,
                                     ROIGerber.X, ROIGerber.Y, ROIGerber.Width, ROIGerber.Height);
-                                    CvInvoke.Imwrite(fileNameGerber, imgRotated);
+                                    CvInvoke.Imwrite(fileNameGerber, imgGerber);
                                 }
                                 imgGerber.ROI = System.Drawing.Rectangle.Empty;
                                 this.Dispatcher.Invoke(() => {
