@@ -238,6 +238,7 @@ namespace SPI_AOI.Views
                 mModel.HardwareSettings.LightIntensity[1],
                 mModel.HardwareSettings.LightIntensity[2],
                 mModel.HardwareSettings.LightIntensity[3]);
+            mCamera.SetParameter(IOT.KeyName.ExposureTime, (float)mModel.HardwareSettings.ExposureTime);
             if (!lightStrobe)
             {
                 mLight.ActiveFour(1, 1, 1, 1);
@@ -249,6 +250,7 @@ namespace SPI_AOI.Views
                 mParam.LIGHT_VI_DEFAULT_INTENSITY_CH2,
                 mParam.LIGHT_VI_DEFAULT_INTENSITY_CH3,
                 mParam.LIGHT_VI_DEFAULT_INTENSITY_CH4);
+                mCamera.SetParameter(IOT.KeyName.ExposureTime, (float)mParam.CAMERA_VI_EXPOSURE_TIME);
                 int capFOVStatus = CaptureFOV(ID, savePath, lightStrobe);
                 if(capFOVStatus != -1)
                 {
@@ -430,39 +432,41 @@ namespace SPI_AOI.Views
                 string modelName = string.Empty;
                 this.Dispatcher.Invoke(() => {
                     modelName = cbModelStatistical.SelectedItem.ToString();
+                
+                    DateTime now = DateTime.Now;
+                    DateTime endTime = now;
+                    DateTime startTime = now;
+                    if(rbShift.IsChecked == true)
+                    {
+                        DateTime lastDay = now - new TimeSpan(24);
+                        DateTime endLastDay = new DateTime(lastDay.Year, lastDay.Month, lastDay.Day, 19, 30, 0);
+                        TimeSpan subTime = now - endLastDay;
+                        if (subTime.Hours < 12)
+                        {
+                            startTime = endLastDay;
+                        }
+                        else if (endLastDay.Hour >= 12 && endLastDay.Hour < 24)
+                        {
+                            startTime = new DateTime(now.Year, now.Month, now.Day, 7, 30, 0);
+                        }
+                        else
+                        {
+                            startTime = new DateTime(now.Year, now.Month, now.Day, 19, 30, 0);
+                        }
+                    }
+                    else if(rbDay.IsChecked == true)
+                    {
+                        startTime = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
+                    }
+                    else if(rbTotal.IsChecked == true)
+                    {
+                        startTime = new DateTime(2020, 1, 1, 0, 0, 0);
+                    }
+                    int pass = mMyDBResult.CountPass(modelName, startTime, endTime);
+                    int fail = mMyDBResult.CountFail(modelName, startTime, endTime);
+                    UpdateChartCount(chartYeildRate, txtPass, txtFail, pass, fail);
                 });
-                DateTime now = DateTime.Now;
-                DateTime endTime = now;
-                DateTime startTime = now;
-                if(rbShift.IsChecked == true)
-                {
-                    DateTime lastDay = now - new TimeSpan(24);
-                    DateTime endLastDay = new DateTime(lastDay.Year, lastDay.Month, lastDay.Day, 19, 30, 0);
-                    TimeSpan subTime = now - endLastDay;
-                    if (subTime.Hours < 12)
-                    {
-                        startTime = endLastDay;
-                    }
-                    else if (endLastDay.Hour >= 12 && endLastDay.Hour < 24)
-                    {
-                        startTime = new DateTime(now.Year, now.Month, now.Day, 7, 30, 0);
-                    }
-                    else
-                    {
-                        startTime = new DateTime(now.Year, now.Month, now.Day, 19, 30, 0);
-                    }
-                }
-                else if(rbDay.IsChecked == true)
-                {
-                    startTime = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
-                }
-                else if(rbTotal.IsChecked == true)
-                {
-                    startTime = new DateTime(2020, 1, 1, 0, 0, 0);
-                }
-                int pass = mMyDBResult.CountPass(modelName, startTime, endTime);
-                int fail = mMyDBResult.CountFail(modelName, startTime, endTime);
-                UpdateChartCount(chartYeildRate, txtPass, txtFail, pass, fail);
+                
             }
             else
             {
