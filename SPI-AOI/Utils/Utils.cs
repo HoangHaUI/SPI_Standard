@@ -42,6 +42,24 @@ namespace SPI_AOI
             }
             return scr;
         }
+        public static Image<Bgr, byte> ImageTransformation(Image<Bgr, byte> scr, int X, int Y)
+        {
+              float[,] translationArray = { { 1, 0, X }, { 0, 1, Y } };
+            using (Matrix<float> translationMatrix = new Matrix<float>(translationArray))
+            {
+                CvInvoke.WarpAffine(scr, scr, translationMatrix, scr.Size);
+            }
+            return scr;
+        }
+        public static Image<Gray, byte> ImageTransformation(Image<Gray, byte> scr, int X, int Y)
+        {
+            float[,] translationArray = { { 1, 0, X }, { 0, 1, Y } };
+            using (Matrix<float> translationMatrix = new Matrix<float>(translationArray))
+            {
+                CvInvoke.WarpAffine(scr, scr, translationMatrix, scr.Size);
+            }
+            return scr;
+        }
         public static int GetCircleByThreePoint(Point P1, Point P2, Point P3, ref PointF Center, ref double Radius)
         {
             // phuong trinh duong thang p1, p2
@@ -83,5 +101,6 @@ namespace SPI_AOI
             double dist = Math.Cos(angle * Math.PI / 180.0) * leght;
             return dist;
         }
+        
     }
 }

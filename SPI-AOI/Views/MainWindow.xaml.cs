@@ -72,6 +72,9 @@ namespace SPI_AOI.Views
             //ColInfo.Width = new GridLength(0);
             //ColStatistical.Width = new GridLength(1, GridUnitType.Star);
             //mMyDBResult.InsertNewImage("sdvajshdasd", DateTime.Now, "now", new System.Drawing.Rectangle(1, 2, 3, 5), new System.Drawing.Rectangle(4, 3, 2, 1), "Image");
+            Image<Bgr, byte> img = new Image<Bgr, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\1.png");
+            Image<Gray, byte> imgGerber = new Image<Gray, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\2.png");
+            
         }
         public void LoadUI()
         {
@@ -169,21 +172,17 @@ namespace SPI_AOI.Views
                                 SetDisplayFOV(i);
                                 var modelFov = mModel.FOV;
 
-                                System.Drawing.Rectangle ROI = new System.Drawing.Rectangle(
-                                image.Width / 2 - modelFov.Width / 2, image.Height / 2 - modelFov.Height / 2,
-                                modelFov.Width, modelFov.Height);
-
+                                System.Drawing.Rectangle ROI = mModel.Gerber.FOVs[i].ROI;
                                 System.Drawing.Rectangle ROIGerber = new System.Drawing.Rectangle(
                                     Fovs[i].X - modelFov.Width / 2, Fovs[i].Y - modelFov.Height / 2,
                                     modelFov.Width, modelFov.Height);
 
-                                
+                                imgRotated.ROI = ROI;
                                 imgGerber.ROI = ROIGerber;
                                 string fileName = string.Format("{0}//Image_{1}_ROI({2}_{3}_{4}_{5})_ROI_GERBER({6}_{7}_{8},{9}).png",
                                     SavePath, i + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height,
                                     ROIGerber.X, ROIGerber.Y, ROIGerber.Width, ROIGerber.Height);
                                 CvInvoke.Imwrite(fileName, imgRotated);
-                                imgRotated.ROI = ROI;
                                 if (mParam.Debug)
                                 {
                                     string fileNameGerber = string.Format("{0}//Image_{1}_ROI({2}_{3}_{4}_{5})_ROI_GERBER({6}_{7}_{8},{9})_gerber.png",

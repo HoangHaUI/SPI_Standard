@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SPI_AOI.Views.ModelManagement"
         mc:Ignorable="d"
-        Title="Model Management - Dash Board" Height="323.84" Width="723.5"
+        Title="Model Management - Dash Board" Height="345" Width="723.5"
         Background="#FFEEEEEE"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -172,7 +172,26 @@
                                         <Grid Grid.Column="0"  HorizontalAlignment="Left"/>
                                         <Grid Grid.Column="1"/>
                                     </Grid>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions >
+                                            <ColumnDefinition Width="6*"></ColumnDefinition>
+                                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0"  HorizontalAlignment="Left">
+                                            <Label   FontWeight="Bold" Content="Step4: Adjust FOV"></Label>
+                                        </Grid>
+                                        <Grid Grid.Column="1">
+                                            <Button x:Name="btAutoAdjustFOV"  Height="30"
+                                                    Margin="5" Width="120" 
+                                                    Click="btAutoAdjustFOV_Click">
+                                                <DockPanel>
+                                                    <Image Source="../../Resources/Icons/xyz-png-2.png"></Image>
+                                                    <Label Content="Settings" ></Label>
+                                                </DockPanel>
 
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
                                 </StackPanel>
                             </ScrollViewer>
                         </GroupBox>

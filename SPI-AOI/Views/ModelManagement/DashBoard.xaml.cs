@@ -199,5 +199,12 @@ namespace SPI_AOI.Views.ModelManagement
                 mModel = null;
             }
         }
+
+        private void btAutoAdjustFOV_Click(object sender, RoutedEventArgs e)
+        {
+            AutoAdjustFOVWindow adjustWindow = new AutoAdjustFOVWindow(mModel);
+            adjustWindow.ShowDialog();
+            LoadDetails();
+        }
     }
 }

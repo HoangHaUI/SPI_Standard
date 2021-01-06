@@ -24,6 +24,7 @@ namespace SPI_AOI.Models
         public byte[] FileData { get; set; }
         public Image<Gray, byte> OrgGerberImage { get; set; }
         public Image<Gray, byte> ProcessingGerberImage { get; set; }
+        
         public bool Visible { get; set; }
         public double Angle { get; set; }
         public SPI_AOI.Utils.StartPoint StartPoint { get; set; }

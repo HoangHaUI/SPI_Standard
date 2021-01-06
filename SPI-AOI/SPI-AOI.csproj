@@ -264,6 +264,7 @@
     <Compile Include="Views\WaitingForm.xaml.cs">
       <DependentUpon>WaitingForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VI\AutoAdjustROIFOV.cs" />
     <Compile Include="VI\CaptureImage.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

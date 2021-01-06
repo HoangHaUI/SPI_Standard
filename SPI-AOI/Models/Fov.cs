@@ -7,6 +7,7 @@ using System.Drawing;
 using Emgu.CV;
 using Emgu.CV.Structure;
 
+
 namespace SPI_AOI.Models
 {
     public class Fov
@@ -27,7 +28,7 @@ namespace SPI_AOI.Models
                 fov.ID = ID;
                 fov.NO = i;
                 fov.Anchor = anchors[i];
-                fov.ROI = new Rectangle(mParam.IMAGE_SIZE.Width - FOV.Width / 2, mParam.IMAGE_SIZE.Width - FOV.Width / 2, FOV.Width, FOV.Height);
+                fov.ROI = new Rectangle(mParam.IMAGE_SIZE.Width /2 - FOV.Width / 2, mParam.IMAGE_SIZE.Height/2 - FOV.Height / 2, FOV.Width, FOV.Height);
                 fov.PadItems = new List<int>();
                 fovs.Add(fov);
             }

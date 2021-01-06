@@ -268,8 +268,26 @@ namespace SPI_AOI.Utils
                             CvInvoke.Rectangle(img, fov, new MCvScalar(0), -1);
                             CvInvoke.Rectangle(tempImg, fov, new MCvScalar(0), -1);
                             //fov = new Rectangle(fov.X + x, fov.Y + y, fov.Width, fov.Height);
+                            // add condition
+                            
                             anchor.X += x;
                             anchor.Y += y;
+                            if (anchor.X + FOV.Width / 2 > Img.Width - 1)
+                            {
+                                anchor.X -= (anchor.X + FOV.Width / 2) - (Img.Width - 1);
+                            }
+                            if (anchor.Y + FOV.Height / 2 > Img.Height - 1)
+                            {
+                                anchor.Y -= (anchor.Y + FOV.Height / 2) - (Img.Height - 1);
+                            }
+                            if (anchor.X - FOV.Width / 2 < 0)
+                            {
+                                anchor.X += FOV.Width / 2 - anchor.X;
+                            }
+                            if (anchor.Y - FOV.Height / 2 < 0)
+                            {
+                                anchor.Y += FOV.Height / 2 - anchor.Y;
+                            }
                             anchors.Add(anchor);
                         }
                     }

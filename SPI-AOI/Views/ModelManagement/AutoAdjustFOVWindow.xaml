@@ -6,10 +6,61 @@
         xmlns:local="clr-namespace:SPI_AOI.Views.ModelManagement"
         mc:Ignorable="d"
         Initialized="Window_Initialized"
-        Title="Auto Adjust FOV" Height="900" Width="1600">
-    <Grid>
-        <Border Margin="5" CornerRadius="5" BorderThickness="0.65" BorderBrush="Gray">
-            
-        </Border>
-    </Grid>
+        WindowStartupLocation="CenterScreen"
+        Title="Auto Adjust FOV" 
+        Height="900" Width="1600"
+        
+        >
+    
+    <Border Margin="5" CornerRadius="5" BorderThickness="0.65" BorderBrush="Gray">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <GroupBox Margin="5" Header="View">
+                    <Border Margin="5" Background="LightGray">
+                        <Image x:Name="imb"></Image>
+                    </Border>
+                </GroupBox>
+                
+            </Grid>
+            <Grid Grid.Column="1">
+                <GroupBox x:Name="grConfig" Margin="5" Header="Configuration">
+                    <StackPanel Margin="5">
+                        <StackPanel Orientation="Horizontal" Margin="3,10,3,10">
+                            <Label Content="FOV : "></Label>
+                            <ComboBox x:Name="cbFOV" Margin="5,0,0,0" Width="60" SelectionChanged="cbFOV_SelectionChanged"></ComboBox>
+                            <Label Content="/"></Label>
+                            <Label x:Name="lbNumFOV" Content="0" FontWeight="Bold"></Label>
+                            <Button x:Name="btBack" Content="Back" Width="40" Margin="10,0,0,0" Click="btBack_Click"></Button>
+                            <Button x:Name="btNext" Content="Next" Width="40" Margin="10,0,0,0" Click="btNext_Click"></Button>
+                        </StackPanel>
+                        <GroupBox Header="ROI" Margin="5" Height="100">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <Label Content="X:" Width="30"></Label>
+                                    <TextBox x:Name="txtROIX" Width="60"></TextBox>
+                                    <Label Content="Width:" Width="50" Margin="20,0,0,0"></Label>
+                                    <TextBox x:Name="txtROIWidth" IsReadOnly="True"  Width="60"></TextBox>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <Label Content="Y:" Width="30"></Label>
+                                    <TextBox x:Name="txtROIY" Width="60"></TextBox>
+                                    <Label Content="Height:" Margin="20,0,0,0" Width="50"></Label>
+                                    <TextBox x:Name="txtROIHeight" IsReadOnly="True" Width="60"></TextBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
+                            <Button x:Name="btAutoAdjust" Content="Auto Adjust All" Width="90" Height="30" Click="btAutoAdjust_Click"></Button>
+                            <Button x:Name="btAdjust" Content="Adjust" Margin="30,0,0,0" Width="90" Height="30" Click="btAdjust_Click"></Button>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+            </Grid>
+        </Grid>
+    </Border>
 </Window>
