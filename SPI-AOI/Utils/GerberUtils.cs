@@ -46,7 +46,6 @@ namespace SPI_AOI.Utils
                     int addy = (max - imgGerber.Height) / 2;
                     Image<Gray, byte> imgGerberAdd = new Image<Gray, byte>(new System.Drawing.Size(imgGerber.Width + 2 *addx, imgGerber.Height + 2*addy));
                     CvInvoke.CopyMakeBorder(imgGerber, imgGerberAdd, addy, addy, addx, addx, Emgu.CV.CvEnum.BorderType.Constant, new MCvScalar(0));
-                    CvInvoke.Flip(imgGerberAdd, imgGerberAdd, Emgu.CV.CvEnum.FlipType.Horizontal);
                     result.GerberImage = imgGerberAdd;
                     imgGerber.Dispose();
                     imgGerber = null;
@@ -72,7 +71,6 @@ namespace SPI_AOI.Utils
                     int addy = (max - imgGerber.Height) / 2;
                     Image<Gray, byte> imgGerberAdd = new Image<Gray, byte>(new System.Drawing.Size(imgGerber.Width + 2 * addx, imgGerber.Height + 2 * addy));
                     CvInvoke.CopyMakeBorder(imgGerber, imgGerberAdd, addy, addy, addx, addx, Emgu.CV.CvEnum.BorderType.Constant, new MCvScalar(0));
-                    CvInvoke.Flip(imgGerberAdd, imgGerberAdd, Emgu.CV.CvEnum.FlipType.Horizontal);
                     result.GerberImage = imgGerberAdd;
                     imgGerber.Dispose();
                     imgGerber = null;

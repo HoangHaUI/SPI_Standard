@@ -22,6 +22,7 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using NLog;
+using System.Collections.Specialized;
 
 namespace SPI_AOI.Views
 {
@@ -72,9 +73,49 @@ namespace SPI_AOI.Views
             //ColInfo.Width = new GridLength(0);
             //ColStatistical.Width = new GridLength(1, GridUnitType.Star);
             //mMyDBResult.InsertNewImage("sdvajshdasd", DateTime.Now, "now", new System.Drawing.Rectangle(1, 2, 3, 5), new System.Drawing.Rectangle(4, 3, 2, 1), "Image");
-            //Image<Bgr, byte> img = new Image<Bgr, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\1.png");
-            //Image<Gray, byte> imgGerber = new Image<Gray, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\2.png");
+            //Image<Bgr, byte> img = new Image<Bgr, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\DL\Data\2021_01_05\Image_20210105140358823.bmp");
+            ////Image<Gray, byte> imgGerber = new Image<Gray, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\2.png");
             
+            //string tenpSavePath = "temp/surround";
+            //if (!Directory.Exists(tenpSavePath))
+            //{
+            //    Directory.CreateDirectory(tenpSavePath);
+            //}
+            //string tempPath = tenpSavePath + "\\" + DateTime.Now.ToBinary().ToString() + ".png";
+            //Stopwatch sw = new Stopwatch();
+            //sw.Start();
+            //CvInvoke.Imwrite(tempPath, img);
+            //Thread a = new Thread(() => {
+            //    NameValueCollection data = new NameValueCollection();
+            //    data.Add("Type", "Segment");
+            //    data.Add("VI_", "True");
+            //    data.Add("FOV", "1");
+            //    data.Add("Debug", Convert.ToString(mParam.Debug));
+            //    VI.ServiceResults serviceResults = VI.ServiceComm.Sendfile("http://10.224.88.156:812", new string[] { tempPath }, data, true);
+            //});
+            //Thread b = new Thread(() => {
+            //    NameValueCollection data = new NameValueCollection();
+            //    data.Add("Type", "Segment");
+            //    data.Add("VI_", "True");
+            //    data.Add("FOV", "2");
+            //    data.Add("Debug", Convert.ToString(mParam.Debug));
+            //    VI.ServiceResults serviceResults = VI.ServiceComm.Sendfile("http://10.224.88.156:812", new string[] { tempPath }, data, true);
+            //});
+            //Thread c = new Thread(() => {
+            //    NameValueCollection data = new NameValueCollection();
+            //    data.Add("Type", "Segment");
+            //    data.Add("VI_", "True");
+            //    data.Add("FOV", "3");
+            //    data.Add("Debug", Convert.ToString(mParam.Debug));
+            //    VI.ServiceResults serviceResults = VI.ServiceComm.Sendfile("http://10.224.88.156:812", new string[] { tempPath }, data, true);
+            //});
+            //a.Start();
+            //b.Start();
+            ////c.Start();
+            //a.Join();
+            //b.Join();
+            ////c.Join();
+            //Console.WriteLine(sw.ElapsedMilliseconds);
         }
         public void LoadUI()
         {

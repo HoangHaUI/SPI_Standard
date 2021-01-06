@@ -269,7 +269,6 @@ namespace SPI_AOI.Views.ModelManagement
                             cbFOV.SelectedIndex = i;
                         });
                         btAdjust_Click(null, null);
-                        Thread.Sleep(1000);
                     }
                 }
                 MessageBox.Show("success");

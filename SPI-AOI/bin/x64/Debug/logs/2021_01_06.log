@@ -408,3 +408,69 @@ Parameter name: startIndex(SLMP.cs:302)|
 2021-01-06 16:18:00.3224|Info|Moving TOP Axis, Position Name : FOV 18,  X = 12274, Y = 38303(MainWindow.xaml.cs:165)|
 2021-01-06 16:18:01.2401|Info|Moving TOP Axis, Position Name : FOV 19,  X = 7747, Y = 38303(MainWindow.xaml.cs:165)|
 2021-01-06 16:18:02.2492|Info|Moving TOP Axis, Position Name : FOV 20,  X = 2594, Y = 38303(MainWindow.xaml.cs:165)|
+2021-01-06 17:09:23.2052|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:310)|
+2021-01-06 17:10:24.4045|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:310)|
+2021-01-06 17:11:24.4439|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:310)|
+2021-01-06 17:12:24.5949|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:310)|
+2021-01-06 17:13:18.0898|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:310)|
+2021-01-06 17:14:19.6042|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:310)|
+2021-01-06 17:15:19.6985|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:310)|
+2021-01-06 17:16:19.8245|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:310)|
+2021-01-06 17:17:19.8450|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:310)|
+2021-01-06 17:18:19.8604|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:310)|
+2021-01-06 17:19:19.8769|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:310)|
+2021-01-06 17:20:20.0579|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:310)|
+2021-01-06 17:21:20.0886|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:310)|
+2021-01-06 17:21:28.8329|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:310)|
+2021-01-06 17:24:55.6924|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:310)|
+2021-01-06 20:19:05.7725|Error|Invalid URI: The URI scheme is not valid.(ServiceComm.cs:63)|
+2021-01-06 20:19:05.8363|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:323)|
+2021-01-06 20:19:52.7664|Error|Invalid URI: The URI scheme is not valid.(ServiceComm.cs:63)|
+2021-01-06 20:19:52.8183|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:323)|
+2021-01-06 20:20:12.4368|Error|Invalid URI: The URI scheme is not valid.(ServiceComm.cs:63)|
+2021-01-06 20:20:14.7935|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:323)|
+2021-01-06 20:20:55.3988|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:123)|
+2021-01-06 20:20:55.4517|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:323)|
+2021-01-06 20:22:12.9055|Error|Unable to connect to the remote server(ServiceComm.cs:115)|
+2021-01-06 20:22:12.9613|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:323)|
+2021-01-06 20:24:35.1070|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:123)|
+2021-01-06 20:24:38.6807|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:323)|
+2021-01-06 20:26:32.7961|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:123)|
+2021-01-06 20:26:32.8480|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:323)|
+2021-01-06 20:27:15.5572|Error|Unexpected character encountered while parsing value: S. Path '', line 0, position 0.(ServiceComm.cs:128)|
+2021-01-06 20:27:15.6130|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:323)|
+2021-01-06 20:32:36.2392|Error|Unable to connect to the remote server(ServiceComm.cs:115)|
+2021-01-06 20:32:38.5540|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:323)|
+2021-01-06 20:32:47.3794|Error|Unexpected character encountered while parsing value: S. Path '', line 0, position 0.(ServiceComm.cs:128)|
+2021-01-06 20:32:47.4332|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:323)|
+2021-01-06 20:34:40.7735|Error|Unexpected character encountered while parsing value: S. Path '', line 0, position 0.(ServiceComm.cs:128)|
+2021-01-06 20:34:40.8264|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:323)|
+2021-01-06 20:42:40.6885|Error|Unable to connect to the remote server(ServiceComm.cs:115)|
+2021-01-06 20:42:42.6805|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:323)|
+2021-01-06 20:43:10.9675|Error|The underlying connection was closed: An unexpected error occurred on a receive.(ServiceComm.cs:123)|
+2021-01-06 20:43:49.1863|Error|Unexpected character encountered while parsing value: b. Path 'image', line 1, position 26.(ServiceComm.cs:128)|
+2021-01-06 20:43:49.2412|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:323)|
+2021-01-06 20:44:48.8437|Error|Unexpected character encountered while parsing value: b. Path 'image', line 1, position 26.(ServiceComm.cs:128)|
+2021-01-06 20:45:37.0597|Error|Unexpected character encountered while parsing value: b. Path 'image', line 1, position 26.(ServiceComm.cs:128)|
+2021-01-06 20:45:37.1126|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:323)|
+2021-01-06 20:47:28.9494|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:323)|
+2021-01-06 20:52:54.7771|Error|Unable to connect to the remote server(ServiceComm.cs:116)|
+2021-01-06 20:52:56.6830|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:324)|
+2021-01-06 21:16:06.3968|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:324)|
+2021-01-06 21:16:29.9269|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:324)|
+2021-01-06 21:18:06.6062|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-06 21:18:08.8492|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:324)|
+2021-01-06 21:18:27.7616|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-06 21:26:37.3096|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-06 21:26:37.3655|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:324)|
+2021-01-06 21:27:19.3205|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:324)|
+2021-01-06 21:30:25.4326|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:324)|
+2021-01-06 21:31:10.4392|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:324)|
+2021-01-06 21:31:53.2038|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:324)|
+2021-01-06 21:32:05.6964|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:324)|
+2021-01-06 21:34:33.6825|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:334)|
+2021-01-06 21:36:29.7400|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:351)|
+2021-01-06 21:36:45.0620|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:351)|
+2021-01-06 21:37:51.2011|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:351)|
+2021-01-06 21:38:20.6822|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:351)|
+2021-01-06 21:38:36.6814|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:351)|

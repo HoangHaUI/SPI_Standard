@@ -518,3 +518,4 @@ C:\Users\Public\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\ModelManagement\Aut
 C:\Users\Public\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\ModelManagement\AutoAdjustFOVWindow.baml
 C:\Users\Public\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI_AOI.Views.ModelManagement.HSVSelectionForm.resources
 C:\Users\Public\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI_AOI.Views.MainConfigWindow.LightCtlForm.resources
+D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\bin\x64\Debug\xNet.dll

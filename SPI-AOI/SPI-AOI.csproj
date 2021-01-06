@@ -132,6 +132,9 @@
       <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="xNet">
+      <HintPath>..\..\..\..\..\..\BN3\BN3 VI Housing\Source code\CSharp\VIHousingVento\VIHousingVento\bin\x64\Debug\xNet.dll</HintPath>
+    </Reference>
     <Reference Include="ZedGraph, Version=5.1.7.430, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
       <HintPath>..\packages\ZedGraph.5.1.7\lib\net35-Client\ZedGraph.dll</HintPath>
       <Private>True</Private>
@@ -266,6 +269,7 @@
     </Compile>
     <Compile Include="VI\AutoAdjustROIFOV.cs" />
     <Compile Include="VI\CaptureImage.cs" />
+    <Compile Include="VI\ServiceComm.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
