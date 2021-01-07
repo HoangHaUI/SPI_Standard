@@ -132,22 +132,40 @@ namespace SPI_AOI.Views
             if(val == 1)
             {
                 mIsProcessing = true;
-                Processing();
+                ResetUI();
+                UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.PROCESSING);
+                UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PROCESSING);
+                int result = Processing();
                 mIsProcessing = false; 
                 mPlcComm.Reset_Has_Product_Top();
-                mPlcComm.Set_Pass();
+                if(result == 0)
+                {
+                    UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PASS);
+                }
+                else
+                {
+                    UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.FAIL);
+                }
+               
             }
             mIsInTimer = false;
             timer.Enabled = mIsRunning;
         }
         
-        private int CaptureMark(string ID, string SavePath, bool LightStrobe)
+        private Utils.MarkAdjust CaptureMark(string ID, string SavePath, bool LightStrobe)
         {
-            System.Drawing.Point[] markPoint = mModel.GetPLCMarkPosition();
-            bool captureError = false;
-            for (int i = 0; i < markPoint.Length; i++)
+            System.Drawing.Point[] markPointXYPLC = mModel.GetPLCMarkPosition();
+            Utils.MarkAdjust markAdjust = new Utils.MarkAdjust();
+            PadItem[] PadMark = new PadItem[2];
+            for (int i = 0; i < 2; i++)
             {
-                System.Drawing.Point mark = markPoint[i];
+                PadMark[i] = mModel.Gerber.PadItems[mModel.Gerber.MarkPoint.PadMark[i]];
+            }
+            System.Drawing.Point[] markPointImage = new System.Drawing.Point[2];
+            double matchingScore = mModel.Gerber.MarkPoint.Score;
+            for (int i = 0; i < markPointXYPLC.Length; i++)
+            {
+                System.Drawing.Point mark = markPointXYPLC[i];
                 int x = mark.X;
                 int y = mark.Y;
                 mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "Mark " + (i+1).ToString(), x, y));
@@ -156,20 +174,49 @@ namespace SPI_AOI.Views
                     if (image != null)
                     {
                         System.Drawing.Rectangle ROI = mModel.GetRectROIMark();
-                        string fileName = string.Format("{0}//Mark_{1}_{2}_{3}_{4}_{5}.png", SavePath, i + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height);
-                        CvInvoke.Imwrite(fileName, image);
+                        
+                        string fileName = string.Format("{0}//Mark_{1}.png", SavePath, i + 1);
                         image.ROI = ROI;
-                        this.Dispatcher.Invoke(() => {
-                        BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(image.Bitmap);
-                            if(i == 0)
+                        ShowMarkImage(image.Bitmap, i);
+                        using (Image<Gray, byte> imgGray = new Image<Gray, byte>(image.Size))
+                        {
+                            CvInvoke.CvtColor(image, imgGray, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
+                            CvInvoke.Threshold(imgGray, imgGray, mModel.Gerber.MarkPoint.ThresholdValue, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
+                            var markInfo = Mark.MarkDetection(imgGray, PadMark[i].Contour);
+                            double realScore = markInfo.Item2;
+                            realScore = Math.Round((1 - realScore) * 100.0, 2);
+                            if (realScore > matchingScore)
                             {
-                                imbMark1.Source = bms;
+                                using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
+                                {
+                                    if (markInfo.Item1 != null)
+                                    {
+                                        contours.Push(markInfo.Item1);
+                                        Moments mm = CvInvoke.Moments(markInfo.Item1);
+                                        if (mm.M00 != 0)
+                                        {
+                                            markPointImage[i] = new System.Drawing.Point(Convert.ToInt32(mm.M10 / mm.M00), Convert.ToInt32(mm.M01 / mm.M00));
+                                        }
+                                        CvInvoke.DrawContours(image, contours, -1, new MCvScalar(255, 0, 0), 2);
+                                        ShowMarkImage(image.Bitmap, i);
+                                    }
+                                }
+                                if(i == 1)
+                                {
+                                    markAdjust.Status = Utils.ActionStatus.Successfully;
+                                    System.Drawing.Point ct = new System.Drawing.Point(image.Width / 2, image.Height / 2);
+                                    markAdjust.X = ct.X - markPointImage[0].X;
+                                    markAdjust.Y = ct.Y - markPointImage[0].Y;
+                                }
                             }
                             else
                             {
-                                imbMark2.Source = bms;
+                                mLog.Info(string.Format("Score matching is lower score standard... {0} < {1}", realScore, matchingScore));
+                                markAdjust.Status = Utils.ActionStatus.Fail;
+                                break;
                             }
-                        });
+                        }
+                        CvInvoke.Imwrite(fileName, image);
                         Thread isDB = new Thread(() => {
                             mMyDBResult.InsertNewImage(ID, DateTime.Now, fileName, ROI, new System.Drawing.Rectangle(), "MARK");
                         });
@@ -178,24 +225,37 @@ namespace SPI_AOI.Views
                     else
                     {
                         mLog.Info(string.Format("Cant Capture image in Mark : {0}", i + 1));
-                        captureError = true;
+                        markAdjust.Status = Utils.ActionStatus.Fail;
                         break;
                     }
                 }
             }
-            if (captureError)
-            {
-                return -1;
-            }
-            return 0;
+            return markAdjust;
         }
-        private int CaptureFOV(string ID, string SavePath, bool LightStrobe)
+        private void ShowMarkImage(System.Drawing.Bitmap bm, int id)
+        {
+            this.Dispatcher.Invoke(() => {
+                BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(bm);
+                if (id == 0)
+                {
+                    imbMark1.Source = bms;
+                }
+                else
+                {
+                    imbMark2.Source = bms;
+                }
+            });
+        }
+        private int CaptureFOV(string ID, string SavePath, int X, int Y, double Angle, bool LightStrobe)
         {
             bool captureError = false;
             System.Drawing.Point[] xyAxisPosition = mModel.GetPulseXYFOVs();
             System.Drawing.Point[] Fovs = mModel.GetAnchorsFOV();
             mModel.Gerber.ProcessingGerberImage.ROI = mModel.Gerber.ROI;
+            Thread[] publishThread = new Thread[Fovs.Length];
+            bool[] threadStatus = new bool[20];
             using (Image<Bgr, byte> imgGraft = new Image<Bgr, byte>(mModel.Gerber.ROI.Size))
+            using (Image<Gray, byte> maskSegmentGraft = new Image<Gray, byte>(mModel.Gerber.ROI.Size))
             using (Image<Gray, byte> imgGerber = mModel.Gerber.ProcessingGerberImage.Copy())
             {
                 for (int i = 0; i < xyAxisPosition.Length; i++)
@@ -206,9 +266,11 @@ namespace SPI_AOI.Views
                     mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "FOV " + (i + 1).ToString(), x, y));
                     using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, fov, LightStrobe))
                     {
-                        if(image != null)
+                        if (image != null)
                         {
-                            using (Image<Bgr, byte> imgRotated = ImageProcessingUtils.ImageRotation(image, new System.Drawing.Point(image.Width / 2, image.Height / 2), -mModel.AngleAxisCamera * Math.PI / 180.0))
+                            double angle = -mModel.AngleAxisCamera - Angle;
+                            using (Image<Bgr, byte> imgRotated = ImageProcessingUtils.ImageRotation(image, new System.Drawing.Point(image.Width / 2, image.Height / 2), angle * Math.PI / 180.0))
+                            using (Image<Bgr, byte> imgTransform = ImageProcessingUtils.ImageTransformation(image, X, Y))
                             {
                                 SetDisplayFOV(i);
                                 var modelFov = mModel.FOV;
@@ -218,12 +280,38 @@ namespace SPI_AOI.Views
                                     Fovs[i].X - modelFov.Width / 2, Fovs[i].Y - modelFov.Height / 2,
                                     modelFov.Width, modelFov.Height);
 
-                                imgRotated.ROI = ROI;
+                                imgTransform.ROI = ROI;
                                 imgGerber.ROI = ROIGerber;
+                                imgGraft.ROI = ROIGerber;
+                                
                                 string fileName = string.Format("{0}//Image_{1}_ROI({2}_{3}_{4}_{5})_ROI_GERBER({6}_{7}_{8},{9}).png",
                                     SavePath, i + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height,
                                     ROIGerber.X, ROIGerber.Y, ROIGerber.Width, ROIGerber.Height);
-                                CvInvoke.Imwrite(fileName, imgRotated);
+                                CvInvoke.Imwrite(fileName, imgTransform);
+                                publishThread[i] = new Thread(() => {
+                                    System.Drawing.Rectangle ROIGraft = ROIGerber;
+                                    NameValueCollection data = new NameValueCollection();
+                                    data.Add("Type", "Segment");
+                                    data.Add("VI_", "True");
+                                    data.Add("FOV", (i + 1).ToString());
+                                    data.Add("Debug", Convert.ToString(mParam.Debug));
+                                    VI.ServiceResults serviceResults = VI.ServiceComm.Sendfile(mParam.ServiceURL, new string[] { fileName }, data, true);
+                                    if (serviceResults != null)
+                                    {
+                                        lock (serviceResults)
+                                        {
+                                            threadStatus[i] = true;
+                                        }
+                                    }
+                                    lock(maskSegmentGraft)
+                                    {
+                                        maskSegmentGraft.ROI = ROIGraft;
+                                        serviceResults.ImgMask.CopyTo(maskSegmentGraft);
+                                        maskSegmentGraft.ROI = new System.Drawing.Rectangle();
+                                    }
+                                    
+                                });
+                                publishThread[i].Start();
                                 if (mParam.Debug)
                                 {
                                     string fileNameGerber = string.Format("{0}//Image_{1}_ROI({2}_{3}_{4}_{5})_ROI_GERBER({6}_{7}_{8},{9})_gerber.png",
@@ -232,12 +320,15 @@ namespace SPI_AOI.Views
                                     CvInvoke.Imwrite(fileNameGerber, imgGerber);
                                 }
                                 imgGerber.ROI = System.Drawing.Rectangle.Empty;
-                                this.Dispatcher.Invoke(() => {
-                                    BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(imgRotated.Bitmap);
+                                imgGraft.ROI = System.Drawing.Rectangle.Empty;
+                                this.Dispatcher.Invoke(() =>
+                                {
+                                    BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(imgTransform.Bitmap);
                                     ImbCameraView.Source = bms;
                                     lbcountFovs.Content = (i + 1).ToString();
                                 });
-                                Thread isDB = new Thread(() => {
+                                Thread isDB = new Thread(() =>
+                                {
                                     mMyDBResult.InsertNewImage(ID, DateTime.Now, fileName, ROI, ROIGerber, "FOV");
                                 });
                                 isDB.Start();
@@ -251,6 +342,19 @@ namespace SPI_AOI.Views
                         }
                     }
                 }
+                for (int i = 0; i < publishThread.Length; i++)
+                {
+                    publishThread[i].Join();
+                }
+                string fileNameGraft = string.Format("{0}//Image_Graft.png", SavePath);
+                CvInvoke.Imwrite(fileNameGraft, imgGraft);
+                string fileNameSegmentGraft = string.Format("{0}//Image_Segment_Graft.png", SavePath);
+                CvInvoke.Imwrite(fileNameSegmentGraft, maskSegmentGraft);
+                if (mParam.Debug)
+                {
+                    string fileNameGerberGraft = string.Format("{0}//Image_Gerber.png", SavePath);
+                    CvInvoke.Imwrite(fileNameGerberGraft, imgGerber);
+                }
             }
             mModel.Gerber.ProcessingGerberImage.ROI = System.Drawing.Rectangle.Empty;
             if (captureError)
@@ -260,8 +364,9 @@ namespace SPI_AOI.Views
             return 0;
         }
         
-        private void Processing()
+        private int Processing()
         {
+            int result = -1;
             string date = DateTime.Now.ToString("yyyy_MM_dd");
             string time = DateTime.Now.ToString("HH_mm_ss");
             string sn = "NOT FOUND";
@@ -272,9 +377,7 @@ namespace SPI_AOI.Views
                 Directory.CreateDirectory(savePath);
             }
             bool lightStrobe = !Convert.ToBoolean(mParam.LIGHT_MODE);
-            ResetUI();
-            UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.PROCESSING);
-            UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PROCESSING);
+            
             mLight.SetFour(mModel.HardwareSettings.LightIntensity[0],
                 mModel.HardwareSettings.LightIntensity[1],
                 mModel.HardwareSettings.LightIntensity[2],
@@ -284,15 +387,15 @@ namespace SPI_AOI.Views
             {
                 mLight.ActiveFour(1, 1, 1, 1);
             }
-            int capMarkStatus = CaptureMark(ID,savePath, lightStrobe);
-            if(capMarkStatus != -1)
+            Utils.MarkAdjust markAdjustInfo = CaptureMark(ID,savePath, lightStrobe);
+            if(markAdjustInfo.Status == Utils.ActionStatus.Successfully)
             {
                 mLight.SetFour(mParam.LIGHT_VI_DEFAULT_INTENSITY_CH1,
                 mParam.LIGHT_VI_DEFAULT_INTENSITY_CH2,
                 mParam.LIGHT_VI_DEFAULT_INTENSITY_CH3,
                 mParam.LIGHT_VI_DEFAULT_INTENSITY_CH4);
                 mCamera.SetParameter(IOT.KeyName.ExposureTime, (float)mParam.CAMERA_VI_EXPOSURE_TIME);
-                int capFOVStatus = CaptureFOV(ID, savePath, lightStrobe);
+                int capFOVStatus = CaptureFOV(ID, savePath, markAdjustInfo.X, markAdjustInfo.Y, markAdjustInfo.Angle, lightStrobe);
                 if(capFOVStatus != -1)
                 {
                     // capture fail
@@ -313,7 +416,7 @@ namespace SPI_AOI.Views
                 {
                     // bypass
                     pass = true;
-                    UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PASS);
+                    
                 }
                 // insert db
                 string runningMode = "CONTROL_RUN";
@@ -334,8 +437,13 @@ namespace SPI_AOI.Views
                 string viResult = pass ? "PASS" : "FAIL";
                 mMyDBResult.InsertNewProduct(ID, mModel.Name, DateTime.Now, "NOT FOUND", runningMode, viResult);
             }
+            else
+            {
+                result = -1;
+            }
             SetDisplayFOV(-1);
             UpdateCountStatistical();
+            return result;
         }
         private void OnCheckStatusEvent(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -687,7 +795,6 @@ namespace SPI_AOI.Views
                 rectPosition2.Visibility = Position2 ? Visibility.Visible : Visibility.Hidden;
                 rectPosition3.Visibility = Position3 ? Visibility.Visible : Visibility.Hidden;
             });
-
         }
         private void UpdatePanelPosition(int Val)
         {

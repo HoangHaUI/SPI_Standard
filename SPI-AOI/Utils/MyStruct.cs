@@ -39,4 +39,11 @@ namespace SPI_AOI.Utils
         public double Height { get; set; }
         public System.Windows.Point[] StartPoint { get; set; }
     }
+    public class MarkAdjust
+    {
+        public double Angle { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public ActionStatus Status { get; set; }
+    }
 }

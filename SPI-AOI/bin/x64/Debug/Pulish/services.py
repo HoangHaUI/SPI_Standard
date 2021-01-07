@@ -14,10 +14,9 @@ import Utils
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 app = Flask(__name__)
-app.config["DEBUG"] = True
+# app.config["DEBUG"] = True
 
 SEGMENT_MODEL = load_model(Config.SEGMENT_MODEL_PATH)
-SEGMENT_MODEL.summary()
 
 @app.route('/', methods=['GET', 'POST'])
 def Segment():
