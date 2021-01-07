@@ -43,46 +43,34 @@ namespace SPI_AOI.Views.ModelManagement
         {
             List<double> areaUSL = new List<double>();
             List<double> areaLSL = new List<double>();
-            List<double> volumeUSL = new List<double>();
-            List<double> volumeLSL = new List<double>();
             List<double> shiftXUSL = new List<double>();
             List<double> shiftXLSL = new List<double>();
             List<double> shiftYUSL = new List<double>();
             List<double> shiftYLSL = new List<double>();
             foreach (var item in mPadsSelected)
             {
-                if (!areaUSL.Contains(item.AreaThresh.USL))
-                    areaUSL.Add(item.AreaThresh.USL);
+                if (!areaUSL.Contains(item.AreaThresh.UM_USL))
+                    areaUSL.Add(item.AreaThresh.UM_USL);
 
-                if (!areaLSL.Contains(item.AreaThresh.LSL))
-                    areaLSL.Add(item.AreaThresh.LSL);
+                if (!areaLSL.Contains(item.AreaThresh.PERCENT_LSL))
+                    areaLSL.Add(item.AreaThresh.PERCENT_LSL);
 
-                if (!volumeUSL.Contains(item.VolumeThresh.USL))
-                    volumeUSL.Add(item.VolumeThresh.USL);
+                if (!shiftXUSL.Contains(item.ShiftXThresh.UM_USL))
+                    shiftXUSL.Add(item.ShiftXThresh.UM_USL);
 
-                if (!volumeLSL.Contains(item.VolumeThresh.LSL))
-                    volumeLSL.Add(item.VolumeThresh.LSL);
+                if (!shiftXLSL.Contains(item.ShiftXThresh.PERCENT_LSL))
+                    shiftXLSL.Add(item.ShiftXThresh.PERCENT_LSL);
 
-                if (!shiftXUSL.Contains(item.ShiftXThresh.USL))
-                    shiftXUSL.Add(item.ShiftXThresh.USL);
+                if (!shiftYUSL.Contains(item.ShiftYThresh.UM_USL))
+                    shiftYUSL.Add(item.ShiftYThresh.UM_USL);
 
-                if (!shiftXLSL.Contains(item.ShiftXThresh.LSL))
-                    shiftXLSL.Add(item.ShiftXThresh.LSL);
-
-                if (!shiftYUSL.Contains(item.ShiftYThresh.USL))
-                    shiftYUSL.Add(item.ShiftYThresh.USL);
-
-                if (!shiftYLSL.Contains(item.ShiftYThresh.LSL))
-                    shiftYLSL.Add(item.ShiftYThresh.LSL);
+                if (!shiftYLSL.Contains(item.ShiftYThresh.PERCENT_LSL))
+                    shiftYLSL.Add(item.ShiftYThresh.PERCENT_LSL);
             }
             if (areaUSL.Count == 1)
                 trAreaUSL.Value = areaUSL[0];
             if (areaLSL.Count == 1)
                 trAreaLSL.Value = areaLSL[0];
-            if (volumeUSL.Count == 1)
-                trVolumeUSL.Value = volumeUSL[0];
-            if (volumeLSL.Count == 1)
-                trVolumeLSL.Value = volumeLSL[0];
             if (shiftXUSL.Count == 1)
                 trShiftXUSL.Value = shiftXUSL[0];
             if (shiftXLSL.Count == 1)
@@ -96,53 +84,39 @@ namespace SPI_AOI.Views.ModelManagement
         {
             Slider s = sender as Slider;
             s.Value = Math.Round(s.Value, 1);
-            mAreaThreshold.USL = s.Value;
+            mAreaThreshold.UM_USL = s.Value;
         }
 
         private void trAreaLSL_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider s = sender as Slider;
             s.Value = Math.Round(s.Value, 1);
-            mAreaThreshold.LSL = s.Value;
+            mAreaThreshold.PERCENT_LSL = s.Value;
         }
-        private void trVolumeUSL_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            Slider s = sender as Slider;
-            s.Value = Math.Round(s.Value, 1);
-            mVolumeThreshold.USL = s.Value;
-        }
-
-        private void trVolumeLSL_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            Slider s = sender as Slider;
-            s.Value = Math.Round(s.Value, 1);
-            mVolumeThreshold.LSL = s.Value;
-        }
-
         private void trShiftXUSL_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider s = sender as Slider;
             s.Value = Math.Round(s.Value, 1);
-            mShiftXThreshold.USL = s.Value;
+            mShiftXThreshold.UM_USL = s.Value;
         }
         private void trShiftXLSL_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider s = sender as Slider;
             s.Value = Math.Round(s.Value, 1);
-            mShiftXThreshold.LSL = s.Value;
+            mShiftXThreshold.PERCENT_LSL = s.Value;
         }
         private void trShiftYUSL_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider s = sender as Slider;
             s.Value = Math.Round(s.Value, 1);
-            mShiftYThreshold.USL = s.Value;
+            mShiftYThreshold.UM_USL = s.Value;
         }
 
         private void trShiftYLSL_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider s = sender as Slider;
             s.Value = Math.Round(s.Value, 1);
-            mShiftYThreshold.LSL = s.Value;
+            mShiftYThreshold.PERCENT_LSL = s.Value;
         }
 
         private void btApply_Click(object sender, RoutedEventArgs e)
@@ -154,11 +128,94 @@ namespace SPI_AOI.Views.ModelManagement
                 foreach (var item in items)
                 {
                     item.AreaThresh = mAreaThreshold;
-                    item.VolumeThresh = mVolumeThreshold;
                     item.ShiftXThresh = mShiftXThreshold;
                     item.ShiftYThresh = mShiftYThreshold;
                 }
                 MessageBox.Show("successfully!", "Question", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void txtAreaUSLVal_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                try
+                {
+                    TextBox txt = sender as TextBox;
+                    int val = Convert.ToInt32(txt.Text);
+                    trAreaUSL.Value = val;
+                }
+                catch { }
+            }
+        }
+
+        private void txtAreaLSL_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+                    TextBox txt = sender as TextBox;
+                    int val = Convert.ToInt32(txt.Text);
+                    trAreaLSL.Value = val;
+                }
+                catch { }
+            }
+        }
+
+        private void txtShiftXUSL_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+                    TextBox txt = sender as TextBox;
+                    int val = Convert.ToInt32(txt.Text);
+                    trShiftXUSL.Value = val;
+                }
+                catch { }
+            }
+        }
+
+        private void txtShiftXLSL_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+                    TextBox txt = sender as TextBox;
+                    int val = Convert.ToInt32(txt.Text);
+                    trShiftXLSL.Value = val;
+                }
+                catch { }
+            }
+        }
+
+        private void txtShiftYUSL_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+                    TextBox txt = sender as TextBox;
+                    int val = Convert.ToInt32(txt.Text);
+                    trShiftYUSL.Value = val;
+                }
+                catch { }
+            }
+        }
+
+        private void txtShiftYLSL_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+                    TextBox txt = sender as TextBox;
+                    int val = Convert.ToInt32(txt.Text);
+                    trShiftYLSL.Value = val;
+                }
+                catch { }
             }
         }
     }

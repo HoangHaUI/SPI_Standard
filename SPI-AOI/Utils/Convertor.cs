@@ -9,6 +9,10 @@ namespace SPI_AOI.Utils
     {
         public static BitmapSource Bitmap2BitmapSource(Bitmap bitmap)
         {
+            if (bitmap == null)
+            {
+                return null;
+            }
             var pixelFormat = bitmap.PixelFormat;
             PixelFormat format = PixelFormats.Bgr24;
             switch (pixelFormat)

@@ -219,7 +219,7 @@ namespace SPI_AOI.Models
         {
             for (int i = 0; i < this.PadItems.Count; i++)
             {
-                Rectangle padBound = new Rectangle(this.PadItems[i].Center.X, this.PadItems[i].Center.Y, 1, 1);
+                Rectangle padBound =CvInvoke.BoundingRectangle(PadItems[i].Contour);
                 for (int j = 0; j < this.FOVs.Count; j++)
                 {
                     Rectangle fov = SPI_AOI.Utils.FOVOptimize.GetRectangleByAnchor(this.FOVs[j].Anchor, FOV);
@@ -234,9 +234,10 @@ namespace SPI_AOI.Models
             List<PadItem> padsNotLink = new List<PadItem>();
             for (int i = 0; i < this.PadItems.Count; i++)
             {
-                if(this.PadItems[i].FOVs.Count == 0)
+                if(this.PadItems[i].FOVs.Count == 0 && this.PadItems[i].Enable && !this.MarkPoint.PadMark.Contains(i))
                     padsNotLink.Add(this.PadItems[i]);
             }
+            Console.WriteLine("has {0} pad not link", padsNotLink.Count);
         }
         public void ClearLinkCadItem()
         {

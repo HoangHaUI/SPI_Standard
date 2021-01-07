@@ -56,28 +56,15 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="USL" Width="35" Margin="10,5,5,5"></Label>
                                     <Slider x:Name="trAreaUSL" Width="200" Margin="10,10,5,5" Maximum="500" Minimum="0" ValueChanged="trAreaUSL_ValueChanged"></Slider>
-                                    <TextBox Width="50" IsReadOnly="True" Height="25" TextAlignment="Center" Text="{Binding Path=Value, ElementName=trAreaUSL}"></TextBox>
+                                    <TextBox x:Name="txtAreaUSLVal" KeyDown="txtAreaUSLVal_KeyDown
+                                             " Width="50" Height="25" TextAlignment="Center" Text="{Binding Path=Value, ElementName=trAreaUSL}"></TextBox>
                                     <Label Content="%" Margin="0,5,5,5"></Label>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="LSL" Width="35" Margin="10,5,5,5"></Label>
                                     <Slider  x:Name="trAreaLSL" Width="200" Margin="10,10,5,5" Maximum="500" Minimum="0" ValueChanged="trAreaLSL_ValueChanged"></Slider>
-                                    <TextBox Width="50" IsReadOnly="True"  Height="25"  Text="{Binding Path=Value, ElementName=trAreaLSL}" TextAlignment="Center"></TextBox>
-                                    <Label Content="%" Margin="0,5,5,5"></Label>
-                                </StackPanel>
-                            </StackPanel>
-                            <StackPanel>
-                                <Label Content="Volume Threshold:" FontWeight="Bold" Margin="10"></Label>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="USL" Width="35" Margin="10,5,5,5"></Label>
-                                    <Slider x:Name="trVolumeUSL" Width="200" Margin="10,10,5,5" Maximum="500" Minimum="0" ValueChanged="trVolumeUSL_ValueChanged"></Slider>
-                                    <TextBox Width="50" IsReadOnly="True"  Height="25"  Text="{Binding Path=Value, ElementName=trVolumeUSL}" TextAlignment="Center"></TextBox>
-                                    <Label Content="%" Margin="0,5,5,5"></Label>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="LSL" Width="35" Margin="10,5,5,5"></Label>
-                                    <Slider x:Name="trVolumeLSL" Width="200" Margin="10,10,5,5" Maximum="500" Minimum="0" ValueChanged="trVolumeLSL_ValueChanged"></Slider>
-                                    <TextBox Width="50" IsReadOnly="True"  Height="25"  Text="{Binding Path=Value, ElementName=trVolumeLSL}" TextAlignment="Center"></TextBox>
+                                    <TextBox x:Name="txtAreaLSL" KeyDown="txtAreaLSL_KeyDown"
+                                             Width="50"  Height="25"  Text="{Binding Path=Value, ElementName=trAreaLSL}" TextAlignment="Center"></TextBox>
                                     <Label Content="%" Margin="0,5,5,5"></Label>
                                 </StackPanel>
                             </StackPanel>
@@ -88,30 +75,34 @@
                             <StackPanel>
                                 <Label Content="Shift X Threshold:" FontWeight="Bold" Margin="10"></Label>
                                 <StackPanel Orientation="Horizontal">
-                                    <Label Content="USL" Width="35" Margin="10,5,5,5"></Label>
-                                    <Slider  x:Name="trShiftXUSL" Width="200" Margin="10,10,5,5" Maximum="500" Minimum="0" ValueChanged="trShiftXUSL_ValueChanged"></Slider>
-                                    <TextBox Width="50" IsReadOnly="True"  Height="25"  Text="{Binding Path=Value, ElementName=trShiftXUSL}" TextAlignment="Center"></TextBox>
-                                    <Label Content="%" Margin="0,5,5,5"></Label>
+                                    <Label Content="Shift" Width="35" Margin="10,5,5,5"></Label>
+                                    <Slider  x:Name="trShiftXUSL" Width="200" Margin="10,10,5,5" Maximum="10000" Minimum="0" ValueChanged="trShiftXUSL_ValueChanged"></Slider>
+                                    <TextBox x:Name="txtShiftXUSL" KeyDown="txtShiftXUSL_KeyDown"
+                                             Width="50"  Height="25"  Text="{Binding Path=Value, ElementName=trShiftXUSL}" TextAlignment="Center"></TextBox>
+                                    <Label Content="um" Margin="0,5,5,5"></Label>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <Label Content="LSL" Width="35" Margin="10,5,5,5"></Label>
+                                    <Label Content="Area" Width="35" Margin="10,5,5,5"></Label>
                                     <Slider x:Name="trShiftXLSL" Width="200" Margin="10,10,5,5" Maximum="500" Minimum="0" ValueChanged="trShiftXLSL_ValueChanged"></Slider>
-                                    <TextBox Width="50" IsReadOnly="True"  Height="25"  Text="{Binding Path=Value, ElementName=trShiftXLSL}" TextAlignment="Center"></TextBox>
+                                    <TextBox x:Name="txtShiftXLSL" KeyDown="txtShiftXLSL_KeyDown"
+                                             Width="50" Height="25"  Text="{Binding Path=Value, ElementName=trShiftXLSL}" TextAlignment="Center"></TextBox>
                                     <Label Content="%" Margin="0,5,5,5"></Label>
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel>
                                 <Label Content="Shift Y Threshold:" FontWeight="Bold" Margin="10"></Label>
                                 <StackPanel Orientation="Horizontal">
-                                    <Label Content="USL" Width="35" Margin="10,5,5,5"></Label>
-                                    <Slider x:Name="trShiftYUSL" Width="200" Margin="10,10,5,5" Maximum="500" Minimum="0" ValueChanged="trShiftYUSL_ValueChanged"></Slider>
-                                    <TextBox Width="50" IsReadOnly="True"  Height="25"  Text="{Binding Path=Value, ElementName=trShiftYUSL}" TextAlignment="Center"></TextBox>
-                                    <Label Content="%" Margin="0,5,5,5"></Label>
+                                    <Label Content="Shift" Width="35" Margin="10,5,5,5"></Label>
+                                    <Slider x:Name="trShiftYUSL" Width="200" Margin="10,10,5,5" Maximum="10000" Minimum="0" ValueChanged="trShiftYUSL_ValueChanged"></Slider>
+                                    <TextBox x:Name="txtShiftYUSL" KeyDown="txtShiftYUSL_KeyDown"
+                                             Width="50"  Height="25"  Text="{Binding Path=Value, ElementName=trShiftYUSL}" TextAlignment="Center"></TextBox>
+                                    <Label Content="um" Margin="0,5,5,5"></Label>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <Label Content="LSL" Width="35" Margin="10,5,5,5"></Label>
+                                    <Label Content="Area" Width="35" Margin="10,5,5,5"></Label>
                                     <Slider x:Name="trShiftYLSL" Width="200" Margin="10,10,5,5" Maximum="500" Minimum="0" ValueChanged="trShiftYLSL_ValueChanged"></Slider>
-                                    <TextBox Width="50" IsReadOnly="True"  Height="25"  Text="{Binding Path=Value, ElementName=trShiftYLSL}" TextAlignment="Center"></TextBox>
+                                    <TextBox x:Name="txtShiftYLSL" KeyDown="txtShiftYLSL_KeyDown" 
+                                             Width="50" Height="25"  Text="{Binding Path=Value, ElementName=trShiftYLSL}" TextAlignment="Center"></TextBox>
                                     <Label Content="%" Margin="0,5,5,5"></Label>
                                 </StackPanel>
                             </StackPanel>

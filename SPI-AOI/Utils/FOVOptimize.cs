@@ -36,7 +36,7 @@ namespace SPI_AOI.Utils
             ImgGerber.ROI = Rectangle.Empty;
             return Anchors;
         }
-        public static  Rectangle GetRectangleByAnchor(Point Anchor  , Size FOV)
+        public static Rectangle GetRectangleByAnchor(Point Anchor, Size FOV)
         {
             int x = Anchor.X - FOV.Width / 2;
             int y = Anchor.Y - FOV.Height / 2;
@@ -44,7 +44,7 @@ namespace SPI_AOI.Utils
             int h = FOV.Height;
             return new Rectangle(x, y, w, h);
         }
-        
+
         public static Image<Bgr, byte> GetDiagram(Image<Gray, byte> ImgGerber, Point[] Anchors, Size FOV)
         {
             Image<Bgr, byte> imgbgr = ImgGerber.Convert<Bgr, byte>();
@@ -76,13 +76,13 @@ namespace SPI_AOI.Utils
                 MCvScalar colorHightLight = new MCvScalar(0, 255, 255);
                 MCvScalar colorNormal = new MCvScalar(255, 0, 0);
                 Rectangle fov = new Rectangle(Anchors[i].X - FOV.Width / 2, Anchors[i].Y - FOV.Height / 2, FOV.Width, FOV.Height);
-                if(i == IndexHightLight)
+                if (i == IndexHightLight)
                 {
                     highLight = fov;
                 }
                 else
                 {
-                    CvInvoke.Rectangle(imgbgr, fov, new MCvScalar(255,0,0), 5);
+                    CvInvoke.Rectangle(imgbgr, fov, new MCvScalar(255, 0, 0), 5);
                 }
                 CvInvoke.PutText(imgbgr, (i).ToString(), Anchors[i], Emgu.CV.CvEnum.FontFace.HersheyComplex, 3, new MCvScalar(0, 255, 0), 3);
                 if (i > 0)
@@ -269,7 +269,7 @@ namespace SPI_AOI.Utils
                             CvInvoke.Rectangle(tempImg, fov, new MCvScalar(0), -1);
                             //fov = new Rectangle(fov.X + x, fov.Y + y, fov.Width, fov.Height);
                             // add condition
-                            
+
                             anchor.X += x;
                             anchor.Y += y;
                             if (anchor.X + FOV.Width / 2 > Img.Width - 1)
@@ -329,7 +329,7 @@ namespace SPI_AOI.Utils
         public Point Right { get; set; }
         public Point Bot { get; set; }
     }
-   public  enum StartPoint
+    public enum StartPoint
     {
         TOP_LEFT,
         TOP_RIGHT,

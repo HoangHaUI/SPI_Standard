@@ -42,6 +42,9 @@ namespace SPI_AOI.Views
         PLCComm mPlcComm = new PLCComm();
         IOT.HikCamera mCamera = null;
         DKZ224V4ACCom mLight = null;
+        Image<Bgr, byte> mImageGraft = null;
+        List<System.Drawing.Rectangle> mROIFOVImage = new List<System.Drawing.Rectangle>();
+        List<Utils.PadErrorDetail> mPadErrorDetails = new List<Utils.PadErrorDetail>();
         bool mIsRunning = false;
         bool mIsProcessing = false;
         bool mIsInTimer = false;
@@ -49,6 +52,7 @@ namespace SPI_AOI.Views
         bool mPingPLCOK = true;
         bool mIsCheck = true;
         bool mIsLoaded = false;
+        bool mIsShowError = false;
         Model mModel = null;
         public MainWindow()
         {
@@ -70,52 +74,7 @@ namespace SPI_AOI.Views
             UpdatePanelPosition(0);
             mTimerCheckStatus.Elapsed += OnCheckStatusEvent;
             mTimerCheckStatus.Enabled = true;
-            //ColInfo.Width = new GridLength(0);
-            //ColStatistical.Width = new GridLength(1, GridUnitType.Star);
-            //mMyDBResult.InsertNewImage("sdvajshdasd", DateTime.Now, "now", new System.Drawing.Rectangle(1, 2, 3, 5), new System.Drawing.Rectangle(4, 3, 2, 1), "Image");
-            //Image<Bgr, byte> img = new Image<Bgr, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\DL\Data\2021_01_05\Image_20210105140358823.bmp");
-            ////Image<Gray, byte> imgGerber = new Image<Gray, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\2.png");
-            
-            //string tenpSavePath = "temp/surround";
-            //if (!Directory.Exists(tenpSavePath))
-            //{
-            //    Directory.CreateDirectory(tenpSavePath);
-            //}
-            //string tempPath = tenpSavePath + "\\" + DateTime.Now.ToBinary().ToString() + ".png";
-            //Stopwatch sw = new Stopwatch();
-            //sw.Start();
-            //CvInvoke.Imwrite(tempPath, img);
-            //Thread a = new Thread(() => {
-            //    NameValueCollection data = new NameValueCollection();
-            //    data.Add("Type", "Segment");
-            //    data.Add("VI_", "True");
-            //    data.Add("FOV", "1");
-            //    data.Add("Debug", Convert.ToString(mParam.Debug));
-            //    VI.ServiceResults serviceResults = VI.ServiceComm.Sendfile("http://10.224.88.156:812", new string[] { tempPath }, data, true);
-            //});
-            //Thread b = new Thread(() => {
-            //    NameValueCollection data = new NameValueCollection();
-            //    data.Add("Type", "Segment");
-            //    data.Add("VI_", "True");
-            //    data.Add("FOV", "2");
-            //    data.Add("Debug", Convert.ToString(mParam.Debug));
-            //    VI.ServiceResults serviceResults = VI.ServiceComm.Sendfile("http://10.224.88.156:812", new string[] { tempPath }, data, true);
-            //});
-            //Thread c = new Thread(() => {
-            //    NameValueCollection data = new NameValueCollection();
-            //    data.Add("Type", "Segment");
-            //    data.Add("VI_", "True");
-            //    data.Add("FOV", "3");
-            //    data.Add("Debug", Convert.ToString(mParam.Debug));
-            //    VI.ServiceResults serviceResults = VI.ServiceComm.Sendfile("http://10.224.88.156:812", new string[] { tempPath }, data, true);
-            //});
-            //a.Start();
-            //b.Start();
-            ////c.Start();
-            //a.Join();
-            //b.Join();
-            ////c.Join();
-            //Console.WriteLine(sw.ElapsedMilliseconds);
+            ShowError(false);
         }
         public void LoadUI()
         {
@@ -129,7 +88,7 @@ namespace SPI_AOI.Views
             System.Timers.Timer timer = sender as System.Timers.Timer;
             timer.Enabled = false;
             int val = mPlcComm.Get_Has_Product_Top();
-            if(val == 1)
+            if(val == 1 && !mIsShowError)
             {
                 mIsProcessing = true;
                 ResetUI();
@@ -248,13 +207,18 @@ namespace SPI_AOI.Views
         }
         private int CaptureFOV(string ID, string SavePath, int X, int Y, double Angle, bool LightStrobe)
         {
-            bool captureError = false;
             System.Drawing.Point[] xyAxisPosition = mModel.GetPulseXYFOVs();
             System.Drawing.Point[] Fovs = mModel.GetAnchorsFOV();
             mModel.Gerber.ProcessingGerberImage.ROI = mModel.Gerber.ROI;
             Thread[] publishThread = new Thread[Fovs.Length];
-            bool[] threadStatus = new bool[20];
-            using (Image<Bgr, byte> imgGraft = new Image<Bgr, byte>(mModel.Gerber.ROI.Size))
+            bool[] threadStatus = new bool[Fovs.Length];
+            ReleasePadErrorAndFOVImage();
+            if(mImageGraft != null)
+            {
+                mImageGraft.Dispose();
+                mImageGraft = null;
+            }
+            mImageGraft = new Image<Bgr, byte>(mModel.Gerber.ROI.Size);
             using (Image<Gray, byte> maskSegmentGraft = new Image<Gray, byte>(mModel.Gerber.ROI.Size))
             using (Image<Gray, byte> imgGerber = mModel.Gerber.ProcessingGerberImage.Copy())
             {
@@ -282,11 +246,9 @@ namespace SPI_AOI.Views
 
                                 imgTransform.ROI = ROI;
                                 imgGerber.ROI = ROIGerber;
-                                imgGraft.ROI = ROIGerber;
-                                imgTransform.CopyTo(imgGraft);
-                                string fileName = string.Format("{0}//Image_{1}_ROI({2}_{3}_{4}_{5})_ROI_GERBER({6}_{7}_{8},{9}).png",
-                                    SavePath, i + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height,
-                                    ROIGerber.X, ROIGerber.Y, ROIGerber.Width, ROIGerber.Height);
+                                mImageGraft.ROI = ROIGerber;
+                                imgTransform.CopyTo(mImageGraft);
+                                string fileName = string.Format("{0}//Image_{1}).png", SavePath, i + 1);
                                 CvInvoke.Imwrite(fileName, imgTransform);
                                 publishThread[i] = new Thread(() => {
                                     System.Drawing.Rectangle ROIGraft = ROIGerber;
@@ -309,18 +271,14 @@ namespace SPI_AOI.Views
                                             maskSegmentGraft.ROI = new System.Drawing.Rectangle();
                                         }
                                     }
-                                    
                                 });
                                 publishThread[i].Start();
                                 if (mParam.Debug)
                                 {
-                                    string fileNameGerber = string.Format("{0}//Image_{1}_ROI({2}_{3}_{4}_{5})_ROI_GERBER({6}_{7}_{8},{9})_gerber.png",
-                                    SavePath, i + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height,
-                                    ROIGerber.X, ROIGerber.Y, ROIGerber.Width, ROIGerber.Height);
-                                    CvInvoke.Imwrite(fileNameGerber, imgGerber);
+                                    string fileNameGerber = string.Format("{0}//Image_Gerber_{1}.png",SavePath, i + 1, ROI.X);
                                 }
                                 imgGerber.ROI = System.Drawing.Rectangle.Empty;
-                                imgGraft.ROI = System.Drawing.Rectangle.Empty;
+                                mImageGraft.ROI = System.Drawing.Rectangle.Empty;
                                 this.Dispatcher.Invoke(() =>
                                 {
                                     BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(imgTransform.Bitmap);
@@ -332,12 +290,12 @@ namespace SPI_AOI.Views
                                     mMyDBResult.InsertNewImage(ID, DateTime.Now, fileName, ROI, ROIGerber, "FOV");
                                 });
                                 isDB.Start();
+                                mROIFOVImage.Add(ROIGerber);
                             }
                         }
                         else
                         {
                             mLog.Info(string.Format("Cant Capture image in FOV : {0}", i + 1));
-                            captureError = true;
                             break;
                         }
                     }
@@ -347,7 +305,7 @@ namespace SPI_AOI.Views
                     publishThread[i].Join();
                 }
                 string fileNameGraft = string.Format("{0}//Image_Graft.png", SavePath);
-                CvInvoke.Imwrite(fileNameGraft, imgGraft);
+                CvInvoke.Imwrite(fileNameGraft, mImageGraft);
                 string fileNameSegmentGraft = string.Format("{0}//Image_Segment_Graft.png", SavePath);
                 CvInvoke.Imwrite(fileNameSegmentGraft, maskSegmentGraft);
                 if (mParam.Debug)
@@ -357,10 +315,7 @@ namespace SPI_AOI.Views
                 }
             }
             mModel.Gerber.ProcessingGerberImage.ROI = System.Drawing.Rectangle.Empty;
-            if (captureError)
-            {
-                return -1;
-            }
+            
             return 0;
         }
         
@@ -396,54 +351,70 @@ namespace SPI_AOI.Views
                 mParam.LIGHT_VI_DEFAULT_INTENSITY_CH4);
                 mCamera.SetParameter(IOT.KeyName.ExposureTime, (float)mParam.CAMERA_VI_EXPOSURE_TIME);
                 int capFOVStatus = CaptureFOV(ID, savePath, markAdjustInfo.X, markAdjustInfo.Y, markAdjustInfo.Angle, lightStrobe);
-                if(capFOVStatus != -1)
-                {
-                    // capture fail
-                }
-                bool pass = false;
                 if (!lightStrobe)
                 {
                     mLight.ActiveFour(0, 0, 0, 0);
                 }
-               
-                if (mParam.RUNNING_MODE == 0 || mParam.RUNNING_MODE == 1)
+                bool pass = false;
+                if (capFOVStatus == 0)
                 {
-                    // control run || test
-                    pass = true;
-                    
+                    // capture fail
+                    if (mParam.RUNNING_MODE == 0 || mParam.RUNNING_MODE == 1)
+                    {
+                        // control run || test
+                        pass = true;
+                        
+                    }
+                    else if (mParam.RUNNING_MODE == 2)
+                    {
+                        // bypass
+                        pass = true;
+
+                    }
+                    // insert db
+                    string runningMode = "";
+                    switch (mParam.RUNNING_MODE)
+                    {
+                        case 0:
+                            runningMode = Utils.LabelStatus.CONTROL_RUN.ToString();
+                            break;
+                        case 1:
+                            runningMode = Utils.LabelStatus.TEST.ToString();
+                            break;
+                        case 2:
+                            runningMode = Utils.LabelStatus.BY_PASS.ToString();
+                            break;
+                        default:
+                            break;
+                    }
+                    string viResult = pass ? "PASS" : "FAIL";
+                    result = pass ? 0 : -1;
+                    mMyDBResult.InsertNewProduct(ID, mModel.Name, DateTime.Now, "NOT FOUND", runningMode, viResult);
                 }
-                else if(mParam.RUNNING_MODE == 2)
+                else
                 {
-                    // bypass
-                    pass = true;
-                    
+                    result = -2;
                 }
-                // insert db
-                string runningMode = "CONTROL_RUN";
-                switch (mParam.RUNNING_MODE)
-                {
-                    case 0:
-                        runningMode = Utils.LabelStatus.CONTROL_RUN.ToString();
-                        break;
-                    case 1:
-                        runningMode = Utils.LabelStatus.TEST.ToString();
-                        break;
-                    case 2:
-                        runningMode = Utils.LabelStatus.BY_PASS.ToString();
-                        break;
-                    default:
-                        break;
-                }
-                string viResult = pass ? "PASS" : "FAIL";
-                mMyDBResult.InsertNewProduct(ID, mModel.Name, DateTime.Now, "NOT FOUND", runningMode, viResult);
             }
             else
             {
-                result = -1;
+                result = -2;
             }
             SetDisplayFOV(-1);
             UpdateCountStatistical();
             return result;
+        }
+        public void ReleasePadErrorAndFOVImage()
+        {
+            for (int i = 0; i < mPadErrorDetails.Count; i++)
+            {
+                if(mPadErrorDetails[i] != null)
+                {
+                    mPadErrorDetails[i].Dispose();
+                    mPadErrorDetails = null;
+                }
+            }
+            mPadErrorDetails.Clear();
         }
         private void OnCheckStatusEvent(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -641,10 +612,10 @@ namespace SPI_AOI.Views
         {
             mSummary.Add(new Utils.SummaryInfo() { Field = "Area Hight", Count = 0, PPM = 0 });
             mSummary.Add(new Utils.SummaryInfo() { Field = "Area Low", Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = "Shift X Hight", Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = "Shift X Low", Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = "Shift Y Hight", Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = "Shift Y Low", Count = 0, PPM = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = "Shift X", Count = 0, PPM = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = "Shift X Area", Count = 0, PPM = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = "Shift Y", Count = 0, PPM = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = "Shift Y Area", Count = 0, PPM = 0 });
         }
         private Views.UserManagement.UserType Login()
         {
@@ -1121,6 +1092,94 @@ namespace SPI_AOI.Views
                 Views.MainConfigWindow.LightCtlForm lightForm = new Views.MainConfigWindow.LightCtlForm();
                 lightForm.ShowDialog();
             }
+        }
+        private void ShowError(bool status)
+        {
+            if(status == true)
+            {
+                mIsShowError = true;
+                this.Dispatcher.Invoke(() => {
+                    int lm = mPadErrorDetails.Count; // mPadErrorDetails.Count > 500 ? 50 : 
+                    for (int i = 0; i < lm; i++)
+                    {
+                        Utils.PadErrorControl item = new Utils.PadErrorControl(mPadErrorDetails[i].PadImage.Bitmap, mPadErrorDetails[i].Pad.NoID);
+                        item.ID = i;
+                        item.Click += EventFOVClick;
+                        stackPadError.Children.Add(item);
+                    }
+                    ColError.Width = new GridLength(850);
+                    ColInfo.Width = new GridLength(0);
+                    ColStatistical.Width = new GridLength(0);
+                    chartForm.Visibility = Visibility.Hidden;
+                });
+            }
+            else
+            {
+                mIsShowError = false; this.Dispatcher.Invoke(() =>
+                {
+                    ColError.Width = new GridLength(0);
+                    ColInfo.Width = new GridLength(500);
+                    ColStatistical.Width = new GridLength(350);
+                    chartForm.Visibility = Visibility.Visible;
+                });
+            }
+        }
+        public void EventFOVClick(object sender, RoutedEventArgs e)
+        {
+            Utils.PadErrorControl item = sender as Utils.PadErrorControl;
+            if(mImageGraft != null)
+            {
+                var padEr = mPadErrorDetails[item.ID];
+                int idFov = padEr.FOVNo;
+                mImageGraft.ROI = mROIFOVImage[idFov];
+                BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(mImageGraft.Bitmap);
+                imbFOVError.Source = bms;
+                mImageGraft.ROI = new System.Drawing.Rectangle();
+                lbPadErrorArea.Content = string.Format("{0} | ({1} ~ {2})", padEr.Area, padEr.AreaStdLow, padEr.AreaStdHight);
+                lbPadErrorShiftX.Content = string.Format("{0} | ({1} ~ {2})", padEr.ShiftX, 0, padEr.ShiftXStduM);
+                lbPadErrorShiftY.Content = string.Format("{0} | ({1} ~ {2})", padEr.ShiftY, 0, padEr.ShiftYStduM);
+                string component = mModel.GetComponentName(padEr.Pad);
+                lbPadErrorID.Content = padEr.Pad.NoID.ToString();
+                lbPadErrorComponent.Content = component;
+            }
+        }
+        private void btFinish_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Thread a = new Thread(() =>
+            {
+                mModel = Model.LoadModelByName("model 123");
+                System.Drawing.Point[] Fovs = mModel.GetAnchorsFOV();
+                var modelFov = mModel.FOV;
+                for (int i = 0; i < mModel.Gerber.FOVs.Count; i++)
+                {
+
+                    System.Drawing.Rectangle ROIGerber = new System.Drawing.Rectangle(
+                                    Fovs[i].X - modelFov.Width / 2, Fovs[i].Y - modelFov.Height / 2,
+                                    modelFov.Width, modelFov.Height);
+                    mROIFOVImage.Add(ROIGerber);
+                }
+                Image<Gray, byte> imgMask = new Image<Gray, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\mask.png");
+                mImageGraft = new Image<Bgr, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\Image_Graft.png");
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                imgMask = VI.Predictor.ReleaseNoise(imgMask);
+                Utils.PadSegmentInfo[] pads = VI.Predictor.GetPadSegmentInfo(imgMask, mModel.Gerber.ROI);
+                Console.WriteLine(sw.ElapsedMilliseconds);
+                Utils.PadErrorDetail[] padError = VI.Predictor.ComparePad(mModel, pads);
+                padError = VI.Predictor.GetImagePadError(mImageGraft, padError, mModel.Gerber.ROI);
+                for (int i = 0; i < padError.Length; i++)
+                {
+                    mPadErrorDetails.Add(padError[i]);
+                }
+                ShowError(true);
+                Console.WriteLine(sw.ElapsedMilliseconds);
+            });
+            a.Start();
         }
     }
 }

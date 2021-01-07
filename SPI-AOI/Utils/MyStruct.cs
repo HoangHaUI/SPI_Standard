@@ -17,22 +17,6 @@ namespace SPI_AOI.Utils
         public int Count { get; set; }
         public int PPM { get; set; }
     }
-    class ImageCaptureInfo
-    {
-        public int ID { get; set; }
-        public Image<Bgr, byte> ImageSource { get; set; }
-        public Image<Gray, byte> ImageSegment { get; set; }
-        public Size ROI { get; set; }
-        public Size FOV { get; set; }
-        public double Angle { get; set; }
-    }
-    class MarkCaptureInfo
-    {
-        public int ID { get; set; }
-        public Image<Bgr, byte> Image { get; set; }
-        public Size ROI { get; set; }
-        public Point MarkCenter { get; set; }
-    }
     class FOVDisplayInfo
     {
         public double Witdh { get; set; }
@@ -45,5 +29,35 @@ namespace SPI_AOI.Utils
         public int X { get; set; }
         public int Y { get; set; }
         public ActionStatus Status { get; set; }
+    }
+    class PadErrorDetail
+    {
+        public Models.PadItem Pad { get; set; }
+        public Rectangle ROI { get; set; }
+        public Image<Bgr, byte> PadImage { get; set; }
+        public int FOVNo { get; set; }
+        public double Area { get; set; }
+        public double ShiftX { get; set; }
+        public double ShiftY { get; set; }
+        public double AreaStdHight { get; set; }
+        public double AreaStdLow { get; set; }
+        public double ShiftXStduM { get; set; }
+        public double ShiftXStdArea { get; set; }
+        public double ShiftYStduM { get; set; }
+        public double ShiftYStdArea { get; set; }
+        public void Dispose()
+        {
+            if(this.PadImage != null)
+            {
+                this.PadImage.Dispose();
+                this.PadImage = null;
+            }
+        }
+    }
+    class PadSegmentInfo
+    {
+        public Rectangle Bouding { get; set; }
+        public double Area { get; set; }
+        public  Point Center { get; set; }
     }
 }

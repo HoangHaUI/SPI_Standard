@@ -78,6 +78,53 @@ namespace SPI_AOI.Models
                 return 0;
             }
         }
+        public Rectangle GetRectangleComponent(string Component)
+        {
+            int Top = (int) Math.Pow(2, 30);
+            int Left = (int)Math.Pow(2, 30);
+            int Bot = 0;
+            int Right = 0;
+            for (int i = 0; i < this.Gerber.PadItems.Count; i++)
+            {
+                PadItem item = this.Gerber.PadItems[i];
+                for (int c  = 0; c < this.Cad.Count; c++)
+                {
+                    if (this.Cad[c].CadFileID == item.CadFileID)
+                    {
+                        if(this.Cad[c].CadItems[item.CadItemIndex].Name == Component)
+                        {
+                            Point[] p = item.Contour.ToArray();
+                            for (int j = 0; j < p.Length; j++)
+                            {
+                                Top = p[j].Y < Top ? p[j].Y : Top;
+                                Left = p[j].X < Left ? p[j].X : Left;
+                                Bot = p[j].Y > Bot ? p[j].Y : Bot;
+                                Right = p[j].X > Right ? p[j].X : Right;
+                            }
+                        }
+                    }
+                }
+            }
+            if(Top != (int)Math.Pow(2, 30) && Left != (int)Math.Pow(2, 30) && Bot != 0 && Right != 0)
+            {
+                return new Rectangle(Left, Top, Right - Left, Bot - Top);
+            }
+            else
+            {
+                return Rectangle.Empty;
+            }
+        }
+        public string GetComponentName(PadItem pad)
+        {
+            for (int c = 0; c < this.Cad.Count; c++)
+            {
+                if (this.Cad[c].CadFileID == pad.CadFileID)
+                {
+                    return this.Cad[c].CadItems[pad.CadItemIndex].Name;
+                }
+            }
+            return null;
+        }
         public void UpdateAfterEditGerber()
         {
             this.Gerber.UpdateFOV(this.FOV);

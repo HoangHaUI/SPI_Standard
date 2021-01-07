@@ -20,7 +20,6 @@ namespace SPI_AOI.Models
         public VectorOfPoint Contour { get; set; }
         public Point Center { get; set; }
         public StandardThreshold AreaThresh { get; set; }
-        public StandardThreshold VolumeThresh { get; set; }
         public StandardThreshold ShiftXThresh { get; set; }
         public StandardThreshold ShiftYThresh { get; set; }
         public int CadItemIndex { get; set; }
@@ -55,10 +54,9 @@ namespace SPI_AOI.Models
                         cntPoint[k].Y += ROI.Y;
                     }
                     pad.Contour = new VectorOfPoint(cntPoint);
-                    pad.AreaThresh = new StandardThreshold(5, 10);
-                    pad.VolumeThresh = new StandardThreshold(5, 10);
-                    pad.ShiftXThresh = new StandardThreshold(5, 10);
-                    pad.ShiftYThresh = new StandardThreshold(5, 10);
+                    pad.AreaThresh = new StandardThreshold(200, 60);
+                    pad.ShiftXThresh = new StandardThreshold(130, 40);
+                    pad.ShiftYThresh = new StandardThreshold(130, 40);
                     pad.FOVs = new List<int>();
                     pad.CadFileID = string.Empty;
                     pad.CadItemIndex = -1;
@@ -83,13 +81,13 @@ namespace SPI_AOI.Models
     }
     public class StandardThreshold
     {
-        public double LSL { get; set; }
-        public double USL { get; set; }
+        public double UM_USL { get; set; }
+        public double PERCENT_LSL { get; set; }
         public StandardThreshold() { }
-        public StandardThreshold(double USL, double LSL)
+        public StandardThreshold(double UM_USL, double PERCENT_LSL)
         {
-            this.LSL = LSL;
-            this.USL = USL;
+            this.UM_USL = UM_USL;
+            this.PERCENT_LSL = PERCENT_LSL;
         }
     }
     

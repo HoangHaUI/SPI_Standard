@@ -60,6 +60,7 @@ namespace SPI_AOI.Views.ModelManagement
         }
         private void LoadDiagram(int Hightlight = -1)
         {
+
             using (Image<Bgr, byte> img = mModel.GetFOVImage(Hightlight))
             {
                 BitmapSource bms = SPI_AOI.Utils.Convertor.Bitmap2BitmapSource(img.ToBitmap());

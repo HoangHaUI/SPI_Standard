@@ -127,9 +127,9 @@
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition x:Name="ColInfo" Width="480"/>
-                    <ColumnDefinition x:Name="ColStatistical" Width="350"/>
-                    <ColumnDefinition x:Name="ColError" Width="0"/>
+                    <ColumnDefinition x:Name="ColInfo" Width="0"/>
+                    <ColumnDefinition x:Name="ColStatistical" Width="0"/>
+                    <ColumnDefinition x:Name="ColError" Width="850"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0" Margin="3">
@@ -307,6 +307,7 @@
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="3">
+                        <Button Content="test" Margin="50" Click="Button_Click"></Button>
                         <GroupBox Header="Result details" BorderBrush="Gray" FontWeight="Bold" Visibility="Hidden">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -432,8 +433,8 @@
                                     </Grid>
                                     <Grid Grid.Column="1">
                                         <Canvas Margin="25,0,0,0">
-                                            <WindowsFormsHost Background="Transparent"
-                                                              Width="220" Height="160">
+                                            <WindowsFormsHost x:Name="chartForm" Background="Transparent"
+                                                              Width="220" Height="160" Visibility="Hidden" >
                                                 <MSChart:Chart x:Name="chartYeildRate" 
                                                                >
                                                     <MSChart:Chart.Series>
@@ -488,8 +489,76 @@
                     </Grid>
                 </Grid>
                 <Grid Grid.Column="3">
-                    <Grid>
 
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" >
+                            <GroupBox Header="Pads" BorderBrush="Gray" Margin="3">
+                                <ScrollViewer VerticalScrollBarVisibility="Visible"  Margin="0,10,0,3">
+                                    <StackPanel x:Name="stackPadError" Orientation="Vertical">
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </GroupBox>
+                            
+
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="105*"/>
+                                <RowDefinition Height="68*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <GroupBox Header="FOV" BorderBrush="Gray" Margin="3">
+                                    <Border Background="LightGray" Margin="10">
+                                        <Grid>
+                                            <Image x:Name="imbFOVError"></Image>
+                                        </Grid>
+                                    </Border>
+                                </GroupBox>
+                                
+                            </Grid>
+                            <Grid Grid.Row="1">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="407*"/>
+                                        <ColumnDefinition Width="175"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <GroupBox Header="Details" BorderBrush="Gray" Margin="3">
+                                            <StackPanel Margin="15">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label FontSize="15" FontWeight="Bold" Content="Pad ID:"/>
+                                                    <Label x:Name="lbPadErrorID" FontSize="15" FontWeight="Bold"  Margin="10,0,0,0"></Label>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label FontSize="15" FontWeight="Bold" Content="Component:"/>
+                                                    <Label x:Name="lbPadErrorComponent" FontSize="15" FontWeight="Bold"  Margin="10"></Label>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label FontSize="15" FontWeight="Bold" Content="Area (%):"/>
+                                                    <Label x:Name="lbPadErrorArea" FontSize="15" FontWeight="Bold" Margin="10,0,0,0"></Label>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label FontSize="15" FontWeight="Bold" Content="Shift X (um):"/>
+                                                        <Label x:Name="lbPadErrorShiftX" FontSize="15" FontWeight="Bold"   Margin="10,0,0,0"></Label>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label FontSize="15" FontWeight="Bold" Content="Shift Y (um):"/>
+                                                    <Label x:Name="lbPadErrorShiftY" FontSize="15" FontWeight="Bold"  Margin="10,0,0,0"></Label>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </GroupBox>
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <Button x:Name="btFinish" Click="btFinish_Click" Margin="12" Content="Finish" FontSize="30" FontWeight="Bold"></Button>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>

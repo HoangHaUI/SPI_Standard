@@ -177,6 +177,7 @@
     <Compile Include="Utils\MyEnum.cs" />
     <Compile Include="Utils\MyState.cs" />
     <Compile Include="Utils\MyStruct.cs" />
+    <Compile Include="Utils\PadErrorControl.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Utils\Convertor.cs" />
     <Compile Include="Utils\FilesManagement.cs" />
@@ -269,6 +270,7 @@
     </Compile>
     <Compile Include="VI\AutoAdjustROIFOV.cs" />
     <Compile Include="VI\CaptureImage.cs" />
+    <Compile Include="VI\Predictor.cs" />
     <Compile Include="VI\ServiceComm.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
