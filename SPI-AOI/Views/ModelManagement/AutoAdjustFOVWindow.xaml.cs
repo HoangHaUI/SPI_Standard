@@ -122,7 +122,7 @@ namespace SPI_AOI.Views.ModelManagement
                         cbFOV.Items.Add(i + 1);
                     }
                     mAnchorFOV = mModel.GetPulseXYFOVs();
-                    mAnchorROIGerber = mModel.GetAnchorsFOV();
+                    mAnchorROIGerber = mModel.GetAnchorsFOV(false);
                 }
             }
         }
@@ -231,12 +231,16 @@ namespace SPI_AOI.Views.ModelManagement
             });
             if(id > -1)
             {
-                System.Drawing.Rectangle ROI = new System.Drawing.Rectangle(
-                    Convert.ToInt32(txtROIX.Text),
-                    Convert.ToInt32(txtROIY.Text),
-                    Convert.ToInt32(txtROIWidth.Text),
-                    Convert.ToInt32(txtROIHeight.Text)
-                    );
+                System.Drawing.Rectangle ROI = new System.Drawing.Rectangle() ;
+                this.Dispatcher.Invoke(() => {
+                    ROI = new System.Drawing.Rectangle(
+                        Convert.ToInt32(txtROIX.Text),
+                        Convert.ToInt32(txtROIY.Text),
+                        Convert.ToInt32(txtROIWidth.Text),
+                        Convert.ToInt32(txtROIHeight.Text)
+                        );
+                });
+                
                 mImage.ROI = ROI;
                 var modelFov = mModel.FOV;
                 System.Drawing.Rectangle ROIGerber = new System.Drawing.Rectangle(

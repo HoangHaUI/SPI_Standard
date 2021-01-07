@@ -45,8 +45,8 @@ namespace SPI_AOI.VI
                     }
                     int x = Convert.ToInt32(Sum(xad) / idCheck.Length);
                     int y = Convert.ToInt32(Sum(yad) / idCheck.Length);
-                    ROIAdjust.X += x;
-                    ROIAdjust.Y += y;
+                    ROIAdjust.X -= x;
+                    ROIAdjust.Y -= y;
                 }
             }
             return ROIAdjust;

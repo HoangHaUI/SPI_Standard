@@ -72,8 +72,8 @@ namespace SPI_AOI.Views
             //ColInfo.Width = new GridLength(0);
             //ColStatistical.Width = new GridLength(1, GridUnitType.Star);
             //mMyDBResult.InsertNewImage("sdvajshdasd", DateTime.Now, "now", new System.Drawing.Rectangle(1, 2, 3, 5), new System.Drawing.Rectangle(4, 3, 2, 1), "Image");
-            Image<Bgr, byte> img = new Image<Bgr, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\1.png");
-            Image<Gray, byte> imgGerber = new Image<Gray, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\2.png");
+            //Image<Bgr, byte> img = new Image<Bgr, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\1.png");
+            //Image<Gray, byte> imgGerber = new Image<Gray, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\2.png");
             
         }
         public void LoadUI()
