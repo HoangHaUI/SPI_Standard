@@ -39,7 +39,7 @@ namespace SPI_AOI.Models
             double areaTemplate = CvInvoke.ContourArea(Template);
             using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
             {
-                CvInvoke.FindContours(ImgBinary, contours, null, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
+                CvInvoke.FindContours(ImgBinary, contours, null, Emgu.CV.CvEnum.RetrType.Ccomp, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
                 for (int i = 0; i < contours.Size; i++)
                 {
                     double scoreMatching = CvInvoke.MatchShapes(Template, contours[i], Emgu.CV.CvEnum.ContoursMatchType.I3);

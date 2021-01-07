@@ -283,7 +283,7 @@ namespace SPI_AOI.Views
                                 imgTransform.ROI = ROI;
                                 imgGerber.ROI = ROIGerber;
                                 imgGraft.ROI = ROIGerber;
-                                
+                                imgTransform.CopyTo(imgGraft);
                                 string fileName = string.Format("{0}//Image_{1}_ROI({2}_{3}_{4}_{5})_ROI_GERBER({6}_{7}_{8},{9}).png",
                                     SavePath, i + 1, ROI.X, ROI.Y, ROI.Width, ROI.Height,
                                     ROIGerber.X, ROIGerber.Y, ROIGerber.Width, ROIGerber.Height);
@@ -302,12 +302,12 @@ namespace SPI_AOI.Views
                                         {
                                             threadStatus[i] = true;
                                         }
-                                    }
-                                    lock(maskSegmentGraft)
-                                    {
-                                        maskSegmentGraft.ROI = ROIGraft;
-                                        serviceResults.ImgMask.CopyTo(maskSegmentGraft);
-                                        maskSegmentGraft.ROI = new System.Drawing.Rectangle();
+                                        lock (maskSegmentGraft)
+                                        {
+                                            maskSegmentGraft.ROI = ROIGraft;
+                                            serviceResults.ImgMask.CopyTo(maskSegmentGraft);
+                                            maskSegmentGraft.ROI = new System.Drawing.Rectangle();
+                                        }
                                     }
                                     
                                 });

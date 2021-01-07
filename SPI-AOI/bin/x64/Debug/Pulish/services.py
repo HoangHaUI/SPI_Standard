@@ -37,10 +37,13 @@ def Segment():
             filestr = f.read()
             npimg = np.fromstring(filestr, np.uint8)
             img = cv2.imdecode(npimg, 1)
+            stt = request.values.get("FOV")
             debug = request.values.get("Debug") == "True"
             mask = SegmentUnet.SegmentImage(SEGMENT_MODEL, img, Config.IMAGE_WIDTH, Config.IMAGE_HEIGHT, debug)
-            cv2.imwrite("Result/mask.png", mask)
-            imageStr = Utils.Image2Str("Result/mask.png")
+            
+            name = "Result/mark" + str(stt) + ".png"
+            cv2.imwrite(name, mask)
+            imageStr = Utils.Image2Str(name)
             result["status"] = "OK"
             result["image"] = imageStr
             result["sn"] = "NOT FOUND"
