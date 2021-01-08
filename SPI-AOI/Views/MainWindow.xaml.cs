@@ -75,6 +75,14 @@ namespace SPI_AOI.Views
             mTimerCheckStatus.Elapsed += OnCheckStatusEvent;
             mTimerCheckStatus.Enabled = true;
             ShowError(false);
+            //NameValueCollection data = new NameValueCollection();
+            //data.Add("Type", "Segment");
+            //data.Add("VI_", "True");
+            //data.Add("FOV", (1 + 1).ToString());
+            //data.Add("Debug", Convert.ToString(mParam.Debug));
+            //string fileName = @"D:\Save\2021_01_08\TIME(10_24_40)_._SN(NOT FOUND)\Image_2).png";
+
+            //VI.ServiceResults serviceResults = VI.ServiceComm.Sendfile(mParam.ServiceURL, new string[] { fileName }, data, true);
         }
         public void LoadUI()
         {
@@ -99,10 +107,13 @@ namespace SPI_AOI.Views
                 mPlcComm.Reset_Has_Product_Top();
                 if(result == 0)
                 {
+                    mPlcComm.Set_Pass();
                     UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PASS);
+                    
                 }
                 else
                 {
+                    mPlcComm.Set_Fail();
                     UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.FAIL);
                     ShowError(true);
                 }
@@ -252,18 +263,23 @@ namespace SPI_AOI.Views
                                 string fileName = string.Format("{0}//Image_{1}).png", SavePath, i + 1);
                                 CvInvoke.Imwrite(fileName, imgTransform);
                                 publishThread[i] = new Thread(() => {
+                                    int id = i;
                                     System.Drawing.Rectangle ROIGraft = ROIGerber;
                                     NameValueCollection data = new NameValueCollection();
                                     data.Add("Type", "Segment");
                                     data.Add("VI_", "True");
-                                    data.Add("FOV", (i + 1).ToString());
+                                    data.Add("FOV", (id + 1).ToString());
                                     data.Add("Debug", Convert.ToString(mParam.Debug));
+                                    if(id > 0)
+                                    {
+                                        publishThread[i - 1].Join();
+                                    }
                                     VI.ServiceResults serviceResults = VI.ServiceComm.Sendfile(mParam.ServiceURL, new string[] { fileName }, data, true);
                                     if (serviceResults != null)
                                     {
                                         lock (serviceResults)
                                         {
-                                            threadStatus[i] = true;
+                                            threadStatus[id] = true;
                                         }
                                         lock (maskSegmentGraft)
                                         {
@@ -304,10 +320,12 @@ namespace SPI_AOI.Views
                 }
                 if(result != -2)
                 {
+                    mLog.Info("waiting predict");
                     for (int i = 0; i < publishThread.Length; i++)
                     {
                         publishThread[i].Join();
                     }
+                    mLog.Info("write image");
                     string fileNameGraft = string.Format("{0}//Image_Graft.png", SavePath);
                     CvInvoke.Imwrite(fileNameGraft, mImageGraft);
                     if (mParam.Debug)
@@ -317,17 +335,20 @@ namespace SPI_AOI.Views
                         string fileNameGerberGraft = string.Format("{0}//Image_Gerber.png", SavePath);
                         CvInvoke.Imwrite(fileNameGerberGraft, imgGerber);
                     }
+                    mLog.Info("predict");
                     Image<Gray, byte> maskReleaseNoise = VI.Predictor.ReleaseNoise(maskSegmentGraft);
                     Utils.PadSegmentInfo[] pads = VI.Predictor.GetPadSegmentInfo(maskReleaseNoise, mModel.Gerber.ROI);
+                    mLog.Info("PadSegmentInfo");
                     Utils.PadErrorDetail[] padError = VI.Predictor.ComparePad(mModel, pads);
-                    padError = VI.Predictor.GetImagePadError(mImageGraft, padError, mModel.Gerber.ROI);
+                    mLog.Info(string.Format("has {0} pad error...", padError.Length));
+                    padError = VI.Predictor.GetImagePadError(mImageGraft, padError, mModel.Gerber.ROI, mParam.LIMIT_SHOW_ERROR);
                     for (int i = 0; i < padError.Length; i++)
                     {
                         mPadErrorDetails.Add(padError[i]);
                     }
                     if (mPadErrorDetails.Count > 0)
                     {
-                        result = -1;
+                        result = 0;
                     }
                     else
                     {
@@ -338,6 +359,7 @@ namespace SPI_AOI.Views
                             mImageGraft = null;
                         }
                     }
+                    mLog.Info("show error");
                 }
             }
             mModel.Gerber.ProcessingGerberImage.ROI = System.Drawing.Rectangle.Empty;
@@ -440,7 +462,7 @@ namespace SPI_AOI.Views
                 if(mPadErrorDetails[i] != null)
                 {
                     mPadErrorDetails[i].Dispose();
-                    mPadErrorDetails = null;
+                    mPadErrorDetails[i] = null;
                 }
             }
             mPadErrorDetails.Clear();
@@ -1128,7 +1150,7 @@ namespace SPI_AOI.Views
             {
                 mIsShowError = true;
                 this.Dispatcher.Invoke(() => {
-                    int lm = mPadErrorDetails.Count; // mPadErrorDetails.Count > 500 ? 50 : 
+                    int lm = mPadErrorDetails.Count > mParam.LIMIT_SHOW_ERROR ? mParam.LIMIT_SHOW_ERROR : mPadErrorDetails.Count; // 
                     for (int i = 0; i < lm; i++)
                     {
                         Utils.PadErrorControl item = new Utils.PadErrorControl(mPadErrorDetails[i].PadImage.Bitmap, mPadErrorDetails[i].Pad.NoID);
@@ -1140,6 +1162,7 @@ namespace SPI_AOI.Views
                     ColInfo.Width = new GridLength(0);
                     ColStatistical.Width = new GridLength(0);
                     chartForm.Visibility = Visibility.Hidden;
+                    bdFOVError.Visibility = Visibility.Visible;
                 });
             }
             else
@@ -1152,9 +1175,10 @@ namespace SPI_AOI.Views
                         mImageGraft = null;
                     }
                     stackPadError.Children.Clear();
-                    ColError.Width = new GridLength(0);
+                    bdFOVError.Visibility = Visibility.Hidden;
                     ColInfo.Width = new GridLength(500);
                     ColStatistical.Width = new GridLength(350);
+                    ColError.Width = new GridLength(0);
                     chartForm.Visibility = Visibility.Visible;
                     ShowComponentPosition(System.Drawing.Rectangle.Empty);
                     lbPadErrorArea.Content = "---";
@@ -1162,6 +1186,7 @@ namespace SPI_AOI.Views
                     lbPadErrorShiftY.Content = "---";
                     lbPadErrorID.Content = "---";
                     lbPadErrorComponent.Content = "---";
+
                 });
             }
         }
@@ -1263,7 +1288,7 @@ namespace SPI_AOI.Views
                 Utils.PadSegmentInfo[] pads = VI.Predictor.GetPadSegmentInfo(imgMask, mModel.Gerber.ROI);
                 Console.WriteLine(sw.ElapsedMilliseconds);
                 Utils.PadErrorDetail[] padError = VI.Predictor.ComparePad(mModel, pads);
-                padError = VI.Predictor.GetImagePadError(mImageGraft, padError, mModel.Gerber.ROI);
+                padError = VI.Predictor.GetImagePadError(mImageGraft, padError, mModel.Gerber.ROI, 10);
                 for (int i = 0; i < padError.Length; i++)
                 {
                     mPadErrorDetails.Add(padError[i]);

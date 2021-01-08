@@ -521,7 +521,7 @@
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
                                 <GroupBox Header="FOV" BorderBrush="Gray" Margin="3">
-                                    <Border Background="LightGray" Margin="10">
+                                    <Border x:Name="bdFOVError" Background="LightGray" Margin="10">
                                         <Grid>
                                             <Image x:Name="imbFOVError"></Image>
                                         </Grid>

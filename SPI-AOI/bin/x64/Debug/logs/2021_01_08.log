@@ -30,3 +30,476 @@
 2021-01-08 09:24:02.6723|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:430)|
 2021-01-08 09:34:56.1776|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:459)|
 2021-01-08 09:36:16.4419|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:459)|
+2021-01-08 10:16:16.6051|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:23.8090|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:26.0235|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:28.9481|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:30.1812|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:31.3401|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:32.4590|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:33.6336|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:34.9470|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:36.1882|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:37.2696|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:38.5641|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:39.6750|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:40.8544|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:42.1354|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:43.3711|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:44.5502|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:45.6101|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:46.6814|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:16:47.6933|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:00.7300|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:01.8687|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:03.0293|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:04.0958|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:05.2391|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:06.5691|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:07.7874|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:08.8543|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:10.1325|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:11.3658|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:12.5278|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:13.8866|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:15.0531|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:16.2089|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:17.2875|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:18.3792|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:17:19.4181|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(AutoAdjustFOVWindow.xaml.cs:173)|
+2021-01-08 10:20:27.3575|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:130)|
+2021-01-08 10:20:29.0910|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:130)|
+2021-01-08 10:20:30.2830|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:31.3356|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:32.4749|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:33.8891|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:35.4948|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:37.4825|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:39.0932|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:40.6610|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:42.3574|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:43.7886|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:45.3260|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:47.0474|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:48.9134|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:50.4922|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:51.9044|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:53.4264|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:231)|
+2021-01-08 10:20:55.3013|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:231)|
+2021-01-08 10:24:40.4194|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:130)|
+2021-01-08 10:24:42.0747|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:130)|
+2021-01-08 10:24:43.2666|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:06.9914|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:12.8729|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:14.4746|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:16.3426|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:18.2894|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:19.9809|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:21.5267|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:23.2721|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:24.7711|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:26.6809|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:28.3206|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:30.0978|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:31.6088|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:33.5965|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:35.2116|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:231)|
+2021-01-08 10:25:36.7453|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:231)|
+2021-01-08 10:28:45.1684|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:130)|
+2021-01-08 10:28:46.8977|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:130)|
+2021-01-08 10:28:48.1453|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:231)|
+2021-01-08 10:28:49.1491|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:231)|
+2021-01-08 10:28:50.1786|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:231)|
+2021-01-08 10:28:51.5979|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:231)|
+2021-01-08 10:28:53.1627|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:231)|
+2021-01-08 10:28:55.0886|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:231)|
+2021-01-08 10:28:57.4463|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:231)|
+2021-01-08 10:28:59.5217|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:231)|
+2021-01-08 10:29:01.1573|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:231)|
+2021-01-08 10:29:03.2358|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:231)|
+2021-01-08 10:29:05.3152|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:231)|
+2021-01-08 10:29:07.2999|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:231)|
+2021-01-08 10:29:09.3704|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:231)|
+2021-01-08 10:29:11.4967|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:231)|
+2021-01-08 10:29:12.6376|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:231)|
+2021-01-08 10:29:13.8113|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:231)|
+2021-01-08 10:29:15.3452|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:13.1449|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:130)|
+2021-01-08 10:34:14.8529|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:130)|
+2021-01-08 10:34:16.0459|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:17.0973|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:18.1219|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:19.4285|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:20.8160|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:21.8967|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:23.0657|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:24.3053|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:24.3422|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:24.5806|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:24.5806|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:24.4888|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:24.5806|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:24.6404|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:25.0224|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:25.7862|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:26.0066|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:26.8366|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:27.0431|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:27.9191|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:28.2781|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:29.0051|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:29.6121|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:30.0958|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:30.3126|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:31.0904|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:31.2989|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:32.1197|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:32.3482|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:33.2029|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:34.2082|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:231)|
+2021-01-08 10:34:34.5666|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:34.6623|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:35.1705|Info|waiting predict(MainWindow.xaml.cs:308)|
+2021-01-08 10:34:35.4800|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:34:35.4800|Info|write image(MainWindow.xaml.cs:313)|
+2021-01-08 10:34:36.8330|Info|predict(MainWindow.xaml.cs:323)|
+2021-01-08 10:34:36.9557|Info|PadSegmentInfo(MainWindow.xaml.cs:326)|
+2021-01-08 10:34:36.9557|Info|padError(MainWindow.xaml.cs:328)|
+2021-01-08 10:37:23.9263|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:130)|
+2021-01-08 10:37:25.6437|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:130)|
+2021-01-08 10:37:26.8124|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:27.9213|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:28.9572|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:29.9934|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:31.0799|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:32.2214|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:33.3971|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:33.6116|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:37:34.4483|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:37:34.4483|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:34.7074|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:37:35.1347|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:37:35.5368|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:37:35.6116|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:35.7572|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:37:35.9517|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:37:36.1851|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:37:36.6226|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:36.8474|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:37:37.7610|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:38.5248|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:37:38.8180|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:39.9219|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:40.8660|Error|Unable to connect to the remote server(ServiceComm.cs:116)|
+2021-01-08 10:37:40.9787|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:41.8841|Error|Unable to connect to the remote server(ServiceComm.cs:116)|
+2021-01-08 10:37:42.0038|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:42.9006|Error|Unable to connect to the remote server(ServiceComm.cs:116)|
+2021-01-08 10:37:43.0172|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:43.9169|Error|Unable to connect to the remote server(ServiceComm.cs:116)|
+2021-01-08 10:37:43.9758|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:231)|
+2021-01-08 10:37:44.5529|Info|Cant Capture image in FOV : 17(MainWindow.xaml.cs:304)|
+2021-01-08 10:37:44.9342|Error|Unable to connect to the remote server(ServiceComm.cs:116)|
+2021-01-08 10:37:45.9543|Error|Unable to connect to the remote server(ServiceComm.cs:116)|
+2021-01-08 10:42:55.2419|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:124)|
+2021-01-08 10:46:56.9358|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:138)|
+2021-01-08 10:46:58.6820|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:138)|
+2021-01-08 10:47:00.0026|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:01.1192|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:02.1722|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:03.1712|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:04.2311|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:05.3118|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:08.5040|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:09.5189|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:10.6802|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:11.7180|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:12.8508|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:13.9215|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:15.0263|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:16.0826|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:17.0947|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:18.1225|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:19.0529|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:239)|
+2021-01-08 10:47:20.0564|Info|waiting predict(MainWindow.xaml.cs:320)|
+2021-01-08 10:47:20.4585|Info|write image(MainWindow.xaml.cs:325)|
+2021-01-08 10:47:21.7710|Info|predict(MainWindow.xaml.cs:335)|
+2021-01-08 10:47:21.8629|Info|PadSegmentInfo(MainWindow.xaml.cs:338)|
+2021-01-08 10:47:21.8629|Info|padError(MainWindow.xaml.cs:340)|
+2021-01-08 10:51:07.1687|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:138)|
+2021-01-08 10:51:08.8202|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:138)|
+2021-01-08 10:51:10.0370|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:11.0433|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:12.0845|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:13.1078|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:14.1889|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:15.2770|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:16.4229|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:17.4871|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:18.6499|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:19.6902|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:20.8221|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:21.9207|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:23.0347|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:24.0580|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:25.1052|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:26.1554|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:27.1098|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:239)|
+2021-01-08 10:51:28.0663|Info|waiting predict(MainWindow.xaml.cs:320)|
+2021-01-08 10:51:28.4203|Info|write image(MainWindow.xaml.cs:325)|
+2021-01-08 10:51:29.7657|Info|predict(MainWindow.xaml.cs:335)|
+2021-01-08 10:51:29.8595|Info|PadSegmentInfo(MainWindow.xaml.cs:338)|
+2021-01-08 10:51:29.8634|Info|padError(MainWindow.xaml.cs:340)|
+2021-01-08 10:51:29.8634|Info|show error(MainWindow.xaml.cs:359)|
+2021-01-08 10:53:22.9613|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:138)|
+2021-01-08 10:53:24.6436|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:138)|
+2021-01-08 10:53:26.3141|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:27.3608|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:28.4138|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:29.4202|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:30.5158|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:31.5891|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:32.7492|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:33.8072|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:34.9717|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:36.0274|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:37.1937|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:38.3312|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:39.4392|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:40.4862|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:41.5054|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:42.5291|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:43.5185|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:239)|
+2021-01-08 10:53:44.5476|Info|waiting predict(MainWindow.xaml.cs:320)|
+2021-01-08 10:53:44.9207|Info|write image(MainWindow.xaml.cs:325)|
+2021-01-08 10:53:46.2734|Info|predict(MainWindow.xaml.cs:335)|
+2021-01-08 10:53:46.3642|Info|PadSegmentInfo(MainWindow.xaml.cs:338)|
+2021-01-08 10:53:46.3642|Info|padError(MainWindow.xaml.cs:340)|
+2021-01-08 10:53:46.3642|Info|show error(MainWindow.xaml.cs:359)|
+2021-01-08 10:57:22.5817|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:141)|
+2021-01-08 10:57:23.9639|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:141)|
+2021-01-08 10:57:25.2029|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:26.2613|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:27.2931|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:28.2722|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:29.3185|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:30.3766|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:31.5106|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:32.4907|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:33.6322|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:34.7111|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:35.8264|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:36.8779|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:38.1121|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:39.1828|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:40.2333|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:41.3008|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:42.2699|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:242)|
+2021-01-08 10:57:43.2756|Info|waiting predict(MainWindow.xaml.cs:323)|
+2021-01-08 10:57:43.6673|Info|write image(MainWindow.xaml.cs:328)|
+2021-01-08 10:57:45.0277|Info|predict(MainWindow.xaml.cs:338)|
+2021-01-08 10:57:45.1215|Info|PadSegmentInfo(MainWindow.xaml.cs:341)|
+2021-01-08 10:57:45.1265|Info|padError(MainWindow.xaml.cs:343)|
+2021-01-08 10:57:45.1265|Info|show error(MainWindow.xaml.cs:362)|
+2021-01-08 11:00:34.2232|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:141)|
+2021-01-08 11:00:35.6660|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:141)|
+2021-01-08 11:00:36.8500|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:37.9056|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:38.9299|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:39.9425|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:41.0220|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:42.0957|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:43.1970|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:44.1512|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:45.3123|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:46.3309|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:47.4652|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:48.5354|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:50.0013|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:50.9878|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:51.9644|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:53.0067|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:53.9962|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:242)|
+2021-01-08 11:00:54.9415|Info|waiting predict(MainWindow.xaml.cs:323)|
+2021-01-08 11:00:55.2856|Info|write image(MainWindow.xaml.cs:328)|
+2021-01-08 11:00:56.6490|Info|predict(MainWindow.xaml.cs:338)|
+2021-01-08 11:00:56.7587|Info|PadSegmentInfo(MainWindow.xaml.cs:341)|
+2021-01-08 11:00:56.8285|Info|padError(MainWindow.xaml.cs:343)|
+2021-01-08 11:00:56.8305|Info|show error(MainWindow.xaml.cs:362)|
+2021-01-08 11:01:59.9683|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:141)|
+2021-01-08 11:02:01.0933|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:141)|
+2021-01-08 11:03:40.4314|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:141)|
+2021-01-08 11:03:42.1373|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:141)|
+2021-01-08 11:03:43.3972|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:242)|
+2021-01-08 11:03:44.4170|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:242)|
+2021-01-08 11:03:45.4227|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:242)|
+2021-01-08 11:03:46.4496|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:242)|
+2021-01-08 11:03:47.4782|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:242)|
+2021-01-08 11:03:48.5080|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:242)|
+2021-01-08 11:03:49.6538|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:242)|
+2021-01-08 11:03:50.6388|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:242)|
+2021-01-08 11:03:51.7967|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:242)|
+2021-01-08 11:03:52.7990|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:242)|
+2021-01-08 11:03:53.9293|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:242)|
+2021-01-08 11:03:55.0128|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:242)|
+2021-01-08 11:03:56.1351|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:242)|
+2021-01-08 11:03:57.1834|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:242)|
+2021-01-08 11:03:58.2240|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:242)|
+2021-01-08 11:03:59.4985|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:242)|
+2021-01-08 11:04:00.8319|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:242)|
+2021-01-08 11:04:01.7972|Info|waiting predict(MainWindow.xaml.cs:323)|
+2021-01-08 11:04:02.1293|Info|write image(MainWindow.xaml.cs:328)|
+2021-01-08 11:04:03.4958|Info|predict(MainWindow.xaml.cs:338)|
+2021-01-08 11:04:03.5925|Info|PadSegmentInfo(MainWindow.xaml.cs:341)|
+2021-01-08 11:04:03.6563|Info|padError(MainWindow.xaml.cs:343)|
+2021-01-08 11:04:03.6573|Info|show error(MainWindow.xaml.cs:362)|
+2021-01-08 11:12:06.2926|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:141)|
+2021-01-08 11:12:07.7120|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:141)|
+2021-01-08 11:12:08.9656|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:09.9725|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:11.0497|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:12.0499|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:13.0851|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:14.1033|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:15.2464|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:16.2756|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:17.3390|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:18.3524|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:19.4217|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:20.4321|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:21.5037|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:22.5550|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:23.6364|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:24.7176|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:25.7258|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:242)|
+2021-01-08 11:12:26.6983|Info|waiting predict(MainWindow.xaml.cs:323)|
+2021-01-08 11:12:27.0639|Info|write image(MainWindow.xaml.cs:328)|
+2021-01-08 11:12:28.4173|Info|predict(MainWindow.xaml.cs:338)|
+2021-01-08 11:12:28.5178|Info|PadSegmentInfo(MainWindow.xaml.cs:341)|
+2021-01-08 11:12:28.5807|Info|padError(MainWindow.xaml.cs:343)|
+2021-01-08 11:12:28.5807|Info|show error(MainWindow.xaml.cs:362)|
+2021-01-08 11:19:37.4305|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:141)|
+2021-01-08 11:19:38.8341|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:141)|
+2021-01-08 11:19:40.0196|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:41.0591|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:42.1103|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:43.1093|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:44.2180|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:45.3167|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:46.4307|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:47.5172|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:48.5874|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:49.5834|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:50.7086|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:51.8024|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:52.8922|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:53.9300|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:54.9966|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:56.0583|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:57.0709|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:242)|
+2021-01-08 11:19:58.0777|Info|waiting predict(MainWindow.xaml.cs:323)|
+2021-01-08 11:19:58.4449|Info|write image(MainWindow.xaml.cs:328)|
+2021-01-08 11:19:59.7923|Info|predict(MainWindow.xaml.cs:338)|
+2021-01-08 11:19:59.9051|Info|PadSegmentInfo(MainWindow.xaml.cs:341)|
+2021-01-08 11:19:59.9720|Info|padError(MainWindow.xaml.cs:343)|
+2021-01-08 11:19:59.9720|Info|show error(MainWindow.xaml.cs:362)|
+2021-01-08 11:22:07.5337|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:141)|
+2021-01-08 11:22:08.9493|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:141)|
+2021-01-08 11:22:10.2001|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:11.2355|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:12.2224|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:13.1878|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:14.2952|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:15.3990|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:16.5654|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:17.6181|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:18.7770|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:19.8472|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:20.9756|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:22.0908|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:23.2083|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:24.3549|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:25.4079|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:26.4608|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:27.4576|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:242)|
+2021-01-08 11:22:28.3995|Info|waiting predict(MainWindow.xaml.cs:323)|
+2021-01-08 11:22:28.7536|Info|write image(MainWindow.xaml.cs:328)|
+2021-01-08 11:22:30.0971|Info|predict(MainWindow.xaml.cs:338)|
+2021-01-08 11:22:30.2017|Info|PadSegmentInfo(MainWindow.xaml.cs:341)|
+2021-01-08 11:22:30.2676|Info|padError(MainWindow.xaml.cs:343)|
+2021-01-08 11:22:30.2676|Info|show error(MainWindow.xaml.cs:362)|
+2021-01-08 11:27:35.1383|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:141)|
+2021-01-08 11:27:36.5398|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:141)|
+2021-01-08 11:27:37.7824|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:38.8724|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:39.9362|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:40.9555|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:42.0322|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:43.1070|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:44.2311|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:45.1956|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:46.3157|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:47.3180|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:48.4667|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:49.5163|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:50.5883|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:51.6170|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:52.5943|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:53.7055|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:54.6782|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:242)|
+2021-01-08 11:27:55.6627|Info|waiting predict(MainWindow.xaml.cs:323)|
+2021-01-08 11:27:56.0118|Info|write image(MainWindow.xaml.cs:328)|
+2021-01-08 11:27:57.3636|Info|predict(MainWindow.xaml.cs:338)|
+2021-01-08 11:27:57.4693|Info|PadSegmentInfo(MainWindow.xaml.cs:341)|
+2021-01-08 11:27:57.5335|Info|has 28 pad error...(MainWindow.xaml.cs:343)|
+2021-01-08 11:27:57.5335|Info|show error(MainWindow.xaml.cs:362)|
+2021-01-08 11:31:39.4864|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:141)|
+2021-01-08 11:31:41.2171|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:141)|
+2021-01-08 11:31:42.4566|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:43.5025|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:44.5721|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:45.6338|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:46.7630|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:47.8743|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:49.0187|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:50.0000|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:51.1403|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:52.1874|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:53.3766|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:54.4299|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:55.5184|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:56.5621|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:57.6415|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:58.7225|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:242)|
+2021-01-08 11:31:59.7064|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:242)|
+2021-01-08 11:32:00.6498|Info|waiting predict(MainWindow.xaml.cs:323)|
+2021-01-08 11:32:01.0280|Info|write image(MainWindow.xaml.cs:328)|
+2021-01-08 11:32:02.3744|Info|predict(MainWindow.xaml.cs:338)|
+2021-01-08 11:32:02.4771|Info|PadSegmentInfo(MainWindow.xaml.cs:341)|
+2021-01-08 11:32:02.5390|Info|has 29 pad error...(MainWindow.xaml.cs:343)|
+2021-01-08 11:32:02.5390|Info|show error(MainWindow.xaml.cs:362)|
+2021-01-08 11:35:40.5926|Info|Moving TOP Axis, Position Name : Mark 1,  X = 1616, Y = 21585(MainWindow.xaml.cs:141)|
+2021-01-08 11:35:42.0391|Info|Moving TOP Axis, Position Name : Mark 2,  X = 23231, Y = 39809(MainWindow.xaml.cs:141)|
+2021-01-08 11:35:43.2122|Info|Moving TOP Axis, Position Name : FOV 1,  X = 23102, Y = 36125(MainWindow.xaml.cs:242)|
+2021-01-08 11:35:44.3099|Info|Moving TOP Axis, Position Name : FOV 2,  X = 19125, Y = 36542(MainWindow.xaml.cs:242)|
+2021-01-08 11:35:45.3328|Info|Moving TOP Axis, Position Name : FOV 3,  X = 15257, Y = 36503(MainWindow.xaml.cs:242)|
+2021-01-08 11:35:46.3814|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7755, Y = 37025(MainWindow.xaml.cs:242)|
+2021-01-08 11:35:47.5479|Info|Moving TOP Axis, Position Name : FOV 5,  X = 1070, Y = 32832(MainWindow.xaml.cs:242)|
+2021-01-08 11:35:48.6486|Info|Moving TOP Axis, Position Name : FOV 6,  X = 7332, Y = 34082(MainWindow.xaml.cs:242)|
+2021-01-08 11:35:49.8286|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11503, Y = 34661(MainWindow.xaml.cs:242)|
+2021-01-08 11:35:50.8237|Info|Moving TOP Axis, Position Name : FOV 8,  X = 21047, Y = 29339(MainWindow.xaml.cs:242)|
+2021-01-08 11:35:51.9466|Info|Moving TOP Axis, Position Name : FOV 9,  X = 16540, Y = 28526(MainWindow.xaml.cs:242)|
+2021-01-08 11:35:52.9973|Info|Moving TOP Axis, Position Name : FOV 10,  X = 8433, Y = 32777(MainWindow.xaml.cs:242)|
+2021-01-08 11:35:54.1566|Info|Moving TOP Axis, Position Name : FOV 11,  X = 2815, Y = 32392(MainWindow.xaml.cs:242)|
+2021-01-08 11:35:55.2394|Info|Moving TOP Axis, Position Name : FOV 12,  X = 3881, Y = 25001(MainWindow.xaml.cs:242)|
+2021-01-08 11:35:56.3356|Info|Moving TOP Axis, Position Name : FOV 13,  X = 8408, Y = 25026(MainWindow.xaml.cs:242)|
+2021-01-08 11:35:57.3939|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12924, Y = 24994(MainWindow.xaml.cs:242)|
+2021-01-08 11:35:58.3731|Info|Moving TOP Axis, Position Name : FOV 15,  X = 17464, Y = 25308(MainWindow.xaml.cs:242)|
+2021-01-08 11:35:59.3903|Info|Moving TOP Axis, Position Name : FOV 16,  X = 20359, Y = 25820(MainWindow.xaml.cs:242)|
+2021-01-08 11:36:00.4051|Info|Moving TOP Axis, Position Name : FOV 17,  X = 23519, Y = 28769(MainWindow.xaml.cs:242)|
+2021-01-08 11:36:01.3962|Info|waiting predict(MainWindow.xaml.cs:323)|
+2021-01-08 11:36:01.7882|Info|write image(MainWindow.xaml.cs:328)|
+2021-01-08 11:36:03.1445|Info|predict(MainWindow.xaml.cs:338)|
+2021-01-08 11:36:03.3201|Info|PadSegmentInfo(MainWindow.xaml.cs:341)|
+2021-01-08 11:36:03.3909|Info|has 27 pad error...(MainWindow.xaml.cs:343)|
+2021-01-08 11:36:03.3949|Info|show error(MainWindow.xaml.cs:362)|

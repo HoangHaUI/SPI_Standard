@@ -12,11 +12,13 @@ import Config
 import SegmentUnet
 import Utils
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 app = Flask(__name__)
 # app.config["DEBUG"] = True
-
+physical_devices = tf.config.experimental.list_physical_devices("GPU")
+if(len(physical_devices) > 0):
+    tf.config.experimental.set_memory_growth(physical_devices[0], True)
 SEGMENT_MODEL = load_model(Config.SEGMENT_MODEL_PATH)
+SEGMENT_MODEL.summary()
 
 @app.route('/', methods=['GET', 'POST'])
 def Segment():

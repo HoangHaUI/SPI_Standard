@@ -104,18 +104,18 @@ namespace SPI_AOI.VI
                     double sPad = CvInvoke.ContourArea(padItem.Contour);
                     scaleArea = padSegment[id].Area * 100 / sPad;
                     Rectangle b2 = padSegment[id].Bouding;
-                    shiftx = Math.Min(Math.Abs(b1.X - b2.X), Math.Abs((b1.X + b1.Width) - (b2.X + b2.Width)));
-                    shifty = Math.Min(Math.Abs(b1.Y - b2.Y), Math.Abs((b1.Y + b1.Height) - (b2.Y + b2.Height)));
+                    shiftx = (Math.Min(Math.Abs(b1.X - b2.X), Math.Abs((b1.X + b1.Width) - (b2.X + b2.Width))) * umPPixel)%130;
+                    shifty = (Math.Min(Math.Abs(b1.Y - b2.Y), Math.Abs((b1.Y + b1.Height) - (b2.Y + b2.Height))) * umPPixel)%130;
                     bool insert = false;
                     if(scaleArea > padItem.AreaThresh.UM_USL ||scaleArea < padItem.AreaThresh.PERCENT_LSL)
                     {
                         insert = true;
                     }
-                    if(shiftx * umPPixel > padItem.ShiftXThresh.UM_USL)
+                    if(shiftx > padItem.ShiftXThresh.UM_USL + 2 * umPPixel)
                     {
                         insert = true;
                     }
-                    if(shifty * umPPixel > padItem.ShiftXThresh.UM_USL)
+                    if(shifty > padItem.ShiftXThresh.UM_USL + 2 * umPPixel)
                     {
                         insert = true;
                     }
@@ -123,8 +123,8 @@ namespace SPI_AOI.VI
                     {
                         
                         padEr.Area = scaleArea;
-                        padEr.ShiftX = Math.Round(shiftx * umPPixel, 2);
-                        padEr.ShiftY = Math.Round(shifty * umPPixel, 2);
+                        padEr.ShiftX = Math.Round(shiftx, 2);
+                        padEr.ShiftY = Math.Round(shifty, 2);
                         // add std
                         padError.Add(padEr);
                     }
@@ -137,9 +137,10 @@ namespace SPI_AOI.VI
             }
             return padError.ToArray();
         }
-        public static PadErrorDetail[] GetImagePadError(Image<Bgr, byte> image, PadErrorDetail[] PadError, Rectangle ROI)
+        public static PadErrorDetail[] GetImagePadError(Image<Bgr, byte> image, PadErrorDetail[] PadError, Rectangle ROI, int limit)
         {
-            for (int i = 0; i < PadError.Length; i++)
+            int lm = PadError.Length > limit ? limit : PadError.Length;
+            for (int i = 0; i < lm; i++)
             {
                 Rectangle bound = PadError[i].ROI;
                 bound.X -= ROI.X;
@@ -149,8 +150,7 @@ namespace SPI_AOI.VI
                 image.ROI = bound;
                 PadError[i].PadImage = image.Copy();
                 image.ROI = Rectangle.Empty;
-                CvInvoke.Rectangle(image, bound, new MCvScalar(0, 255, 255), 3);
-                CvInvoke.Imwrite("out.png", image);
+                //CvInvoke.Rectangle(image, bound, new MCvScalar(0, 255, 255), 3);
             }
             return PadError;
         }
