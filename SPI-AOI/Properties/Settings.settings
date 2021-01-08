@@ -299,5 +299,8 @@
     <Setting Name="ServiceURL" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://127.0.0.1:812</Value>
     </Setting>
+    <Setting Name="LIMIT_SHOW_ERROR" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

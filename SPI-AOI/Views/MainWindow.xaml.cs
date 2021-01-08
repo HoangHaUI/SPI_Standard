@@ -104,8 +104,8 @@ namespace SPI_AOI.Views
                 else
                 {
                     UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.FAIL);
+                    ShowError(true);
                 }
-               
             }
             mIsInTimer = false;
             timer.Enabled = mIsRunning;
@@ -207,6 +207,7 @@ namespace SPI_AOI.Views
         }
         private int CaptureFOV(string ID, string SavePath, int X, int Y, double Angle, bool LightStrobe)
         {
+            int result = -1;
             System.Drawing.Point[] xyAxisPosition = mModel.GetPulseXYFOVs();
             System.Drawing.Point[] Fovs = mModel.GetAnchorsFOV();
             mModel.Gerber.ProcessingGerberImage.ROI = mModel.Gerber.ROI;
@@ -296,27 +297,51 @@ namespace SPI_AOI.Views
                         else
                         {
                             mLog.Info(string.Format("Cant Capture image in FOV : {0}", i + 1));
+                            result = -2;
                             break;
                         }
                     }
                 }
-                for (int i = 0; i < publishThread.Length; i++)
+                if(result != -2)
                 {
-                    publishThread[i].Join();
-                }
-                string fileNameGraft = string.Format("{0}//Image_Graft.png", SavePath);
-                CvInvoke.Imwrite(fileNameGraft, mImageGraft);
-                string fileNameSegmentGraft = string.Format("{0}//Image_Segment_Graft.png", SavePath);
-                CvInvoke.Imwrite(fileNameSegmentGraft, maskSegmentGraft);
-                if (mParam.Debug)
-                {
-                    string fileNameGerberGraft = string.Format("{0}//Image_Gerber.png", SavePath);
-                    CvInvoke.Imwrite(fileNameGerberGraft, imgGerber);
+                    for (int i = 0; i < publishThread.Length; i++)
+                    {
+                        publishThread[i].Join();
+                    }
+                    string fileNameGraft = string.Format("{0}//Image_Graft.png", SavePath);
+                    CvInvoke.Imwrite(fileNameGraft, mImageGraft);
+                    if (mParam.Debug)
+                    {
+                        string fileNameSegmentGraft = string.Format("{0}//Image_Segment_Graft.png", SavePath);
+                        CvInvoke.Imwrite(fileNameSegmentGraft, maskSegmentGraft);
+                        string fileNameGerberGraft = string.Format("{0}//Image_Gerber.png", SavePath);
+                        CvInvoke.Imwrite(fileNameGerberGraft, imgGerber);
+                    }
+                    Image<Gray, byte> maskReleaseNoise = VI.Predictor.ReleaseNoise(maskSegmentGraft);
+                    Utils.PadSegmentInfo[] pads = VI.Predictor.GetPadSegmentInfo(maskReleaseNoise, mModel.Gerber.ROI);
+                    Utils.PadErrorDetail[] padError = VI.Predictor.ComparePad(mModel, pads);
+                    padError = VI.Predictor.GetImagePadError(mImageGraft, padError, mModel.Gerber.ROI);
+                    for (int i = 0; i < padError.Length; i++)
+                    {
+                        mPadErrorDetails.Add(padError[i]);
+                    }
+                    if (mPadErrorDetails.Count > 0)
+                    {
+                        result = -1;
+                    }
+                    else
+                    {
+                        result = 0;
+                        if (mImageGraft != null)
+                        {
+                            mImageGraft.Dispose();
+                            mImageGraft = null;
+                        }
+                    }
                 }
             }
             mModel.Gerber.ProcessingGerberImage.ROI = System.Drawing.Rectangle.Empty;
-            
-            return 0;
+            return result;
         }
         
         private int Processing()
@@ -350,20 +375,24 @@ namespace SPI_AOI.Views
                 mParam.LIGHT_VI_DEFAULT_INTENSITY_CH3,
                 mParam.LIGHT_VI_DEFAULT_INTENSITY_CH4);
                 mCamera.SetParameter(IOT.KeyName.ExposureTime, (float)mParam.CAMERA_VI_EXPOSURE_TIME);
-                int capFOVStatus = CaptureFOV(ID, savePath, markAdjustInfo.X, markAdjustInfo.Y, markAdjustInfo.Angle, lightStrobe);
+                int status = CaptureFOV(ID, savePath, markAdjustInfo.X, markAdjustInfo.Y, markAdjustInfo.Angle, lightStrobe);
                 if (!lightStrobe)
                 {
                     mLight.ActiveFour(0, 0, 0, 0);
                 }
                 bool pass = false;
-                if (capFOVStatus == 0)
+                if (status != -2)
                 {
                     // capture fail
                     if (mParam.RUNNING_MODE == 0 || mParam.RUNNING_MODE == 1)
                     {
                         // control run || test
-                        pass = true;
-                        
+                        if (status == 0)
+                            pass = true;
+                        else if (status == -1)
+                        {
+                            pass = false;
+                        }
                     }
                     else if (mParam.RUNNING_MODE == 2)
                     {
@@ -1117,10 +1146,22 @@ namespace SPI_AOI.Views
             {
                 mIsShowError = false; this.Dispatcher.Invoke(() =>
                 {
+                    if(mImageGraft != null)
+                    {
+                        mImageGraft.Dispose();
+                        mImageGraft = null;
+                    }
+                    stackPadError.Children.Clear();
                     ColError.Width = new GridLength(0);
                     ColInfo.Width = new GridLength(500);
                     ColStatistical.Width = new GridLength(350);
                     chartForm.Visibility = Visibility.Visible;
+                    ShowComponentPosition(System.Drawing.Rectangle.Empty);
+                    lbPadErrorArea.Content = "---";
+                    lbPadErrorShiftX.Content = "---";
+                    lbPadErrorShiftY.Content = "---";
+                    lbPadErrorID.Content = "---";
+                    lbPadErrorComponent.Content = "---";
                 });
             }
         }
@@ -1141,18 +1182,69 @@ namespace SPI_AOI.Views
                 string component = mModel.GetComponentName(padEr.Pad);
                 lbPadErrorID.Content = padEr.Pad.NoID.ToString();
                 lbPadErrorComponent.Content = component;
+                var rect = mModel.GetRectangleComponent(padEr.Pad);
+                rect.Inflate(20, 20);
+                rect.X -= mModel.Gerber.ROI.X;
+                rect.Y -= mModel.Gerber.ROI.Y;
+                ShowComponentPosition(rect);
             }
         }
         private void btFinish_Click(object sender, RoutedEventArgs e)
         {
-            
+            ShowError(false);
         }
+        public void ShowComponentPosition(System.Drawing.Rectangle Component)
+        {
+            if(Component == null || Component == System.Drawing.Rectangle.Empty || imbDiagram.Source == null)
+            {
+                bdComponentError.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                double imgWidth = mModel.Gerber.ROI.Width;
+                double imgHeight = mModel.Gerber.ROI.Height;
+                double fovWidth = Component.Width;
+                double fovHeight = Component.Height;
+                double imbWidth = imbDiagram.ActualWidth;
+                double imbHeight = imbDiagram.ActualHeight;
+                double bdImbWidth = bdImbDiagram.ActualWidth;
+                double bdImbHeight = bdImbDiagram.ActualHeight;
 
+
+                double scaleWidth = imbWidth / imgWidth;
+                double scaleHeight = imbHeight / imgHeight;
+                double showDisplayWidth = fovWidth * scaleWidth;
+                double showDisplayHeight = fovHeight * scaleHeight;
+                double addX = 0;
+                double addY = 0;
+                if(showDisplayWidth < 15)
+                {
+                    addX = 15 - showDisplayWidth;
+                }
+                if(showDisplayHeight < 15)
+                {
+                    addY = 15 - showDisplayHeight;
+                }
+                Point startPoint = new Point (
+                               Component.X * scaleWidth + (bdImbWidth - imbWidth) / 2 - addX /2,
+                               Component.Y * scaleHeight  + (bdImbHeight - imbHeight) / 2 - addY / 2
+                               );
+                bdComponentError.Margin = new Thickness(startPoint.X, startPoint.Y, 0 , 0);
+                bdComponentError.Width = showDisplayWidth + addX;
+                bdComponentError.Height = showDisplayHeight + addY;
+                bdComponentError.Visibility = Visibility.Visible;
+
+            }
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Thread a = new Thread(() =>
             {
                 mModel = Model.LoadModelByName("model 123");
+                using (Image<Bgr, byte> imgDigram = mModel.GetDiagramImage())
+                {
+                    SetImageToImb(imbDiagram, imgDigram.Bitmap);
+                }
                 System.Drawing.Point[] Fovs = mModel.GetAnchorsFOV();
                 var modelFov = mModel.FOV;
                 for (int i = 0; i < mModel.Gerber.FOVs.Count; i++)
@@ -1163,8 +1255,8 @@ namespace SPI_AOI.Views
                                     modelFov.Width, modelFov.Height);
                     mROIFOVImage.Add(ROIGerber);
                 }
-                Image<Gray, byte> imgMask = new Image<Gray, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\mask.png");
-                mImageGraft = new Image<Bgr, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\Image_Graft.png");
+                Image<Gray, byte> imgMask = new Image<Gray, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\2021_01_08_08_27_08.png");
+                mImageGraft = new Image<Bgr, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\2021_01_08_08_27_08.png");
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
                 imgMask = VI.Predictor.ReleaseNoise(imgMask);

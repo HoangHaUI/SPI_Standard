@@ -60,29 +60,52 @@ namespace SPI_AOI.VI
                 {
                     continue;
                 }
-                double sOverLapMax = 0;
+
+                Rectangle b1 = padItem.Bouding;
+                double bestScoreOverLap = 0;
                 int id = -1;
                 for (int j = 0; j < padSegment.Length; j++)
                 {
-                    if (padItem.Bouding.IntersectsWith(padSegment[j].Bouding))
+
+                    Rectangle b2 = padSegment[j].Bouding;
+                    Rectangle rOverLap = Rectangle.Intersect(b1, b2);
+                    if (rOverLap.Width > 0 && rOverLap .Height > 0)
                     {
-                        if (sOverLapMax < padSegment[j].Area)
+                        double sumS = b1.Width * b1.Height + b2.Width * b2.Height;
+                        double overlapS = rOverLap.Width * rOverLap.Height;
+                        double score = overlapS / (sumS - overlapS);
+                        if(score > bestScoreOverLap)
                         {
-                            sOverLapMax = padSegment[j].Area;
+                            bestScoreOverLap = score;
                             id = j;
                         }
                     }
+                    
                 }
-                if(id >= 0)
+                PadErrorDetail padEr = new PadErrorDetail();
+                double scaleArea = 0;
+                double shiftx = 0;
+                double shifty = 0;
+                padEr.AreaStdHight = padItem.AreaThresh.UM_USL;
+                padEr.AreaStdLow = padItem.AreaThresh.PERCENT_LSL;
+                padEr.ShiftXStduM = padItem.ShiftXThresh.UM_USL;
+                padEr.ShiftYStduM = padItem.ShiftYThresh.UM_USL;
+                padEr.ShiftXStdArea = padItem.ShiftXThresh.PERCENT_LSL;
+                padEr.ShiftYStdArea = padItem.ShiftYThresh.PERCENT_LSL;
+                padEr.ROI = Rectangle.Inflate(b1, 10, 10);
+                padEr.Pad = padItem;
+                if (padItem.FOVs.Count > 0)
+                {
+                    padEr.FOVNo = padItem.FOVs[0];
+                }
+
+                if (id >= 0)
                 {
                     double sPad = CvInvoke.ContourArea(padItem.Contour);
-                    double scaleArea = padSegment[id].Area * 100 / sPad;
-
-                    Rectangle b1 = padItem.Bouding;
+                    scaleArea = padSegment[id].Area * 100 / sPad;
                     Rectangle b2 = padSegment[id].Bouding;
-
-                    double shiftx = Math.Min(Math.Abs(b1.X - b2.X), Math.Abs((b1.X + b1.Width) - (b2.X + b2.Width)));
-                    double shifty = Math.Min(Math.Abs(b1.Y - b2.Y), Math.Abs((b1.Y + b1.Height) - (b2.Y + b2.Height)));
+                    shiftx = Math.Min(Math.Abs(b1.X - b2.X), Math.Abs((b1.X + b1.Width) - (b2.X + b2.Width)));
+                    shifty = Math.Min(Math.Abs(b1.Y - b2.Y), Math.Abs((b1.Y + b1.Height) - (b2.Y + b2.Height)));
                     bool insert = false;
                     if(scaleArea > padItem.AreaThresh.UM_USL ||scaleArea < padItem.AreaThresh.PERCENT_LSL)
                     {
@@ -98,26 +121,19 @@ namespace SPI_AOI.VI
                     }
                     if (insert)
                     {
-                        PadErrorDetail padEr = new PadErrorDetail();
+                        
                         padEr.Area = scaleArea;
                         padEr.ShiftX = Math.Round(shiftx * umPPixel, 2);
                         padEr.ShiftY = Math.Round(shifty * umPPixel, 2);
-                        padEr.Pad = padItem;
-                        if(padItem.FOVs.Count > 0)
-                        {
-                            padEr.FOVNo = padItem.FOVs[0];
-                        }
-                        padEr.ROI = Rectangle.Inflate(b1, 10, 10);
                         // add std
-                        padEr.AreaStdHight = padItem.AreaThresh.UM_USL;
-                        padEr.AreaStdLow = padItem.AreaThresh.PERCENT_LSL;
-                        padEr.ShiftXStduM = padItem.ShiftXThresh.UM_USL;
-                        padEr.ShiftYStduM = padItem.ShiftYThresh.UM_USL;
-                        padEr.ShiftXStdArea = padItem.ShiftXThresh.PERCENT_LSL;
-                        padEr.ShiftYStdArea = padItem.ShiftYThresh.PERCENT_LSL;
                         padError.Add(padEr);
                     }
                 }
+                else
+                {
+                    padError.Add(padEr);
+                }
+                
             }
             return padError.ToArray();
         }
@@ -134,8 +150,8 @@ namespace SPI_AOI.VI
                 PadError[i].PadImage = image.Copy();
                 image.ROI = Rectangle.Empty;
                 CvInvoke.Rectangle(image, bound, new MCvScalar(0, 255, 255), 3);
+                CvInvoke.Imwrite("out.png", image);
             }
-            CvInvoke.Imwrite("out.png", image);
             return PadError;
         }
     }

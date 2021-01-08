@@ -127,9 +127,9 @@
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition x:Name="ColInfo" Width="0"/>
-                    <ColumnDefinition x:Name="ColStatistical" Width="0"/>
-                    <ColumnDefinition x:Name="ColError" Width="850"/>
+                    <ColumnDefinition x:Name="ColInfo" Width="500"/>
+                    <ColumnDefinition x:Name="ColStatistical" Width="350"/>
+                    <ColumnDefinition x:Name="ColError" Width="0"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0" Margin="3">
@@ -151,11 +151,20 @@
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"></Label>
                                 <Border x:Name="bdFOV" Width="420" Height="280" 
-                                        BorderThickness="3" 
+                                        BorderThickness="2" 
                                         Background="Transparent"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         BorderBrush="Yellow"
+                                        Margin="70,2080,0,0"
+                                        Visibility="Hidden">
+                                </Border>
+                                <Border x:Name="bdComponentError" Width="420" Height="280" 
+                                        BorderThickness="2" 
+                                        Background="Transparent"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        BorderBrush="Red"
                                         Margin="70,2080,0,0"
                                         Visibility="Hidden">
                                 </Border>
@@ -307,7 +316,7 @@
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="3">
-                        <Button Content="test" Margin="50" Click="Button_Click"></Button>
+                        <Button Content="test" Visibility="Hidden" Margin="50" Click="Button_Click"></Button>
                         <GroupBox Header="Result details" BorderBrush="Gray" FontWeight="Bold" Visibility="Hidden">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -536,7 +545,7 @@
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Label FontSize="15" FontWeight="Bold" Content="Component:"/>
-                                                    <Label x:Name="lbPadErrorComponent" FontSize="15" FontWeight="Bold"  Margin="10"></Label>
+                                                    <Label x:Name="lbPadErrorComponent" FontSize="15" FontWeight="Bold" Margin="10,0,0,0"></Label>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Label FontSize="15" FontWeight="Bold" Content="Area (%):"/>

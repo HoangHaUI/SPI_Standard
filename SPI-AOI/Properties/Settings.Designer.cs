@@ -1210,5 +1210,17 @@ namespace SPI_AOI.Properties {
                 this["ServiceURL"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public int LIMIT_SHOW_ERROR {
+            get {
+                return ((int)(this["LIMIT_SHOW_ERROR"]));
+            }
+            set {
+                this["LIMIT_SHOW_ERROR"] = value;
+            }
+        }
     }
 }

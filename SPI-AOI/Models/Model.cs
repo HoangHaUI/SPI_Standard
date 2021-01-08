@@ -78,30 +78,26 @@ namespace SPI_AOI.Models
                 return 0;
             }
         }
-        public Rectangle GetRectangleComponent(string Component)
+        public Rectangle GetRectangleComponent(PadItem pad)
         {
             int Top = (int) Math.Pow(2, 30);
             int Left = (int)Math.Pow(2, 30);
             int Bot = 0;
             int Right = 0;
+            string ComponentName = this.GetComponentName(pad);
+
             for (int i = 0; i < this.Gerber.PadItems.Count; i++)
             {
                 PadItem item = this.Gerber.PadItems[i];
-                for (int c  = 0; c < this.Cad.Count; c++)
+                if(item.CadFileID == pad.CadFileID && item.CadItemIndex == pad.CadItemIndex)
                 {
-                    if (this.Cad[c].CadFileID == item.CadFileID)
+                    Point[] p = item.Contour.ToArray();
+                    for (int j = 0; j < p.Length; j++)
                     {
-                        if(this.Cad[c].CadItems[item.CadItemIndex].Name == Component)
-                        {
-                            Point[] p = item.Contour.ToArray();
-                            for (int j = 0; j < p.Length; j++)
-                            {
-                                Top = p[j].Y < Top ? p[j].Y : Top;
-                                Left = p[j].X < Left ? p[j].X : Left;
-                                Bot = p[j].Y > Bot ? p[j].Y : Bot;
-                                Right = p[j].X > Right ? p[j].X : Right;
-                            }
-                        }
+                        Top = p[j].Y < Top ? p[j].Y : Top;
+                        Left = p[j].X < Left ? p[j].X : Left;
+                        Bot = p[j].Y > Bot ? p[j].Y : Bot;
+                        Right = p[j].X > Right ? p[j].X : Right;
                     }
                 }
             }
