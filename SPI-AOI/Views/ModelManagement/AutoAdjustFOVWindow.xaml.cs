@@ -37,6 +37,8 @@ namespace SPI_AOI.Views.ModelManagement
         private Image<Bgr, byte> mImage = null;
         private System.Drawing.Point[] mAnchorFOV = null;
         private System.Drawing.Point[] mAnchorROIGerber = null;
+        public System.Drawing.Point[] mMark = null;
+        Utils.MarkAdjust mMarkAdjust = new Utils.MarkAdjust();
         public AutoAdjustFOVWindow(Model model)
         {
             mModel = model;
@@ -146,11 +148,83 @@ namespace SPI_AOI.Views.ModelManagement
                 cbFOV.SelectedIndex = cbFOV.SelectedIndex + 1;
             }
         }
-
+        private void CaptureMark()
+        {
+            bool lightStrobe = !Convert.ToBoolean(mParam.LIGHT_MODE);
+            System.Drawing.Point[] markPointXYPLC = mModel.GetPLCMarkPosition();
+            PadItem[] PadMark = new PadItem[2];
+            for (int i = 0; i < 2; i++)
+            {
+                PadMark[i] = mModel.Gerber.PadItems[mModel.Gerber.MarkPoint.PadMark[i]];
+            }
+            mMark =  new System.Drawing.Point[2];
+            double matchingScore = mModel.Gerber.MarkPoint.Score;
+            for (int i = 0; i < markPointXYPLC.Length; i++)
+            {
+                System.Drawing.Point mark = markPointXYPLC[i];
+                int x = mark.X;
+                int y = mark.Y;
+                mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "Mark " + (i + 1).ToString(), x, y));
+                using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, mark, lightStrobe))
+                {
+                    if (image != null)
+                    {
+                        System.Drawing.Rectangle ROI = mModel.GetRectROIMark();
+                        image.ROI = ROI;
+                        using (Image<Gray, byte> imgGray = new Image<Gray, byte>(image.Size))
+                        {
+                            CvInvoke.CvtColor(image, imgGray, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
+                            CvInvoke.Threshold(imgGray, imgGray, mModel.Gerber.MarkPoint.ThresholdValue, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
+                            var markInfo = Mark.MarkDetection(imgGray, PadMark[i].Contour);
+                            double realScore = markInfo.Item2;
+                            realScore = Math.Round((1 - realScore) * 100.0, 2);
+                            if (realScore > matchingScore)
+                            {
+                                using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
+                                {
+                                    if (markInfo.Item1 != null)
+                                    {
+                                        contours.Push(markInfo.Item1);
+                                        Moments mm = CvInvoke.Moments(markInfo.Item1);
+                                        if (mm.M00 != 0)
+                                        {
+                                            mMark[i] = new System.Drawing.Point(Convert.ToInt32(mm.M10 / mm.M00), Convert.ToInt32(mm.M01 / mm.M00));
+                                        }
+                                    }
+                                }
+                                if (i == 1)
+                                {
+                                    mMarkAdjust.Status = Utils.ActionStatus.Successfully;
+                                    System.Drawing.Point ct = new System.Drawing.Point(image.Width / 2, image.Height / 2);
+                                    mMarkAdjust.X = ct.X - mMark[0].X;
+                                    mMarkAdjust.Y = ct.Y - mMark[0].Y;
+                                }
+                            }
+                            else
+                            {
+                                mLog.Info(string.Format("Score matching is lower score standard... {0} < {1}", realScore, matchingScore));
+                                mMarkAdjust.Status = Utils.ActionStatus.Fail;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        mLog.Info(string.Format("Cant Capture image in Mark : {0}", i + 1));
+                        mMarkAdjust.Status = Utils.ActionStatus.Fail;
+                        break;
+                    }
+                }
+            }
+        }
         private void cbFOV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!mLoaded)
                 return;
+            if(mMark == null)
+            {
+                CaptureMark();
+            }
             int id = -1;
             this.Dispatcher.Invoke(() =>
             {
@@ -175,6 +249,7 @@ namespace SPI_AOI.Views.ModelManagement
                 {
                     //
                     mImage = ImageProcessingUtils.ImageRotation(image, new System.Drawing.Point(image.Width / 2, image.Height / 2), -mModel.AngleAxisCamera * Math.PI / 180.0).Copy();
+                    mImage = ImageProcessingUtils.ImageTransformation(mImage, mMarkAdjust.X, mMarkAdjust.Y);
                     ShowDetail();
                 }
             }

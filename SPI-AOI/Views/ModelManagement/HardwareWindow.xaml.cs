@@ -556,7 +556,6 @@ namespace SPI_AOI.Views.ModelManagement
                     }
                     mLightSource.ActiveFour(0, 0, 0, 0);
                     mLightSource.Close();
-                    btUnload_Click(null, null);
                 }
             }
         }
@@ -772,7 +771,14 @@ namespace SPI_AOI.Views.ModelManagement
 
         private void btApply_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            SaveChanged();
+            MessageBox.Show("Done!");
+
+        }
+
+        private void btAutoAdjust_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

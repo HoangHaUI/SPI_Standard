@@ -111,11 +111,11 @@ namespace SPI_AOI.VI
                     {
                         insert = true;
                     }
-                    if(shiftx > padItem.ShiftXThresh.UM_USL + 2 * umPPixel)
+                    if(shiftx > padItem.ShiftXThresh.UM_USL)
                     {
                         insert = true;
                     }
-                    if(shifty > padItem.ShiftXThresh.UM_USL + 2 * umPPixel)
+                    if(shifty > padItem.ShiftXThresh.UM_USL)
                     {
                         insert = true;
                     }

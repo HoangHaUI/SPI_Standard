@@ -347,12 +347,12 @@
                                                 </Image>
                                             </Border>
                                         </StackPanel>
-                                        <StackPanel Orientation="Vertical" Margin="10,30,10,0">
-                                            <!--<Button x:Name="btAutoAdjust"
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,30,10,0">
+                                            <!--<Button x:Name="btAutoAdjust" Click="btAutoAdjust_Click"
                                                     Width="120" Height="30" Content="Auto Adjust FOVs"
                                                     ></Button>-->
                                             <Button x:Name="btApply" Click="btApply_Click" Margin="20,0,0,0"
-                                                    Width="200" Height="30" Content="Apply"
+                                                    Width="120" Height="30" Content="Apply"
                                                     ></Button>
                                         </StackPanel>
                                     </StackPanel>
