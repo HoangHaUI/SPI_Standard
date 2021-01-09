@@ -150,6 +150,7 @@ namespace SPI_AOI.Views.ModelManagement
         }
         private void CaptureMark()
         {
+            mPlcComm.Logout();
             bool lightStrobe = !Convert.ToBoolean(mParam.LIGHT_MODE);
             System.Drawing.Point[] markPointXYPLC = mModel.GetPLCMarkPosition();
             PadItem[] PadMark = new PadItem[2];

@@ -442,8 +442,8 @@
                                     </Grid>
                                     <Grid Grid.Column="1">
                                         <Canvas Margin="25,0,0,0">
-                                            <WindowsFormsHost x:Name="chartForm" Background="Transparent"
-                                                              Width="220" Height="160" Visibility="Hidden" >
+                                            <WindowsFormsHost x:Name="chartForm"
+                                                              Width="220" Height="160" Visibility="Hidden" Background="#FFF0F0F0" >
                                                 <MSChart:Chart x:Name="chartYeildRate" 
                                                                >
                                                     <MSChart:Chart.Series>

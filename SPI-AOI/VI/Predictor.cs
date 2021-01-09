@@ -103,11 +103,17 @@ namespace SPI_AOI.VI
                 {
                     double sPad = CvInvoke.ContourArea(padItem.Contour);
                     scaleArea = padSegment[id].Area * 100 / sPad;
+                    double dev = 0;
+                    if(15 * 15 > sPad)
+                    {
+                       double sca = sPad / (15 * 15);
+                        dev = (1 - sca) * 50;
+                    }
                     Rectangle b2 = padSegment[id].Bouding;
                     shiftx = (Math.Min(Math.Abs(b1.X - b2.X), Math.Abs((b1.X + b1.Width) - (b2.X + b2.Width))) * umPPixel)%130;
                     shifty = (Math.Min(Math.Abs(b1.Y - b2.Y), Math.Abs((b1.Y + b1.Height) - (b2.Y + b2.Height))) * umPPixel)%130;
                     bool insert = false;
-                    if(scaleArea > padItem.AreaThresh.UM_USL ||scaleArea < padItem.AreaThresh.PERCENT_LSL)
+                    if(scaleArea > padItem.AreaThresh.UM_USL + dev ||scaleArea < padItem.AreaThresh.PERCENT_LSL - dev)
                     {
                         insert = true;
                     }

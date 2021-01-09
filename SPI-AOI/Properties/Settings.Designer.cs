@@ -1069,7 +1069,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("200000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("100000")]
         public int RUN_X_TOP_SPEED {
             get {
                 return ((int)(this["RUN_X_TOP_SPEED"]));
@@ -1081,7 +1081,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("200000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("100000")]
         public int RUN_Y_TOP_SPEED {
             get {
                 return ((int)(this["RUN_Y_TOP_SPEED"]));
@@ -1165,7 +1165,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        [global::System.Configuration.DefaultSettingValueAttribute("40")]
         public int LIGHT_VI_DEFAULT_INTENSITY_CH4 {
             get {
                 return ((int)(this["LIGHT_VI_DEFAULT_INTENSITY_CH4"]));
@@ -1177,7 +1177,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("6000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5000")]
         public int CAMERA_VI_EXPOSURE_TIME {
             get {
                 return ((int)(this["CAMERA_VI_EXPOSURE_TIME"]));

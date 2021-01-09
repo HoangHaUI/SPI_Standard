@@ -264,10 +264,10 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="RUN_X_TOP_SPEED" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">200000</Value>
+      <Value Profile="(Default)">100000</Value>
     </Setting>
     <Setting Name="RUN_Y_TOP_SPEED" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">200000</Value>
+      <Value Profile="(Default)">100000</Value>
     </Setting>
     <Setting Name="RUN_CONVEYOR_SPEED" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">30000</Value>
@@ -288,10 +288,10 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="LIGHT_VI_DEFAULT_INTENSITY_CH4" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">30</Value>
+      <Value Profile="(Default)">40</Value>
     </Setting>
     <Setting Name="CAMERA_VI_EXPOSURE_TIME" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">6000</Value>
+      <Value Profile="(Default)">5000</Value>
     </Setting>
     <Setting Name="Debug" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

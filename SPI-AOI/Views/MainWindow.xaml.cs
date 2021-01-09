@@ -348,7 +348,7 @@ namespace SPI_AOI.Views
                     }
                     if (mPadErrorDetails.Count > 0)
                     {
-                        result = 0;
+                        result = -1;
                     }
                     else
                     {
@@ -1001,6 +1001,7 @@ namespace SPI_AOI.Views
             ResetDetails();
             SetDisplayFOV(-1);
             SetButtonRun(Utils.RunMode.STOP);
+            ShowError(false);
         }
         private void SetButtonRun(Utils.RunMode mode)
         {
@@ -1163,6 +1164,7 @@ namespace SPI_AOI.Views
                     ColStatistical.Width = new GridLength(0);
                     chartForm.Visibility = Visibility.Hidden;
                     bdFOVError.Visibility = Visibility.Visible;
+                    
                 });
             }
             else
@@ -1212,6 +1214,7 @@ namespace SPI_AOI.Views
                 rect.X -= mModel.Gerber.ROI.X;
                 rect.Y -= mModel.Gerber.ROI.Y;
                 ShowComponentPosition(rect);
+                UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.READY);
             }
         }
         private void btFinish_Click(object sender, RoutedEventArgs e)
