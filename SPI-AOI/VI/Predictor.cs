@@ -61,99 +61,217 @@ namespace SPI_AOI.VI
                 {
                     continue;
                 }
-                Rectangle boundPadRef = padItem.Bouding;
-                double sPadRef = CvInvoke.ContourArea(padItem.Contour);
-                List<int> idPadSegOverlap = new List<int>();
-                for (int j = 0; j < padSegment.Length; j++)
+                PadErrorDetail padEr = CheckPad(padItem, padSegment, umPPixel, false);
+                if (padEr == null)
+                    continue;
+                else
                 {
-                    
-                    if(boundPadRef.IntersectsWith(padSegment[j].Bouding))
-                    {
-                        idPadSegOverlap.Add(j);
-                        break;
-                    }
-                }
-                PadErrorDetail padEr = new PadErrorDetail();
-                double scaleArea = 0;
-                double shiftx = 0;
-                double shifty = 0;
-                padEr.AreaStdHight = padItem.AreaThresh.UM_USL;
-                padEr.AreaStdLow = padItem.AreaThresh.PERCENT_LSL;
-                padEr.ShiftXStduM = padItem.ShiftXThresh.UM_USL;
-                padEr.ShiftYStduM = padItem.ShiftYThresh.UM_USL;
-                padEr.ShiftXStdArea = padItem.ShiftXThresh.PERCENT_LSL;
-                padEr.ShiftYStdArea = padItem.ShiftYThresh.PERCENT_LSL;
-                padEr.ROI = Rectangle.Inflate(boundPadRef, 10, 10);
-                padEr.Pad = padItem;
-                
-                if(idPadSegOverlap.Count > 0)
-                {
-                    double areaAllPadSeg = 0;
-                    Rectangle boundAllPadSeg = new Rectangle();
-                    for (int j = 0; j < idPadSegOverlap.Count; j++)
-                    {
-                        PadSegmentInfo padSeg = padSegment[idPadSegOverlap[j]];
-                        areaAllPadSeg += padSeg.Area;
-                        if(j == 0)
-                        {
-                            boundAllPadSeg = padSeg.Bouding;
-                            continue;
-                        }
-                        if (padSeg.Bouding.X < boundAllPadSeg.X)
-                            boundAllPadSeg.X = padSeg.Bouding.X;
-                        if (padSeg.Bouding.Y < boundAllPadSeg.Y)
-                            boundAllPadSeg.Y = padSeg.Bouding.Y;
-                        if (padSeg.Bouding.X + padSeg.Bouding.Width > boundAllPadSeg.X + boundAllPadSeg.Width)
-                            boundAllPadSeg.Width = padSeg.Bouding.X + padSeg.Bouding.Width - boundAllPadSeg.X;
-                        if (padSeg.Bouding.Y + padSeg.Bouding.Height > boundAllPadSeg.Y + boundAllPadSeg.Height)
-                            boundAllPadSeg.Height = padSeg.Bouding.Y + padSeg.Bouding.Height - boundAllPadSeg.Y;
-                    }
-                    padEr.Center = new Point( boundAllPadSeg.X + boundAllPadSeg.Width/2, boundAllPadSeg.Y + boundAllPadSeg.Height/ 2);
-                    scaleArea = areaAllPadSeg * 100 / sPadRef;
-
-                    shiftx = (Math.Max(Math.Abs(boundPadRef.X - boundAllPadSeg.X), Math.Abs((boundPadRef.X + boundPadRef.Width) - (boundAllPadSeg.X + boundAllPadSeg.Width))) * umPPixel) % 130;
-                    shifty = (Math.Max(Math.Abs(boundPadRef.Y - boundAllPadSeg.Y), Math.Abs((boundPadRef.Y + boundPadRef.Height) - (boundAllPadSeg.Y + boundAllPadSeg.Height))) * umPPixel) % 130;
-                    
-                    bool insert = false;
-                    double deviation = (100 - (sPadRef / umPPixel)) / 2;
-                    deviation = deviation < 0 ? 0 : deviation;
-                    if (scaleArea > padItem.AreaThresh.UM_USL + deviation || scaleArea < padItem.AreaThresh.PERCENT_LSL - deviation  )
-                    {
-                        if(sPadRef > 100 || (sPadRef < 100 && scaleArea < 5))
-                        {
-                            insert = true;
-                        }
-                    }
-                    if (shiftx > padItem.ShiftXThresh.UM_USL)
-                    {
-                        insert = true;
-                    }
-                    if (shifty > padItem.ShiftXThresh.UM_USL)
-                    {
-                        insert = true;
-                    }
-                    if (insert)
-                    {
-                        
-                        padEr.Area = scaleArea;
-                        padEr.ShiftX = shiftx;
-                        padEr.ShiftY = shifty;
-                        padError.Add(padEr);
-                    }
+                    padEr = CheckPad(padItem, padSegment, umPPixel, true);
+                    if (padEr == null)
+                        continue;
                     else
+                        padError.Add(padEr);
+                }
+                
+                //Rectangle boundPadRef = padItem.Bouding;
+                //boundPadRef.Inflate(6, 6);
+                //double sPadRef = CvInvoke.ContourArea(padItem.Contour);
+                //List<int> idPadSegOverlap = new List<int>();
+                //for (int j = 0; j < padSegment.Length; j++)
+                //{
+
+                //    if(boundPadRef.IntersectsWith(padSegment[j].Bouding))
+                //    {
+                //        idPadSegOverlap.Add(j);
+                //        break;
+                //    }
+                //}
+                //boundPadRef = padItem.Bouding;
+                //PadErrorDetail padEr = new PadErrorDetail();
+                //double scaleArea = 0;
+                //double shiftx = 0;
+                //double shifty = 0;
+                //padEr.AreaStdHight = padItem.AreaThresh.UM_USL;
+                //padEr.AreaStdLow = padItem.AreaThresh.PERCENT_LSL;
+                //padEr.ShiftXStduM = padItem.ShiftXThresh.UM_USL;
+                //padEr.ShiftYStduM = padItem.ShiftYThresh.UM_USL;
+                //padEr.ShiftXStdArea = padItem.ShiftXThresh.PERCENT_LSL;
+                //padEr.ShiftYStdArea = padItem.ShiftYThresh.PERCENT_LSL;
+                //padEr.ROI = Rectangle.Inflate(boundPadRef, 10, 10);
+                //padEr.Pad = padItem;
+
+                //if(idPadSegOverlap.Count > 0)
+                //{
+                //    double areaAllPadSeg = 0;
+                //    Rectangle boundAllPadSeg = new Rectangle();
+                //    for (int j = 0; j < idPadSegOverlap.Count; j++)
+                //    {
+                //        PadSegmentInfo padSeg = padSegment[idPadSegOverlap[j]];
+                //        areaAllPadSeg += padSeg.Area;
+                //        if(j == 0)
+                //        {
+                //            boundAllPadSeg = padSeg.Bouding;
+                //            continue;
+                //        }
+                //        if (padSeg.Bouding.X < boundAllPadSeg.X)
+                //            boundAllPadSeg.X = padSeg.Bouding.X;
+                //        if (padSeg.Bouding.Y < boundAllPadSeg.Y)
+                //            boundAllPadSeg.Y = padSeg.Bouding.Y;
+                //        if (padSeg.Bouding.X + padSeg.Bouding.Width > boundAllPadSeg.X + boundAllPadSeg.Width)
+                //            boundAllPadSeg.Width = padSeg.Bouding.X + padSeg.Bouding.Width - boundAllPadSeg.X;
+                //        if (padSeg.Bouding.Y + padSeg.Bouding.Height > boundAllPadSeg.Y + boundAllPadSeg.Height)
+                //            boundAllPadSeg.Height = padSeg.Bouding.Y + padSeg.Bouding.Height - boundAllPadSeg.Y;
+                //    }
+                //    padEr.Center = new Point( boundAllPadSeg.X + boundAllPadSeg.Width/2, boundAllPadSeg.Y + boundAllPadSeg.Height/ 2);
+                //    scaleArea = areaAllPadSeg * 100 / sPadRef;
+
+                //    shiftx = (Math.Max(Math.Abs(boundPadRef.X - boundAllPadSeg.X), Math.Abs((boundPadRef.X + boundPadRef.Width) - (boundAllPadSeg.X + boundAllPadSeg.Width))) * umPPixel) % 130;
+                //    shifty = (Math.Max(Math.Abs(boundPadRef.Y - boundAllPadSeg.Y), Math.Abs((boundPadRef.Y + boundPadRef.Height) - (boundAllPadSeg.Y + boundAllPadSeg.Height))) * umPPixel) % 130;
+
+                //    bool insert = false;
+                //    double deviation = (100 - (sPadRef / umPPixel)) / 2;
+                //    deviation = deviation < 0 ? 0 : deviation;
+                //    if ( scaleArea < padItem.AreaThresh.PERCENT_LSL - deviation  )
+                //    {
+                //        if(sPadRef > 100 || (sPadRef < 100 && scaleArea < 5))
+                //        {
+                //            insert = true;
+                //        }
+                //    }
+                //    if(scaleArea > padItem.AreaThresh.UM_USL)
+                //    {
+                //        insert = true;
+                //    }
+                //    if (shiftx > padItem.ShiftXThresh.UM_USL)
+                //    {
+                //        insert = true;
+                //    }
+                //    if (shifty > padItem.ShiftXThresh.UM_USL)
+                //    {
+                //        insert = true;
+                //    }
+                //    if (insert)
+                //    {
+
+                //        padEr.Area = scaleArea;
+                //        padEr.ShiftX = shiftx;
+                //        padEr.ShiftY = shifty;
+                //        padError.Add(padEr);
+                //    }
+                //    else
+                //    {
+                //        // pad pass
+                //        continue;
+                //    }
+                //}
+                //else
+                //{
+                //    // not found solder paste
+                //    padError.Add(padEr);
+                //}
+
+            }
+            return padError.ToArray();
+        }
+        private static PadErrorDetail CheckPad(Models.PadItem padItem,PadSegmentInfo[] padSegment,double umPPixel, bool Inflate =false)
+        {
+            Rectangle boundPadRef = padItem.Bouding;
+            if(Inflate)
+                boundPadRef.Inflate(6, 6);
+            double sPadRef = CvInvoke.ContourArea(padItem.Contour);
+            List<int> idPadSegOverlap = new List<int>();
+            for (int j = 0; j < padSegment.Length; j++)
+            {
+
+                if (boundPadRef.IntersectsWith(padSegment[j].Bouding))
+                {
+                    idPadSegOverlap.Add(j);
+                    break;
+                }
+            }
+            boundPadRef = padItem.Bouding;
+            PadErrorDetail padEr = new PadErrorDetail();
+            double scaleArea = 0;
+            double shiftx = 0;
+            double shifty = 0;
+            padEr.AreaStdHight = padItem.AreaThresh.UM_USL;
+            padEr.AreaStdLow = padItem.AreaThresh.PERCENT_LSL;
+            padEr.ShiftXStduM = padItem.ShiftXThresh.UM_USL;
+            padEr.ShiftYStduM = padItem.ShiftYThresh.UM_USL;
+            padEr.ShiftXStdArea = padItem.ShiftXThresh.PERCENT_LSL;
+            padEr.ShiftYStdArea = padItem.ShiftYThresh.PERCENT_LSL;
+            padEr.ROI = Rectangle.Inflate(boundPadRef, 10, 10);
+            padEr.Pad = padItem;
+
+            if (idPadSegOverlap.Count > 0)
+            {
+                double areaAllPadSeg = 0;
+                Rectangle boundAllPadSeg = new Rectangle();
+                for (int j = 0; j < idPadSegOverlap.Count; j++)
+                {
+                    PadSegmentInfo padSeg = padSegment[idPadSegOverlap[j]];
+                    areaAllPadSeg += padSeg.Area;
+                    if (j == 0)
                     {
-                        // pad pass
+                        boundAllPadSeg = padSeg.Bouding;
                         continue;
                     }
+                    if (padSeg.Bouding.X < boundAllPadSeg.X)
+                        boundAllPadSeg.X = padSeg.Bouding.X;
+                    if (padSeg.Bouding.Y < boundAllPadSeg.Y)
+                        boundAllPadSeg.Y = padSeg.Bouding.Y;
+                    if (padSeg.Bouding.X + padSeg.Bouding.Width > boundAllPadSeg.X + boundAllPadSeg.Width)
+                        boundAllPadSeg.Width = padSeg.Bouding.X + padSeg.Bouding.Width - boundAllPadSeg.X;
+                    if (padSeg.Bouding.Y + padSeg.Bouding.Height > boundAllPadSeg.Y + boundAllPadSeg.Height)
+                        boundAllPadSeg.Height = padSeg.Bouding.Y + padSeg.Bouding.Height - boundAllPadSeg.Y;
+                }
+                padEr.Center = new Point(boundAllPadSeg.X + boundAllPadSeg.Width / 2, boundAllPadSeg.Y + boundAllPadSeg.Height / 2);
+                scaleArea = areaAllPadSeg * 100 / sPadRef;
+
+                shiftx = (Math.Max(Math.Abs(boundPadRef.X - boundAllPadSeg.X), Math.Abs((boundPadRef.X + boundPadRef.Width) - (boundAllPadSeg.X + boundAllPadSeg.Width))) * umPPixel) % 130;
+                shifty = (Math.Max(Math.Abs(boundPadRef.Y - boundAllPadSeg.Y), Math.Abs((boundPadRef.Y + boundPadRef.Height) - (boundAllPadSeg.Y + boundAllPadSeg.Height))) * umPPixel) % 130;
+
+                bool insert = false;
+                double deviation = (100 - (sPadRef / umPPixel)) / 2;
+                deviation = deviation < 0 ? 0 : deviation;
+                if (scaleArea < padItem.AreaThresh.PERCENT_LSL - deviation)
+                {
+                    if (sPadRef > 100 || (sPadRef < 100 && scaleArea < 5))
+                    {
+                        insert = true;
+                    }
+                }
+                if (scaleArea > padItem.AreaThresh.UM_USL)
+                {
+                    insert = true;
+                }
+                if (shiftx > padItem.ShiftXThresh.UM_USL)
+                {
+                    insert = true;
+                }
+                if (shifty > padItem.ShiftXThresh.UM_USL)
+                {
+                    insert = true;
+                }
+                if (insert)
+                {
+
+                    padEr.Area = scaleArea;
+                    padEr.ShiftX = shiftx;
+                    padEr.ShiftY = shifty;
+                    return padEr;
                 }
                 else
                 {
-                    // not found solder paste
-                    padError.Add(padEr);
+                    // pad pass
+                    return null;
                 }
-                
             }
-            return padError.ToArray();
+            else
+            {
+                // not found solder paste
+                return padEr;
+            }
         }
         public static PadErrorDetail[] GetImagePadError(Image<Bgr, byte> image, PadErrorDetail[] PadError, Rectangle ROI, int limit)
         {

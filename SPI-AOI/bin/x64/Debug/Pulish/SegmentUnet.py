@@ -13,13 +13,15 @@ def SegmentImage(model, image, image_width, image_height, debug):
     if debug:
         print("[INFO] | {} | Split {} images...".format(datetime.datetime.now(),len(imgs)))
     data_input = Utils.Convert_Image(imgs)
-    results = model.predict(data_input, batch_size = 10)
+    results = model.predict(data_input, batch_size = 6)
     for i, imgp in enumerate(results):
         img_predict = np.argmax(imgp, axis=2)
         img_predict[img_predict == 1] = 255
         img_predict = img_predict.astype(np.uint8)
         x, y, w, h = locs[i]
-        mask[y:y+h, x:x+w] = img_predict
+        mask_roi = mask[y:y+h, x:x+w]
+        graft = cv2.bitwise_or(mask_roi,img_predict)
+        mask[y:y+h, x:x+w] = graft
     if(debug):
         print("[INFO] | {} | Predict in {} seconds...".format(datetime.datetime.now(),time.time() - st))
     return mask

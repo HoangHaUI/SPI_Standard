@@ -85,7 +85,8 @@ namespace SPI_AOI.Models
             int Bot = 0;
             int Right = 0;
             string ComponentName = this.GetComponentName(pad);
-
+            if (ComponentName == "UNDEFINE")
+                return pad.Bouding;
             for (int i = 0; i < this.Gerber.PadItems.Count; i++)
             {
                 PadItem item = this.Gerber.PadItems[i];

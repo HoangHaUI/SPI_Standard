@@ -117,6 +117,8 @@ namespace SPI_AOI.Views
                     UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.FAIL);
                     ShowError(true);
                 }
+
+                GC.Collect();
             }
             mIsInTimer = false;
             timer.Enabled = mIsRunning;
@@ -284,7 +286,8 @@ namespace SPI_AOI.Views
                                         lock (maskSegmentGraft)
                                         {
                                             maskSegmentGraft.ROI = ROIGraft;
-                                            serviceResults.ImgMask.CopyTo(maskSegmentGraft);
+                                            CvInvoke.BitwiseOr(maskSegmentGraft, serviceResults.ImgMask, maskSegmentGraft);
+                                            //serviceResults.ImgMask.CopyTo(maskSegmentGraft);
                                             maskSegmentGraft.ROI = new System.Drawing.Rectangle();
                                         }
                                     }
