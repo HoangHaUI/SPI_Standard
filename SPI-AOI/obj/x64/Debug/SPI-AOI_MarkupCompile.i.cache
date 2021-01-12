@@ -1,0 +1,20 @@
+﻿SPI-AOI
+
+
+winexe
+C#
+.cs
+D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\
+SPI_AOI
+none
+false
+DEBUG;TRACE
+D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\App.xaml
+17-1384863444
+1-2138471434
+74-288835077
+38-1334122028
+Views\MainWindow.xaml;Views\ModelManagement\AutoAdjustFOVWindow.xaml;Views\ModelManagement\AutoAdjustWindow.xaml;Views\ModelManagement\AutoLinkPadWindow.xaml;Views\ModelManagement\DashBoard.xaml;Views\ModelManagement\FOVCaptureWindow.xaml;Views\ModelManagement\HardwareWindow.xaml;Views\ModelManagement\NewModel.xaml;Views\ModelManagement\SuggestLinkPadWindow.xaml;Views\ModelManagement\AvailabilityLayerWindow.xaml;Views\ModelManagement\GerberTools.xaml;Views\ModelManagement\RotationWindow.xaml;Views\ModelManagement\PadconditionWindow.xaml;Views\ModelManagement\XYMovingWindow.xaml;Views\Styles\Base.xaml;Views\UserManagement\LoginWindow.xaml;Views\WaitingForm.xaml;
+
+True
+

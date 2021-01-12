@@ -794,8 +794,9 @@ namespace SPI_AOI.Views
                 lbLoadTime.Content = DateTime.Now.ToString("HH:mm:ss   dd/MM/yyyy");
                 lbFovs.Content = mModel.Gerber.FOVs.Count.ToString() + " FOVs";
                 lbGerberFile.Content = mModel.Gerber.FileName;
-                lbCircleTime.Content = "20.0 seconds";
                 lbTotalCountFovs.Content = mModel.Gerber.FOVs.Count.ToString();
+                lbNoPad.Content = mModel.Gerber.PadItems.Count.ToString() + " Pad";
+                cbModelStatistical.SelectedItem = cbModelsName.SelectedItem;
             });
         }
         private void ResetDetails()
@@ -988,6 +989,7 @@ namespace SPI_AOI.Views
                 mTimer.Enabled = true;
                 mIsInTimer = false;
                 wait.KillMe = true;
+               
             });
             startThread.Start();
             wait.ShowDialog();
@@ -1198,7 +1200,15 @@ namespace SPI_AOI.Views
             if(mImageGraft != null)
             {
                 var padEr = mPadErrorDetails[item.ID];
-                int idFov = padEr.FOVNo;
+                int idFov = 0;
+                for (int i = 0; i < mROIFOVImage.Count; i++)
+                {
+                    if(mROIFOVImage[i].Contains(padEr.Center))
+                        {
+                        idFov = i;
+                        break;
+                    }
+                }
                 mImageGraft.ROI = mROIFOVImage[idFov];
                 BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(mImageGraft.Bitmap);
                 imbFOVError.Source = bms;
@@ -1268,7 +1278,7 @@ namespace SPI_AOI.Views
         {
             Thread a = new Thread(() =>
             {
-                mModel = Model.LoadModelByName("model 123");
+                mModel = Model.LoadModelByName("U10C153T10_BOT");
                 using (Image<Bgr, byte> imgDigram = mModel.GetDiagramImage())
                 {
                     SetImageToImb(imbDiagram, imgDigram.Bitmap);
@@ -1283,15 +1293,15 @@ namespace SPI_AOI.Views
                                     modelFov.Width, modelFov.Height);
                     mROIFOVImage.Add(ROIGerber);
                 }
-                Image<Gray, byte> imgMask = new Image<Gray, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\2021_01_08_08_27_08.png");
-                mImageGraft = new Image<Bgr, byte>(@"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Auto adjust\2021_01_08_08_27_08.png");
+                Image<Gray, byte> imgMask = new Image<Gray, byte>(@"D:\Heal\Projects\B06\SPI\Data\Pad\2021_01_08\TIME(16_01_46)_._SN(NOT FOUND)\Image_Graft_mask.png");
+                mImageGraft = new Image<Bgr, byte>(@"D:\Heal\Projects\B06\SPI\Data\Pad\2021_01_08\TIME(16_01_46)_._SN(NOT FOUND)\Image_Graft.png");
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
                 imgMask = VI.Predictor.ReleaseNoise(imgMask);
                 Utils.PadSegmentInfo[] pads = VI.Predictor.GetPadSegmentInfo(imgMask, mModel.Gerber.ROI);
                 Console.WriteLine(sw.ElapsedMilliseconds);
                 Utils.PadErrorDetail[] padError = VI.Predictor.ComparePad(mModel, pads);
-                padError = VI.Predictor.GetImagePadError(mImageGraft, padError, mModel.Gerber.ROI, 10);
+                padError = VI.Predictor.GetImagePadError(mImageGraft, padError, mModel.Gerber.ROI, 100);
                 for (int i = 0; i < padError.Length; i++)
                 {
                     mPadErrorDetails.Add(padError[i]);

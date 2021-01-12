@@ -242,6 +242,10 @@
                                         <Label x:Name="lbFovs" Content="-----" FontSize="15"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
+                                        <Label  Content="Pads:" Width="100" Foreground="Gray"/>
+                                        <Label x:Name="lbNoPad" Content="-----" FontSize="15"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Visibility="Hidden">
                                         <Label  Content="Cycle Time:" Width="100" Foreground="Gray"/>
                                         <Label x:Name="lbCircleTime" Content="-----" FontSize="15"/>
                                     </StackPanel>
@@ -316,7 +320,7 @@
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="3">
-                        <Button Content="test" Visibility="Hidden" Margin="50" Click="Button_Click"></Button>
+                        <Button Content="test" Visibility="Visible" Margin="50" Click="Button_Click"></Button>
                         <GroupBox Header="Result details" BorderBrush="Gray" FontWeight="Bold" Visibility="Hidden">
                             <Grid>
                                 <Grid.ColumnDefinitions>

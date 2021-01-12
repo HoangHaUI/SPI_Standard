@@ -41,6 +41,7 @@ namespace SPI_AOI.VI
                     bound.Y += ROI.Y;
                     double s = CvInvoke.ContourArea(contours[i]);
                     PadSegmentInfo pad = new PadSegmentInfo();
+                    pad.Contours = contours[i].ToArray();
                     pad.Bouding = bound;
                     pad.Area = s;
                     pad.Center = ctCnt;
@@ -60,27 +61,17 @@ namespace SPI_AOI.VI
                 {
                     continue;
                 }
-
-                Rectangle b1 = padItem.Bouding;
-                double bestScoreOverLap = 0;
-                int id = -1;
+                Rectangle boundPadRef = padItem.Bouding;
+                double sPadRef = CvInvoke.ContourArea(padItem.Contour);
+                List<int> idPadSegOverlap = new List<int>();
                 for (int j = 0; j < padSegment.Length; j++)
                 {
-
-                    Rectangle b2 = padSegment[j].Bouding;
-                    Rectangle rOverLap = Rectangle.Intersect(b1, b2);
-                    if (rOverLap.Width > 0 && rOverLap .Height > 0)
-                    {
-                        double sumS = b1.Width * b1.Height + b2.Width * b2.Height;
-                        double overlapS = rOverLap.Width * rOverLap.Height;
-                        double score = overlapS / (sumS - overlapS);
-                        if(score > bestScoreOverLap)
-                        {
-                            bestScoreOverLap = score;
-                            id = j;
-                        }
-                    }
                     
+                    if(boundPadRef.IntersectsWith(padSegment[j].Bouding))
+                    {
+                        idPadSegOverlap.Add(j);
+                        break;
+                    }
                 }
                 PadErrorDetail padEr = new PadErrorDetail();
                 double scaleArea = 0;
@@ -92,36 +83,52 @@ namespace SPI_AOI.VI
                 padEr.ShiftYStduM = padItem.ShiftYThresh.UM_USL;
                 padEr.ShiftXStdArea = padItem.ShiftXThresh.PERCENT_LSL;
                 padEr.ShiftYStdArea = padItem.ShiftYThresh.PERCENT_LSL;
-                padEr.ROI = Rectangle.Inflate(b1, 10, 10);
+                padEr.ROI = Rectangle.Inflate(boundPadRef, 10, 10);
                 padEr.Pad = padItem;
-                if (padItem.FOVs.Count > 0)
+                
+                if(idPadSegOverlap.Count > 0)
                 {
-                    padEr.FOVNo = padItem.FOVs[0];
-                }
+                    double areaAllPadSeg = 0;
+                    Rectangle boundAllPadSeg = new Rectangle();
+                    for (int j = 0; j < idPadSegOverlap.Count; j++)
+                    {
+                        PadSegmentInfo padSeg = padSegment[idPadSegOverlap[j]];
+                        areaAllPadSeg += padSeg.Area;
+                        if(j == 0)
+                        {
+                            boundAllPadSeg = padSeg.Bouding;
+                            continue;
+                        }
+                        if (padSeg.Bouding.X < boundAllPadSeg.X)
+                            boundAllPadSeg.X = padSeg.Bouding.X;
+                        if (padSeg.Bouding.Y < boundAllPadSeg.Y)
+                            boundAllPadSeg.Y = padSeg.Bouding.Y;
+                        if (padSeg.Bouding.X + padSeg.Bouding.Width > boundAllPadSeg.X + boundAllPadSeg.Width)
+                            boundAllPadSeg.Width = padSeg.Bouding.X + padSeg.Bouding.Width - boundAllPadSeg.X;
+                        if (padSeg.Bouding.Y + padSeg.Bouding.Height > boundAllPadSeg.Y + boundAllPadSeg.Height)
+                            boundAllPadSeg.Height = padSeg.Bouding.Y + padSeg.Bouding.Height - boundAllPadSeg.Y;
+                    }
+                    padEr.Center = new Point( boundAllPadSeg.X + boundAllPadSeg.Width/2, boundAllPadSeg.Y + boundAllPadSeg.Height/ 2);
+                    scaleArea = areaAllPadSeg * 100 / sPadRef;
 
-                if (id >= 0)
-                {
-                    double sPad = CvInvoke.ContourArea(padItem.Contour);
-                    scaleArea = padSegment[id].Area * 100 / sPad;
-                    double dev = 0;
-                    if(15 * 15 > sPad)
-                    {
-                       double sca = sPad / (15 * 15);
-                        dev = (1 - sca) * 50;
-                    }
-                    Rectangle b2 = padSegment[id].Bouding;
-                    shiftx = (Math.Min(Math.Abs(b1.X - b2.X), Math.Abs((b1.X + b1.Width) - (b2.X + b2.Width))) * umPPixel)%130;
-                    shifty = (Math.Min(Math.Abs(b1.Y - b2.Y), Math.Abs((b1.Y + b1.Height) - (b2.Y + b2.Height))) * umPPixel)%130;
+                    shiftx = (Math.Max(Math.Abs(boundPadRef.X - boundAllPadSeg.X), Math.Abs((boundPadRef.X + boundPadRef.Width) - (boundAllPadSeg.X + boundAllPadSeg.Width))) * umPPixel) % 130;
+                    shifty = (Math.Max(Math.Abs(boundPadRef.Y - boundAllPadSeg.Y), Math.Abs((boundPadRef.Y + boundPadRef.Height) - (boundAllPadSeg.Y + boundAllPadSeg.Height))) * umPPixel) % 130;
+                    
                     bool insert = false;
-                    if(scaleArea > padItem.AreaThresh.UM_USL + dev ||scaleArea < padItem.AreaThresh.PERCENT_LSL - dev)
+                    double deviation = (100 - (sPadRef / umPPixel)) / 2;
+                    deviation = deviation < 0 ? 0 : deviation;
+                    if (scaleArea > padItem.AreaThresh.UM_USL + deviation || scaleArea < padItem.AreaThresh.PERCENT_LSL - deviation  )
+                    {
+                        if(sPadRef > 100 || (sPadRef < 100 && scaleArea < 5))
+                        {
+                            insert = true;
+                        }
+                    }
+                    if (shiftx > padItem.ShiftXThresh.UM_USL)
                     {
                         insert = true;
                     }
-                    if(shiftx > padItem.ShiftXThresh.UM_USL)
-                    {
-                        insert = true;
-                    }
-                    if(shifty > padItem.ShiftXThresh.UM_USL)
+                    if (shifty > padItem.ShiftXThresh.UM_USL)
                     {
                         insert = true;
                     }
@@ -129,14 +136,19 @@ namespace SPI_AOI.VI
                     {
                         
                         padEr.Area = scaleArea;
-                        padEr.ShiftX = Math.Round(shiftx, 2);
-                        padEr.ShiftY = Math.Round(shifty, 2);
-                        // add std
+                        padEr.ShiftX = shiftx;
+                        padEr.ShiftY = shifty;
                         padError.Add(padEr);
+                    }
+                    else
+                    {
+                        // pad pass
+                        continue;
                     }
                 }
                 else
                 {
+                    // not found solder paste
                     padError.Add(padEr);
                 }
                 
@@ -156,7 +168,6 @@ namespace SPI_AOI.VI
                 image.ROI = bound;
                 PadError[i].PadImage = image.Copy();
                 image.ROI = Rectangle.Empty;
-                //CvInvoke.Rectangle(image, bound, new MCvScalar(0, 255, 255), 3);
             }
             return PadError;
         }

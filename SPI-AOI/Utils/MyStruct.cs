@@ -35,6 +35,7 @@ namespace SPI_AOI.Utils
         public Models.PadItem Pad { get; set; }
         public Rectangle ROI { get; set; }
         public Image<Bgr, byte> PadImage { get; set; }
+        public Point Center { get; set; }
         public int FOVNo { get; set; }
         public double Area { get; set; }
         public double ShiftX { get; set; }
@@ -59,5 +60,6 @@ namespace SPI_AOI.Utils
         public Rectangle Bouding { get; set; }
         public double Area { get; set; }
         public  Point Center { get; set; }
+        public Point[] Contours { get; set; }
     }
 }
