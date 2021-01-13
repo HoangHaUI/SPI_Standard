@@ -14,6 +14,73 @@ namespace SPI_AOI.VI
 {
     class AutoAdjustROIFOV
     {
+        public static List<Utils.PadAdjustResult> AdjustPad(Image<Bgr, byte> ImgCap,List<Rectangle> BoundPad, Hsv Upper, Hsv Lower, Rectangle CapROI)
+        {
+            ImgCap.ROI = CapROI;
+            List<Utils.PadAdjustResult> adjustResult = new List<Utils.PadAdjustResult>();
+            using (Image<Hsv, byte> ImgHsv = new Image<Hsv, byte>(ImgCap.Size))
+            {
+                CvInvoke.CvtColor(ImgCap, ImgHsv, Emgu.CV.CvEnum.ColorConversion.Bgr2Hsv);
+                using (Image<Gray, byte> imgSegment = ImgHsv.InRange(Upper, Lower))
+                using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
+                {
+                    CvInvoke.FindContours(imgSegment, contours, null, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
+                    Rectangle[] listBoundPadSeg = new Rectangle[contours.Size];
+                    for (int i = 0; i < contours.Size; i++)
+                    {
+                        listBoundPadSeg[i] = CvInvoke.BoundingRectangle(contours[i]);
+                    }
+                    for (int i = 0; i < BoundPad.Count; i++)
+                    {
+                        Rectangle boundPadRef = BoundPad[i];
+                        Rectangle boundPadSeg = Rectangle.Empty;
+                        Utils.PadAdjustResult padAdjustResult = new Utils.PadAdjustResult();
+
+                        foreach (var item in listBoundPadSeg)
+                        {
+                            if (BoundPad[i].IntersectsWith(item))
+                            {
+                                if (boundPadSeg == Rectangle.Empty)
+                                {
+                                    boundPadSeg = item;
+                                }
+                                else
+                                {
+                                    if (boundPadSeg.X > item.X)
+                                        boundPadSeg.X = item.X;
+                                    if (boundPadSeg.Y > item.Y)
+                                        boundPadSeg.Y = item.Y;
+                                    if (boundPadSeg.X + boundPadSeg.Width < item.X + item.Width)
+                                    {
+                                        boundPadSeg.Width = item.X + item.Width - boundPadSeg.X;
+                                    }
+                                    if (boundPadSeg.Y + boundPadSeg.Height < item.Y + item.Height)
+                                    {
+                                        boundPadSeg.Height = item.Y + item.Height - boundPadSeg.Y;
+                                    }
+                                }
+                            }
+                        }
+                        if(boundPadSeg != Rectangle.Empty)
+                        {
+                            Point ctSeg = new Point(boundPadSeg.Width / 2 + boundPadSeg.X, boundPadSeg.Height / 2 + boundPadSeg.Y);
+                            Point ctRef = new Point(boundPadRef.Width / 2 + boundPadRef.X, boundPadRef.Height / 2 + boundPadRef.Y);
+                            int subx = ctSeg.X - ctRef.X;
+                            int suby = ctSeg.Y - ctRef.Y;
+                            if (Math.Abs(subx) <= 5)
+                                padAdjustResult.X = subx;
+                            if(Math.Abs(suby) <= 5)
+                            {
+                                padAdjustResult.X = ctSeg.Y - ctRef.Y;
+                            }
+                        }
+                        adjustResult.Add(padAdjustResult);
+                    }
+                }
+            }
+            ImgCap.ROI = Rectangle.Empty;
+            return adjustResult;
+        }
         public static Rectangle Adjust(Image<Bgr, byte> ImgCap, Image<Gray, byte> ImgGerber, Hsv Upper, Hsv Lower, Size FOV, Rectangle CapROI)
         {
             Rectangle ROIAdjust = new Rectangle(CapROI.X, CapROI.Y, CapROI.Width, CapROI.Height);

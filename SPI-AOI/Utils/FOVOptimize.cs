@@ -19,7 +19,7 @@ namespace SPI_AOI.Utils
         {
             ImgGerber.ROI = ROI;
             Point[] Anchors = null;
-            Size fovTruncate = new Size(FOV.Width - 20, FOV.Height - 20);
+            Size fovTruncate = new Size(FOV.Width - 64, FOV.Height - 64);
             using (Image<Gray, byte> img = ImgGerber.Copy())
             {
                 ExtremePoints extreme = FindExtremeImage(img);

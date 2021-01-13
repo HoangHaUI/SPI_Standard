@@ -62,4 +62,9 @@ namespace SPI_AOI.Utils
         public  Point Center { get; set; }
         public Point[] Contours { get; set; }
     }
+    public class PadAdjustResult
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+    }
 }

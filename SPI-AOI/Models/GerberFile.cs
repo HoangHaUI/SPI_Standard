@@ -185,7 +185,10 @@ namespace SPI_AOI.Models
                 {
                     if(!this.MarkPoint.PadMark.Contains(i) && this.PadItems[i].Enable)
                     {
-                        contours.Push(this.PadItems[i].Contour);
+                        using (VectorOfPoint cnt = new VectorOfPoint(this.PadItems[i].Contour))
+                        {
+                            contours.Push(cnt);
+                        }
                     }
                 }
                 CvInvoke.DrawContours(searchFOVImage, contours, -1, new MCvScalar(255), -1);
@@ -219,7 +222,8 @@ namespace SPI_AOI.Models
         {
             for (int i = 0; i < this.PadItems.Count; i++)
             {
-                Rectangle padBound =CvInvoke.BoundingRectangle(PadItems[i].Contour);
+                this.PadItems[i].FOVs.Clear();
+                Rectangle padBound = PadItems[i].Bouding;
                 for (int j = 0; j < this.FOVs.Count; j++)
                 {
                     Rectangle fov = SPI_AOI.Utils.FOVOptimize.GetRectangleByAnchor(this.FOVs[j].Anchor, FOV);

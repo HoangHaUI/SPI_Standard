@@ -101,11 +101,11 @@ namespace SPI_AOI.Models
             {
                 for (int i = 0; i < model.Gerber.PadItems.Count; i++)
                 {
-                    Rectangle bound = CvInvoke.BoundingRectangle(model.Gerber.PadItems[i].Contour);
+                    Rectangle bound = model.Gerber.PadItems[i].Bouding;
 
                     if (model.Gerber.SelectPad.Contains(bound) && model.Gerber.PadItems[i].Enable)
                     {
-                        contours.Push(model.Gerber.PadItems[i].Contour);
+                        contours.Push(new VectorOfPoint(model.Gerber.PadItems[i].Contour));
                     }
                 }
                 CvInvoke.DrawContours(ImgDraw, contours, -1, new MCvScalar(255, 255, 255), -1);
@@ -120,7 +120,7 @@ namespace SPI_AOI.Models
                     int idMark = model.Gerber.MarkPoint.PadMark[i];
                     if (idMark != -1)
                     {
-                        contours.Push(model.Gerber.PadItems[idMark].Contour);
+                        contours.Push(new  VectorOfPoint(model.Gerber.PadItems[idMark].Contour));
                         Point ct = model.Gerber.PadItems[idMark].Center;
                         CvInvoke.PutText(ImgDraw, "G" + (i + 1).ToString() , new Point(ct.X + 10, ct.Y - 10), Emgu.CV.CvEnum.FontFace.HersheyDuplex, 0.9, new MCvScalar(0, 255, 255), 1, Emgu.CV.CvEnum.LineType.Filled);
                     }

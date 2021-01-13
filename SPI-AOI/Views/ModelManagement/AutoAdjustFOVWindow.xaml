@@ -53,13 +53,41 @@
                                 </StackPanel>
                             </StackPanel>
                         </GroupBox>
-                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
-                            <Button x:Name="btAutoAdjust" Content="Auto Adjust All" Width="90" Height="30" Click="btAutoAdjust_Click"></Button>
-                            <Button x:Name="btAdjust" Content="Adjust" Margin="30,0,0,0" Width="90" Height="30" Click="btAdjust_Click"></Button>
-                        </StackPanel>
+                        <Grid  Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="33*"/>
+                                <ColumnDefinition Width="34*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="1">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                        <Button x:Name="btAdjust" Content="Adjust" Margin="0,0,0,0" Width="110" Height="30" Click="btAdjust_Click"></Button>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                        <Button x:Name="btAutoAdjust" Content="Auto Adjust All" Width="110" Height="30" Click="btAutoAdjust_Click"></Button>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                        <Button x:Name="btAutoAdjustPad" Content="Auto Adjust All Pad" Width="110" Height="30" Click="btAutoAdjustPad_Click"></Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Column="0" >
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Left">
+                                        <Button x:Name="btLoad" Content="Load" Margin="0,0,0,0"
+                                                Width="110" Height="30" Click="btLoad_Click">
+                                        </Button>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Left">
+                                        <Button x:Name="btUnload" Content="Unload" Width="110" 
+                                                Height="30" Click="btUnload_Click"></Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                        
                     </StackPanel>
                 </GroupBox>
-
             </Grid>
         </Grid>
     </Border>

@@ -16,8 +16,11 @@ namespace SPI_AOI.Models
         public string GerberID { get; set; }
         public bool Enable { get; set; }
         public int NoID { get; set; }
+        public double Area { get; set; }
+        public Point[] Contour { get; set; }
         public Rectangle  Bouding { get; set; }
-        public VectorOfPoint Contour { get; set; }
+        public Point[] ContourAdjust { get; set; }
+        public Rectangle BoudingAdjust { get; set; }
         public Point Center { get; set; }
         public StandardThreshold AreaThresh { get; set; }
         public StandardThreshold ShiftXThresh { get; set; }
@@ -39,6 +42,7 @@ namespace SPI_AOI.Models
                         continue;
                     Point ctCnt = new Point(Convert.ToInt32(mm.M10 / mm.M00), Convert.ToInt32(mm.M01 / mm.M00));
                     Rectangle bound = CvInvoke.BoundingRectangle(contours[i]);
+                    double area = CvInvoke.ContourArea(contours[i]);
                     PadItem pad = new PadItem();
                     pad.GerberID = GerberID;
                     bound.X += ROI.X;
@@ -47,16 +51,19 @@ namespace SPI_AOI.Models
                     ctCnt.Y += ROI.Y;
                     pad.Center = ctCnt;
                     pad.Bouding = bound;
+                    pad.BoudingAdjust = bound;
                     Point[] cntPoint = contours[i].ToArray();
                     for (int k = 0; k < cntPoint.Length; k++)
                     {
                         cntPoint[k].X += ROI.X;
                         cntPoint[k].Y += ROI.Y;
                     }
-                    pad.Contour = new VectorOfPoint(cntPoint);
-                    pad.AreaThresh = new StandardThreshold(200, 60);
-                    pad.ShiftXThresh = new StandardThreshold(130, 40);
-                    pad.ShiftYThresh = new StandardThreshold(130, 40);
+                    pad.Contour = cntPoint;
+                    pad.ContourAdjust = (Point[])cntPoint.Clone();
+                    pad.Area = area;
+                    pad.AreaThresh = new StandardThreshold(260, 60);
+                    pad.ShiftXThresh = new StandardThreshold(370, 40);
+                    pad.ShiftYThresh = new StandardThreshold(70, 40);
                     pad.FOVs = new List<int>();
                     pad.CadFileID = string.Empty;
                     pad.CadItemIndex = -1;
@@ -69,14 +76,8 @@ namespace SPI_AOI.Models
             return padItems;
         }
         public void Dispose()
-
         {
             this.FOVs.Clear();
-            if(this.Contour != null)
-            {
-                this.Contour.Dispose();
-                this.Contour = null;
-            }
         }
     }
     public class StandardThreshold

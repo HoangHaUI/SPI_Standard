@@ -17,7 +17,7 @@ namespace SPI_AOI.VI
     {
         private static Logger mLog = Heal.LogCtl.GetInstance();
         private static CalibrateInfo mCalibImage = CalibrateLoader.GetIntance();
-        public static Image<Bgr, byte> CaptureFOV(PLCComm PLC, HikCamera Camera, DKZ224V4ACCom LightCtl, Point Anchor, bool ActiveLight)
+        public static Image<Bgr, byte> CaptureFOV(PLCComm PLC, HikCamera Camera, DKZ224V4ACCom LightCtl, Point Anchor, bool ActiveLight, int TimeSleep = 200)
         {
             Image<Bgr, byte> img = null;
             bool ret = PLC.SetXYTop(Anchor.X, Anchor.Y);
@@ -38,7 +38,7 @@ namespace SPI_AOI.VI
                 Thread.Sleep(100);
             }
 
-            Thread.Sleep(200);
+            Thread.Sleep(TimeSleep);
             Bitmap bm = Camera.GetOneBitmap(1000);
             if (ActiveLight)
             {

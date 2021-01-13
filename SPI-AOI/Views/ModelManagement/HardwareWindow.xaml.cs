@@ -164,7 +164,7 @@ namespace SPI_AOI.Views.ModelManagement
             int scanH = Convert.ToInt32(mScanHeight * mModel.DPI / 25.4);
             int threshold = Convert.ToInt32(mGrayLevel);
             double score = mMatchingScore;
-            VectorOfPoint template = mPadMark.Contour;
+            using (VectorOfPoint template = new VectorOfPoint(mPadMark.Contour))
             using (System.Drawing.Bitmap bm = mCamera.GetOneBitmap(1000))
             {
                 if(bm != null)

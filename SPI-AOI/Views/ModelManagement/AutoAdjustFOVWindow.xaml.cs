@@ -34,6 +34,7 @@ namespace SPI_AOI.Views.ModelManagement
         private IOT.HikCamera mCamera = null;
         private DKZ224V4ACCom mLight = null;
         private bool mLoaded = false;
+        private bool mAdjustPad = false;
         private Image<Bgr, byte> mImage = null;
         private System.Drawing.Point[] mAnchorFOV = null;
         private System.Drawing.Point[] mAnchorROIGerber = null;
@@ -176,7 +177,10 @@ namespace SPI_AOI.Views.ModelManagement
                         {
                             CvInvoke.CvtColor(image, imgGray, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
                             CvInvoke.Threshold(imgGray, imgGray, mModel.Gerber.MarkPoint.ThresholdValue, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
-                            var markInfo = Mark.MarkDetection(imgGray, PadMark[i].Contour);
+                            VectorOfPoint cnt = new VectorOfPoint(PadMark[i].Contour);
+                                var markInfo = Mark.MarkDetection(imgGray, cnt);
+                            cnt.Dispose();
+                            cnt = null;
                             double realScore = markInfo.Item2;
                             realScore = Math.Round((1 - realScore) * 100.0, 2);
                             if (realScore > matchingScore)
@@ -234,7 +238,6 @@ namespace SPI_AOI.Views.ModelManagement
             
             if (cbFOV.SelectedIndex > -1)
             {
-
                 System.Drawing.Point fov = mAnchorFOV[id];
                 int x = fov.X;
                 int y = fov.Y;
@@ -248,7 +251,6 @@ namespace SPI_AOI.Views.ModelManagement
                 mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "FOV " + (id + 1).ToString(), x, y));
                 using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, fov, lightStrobe))
                 {
-                    //
                     mImage = ImageProcessingUtils.ImageRotation(image, new System.Drawing.Point(image.Width / 2, image.Height / 2), -mModel.AngleAxisCamera * Math.PI / 180.0).Copy();
                     mImage = ImageProcessingUtils.ImageTransformation(mImage, mMarkAdjust.X, mMarkAdjust.Y);
                     ShowDetail();
@@ -277,19 +279,37 @@ namespace SPI_AOI.Views.ModelManagement
                 System.Drawing.Rectangle ROIGerber = new System.Drawing.Rectangle(
                     mAnchorROIGerber[id].X - modelFov.Width / 2, mAnchorROIGerber[id].Y - modelFov.Height / 2,
                     modelFov.Width, modelFov.Height);
-                mModel.Gerber.ProcessingGerberImage.ROI = ROIGerber;
                 mImage.ROI = ROI;
-                Image<Bgr, byte> imgGerberBgr = new Image<Bgr, byte>(ROIGerber.Size);
-                CvInvoke.CvtColor(mModel.Gerber.ProcessingGerberImage, imgGerberBgr, Emgu.CV.CvEnum.ColorConversion.Gray2Bgr);
-                mModel.Gerber.ProcessingGerberImage.ROI = new System.Drawing.Rectangle();
-                CvInvoke.AddWeighted(imgGerberBgr, 0.5, mImage, 0.5, 1, imgGerberBgr);
-                this.Dispatcher.Invoke(() =>
+                using (Image<Bgr, byte> imgGerberBgr = new Image<Bgr, byte>(ROIGerber.Size))
+                using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
                 {
-                    BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(imgGerberBgr.Bitmap);
-                    imb.Source = bms;
-                });
-                imgGerberBgr.Dispose();
-                imgGerberBgr = null;
+                    for (int i = 0; i < mModel.Gerber.PadItems.Count; i++)
+                    {
+                        PadItem item = mModel.Gerber.PadItems[i];
+                        if (item.FOVs.Count > 0)
+                        {
+                            if (item.FOVs[0] == id)
+                            {
+                                System.Drawing.Point[] cntPointSub = new System.Drawing.Point[item.ContourAdjust.Length];
+                                for (int j = 0; j < cntPointSub.Length; j++)
+                                {
+                                    cntPointSub[j] = new System.Drawing.Point(item.ContourAdjust[j].X - ROIGerber.X, item.ContourAdjust[j].Y - ROIGerber.Y);
+
+                                }
+                                contours.Push(new VectorOfPoint(cntPointSub));
+                            }
+                        }
+                    }
+                    CvInvoke.DrawContours(imgGerberBgr, contours, -1, new MCvScalar(255), -1);
+                    CvInvoke.AddWeighted(imgGerberBgr, 0.8, mImage, 0.5, 1, imgGerberBgr);
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(imgGerberBgr.Bitmap);
+                        imb.Source = bms;
+                    });
+                }
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
             }
             else
             {
@@ -316,7 +336,6 @@ namespace SPI_AOI.Views.ModelManagement
                         Convert.ToInt32(txtROIHeight.Text)
                         );
                 });
-                
                 mImage.ROI = ROI;
                 var modelFov = mModel.FOV;
                 System.Drawing.Rectangle ROIGerber = new System.Drawing.Rectangle(
@@ -328,8 +347,47 @@ namespace SPI_AOI.Views.ModelManagement
                     ROI = VI.AutoAdjustROIFOV.Adjust(mImage, imgGerber, new Hsv(145, 110, 130), new Hsv(255, 255, 255), mModel.FOV, ROI);
                     mModel.Gerber.FOVs[id].ROI = ROI;
                 }
+                if(mAdjustPad)
+                {
+                    List<System.Drawing.Rectangle> padBoundInFOV = new List<System.Drawing.Rectangle>();
+                    List<PadItem> padInFOV = new List<PadItem>();
+                    for (int i = 0; i < mModel.Gerber.PadItems.Count; i++)
+                    {
+                        PadItem item = mModel.Gerber.PadItems[i];
+                        if (item.FOVs.Count > 0)
+                        {
+                            if (item.FOVs[0] == id)
+                            {
+                                System.Drawing.Rectangle padBound = item.Bouding;
+                                padBound.X -= ROIGerber.X;
+                                ROIGerber.Y -= ROIGerber.Y;
+                                padBoundInFOV.Add(padBound);
+                                padInFOV.Add(mModel.Gerber.PadItems[i]);
+                            }
+                        }
+                    }
+                    var adjustPadResult = VI.AutoAdjustROIFOV.AdjustPad(mImage, padBoundInFOV, new Hsv(145, 110, 130), new Hsv(255, 255, 255), ROI);
+                    for (int i = 0; i < padInFOV.Count; i++)
+                    {
+                        System.Drawing.Rectangle bounding = padInFOV[i].Bouding;
+                        System.Drawing.Point[] cntPoint = padInFOV[i].Contour;
+                        bounding.X += adjustPadResult[i].X;
+                        bounding.Y += adjustPadResult[i].Y;
+                        for (int j = 0; j < cntPoint.Length; j++)
+                        {
+                            cntPoint[j].X += adjustPadResult[i].X;
+                            cntPoint[j].Y += adjustPadResult[i].Y;
+                        }
+                        padInFOV[i].BoudingAdjust = bounding;
+                        padInFOV[i].ContourAdjust = cntPoint;
+                    }
+
+                    mAdjustPad = false;
+                }
                 mModel.Gerber.ProcessingGerberImage.ROI = new System.Drawing.Rectangle();
                 ShowDetail();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
             }
         }
 
@@ -345,11 +403,45 @@ namespace SPI_AOI.Views.ModelManagement
                             cbFOV.SelectedIndex = i;
                         });
                         btAdjust_Click(null, null);
+                        Thread.Sleep(500);
                     }
                 }
-                MessageBox.Show("success");
+                MessageBox.Show("Done!");
             });
             auto.Start();
+        }
+
+        private void btAutoAdjustPad_Click(object sender, RoutedEventArgs e)
+        {
+            Thread auto = new Thread(() => {
+                if (mAnchorFOV != null)
+                {
+                    for (int i = 0; i < mAnchorFOV.Length; i++)
+                    {
+                        mAdjustPad = true;
+                        this.Dispatcher.Invoke(() => {
+
+                            cbFOV.SelectedIndex = i;
+                        });
+                        btAdjust_Click(null, null);
+                        Thread.Sleep(500);
+                    }
+                }
+                MessageBox.Show("Done!");
+            });
+            auto.Start();
+        }
+
+        private void btLoad_Click(object sender, RoutedEventArgs e)
+        {
+            mPlcComm.Login();
+            mPlcComm.Set_Load_Product();
+        }
+
+        private void btUnload_Click(object sender, RoutedEventArgs e)
+        {
+            mPlcComm.Login();
+            mPlcComm.Set_Unload_Product();
         }
     }
 }

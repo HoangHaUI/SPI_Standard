@@ -77,10 +77,10 @@ namespace SPI_AOI.VI
         }
         private static PadErrorDetail CheckPad(Models.PadItem padItem,PadSegmentInfo[] padSegment,double umPPixel, bool Inflate =false)
         {
-            Rectangle boundPadRef = padItem.Bouding;
+            Rectangle boundPadRef = padItem.BoudingAdjust;
             if(Inflate)
                 boundPadRef.Inflate(6, 6);
-            double sPadRef = CvInvoke.ContourArea(padItem.Contour);
+            double sPadRef = padItem.Area;
             List<int> idPadSegOverlap = new List<int>();
             for (int j = 0; j < padSegment.Length; j++)
             {
@@ -88,7 +88,7 @@ namespace SPI_AOI.VI
                 if (boundPadRef.IntersectsWith(padSegment[j].Bouding))
                 {
                     idPadSegOverlap.Add(j);
-                    break;
+                    //break;
                 }
             }
             boundPadRef = padItem.Bouding;
@@ -104,7 +104,8 @@ namespace SPI_AOI.VI
             padEr.ShiftYStdArea = padItem.ShiftYThresh.PERCENT_LSL;
             padEr.ROI = Rectangle.Inflate(boundPadRef, 10, 10);
             padEr.Pad = padItem;
-
+            if(padItem.FOVs .Count > 0)
+                padEr.FOVNo = padItem.FOVs[0];
             if (idPadSegOverlap.Count > 0)
             {
                 double areaAllPadSeg = 0;

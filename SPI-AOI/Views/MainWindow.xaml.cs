@@ -141,7 +141,7 @@ namespace SPI_AOI.Views
                 int x = mark.X;
                 int y = mark.Y;
                 mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "Mark " + (i+1).ToString(), x, y));
-                using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, mark, LightStrobe))
+                using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, mark, LightStrobe, 300))
                 {
                     if (image != null)
                     {
@@ -154,39 +154,43 @@ namespace SPI_AOI.Views
                         {
                             CvInvoke.CvtColor(image, imgGray, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
                             CvInvoke.Threshold(imgGray, imgGray, mModel.Gerber.MarkPoint.ThresholdValue, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
-                            var markInfo = Mark.MarkDetection(imgGray, PadMark[i].Contour);
-                            double realScore = markInfo.Item2;
-                            realScore = Math.Round((1 - realScore) * 100.0, 2);
-                            if (realScore > matchingScore)
+                            using (VectorOfPoint padContour = new VectorOfPoint(PadMark[i].Contour))
                             {
-                                using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
+                                var markInfo = Mark.MarkDetection(imgGray, padContour);
+                                double realScore = markInfo.Item2;
+                                realScore = Math.Round((1 - realScore) * 100.0, 2);
+                                if (realScore > matchingScore)
                                 {
-                                    if (markInfo.Item1 != null)
+                                    using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
                                     {
-                                        contours.Push(markInfo.Item1);
-                                        Moments mm = CvInvoke.Moments(markInfo.Item1);
-                                        if (mm.M00 != 0)
+                                        if (markInfo.Item1 != null)
                                         {
-                                            markPointImage[i] = new System.Drawing.Point(Convert.ToInt32(mm.M10 / mm.M00), Convert.ToInt32(mm.M01 / mm.M00));
+                                            contours.Push(markInfo.Item1);
+                                            Moments mm = CvInvoke.Moments(markInfo.Item1);
+                                            if (mm.M00 != 0)
+                                            {
+                                                markPointImage[i] = new System.Drawing.Point(Convert.ToInt32(mm.M10 / mm.M00), Convert.ToInt32(mm.M01 / mm.M00));
+                                            }
+                                            CvInvoke.DrawContours(image, contours, -1, new MCvScalar(255, 0, 0), 2);
+                                            ShowMarkImage(image.Bitmap, i);
                                         }
-                                        CvInvoke.DrawContours(image, contours, -1, new MCvScalar(255, 0, 0), 2);
-                                        ShowMarkImage(image.Bitmap, i);
+                                    }
+                                    if (i == 1)
+                                    {
+                                        markAdjust.Status = Utils.ActionStatus.Successfully;
+                                        System.Drawing.Point ct = new System.Drawing.Point(image.Width / 2, image.Height / 2);
+                                        markAdjust.X = ct.X - markPointImage[0].X;
+                                        markAdjust.Y = ct.Y - markPointImage[0].Y;
                                     }
                                 }
-                                if(i == 1)
+                                else
                                 {
-                                    markAdjust.Status = Utils.ActionStatus.Successfully;
-                                    System.Drawing.Point ct = new System.Drawing.Point(image.Width / 2, image.Height / 2);
-                                    markAdjust.X = ct.X - markPointImage[0].X;
-                                    markAdjust.Y = ct.Y - markPointImage[0].Y;
+                                    mLog.Info(string.Format("Score matching is lower score standard... {0} < {1}", realScore, matchingScore));
+                                    markAdjust.Status = Utils.ActionStatus.Fail;
+                                    break;
                                 }
                             }
-                            else
-                            {
-                                mLog.Info(string.Format("Score matching is lower score standard... {0} < {1}", realScore, matchingScore));
-                                markAdjust.Status = Utils.ActionStatus.Fail;
-                                break;
-                            }
+                            
                         }
                         CvInvoke.Imwrite(fileName, image);
                         Thread isDB = new Thread(() => {
@@ -218,7 +222,7 @@ namespace SPI_AOI.Views
                 }
             });
         }
-        private int CaptureFOV(string ID, string SavePath, int X, int Y, double Angle, bool LightStrobe)
+        private int CaptureFOV(string ID, string SavePath, int XDeviation, int YDeviation, double Angle, bool LightStrobe)
         {
             int result = -1;
             System.Drawing.Point[] xyAxisPosition = mModel.GetPulseXYFOVs();
@@ -242,13 +246,13 @@ namespace SPI_AOI.Views
                     int x = fov.X;
                     int y = fov.Y;
                     mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "FOV " + (i + 1).ToString(), x, y));
-                    using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, fov, LightStrobe))
+                    using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, fov, LightStrobe, 300))
                     {
                         if (image != null)
                         {
                             double angle = -mModel.AngleAxisCamera - Angle;
                             using (Image<Bgr, byte> imgRotated = ImageProcessingUtils.ImageRotation(image, new System.Drawing.Point(image.Width / 2, image.Height / 2), angle * Math.PI / 180.0))
-                            using (Image<Bgr, byte> imgTransform = ImageProcessingUtils.ImageTransformation(image, X, Y))
+                            using (Image<Bgr, byte> imgTransform = ImageProcessingUtils.ImageTransformation(image, XDeviation, YDeviation))
                             {
                                 SetDisplayFOV(i);
                                 var modelFov = mModel.FOV;
@@ -260,7 +264,7 @@ namespace SPI_AOI.Views
                                 imgGerber.ROI = ROIGerber;
                                 mImageGraft.ROI = ROIGerber;
                                 imgTransform.CopyTo(mImageGraft);
-                                string fileName = string.Format("{0}//Image_{1}).png", SavePath, i + 1);
+                                string fileName = string.Format("{0}//Image_{1}.png", SavePath, i + 1);
                                 CvInvoke.Imwrite(fileName, imgTransform);
                                 publishThread[i] = new Thread(() => {
                                     int id = i;
@@ -290,10 +294,6 @@ namespace SPI_AOI.Views
                                     }
                                 });
                                 publishThread[i].Start();
-                                if (mParam.Debug)
-                                {
-                                    string fileNameGerber = string.Format("{0}//Image_Gerber_{1}.png",SavePath, i + 1, ROI.X);
-                                }
                                 imgGerber.ROI = System.Drawing.Rectangle.Empty;
                                 mImageGraft.ROI = System.Drawing.Rectangle.Empty;
                                 this.Dispatcher.Invoke(() =>
@@ -1200,15 +1200,7 @@ namespace SPI_AOI.Views
             if(mImageGraft != null)
             {
                 var padEr = mPadErrorDetails[item.ID];
-                int idFov = 0;
-                for (int i = 0; i < mROIFOVImage.Count; i++)
-                {
-                    if(mROIFOVImage[i].Contains(new System.Drawing.Rectangle(padEr.Center.X, padEr.Center.Y, 1,1)))
-                    {
-                        idFov = i;
-                        break;
-                    }
-                }
+                int idFov = padEr.FOVNo;
                 mImageGraft.ROI = mROIFOVImage[idFov];
                 BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(mImageGraft.Bitmap);
                 imbFOVError.Source = bms;
