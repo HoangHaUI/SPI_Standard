@@ -19,10 +19,11 @@ namespace SPI_AOI.Utils
         {
             ImgGerber.ROI = ROI;
             Point[] Anchors = null;
+            Size fovTruncate = new Size(FOV.Width - 20, FOV.Height - 20);
             using (Image<Gray, byte> img = ImgGerber.Copy())
             {
                 ExtremePoints extreme = FindExtremeImage(img);
-                Point[][] AnchorsArr = GetAnchorsX(img, extreme, FOV);
+                Point[][] AnchorsArr = GetAnchorsX(img, extreme, fovTruncate, FOV);
                 Anchors = Sort(AnchorsArr, StartPoint);
             }
             if (ROI != null)
@@ -189,22 +190,22 @@ namespace SPI_AOI.Utils
         {
             return Math.Sqrt(Math.Pow(A.X - B.X, 2) + Math.Pow(A.Y - B.Y, 2));
         }
-        private static Point[][] GetAnchorsX(Image<Gray, byte> Img, ExtremePoints Extreme, Size FOV)
+        private static Point[][] GetAnchorsX(Image<Gray, byte> Img, ExtremePoints Extreme, Size FOVTruncate, Size FOVNormal)
         {
             ArrayList listAnchors = new ArrayList();
             int stx = Extreme.Left.X, sty = Extreme.Top.Y;
             int width = Extreme.Right.X - Extreme.Left.X;
             int height = Extreme.Bot.Y - Extreme.Top.Y;
-            int step = height % FOV.Height == 0 ? height / FOV.Height : height / FOV.Height + 1;
+            int step = height % FOVTruncate.Height == 0 ? height / FOVTruncate.Height : height / FOVTruncate.Height + 1;
             using (Image<Gray, byte> img = Img.Copy())
             {
                 for (int i = 0; i < step; i++)
                 {
                     ArrayList anchors = new ArrayList();
                     int x = stx;
-                    int y = i * FOV.Height + sty;
+                    int y = i * FOVTruncate.Height + sty;
                     int w = width;
-                    int h = FOV.Height;
+                    int h = FOVTruncate.Height;
                     Rectangle ROINormal = new Rectangle(x, y, w, h);
                     Rectangle ROIExtened = new Rectangle(x, y, w, h * 2);
                     if (y + h > sty + height)
@@ -228,7 +229,7 @@ namespace SPI_AOI.Utils
                             Rectangle fov = Rectangle.Empty;
                             Point anchor = new Point();
                             ExtremePoints extROI = FindExtremeImage(tempImg);
-                            Rectangle tempRect = new Rectangle(extROI.Left.X, 0, FOV.Width, FOV.Height);
+                            Rectangle tempRect = new Rectangle(extROI.Left.X, 0, FOVTruncate.Width, FOVTruncate.Height);
                             if (tempRect.X + tempRect.Width > width)
                             {
                                 tempRect = new Rectangle(tempRect.X, tempRect.Y, width - tempRect.X, tempRect.Height);
@@ -263,7 +264,7 @@ namespace SPI_AOI.Utils
                                 anchor = new Point(left + (right - left + 1) / 2, top + (bot - top + 1) / 2);
                                 anchor.X += tempRect.X;
                                 anchor.Y += tempRect.Y;
-                                fov = new Rectangle(anchor.X - FOV.Width / 2, anchor.Y - FOV.Height / 2, FOV.Width, FOV.Height);
+                                fov = new Rectangle(anchor.X - FOVTruncate.Width / 2, anchor.Y - FOVTruncate.Height / 2, FOVTruncate.Width, FOVTruncate.Height);
                             }
                             CvInvoke.Rectangle(img, fov, new MCvScalar(0), -1);
                             CvInvoke.Rectangle(tempImg, fov, new MCvScalar(0), -1);
@@ -272,21 +273,21 @@ namespace SPI_AOI.Utils
 
                             anchor.X += x;
                             anchor.Y += y;
-                            if (anchor.X + FOV.Width / 2 > Img.Width - 1)
+                            if (anchor.X + FOVNormal.Width / 2 > Img.Width - 1)
                             {
-                                anchor.X -= (anchor.X + FOV.Width / 2) - (Img.Width - 1);
+                                anchor.X -= (anchor.X + FOVNormal.Width / 2) - (Img.Width - 1);
                             }
-                            if (anchor.Y + FOV.Height / 2 > Img.Height - 1)
+                            if (anchor.Y + FOVNormal.Height / 2 > Img.Height - 1)
                             {
-                                anchor.Y -= (anchor.Y + FOV.Height / 2) - (Img.Height - 1);
+                                anchor.Y -= (anchor.Y + FOVNormal.Height / 2) - (Img.Height - 1);
                             }
-                            if (anchor.X - FOV.Width / 2 < 0)
+                            if (anchor.X - FOVNormal.Width / 2 < 0)
                             {
-                                anchor.X += FOV.Width / 2 - anchor.X;
+                                anchor.X += FOVNormal.Width / 2 - anchor.X;
                             }
-                            if (anchor.Y - FOV.Height / 2 < 0)
+                            if (anchor.Y - FOVNormal.Height / 2 < 0)
                             {
-                                anchor.Y += FOV.Height / 2 - anchor.Y;
+                                anchor.Y += FOVNormal.Height / 2 - anchor.Y;
                             }
                             anchors.Add(anchor);
                         }

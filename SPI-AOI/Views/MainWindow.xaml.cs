@@ -252,12 +252,10 @@ namespace SPI_AOI.Views
                             {
                                 SetDisplayFOV(i);
                                 var modelFov = mModel.FOV;
-
                                 System.Drawing.Rectangle ROI = mModel.Gerber.FOVs[i].ROI;
                                 System.Drawing.Rectangle ROIGerber = new System.Drawing.Rectangle(
                                     Fovs[i].X - modelFov.Width / 2, Fovs[i].Y - modelFov.Height / 2,
                                     modelFov.Width, modelFov.Height);
-
                                 imgTransform.ROI = ROI;
                                 imgGerber.ROI = ROIGerber;
                                 mImageGraft.ROI = ROIGerber;
@@ -287,7 +285,6 @@ namespace SPI_AOI.Views
                                         {
                                             maskSegmentGraft.ROI = ROIGraft;
                                             CvInvoke.BitwiseOr(maskSegmentGraft, serviceResults.ImgMask, maskSegmentGraft);
-                                            //serviceResults.ImgMask.CopyTo(maskSegmentGraft);
                                             maskSegmentGraft.ROI = new System.Drawing.Rectangle();
                                         }
                                     }
@@ -1206,8 +1203,8 @@ namespace SPI_AOI.Views
                 int idFov = 0;
                 for (int i = 0; i < mROIFOVImage.Count; i++)
                 {
-                    if(mROIFOVImage[i].Contains(padEr.Center))
-                        {
+                    if(mROIFOVImage[i].Contains(new System.Drawing.Rectangle(padEr.Center.X, padEr.Center.Y, 1,1)))
+                    {
                         idFov = i;
                         break;
                     }

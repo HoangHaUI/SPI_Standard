@@ -37,7 +37,7 @@ namespace SPI_AOI.VI
                         ROI.Height += 2 * extend;
                         ImgGerber.ROI = ROI;
                         imgSegment.ROI = ROI;
-                        int[] adjust = GetAdjust(imgSegment, ImgGerber, 10, 10);
+                        int[] adjust = GetAdjust(imgSegment, ImgGerber, 50, 10);
                         xad[i] = adjust[0];
                         yad[i] = adjust[1];
                         ImgGerber.ROI = Rectangle.Empty;
