@@ -64,7 +64,6 @@ def Split_Image(img, ROI, width_target, height_target, step_ratio = 0.8):
                 yt = h - 1 - he
                 breaky = True
             loc = (xt + x, yt + y, we, he)
-            print(loc)
             imge = img_roi[yt:yt+he, xt:xt+we]
             img_split.append(imge)
             locs.append(loc)

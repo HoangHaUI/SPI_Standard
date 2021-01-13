@@ -130,15 +130,15 @@ namespace SPI_AOI.VI
                 padEr.Center = new Point(boundAllPadSeg.X + boundAllPadSeg.Width / 2, boundAllPadSeg.Y + boundAllPadSeg.Height / 2);
                 scaleArea = areaAllPadSeg * 100 / sPadRef;
 
-                shiftx = (Math.Max(Math.Abs(boundPadRef.X - boundAllPadSeg.X), Math.Abs((boundPadRef.X + boundPadRef.Width) - (boundAllPadSeg.X + boundAllPadSeg.Width))) * umPPixel) % 130;
-                shifty = (Math.Max(Math.Abs(boundPadRef.Y - boundAllPadSeg.Y), Math.Abs((boundPadRef.Y + boundPadRef.Height) - (boundAllPadSeg.Y + boundAllPadSeg.Height))) * umPPixel) % 130;
+                shiftx = (Math.Max(Math.Abs(boundPadRef.X - boundAllPadSeg.X), Math.Abs((boundPadRef.X + boundPadRef.Width) - (boundAllPadSeg.X + boundAllPadSeg.Width))) * umPPixel) % 150;
+                shifty = (Math.Max(Math.Abs(boundPadRef.Y - boundAllPadSeg.Y), Math.Abs((boundPadRef.Y + boundPadRef.Height) - (boundAllPadSeg.Y + boundAllPadSeg.Height))) * umPPixel) % 150;
 
                 bool insert = false;
                 double deviation = (100 - (sPadRef / umPPixel)) / 2;
                 deviation = deviation < 0 ? 0 : deviation;
                 if (scaleArea < padItem.AreaThresh.PERCENT_LSL - deviation)
                 {
-                    if (sPadRef > 100 || (sPadRef < 100 && scaleArea < 5))
+                    //if (sPadRef > 100 || (sPadRef < 100 && scaleArea < 5))
                     {
                         insert = true;
                     }

@@ -37,6 +37,8 @@ namespace SPI_AOI.VI
                 LightCtl.ActiveFour(1, 1, 1, 1);
                 Thread.Sleep(100);
             }
+
+            Thread.Sleep(200);
             Bitmap bm = Camera.GetOneBitmap(1000);
             if (ActiveLight)
             {
@@ -44,7 +46,6 @@ namespace SPI_AOI.VI
             }
             if(bm != null)
             {
-                
                 using (Image<Bgr, byte> imgDis = new Image<Bgr, byte>(bm))
                 {
                     img = new Image<Bgr, byte>(imgDis.Size);
