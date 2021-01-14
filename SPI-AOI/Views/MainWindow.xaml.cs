@@ -1270,7 +1270,7 @@ namespace SPI_AOI.Views
         {
             Thread a = new Thread(() =>
             {
-                mModel = Model.LoadModelByName("U10C153T10_BOT");
+                mModel = Model.LoadModelByName("UBN2304T10_BOT");
                 using (Image<Bgr, byte> imgDigram = mModel.GetDiagramImage())
                 {
                     SetImageToImb(imbDiagram, imgDigram.Bitmap);
@@ -1285,8 +1285,8 @@ namespace SPI_AOI.Views
                                     modelFov.Width, modelFov.Height);
                     mROIFOVImage.Add(ROIGerber);
                 }
-                Image<Gray, byte> imgMask = new Image<Gray, byte>(@"D:\Heal\Projects\B06\SPI\Data\Pad\2021_01_08\TIME(16_01_46)_._SN(NOT FOUND)\Image_Graft_mask.png");
-                mImageGraft = new Image<Bgr, byte>(@"D:\Heal\Projects\B06\SPI\Data\Pad\2021_01_08\TIME(16_01_46)_._SN(NOT FOUND)\Image_Graft.png");
+                Image<Gray, byte> imgMask = new Image<Gray, byte>(@"D:\Heal\Projects\B06\SPI\Data\Pad\2021_01_14\TIME(10_51_54)_._SN(NOT FOUND)\Image_Segment_Graft.png");
+                mImageGraft = new Image<Bgr, byte>(@"D:\Heal\Projects\B06\SPI\Data\Pad\2021_01_14\TIME(10_51_54)_._SN(NOT FOUND)\Image_Graft.png");
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
                 imgMask = VI.Predictor.ReleaseNoise(imgMask);

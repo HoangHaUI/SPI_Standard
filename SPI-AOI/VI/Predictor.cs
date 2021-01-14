@@ -42,6 +42,10 @@ namespace SPI_AOI.VI
                     double s = CvInvoke.ContourArea(contours[i]);
                     PadSegmentInfo pad = new PadSegmentInfo();
                     pad.Contours = contours[i].ToArray();
+                    for (int j = 0; j < pad.Contours.Length; j++)
+                    {
+                        pad.Contours[j] = new Point(pad.Contours[j].X + ROI.X, pad.Contours[j].Y + ROI.Y);
+                    }
                     pad.Bouding = bound;
                     pad.Area = s;
                     pad.Center = ctCnt;
@@ -66,29 +70,78 @@ namespace SPI_AOI.VI
                     continue;
                 else
                 {
-                    padEr = CheckPad(padItem, padSegment, umPPixel, true);
-                    if (padEr == null)
-                        continue;
-                    else
+                    //padEr = CheckPad(padItem, padSegment, umPPixel, true);
+                    //if (padEr == null)
+                    //    continue;
+                    //else
                         padError.Add(padEr);
                 }
             }
             return padError.ToArray();
         }
+        private static bool IntersectsContour(Point[] Cnt1, Point[] Cnt2, Rectangle BoudingCnt1)
+        {
+            bool intersect = false;
+            bool canIntersect = false;
+            Point[] cntPTranform1 = new Point[Cnt1.Length];
+            Point[] cntPTranform2 = new Point[Cnt2.Length];
+            for (int i = 0; i < Cnt1.Length; i++)
+            {
+                cntPTranform1[i] = new Point(Cnt1[i].X - BoudingCnt1.X, Cnt1[i].Y - BoudingCnt1.Y);
+            }
+            for (int i = 0; i < Cnt2.Length; i++)
+            {
+                cntPTranform2[i] = new Point(Cnt2[i].X - BoudingCnt1.X, Cnt2[i].Y - BoudingCnt1.Y);
+                if ((cntPTranform2[i].X > 0 && cntPTranform2[i].X < BoudingCnt1.Width) ||
+                    (cntPTranform2[i].Y > 0 && cntPTranform2[i].Y < BoudingCnt1.Height))
+                    canIntersect = true;
+            }
+            if(canIntersect)
+            {
+                using (VectorOfPoint cnt1 = new VectorOfPoint(cntPTranform1))
+                using (VectorOfPoint cnt2 = new VectorOfPoint(cntPTranform2))
+                using (VectorOfVectorOfPoint contour1 = new VectorOfVectorOfPoint())
+                using (VectorOfVectorOfPoint contour2 = new VectorOfVectorOfPoint())
+                using (Image<Gray, byte> image1 = new Image<Gray, byte>(BoudingCnt1.Size))
+                using (Image<Gray, byte> image2 = new Image<Gray, byte>(BoudingCnt1.Size))
+                using (Image<Gray, byte> imageAnd = new Image<Gray, byte>(BoudingCnt1.Size))
+                {
+                    contour1.Push(cnt1);
+                    contour2.Push(cnt2);
+                    CvInvoke.DrawContours(image1, contour1, -1, new MCvScalar(255), -1);
+                    CvInvoke.DrawContours(image2, contour2, -1, new MCvScalar(255), -1);
+                    CvInvoke.BitwiseAnd(image1, image2, imageAnd);
+                    int count = CvInvoke.CountNonZero(imageAnd);
+                    if (count > 0)
+                    {
+                        intersect = true;
+                    }
+                    //CvInvoke.Imshow("image1", image1);
+                    //CvInvoke.Imshow("image2", image2);
+                    //CvInvoke.Imshow("imageAnd", imageAnd);
+                    //CvInvoke.WaitKey(0);
+                    //Console.WriteLine("go");
+                }
+            }
+            return intersect;
+        }
         private static PadErrorDetail CheckPad(Models.PadItem padItem,PadSegmentInfo[] padSegment,double umPPixel, bool Inflate =false)
         {
             Rectangle boundPadRef = padItem.BoudingAdjust;
             if(Inflate)
-                boundPadRef.Inflate(6, 6);
+                boundPadRef.Inflate(3, 3);
             double sPadRef = padItem.Area;
             List<int> idPadSegOverlap = new List<int>();
             for (int j = 0; j < padSegment.Length; j++)
             {
 
-                if (boundPadRef.IntersectsWith(padSegment[j].Bouding))
+                //if (boundPadRef.IntersectsWith(padSegment[j].Bouding))
+                //{
+                //    idPadSegOverlap.Add(j);
+                //}
+                if (IntersectsContour(padItem.ContourAdjust, padSegment[j].Contours, boundPadRef))
                 {
                     idPadSegOverlap.Add(j);
-                    //break;
                 }
             }
             boundPadRef = padItem.Bouding;
@@ -96,13 +149,14 @@ namespace SPI_AOI.VI
             double scaleArea = 0;
             double shiftx = 0;
             double shifty = 0;
+            int inflate = 40;
             padEr.AreaStdHight = padItem.AreaThresh.UM_USL;
             padEr.AreaStdLow = padItem.AreaThresh.PERCENT_LSL;
             padEr.ShiftXStduM = padItem.ShiftXThresh.UM_USL;
             padEr.ShiftYStduM = padItem.ShiftYThresh.UM_USL;
             padEr.ShiftXStdArea = padItem.ShiftXThresh.PERCENT_LSL;
             padEr.ShiftYStdArea = padItem.ShiftYThresh.PERCENT_LSL;
-            padEr.ROI = Rectangle.Inflate(boundPadRef, 10, 10);
+            padEr.ROI = Rectangle.Inflate(boundPadRef, inflate, inflate);
             padEr.Pad = padItem;
             if(padItem.FOVs .Count > 0)
                 padEr.FOVNo = padItem.FOVs[0];
