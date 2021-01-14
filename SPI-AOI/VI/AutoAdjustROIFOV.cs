@@ -65,13 +65,13 @@ namespace SPI_AOI.VI
                         {
                             Point ctSeg = new Point(boundPadSeg.Width / 2 + boundPadSeg.X, boundPadSeg.Height / 2 + boundPadSeg.Y);
                             Point ctRef = new Point(boundPadRef.Width / 2 + boundPadRef.X, boundPadRef.Height / 2 + boundPadRef.Y);
-                            int subx = ctSeg.X - ctRef.X;
-                            int suby = ctSeg.Y - ctRef.Y;
+                            int subx = ctRef.X - ctSeg.X;
+                            int suby = ctRef.Y - ctSeg.Y;
                             if (Math.Abs(subx) <= 5)
-                                padAdjustResult.X = subx;
+                                padAdjustResult.X = -subx;
                             if(Math.Abs(suby) <= 5)
                             {
-                                padAdjustResult.X = ctSeg.Y - ctRef.Y;
+                                padAdjustResult.Y = -suby;
                             }
                         }
                         adjustResult.Add(padAdjustResult);

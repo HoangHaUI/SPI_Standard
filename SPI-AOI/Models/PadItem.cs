@@ -59,11 +59,15 @@ namespace SPI_AOI.Models
                         cntPoint[k].Y += ROI.Y;
                     }
                     pad.Contour = cntPoint;
-                    pad.ContourAdjust = (Point[])cntPoint.Clone();
+                    pad.ContourAdjust = new Point[cntPoint.Length];
+                    for (int j = 0; j < cntPoint.Length; j++)
+                    {
+                        pad.ContourAdjust[j] = new Point(cntPoint[j].X, cntPoint[j].Y);
+                    }
                     pad.Area = area;
                     pad.AreaThresh = new StandardThreshold(260, 60);
                     pad.ShiftXThresh = new StandardThreshold(370, 40);
-                    pad.ShiftYThresh = new StandardThreshold(70, 40);
+                    pad.ShiftYThresh = new StandardThreshold(370, 40);
                     pad.FOVs = new List<int>();
                     pad.CadFileID = string.Empty;
                     pad.CadItemIndex = -1;

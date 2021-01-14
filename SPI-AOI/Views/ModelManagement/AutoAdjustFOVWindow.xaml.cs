@@ -249,7 +249,7 @@ namespace SPI_AOI.Views.ModelManagement
                     mImage = null;
                 }
                 mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "FOV " + (id + 1).ToString(), x, y));
-                using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, fov, lightStrobe))
+                using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, fov, lightStrobe, 1000))
                 {
                     mImage = ImageProcessingUtils.ImageRotation(image, new System.Drawing.Point(image.Width / 2, image.Height / 2), -mModel.AngleAxisCamera * Math.PI / 180.0).Copy();
                     mImage = ImageProcessingUtils.ImageTransformation(mImage, mMarkAdjust.X, mMarkAdjust.Y);
@@ -301,7 +301,7 @@ namespace SPI_AOI.Views.ModelManagement
                         }
                     }
                     CvInvoke.DrawContours(imgGerberBgr, contours, -1, new MCvScalar(255), -1);
-                    CvInvoke.AddWeighted(imgGerberBgr, 0.8, mImage, 0.5, 1, imgGerberBgr);
+                    CvInvoke.AddWeighted(imgGerberBgr, 0.5, mImage, 0.5, 1, imgGerberBgr);
                     this.Dispatcher.Invoke(() =>
                     {
                         BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(imgGerberBgr.Bitmap);
@@ -360,13 +360,13 @@ namespace SPI_AOI.Views.ModelManagement
                             {
                                 System.Drawing.Rectangle padBound = item.Bouding;
                                 padBound.X -= ROIGerber.X;
-                                ROIGerber.Y -= ROIGerber.Y;
+                                padBound.Y -= ROIGerber.Y;
                                 padBoundInFOV.Add(padBound);
                                 padInFOV.Add(mModel.Gerber.PadItems[i]);
                             }
                         }
                     }
-                    var adjustPadResult = VI.AutoAdjustROIFOV.AdjustPad(mImage, padBoundInFOV, new Hsv(145, 110, 130), new Hsv(255, 255, 255), ROI);
+                    var adjustPadResult = VI.AutoAdjustROIFOV.AdjustPad(mImage, padBoundInFOV, new Hsv(145, 110, 130), new Hsv(255, 255, 255), mModel.Gerber.FOVs[id].ROI);
                     for (int i = 0; i < padInFOV.Count; i++)
                     {
                         System.Drawing.Rectangle bounding = padInFOV[i].Bouding;
@@ -386,8 +386,6 @@ namespace SPI_AOI.Views.ModelManagement
                 }
                 mModel.Gerber.ProcessingGerberImage.ROI = new System.Drawing.Rectangle();
                 ShowDetail();
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
             }
         }
 
@@ -436,12 +434,94 @@ namespace SPI_AOI.Views.ModelManagement
         {
             mPlcComm.Login();
             mPlcComm.Set_Load_Product();
+            mPlcComm.Logout();
         }
 
         private void btUnload_Click(object sender, RoutedEventArgs e)
         {
             mPlcComm.Login();
             mPlcComm.Set_Unload_Product();
+            mPlcComm.Logout();
+        }
+
+        private void btAdjustPad_Click(object sender, RoutedEventArgs e)
+        {
+            int id = -1;
+            mAdjustPad = true;
+            this.Dispatcher.Invoke(() =>
+            {
+                id = cbFOV.SelectedIndex;
+            });
+            if (id > -1)
+            {
+                System.Drawing.Rectangle ROI = mModel.Gerber.FOVs[id].ROI;
+                mImage.ROI = ROI;
+                var modelFov = mModel.FOV;
+                System.Drawing.Rectangle ROIGerber = new System.Drawing.Rectangle(
+                    mAnchorROIGerber[id].X - modelFov.Width / 2, mAnchorROIGerber[id].Y - modelFov.Height / 2,
+                    modelFov.Width, modelFov.Height);
+                if (mAdjustPad)
+                {
+                    List<System.Drawing.Rectangle> padBoundInFOV = new List<System.Drawing.Rectangle>();
+                    List<PadItem> padInFOV = new List<PadItem>();
+                    for (int i = 0; i < mModel.Gerber.PadItems.Count; i++)
+                    {
+                        PadItem item = mModel.Gerber.PadItems[i];
+                        if (item.FOVs.Count > 0)
+                        {
+                            if (item.FOVs[0] == id)
+                            {
+                                System.Drawing.Rectangle padBound = item.Bouding;
+                                
+                                padBound.X -= ROIGerber.X;
+                                padBound.Y -= ROIGerber.Y;
+                                padBoundInFOV.Add(padBound);
+                                padInFOV.Add(mModel.Gerber.PadItems[i]);
+                            }
+                        }
+                    }
+                    var adjustPadResult = VI.AutoAdjustROIFOV.AdjustPad(mImage, padBoundInFOV, new Hsv(145, 110, 130), new Hsv(255, 255, 255), mModel.Gerber.FOVs[id].ROI);
+                    for (int i = 0; i < padInFOV.Count; i++)
+                    {
+                        System.Drawing.Rectangle bounding = new System.Drawing.Rectangle(padInFOV[i].Bouding.X, padInFOV[i].Bouding.Y, padInFOV[i].Bouding.Width, padInFOV[i].Bouding.Height);
+                        System.Drawing.Point[] cntPoint = new System.Drawing.Point[padInFOV[i].Contour.Length];
+                        bounding.X += adjustPadResult[i].X;
+                        bounding.Y += adjustPadResult[i].Y;
+                        for (int j = 0; j < cntPoint.Length; j++)
+                        {
+                            cntPoint[j] = new System.Drawing.Point(padInFOV[i].Contour[j].X + adjustPadResult[i].X, padInFOV[i].Contour[j].Y + adjustPadResult[i].Y);
+                        }
+                        padInFOV[i].BoudingAdjust = bounding;
+                        padInFOV[i].ContourAdjust = cntPoint;
+                    }
+                    mAdjustPad = false;
+                }
+                ShowDetail();
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (mCamera != null)
+            {
+                if (mCamera.IsGrab)
+                {
+                    mCamera.StopGrabbing();
+                }
+                if (mCamera.IsOpen)
+                {
+                    mCamera.Close();
+                }
+                mCamera = null;
+            }
+            if (mLight != null)
+            {
+                if (mLight.Serial.IsOpen)
+                {
+                    mLight.Close();
+                    mLight = null;
+                }
+            }
         }
     }
 }

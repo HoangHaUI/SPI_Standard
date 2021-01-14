@@ -19,7 +19,7 @@ if(len(physical_devices) > 0):
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
 SEGMENT_MODEL = load_model(Config.SEGMENT_MODEL_PATH)
 SEGMENT_MODEL.summary()
-
+SegmentUnet.ActiveGPU(SEGMENT_MODEL, Config.IMAGE_WIDTH, Config.IMAGE_HEIGHT)
 @app.route('/', methods=['GET', 'POST'])
 def Segment():
     global SEGMENT_MODEL

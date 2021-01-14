@@ -26,3 +26,11 @@ def SegmentImage(model, image, image_width, image_height, debug):
         print("[INFO] | {} | Predict in {} seconds...".format(datetime.datetime.now(),time.time() - st))
     return mask
 
+
+
+def ActiveGPU(model, image_width, image_height):
+    img = np.zeros((image_height, image_width, 3), np.float32)
+    x = np.array([img])
+    print(img.shape)
+    model.predict(x)
+    

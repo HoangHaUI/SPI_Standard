@@ -37,7 +37,6 @@ namespace SPI_AOI.VI
                 LightCtl.ActiveFour(1, 1, 1, 1);
                 Thread.Sleep(100);
             }
-
             Thread.Sleep(TimeSleep);
             Bitmap bm = Camera.GetOneBitmap(1000);
             if (ActiveLight)
