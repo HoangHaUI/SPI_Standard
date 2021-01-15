@@ -16,7 +16,7 @@ namespace Heal.UI
     public partial class MachineIssueForm : Form
     {
         private static SQLiteConnection mConn = new SQLiteConnection(string.Format("Data Source={0};Version=3;", DefineTbl.DBName));
-        private Logger mLog = Heal.LogCtl.GetInstance();
+        private static Logger mLog = Heal.LogCtl.GetInstance();
         public MachineIssueForm()
         {
             InitializeComponent();
@@ -27,7 +27,7 @@ namespace Heal.UI
             txtBit_TextChanged(null, null);
             UpdateTable();
         }
-        public bool Insert(string TableName, string[] Values)
+        public static bool Insert(string TableName, string[] Values)
         {
             bool rep = true;
             mConn.Open();
@@ -56,7 +56,7 @@ namespace Heal.UI
             mConn.Close();
             return rep;
         }
-        public object FindOne(string TableName, string ColSearch, string ColCondition, string Values)
+        public static object FindOne(string TableName, string ColSearch, string ColCondition, string Values)
         {
             object result = null;
             mConn.Open();
@@ -75,7 +75,7 @@ namespace Heal.UI
             mConn.Close();
             return result;
         }
-        public List<object[]> FindMany(string TableName, string ColSearch, string ColCondition = null, string Values = null)
+        public static List<object[]> FindMany(string TableName, string ColSearch, string ColCondition = null, string Values = null)
         {
             mConn.Open();
             List<object[]> result = new List<object[]>();
@@ -112,7 +112,40 @@ namespace Heal.UI
             mConn.Close();
             return result;
         }
-        public bool UpdateOne(string TableName, string ColSet, string NewValue, string ColCondition, string Values)
+        public static string[] GetErrorBits()
+        {
+            string[] bits = null;
+            List<object[]> reader = FindMany(DefineTbl.TblName, "*");
+            bits = new string[reader.Count];
+            for (int i = 0; i < reader.Count; i++)
+            {
+                bits[i] = (string)reader[i][0];
+            }
+            return bits;
+        }
+        public static string[] GetErrorMessages()
+        {
+            string[] bits = null;
+            List<object[]> reader = FindMany(DefineTbl.TblName, "*");
+            bits = new string[reader.Count];
+            for (int i = 0; i < reader.Count; i++)
+            {
+                bits[i] = (string)reader[i][1];
+            }
+            return bits;
+        }
+        public static string[] GetErrorSolutions()
+        {
+            string[] bits = null;
+            List<object[]> reader = FindMany(DefineTbl.TblName, "*");
+            bits = new string[reader.Count];
+            for (int i = 0; i < reader.Count; i++)
+            {
+                bits[i] = (string)reader[i][2];
+            }
+            return bits;
+        }
+        public static bool UpdateOne(string TableName, string ColSet, string NewValue, string ColCondition, string Values)
         {
             bool rep = true;
             mConn.Open();
@@ -132,7 +165,7 @@ namespace Heal.UI
             mConn.Close();
             return rep;
         }
-        public bool UpdateMany(string TableName, string ColCondition, string Values, string[] ColSet, string[] NewValue)
+        public static bool UpdateMany(string TableName, string ColCondition, string Values, string[] ColSet, string[] NewValue)
         {
             bool rep = true;
             string cmd = "";
@@ -163,7 +196,7 @@ namespace Heal.UI
             Thread.Sleep(10);
             return rep;
         }
-        public bool Delete(string TableName, string ColCondition, string Values)
+        public static bool Delete(string TableName, string ColCondition, string Values)
         {
             bool rep = true;
             mConn.Open();
@@ -205,7 +238,7 @@ namespace Heal.UI
             return ds;
         }
         
-        public bool CreateTable(string TableName, string[] TableContent)
+        public static bool CreateTable(string TableName, string[] TableContent)
         {
             bool rep = true;
             mConn.Open();

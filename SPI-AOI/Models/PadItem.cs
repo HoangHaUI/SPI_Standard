@@ -42,7 +42,7 @@ namespace SPI_AOI.Models
                         continue;
                     Point ctCnt = new Point(Convert.ToInt32(mm.M10 / mm.M00), Convert.ToInt32(mm.M01 / mm.M00));
                     Rectangle bound = CvInvoke.BoundingRectangle(contours[i]);
-                    double area = CvInvoke.ContourArea(contours[i]);
+                    double area = ImageProcessingUtils.ContourArea(contours[i]);
                     PadItem pad = new PadItem();
                     pad.GerberID = GerberID;
                     bound.X += ROI.X;

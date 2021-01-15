@@ -7,6 +7,7 @@ using System.Drawing;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
+using System.Diagnostics;
 
 namespace SPI_AOI
 {
@@ -101,6 +102,33 @@ namespace SPI_AOI
             double dist = Math.Cos(angle * Math.PI / 180.0) * leght;
             return dist;
         }
-        
+        public static double ContourArea(Point[] contour)
+        {
+            double s = 0;
+            int npoint = contour.Length;
+            var sortX = contour.OrderBy(item => item.X);
+            var sortY = contour.OrderBy(item => item.Y);
+            int x = sortX.ElementAt(0).X;
+            int y = sortY.ElementAt(0).Y;
+            int w = sortX.ElementAt(npoint - 1).X - sortX.ElementAt(0).X  + 1;
+            int h = sortY.ElementAt(npoint - 1).Y - sortY.ElementAt(0).Y + 1;
+            Point[] subPoint = new Point[npoint];
+            for (int i = 0; i < npoint; i++)
+            {
+                subPoint[i] = new Point(contour[i].X - x, contour[i].Y - y);
+            }
+            using (Image<Gray, byte> image = new Image<Gray, byte>(w, h))
+            using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
+            {
+                contours.Push(new VectorOfPoint(subPoint));
+                CvInvoke.DrawContours(image, contours, -1, new MCvScalar(255), -1);
+                s = CvInvoke.CountNonZero(image);
+            }
+            return s;
+        }
+        public static double ContourArea(VectorOfPoint contour)
+        {
+            return ContourArea(contour.ToArray());
+        }
     }
 }

@@ -574,3 +574,17 @@
 2021-01-15 10:35:58.6964|Info|PadSegmentInfo(MainWindow.xaml.cs:341)|
 2021-01-15 10:36:00.0547|Info|has 0 pad error...(MainWindow.xaml.cs:343)|
 2021-01-15 10:36:00.0547|Info|show error(MainWindow.xaml.cs:362)|
+2021-01-15 14:36:16.2147|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:481)|
+2021-01-15 14:40:57.2150|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:487)|
+2021-01-15 14:47:10.7160|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:487)|
+2021-01-15 14:48:32.2150|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:487)|
+2021-01-15 15:50:13.2164|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:487)|
+2021-01-15 15:53:22.2149|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:489)|
+2021-01-15 16:10:47.1299|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-15 16:10:50.2147|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:489)|
+2021-01-15 16:13:00.8246|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-15 16:13:03.7149|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:489)|
+2021-01-15 16:57:45.0794|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|

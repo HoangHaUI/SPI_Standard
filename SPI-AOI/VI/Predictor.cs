@@ -39,7 +39,7 @@ namespace SPI_AOI.VI
                     Rectangle bound = CvInvoke.BoundingRectangle(contours[i]);
                     bound.X += ROI.X;
                     bound.Y += ROI.Y;
-                    double s = CvInvoke.ContourArea(contours[i]);
+                    double s = ImageProcessingUtils.ContourArea(contours[i]);
                     PadSegmentInfo pad = new PadSegmentInfo();
                     pad.Contours = contours[i].ToArray();
                     for (int j = 0; j < pad.Contours.Length; j++)
@@ -199,7 +199,6 @@ namespace SPI_AOI.VI
                 deviation = deviation < 0 ? 0 : deviation;
                 if (scaleAreaAddperimeter < padItem.AreaThresh.PERCENT_LSL - deviation)
                 {
-                    //if (sPadRef > 100 || (sPadRef < 100 && scaleArea < 5))
                     {
                         insert = true;
                     }
@@ -208,11 +207,11 @@ namespace SPI_AOI.VI
                 {
                     insert = true;
                 }
-                if (shiftx > padItem.ShiftXThresh.UM_USL)
+                if (shiftx > padItem.ShiftXThresh.UM_USL + 3 * umPPixel)
                 {
                     insert = true;
                 }
-                if (shifty > padItem.ShiftXThresh.UM_USL)
+                if (shifty > padItem.ShiftXThresh.UM_USL + 3 * umPPixel)
                 {
                     insert = true;
                 }

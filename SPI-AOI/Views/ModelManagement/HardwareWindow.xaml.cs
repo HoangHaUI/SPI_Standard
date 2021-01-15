@@ -640,10 +640,12 @@ namespace SPI_AOI.Views.ModelManagement
                 if(readCodeInfo.Surface ==  Surface.TOP)
                 {
                     SetTopAxis(readCodeInfo.Origin.X, readCodeInfo.Origin.Y);
+                    cbSurface.SelectedItem = 0;
                 } 
                 else if (readCodeInfo.Surface == Surface.BOT)
                 {
                     SetBotAxis(readCodeInfo.Origin.X, readCodeInfo.Origin.Y);
+                    cbSurface.SelectedItem = 1;
                 }
                 nScanWidth.Value = Convert.ToDecimal(readCodeInfo.Width);
                 nScanHeight.Value = Convert.ToDecimal(readCodeInfo.Height);
@@ -662,13 +664,13 @@ namespace SPI_AOI.Views.ModelManagement
             int x = 0;
             int y = 0;
             Surface surface = Surface.TOP;
-            if(rbBotAxis.IsChecked == true)
+            if(cbSurface.SelectedItem.ToString() == "BOT")
             {
                 x = mPLC.Get_X_Bot();
                 y = mPLC.Get_Y_Bot();
                 surface = Surface.BOT;
             }
-            if(rbTopAxis.IsChecked == true)
+            if(cbSurface.SelectedItem.ToString() == "TOP")
             {
                 x = mPLC.Get_X_Top();
                 y = mPLC.Get_Y_Top();
@@ -713,7 +715,6 @@ namespace SPI_AOI.Views.ModelManagement
             mPLC.Set_Speed_Top(3000);
             mPLC.Set_Speed_Bot(6000);
             mPLC.Set_Speed_Conveyor(8000);
-            
             int conveyorPulse = mPLC.Get_Conveyor();
             mLog.Info(string.Format("Current Pulse conveyor {0} => {1}", conveyorPulse, mConveyor));
             if (conveyorPulse != mConveyor)

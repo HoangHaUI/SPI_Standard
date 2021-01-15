@@ -249,7 +249,7 @@ namespace SPI_AOI.Views.ModelManagement
                     mImage = null;
                 }
                 mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "FOV " + (id + 1).ToString(), x, y));
-                using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, fov, lightStrobe, 1000))
+                using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, fov, lightStrobe, 300))
                 {
                     mImage = ImageProcessingUtils.ImageRotation(image, new System.Drawing.Point(image.Width / 2, image.Height / 2), -mModel.AngleAxisCamera * Math.PI / 180.0).Copy();
                     mImage = ImageProcessingUtils.ImageTransformation(mImage, mMarkAdjust.X, mMarkAdjust.Y);

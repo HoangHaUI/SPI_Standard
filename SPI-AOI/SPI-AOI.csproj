@@ -156,6 +156,7 @@
     <Compile Include="DB\Ctl.cs" />
     <Compile Include="DB\Result.cs" />
     <Compile Include="DB\SQLiteConn.cs" />
+    <Compile Include="DB\Table\MachineIssueTbl.cs" />
     <Compile Include="DB\Table\Result.cs" />
     <Compile Include="Devices\LightSource.cs" />
     <Compile Include="Devices\MyCamera.cs" />
@@ -186,6 +187,12 @@
     <Compile Include="Utils\HikCamera.cs" />
     <Compile Include="Utils\LogCtl.cs" />
     <Compile Include="Utils\SLMP.cs" />
+    <Compile Include="Views\MainConfigWindow\AlarmForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MainConfigWindow\AlarmForm.Designer.cs">
+      <DependentUpon>AlarmForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainConfigWindow\AlgorithmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -270,6 +277,7 @@
     </Compile>
     <Compile Include="VI\AutoAdjustROIFOV.cs" />
     <Compile Include="VI\CaptureImage.cs" />
+    <Compile Include="VI\Decoder.cs" />
     <Compile Include="VI\Predictor.cs" />
     <Compile Include="VI\ServiceComm.cs" />
     <Page Include="Views\MainWindow.xaml">
@@ -363,6 +371,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Views\MainConfigWindow\AlarmForm.resx">
+      <DependentUpon>AlarmForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\ModelManagement\HSVSelectionForm.resx">
       <DependentUpon>HSVSelectionForm.cs</DependentUpon>
     </EmbeddedResource>

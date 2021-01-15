@@ -320,7 +320,7 @@
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="3">
-                        <Button Content="test" Visibility="Visible" Margin="50" Click="Button_Click"></Button>
+                        <Button Content="test" Visibility="Visible" Margin="431,10,10,182" Click="Button_Click"></Button>
                         <GroupBox Header="Result details" BorderBrush="Gray" FontWeight="Bold" Visibility="Hidden">
                             <Grid>
                                 <Grid.ColumnDefinitions>

@@ -11,6 +11,13 @@ using System.Drawing;
 
 namespace SPI_AOI.Utils
 {
+    class MachineAlarmResult
+    {
+        public string ErCode { get; set; }
+        public string ErMessages { get; set; }
+        public string ErSolution { get; set; }
+        public bool Success { get; set; }
+    }
     class SummaryInfo
     {
         public string Field { get; set; }

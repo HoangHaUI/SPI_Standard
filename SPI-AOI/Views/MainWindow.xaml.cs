@@ -75,6 +75,14 @@ namespace SPI_AOI.Views
             mTimerCheckStatus.Elapsed += OnCheckStatusEvent;
             mTimerCheckStatus.Enabled = true;
             ShowError(false);
+            //Image<Gray, byte> image = new Image<Gray, byte>("D:/2021_01_15_14_46_25.png");
+            //int count1 = CvInvoke.CountNonZero(image);
+            //VectorOfVectorOfPoint cnt = new VectorOfVectorOfPoint();
+            //CvInvoke.FindContours(image, cnt, null, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
+            //double s = ImageProcessingUtils.ContourArea(cnt[0]);
+            //Console.WriteLine("{0}, {1}", count1, s);
+            //MainConfigWindow.AlarmForm alarm = new MainConfigWindow.AlarmForm();
+            //alarm.ShowDialog();
             //NameValueCollection data = new NameValueCollection();
             //data.Add("Type", "Segment");
             //data.Add("VI_", "True");
@@ -515,6 +523,15 @@ namespace SPI_AOI.Views
                 if (valPanelPosition >= 0 && valPanelPosition < 8)
                 {
                     UpdatePanelPosition(valPanelPosition);
+                }
+                Thread.Sleep(20);
+                if (!mIsCheck)
+                    return;
+                int valAlarmMachine = mPlcComm.Get_Error_Machine();
+                if (valPanelPosition == 1)
+                {
+                    MainConfigWindow.AlarmForm alarm = new MainConfigWindow.AlarmForm();
+                    alarm.ShowDialog();
                 }
                 Thread.Sleep(20);
                 if (!mIsCheck)

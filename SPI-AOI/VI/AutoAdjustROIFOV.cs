@@ -32,9 +32,9 @@ namespace SPI_AOI.VI
                     }
                     for (int i = 0; i < BoundPad.Count; i++)
                     {
+                        Utils.PadAdjustResult padAdjustResult = new Utils.PadAdjustResult();
                         Rectangle boundPadRef = BoundPad[i];
                         Rectangle boundPadSeg = Rectangle.Empty;
-                        Utils.PadAdjustResult padAdjustResult = new Utils.PadAdjustResult();
 
                         foreach (var item in listBoundPadSeg)
                         {
@@ -67,12 +67,13 @@ namespace SPI_AOI.VI
                             Point ctRef = new Point(boundPadRef.Width / 2 + boundPadRef.X, boundPadRef.Height / 2 + boundPadRef.Y);
                             int subx = ctRef.X - ctSeg.X;
                             int suby = ctRef.Y - ctSeg.Y;
-                            if (Math.Abs(subx) <= 5)
+                            if (Math.Abs(subx) <= 5 && boundPadRef.Width < 40)
                                 padAdjustResult.X = -subx;
-                            if(Math.Abs(suby) <= 5)
+                            if(Math.Abs(suby) <= 5 && boundPadRef.Height < 40)
                             {
                                 padAdjustResult.Y = -suby;
                             }
+                           
                         }
                         adjustResult.Add(padAdjustResult);
                     }
@@ -104,7 +105,7 @@ namespace SPI_AOI.VI
                         ROI.Height += 2 * extend;
                         ImgGerber.ROI = ROI;
                         imgSegment.ROI = ROI;
-                        int[] adjust = GetAdjust(imgSegment, ImgGerber, 50, 10);
+                        int[] adjust = GetAdjust(imgSegment, ImgGerber, 20, 10);
                         xad[i] = adjust[0];
                         yad[i] = adjust[1];
                         ImgGerber.ROI = Rectangle.Empty;

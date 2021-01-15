@@ -32,7 +32,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="150"/>
                             <RowDefinition/>
-                        </Grid.RowDefinitions> 
+                        </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <GroupBox  Header="Move XY Axis:">
                                 <Canvas>
@@ -47,7 +47,7 @@
                                                  Content="Top Axis"
                                                 Canvas.Top="45" Canvas.Left="15"
                                                  FontSize="15" Checked="rbTopAxis_Checked">
-                                        
+
                                     </RadioButton>
                                     <RadioButton x:Name="rbBotAxis" Content="Bot Axis"
                                                   Canvas.Top="70" Canvas.Left="15"
@@ -133,11 +133,15 @@
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
                                             <Label Content="P.ID:"></Label>
-                                            <ComboBox x:Name="cbScanPointID" Width="80"
+                                            <ComboBox x:Name="cbScanPointID" Width="50"
                                                       SelectionChanged="cbScanPointID_SelectionChanged"></ComboBox>
-                                            <Button x:Name="btAddScan" Width="80" Content="Add" Margin="10,0,0,0
+                                            <ComboBox x:Name="cbSurface" Width="50" Margin="15,0,0,0" SelectedIndex="0">
+                                                <ComboBoxItem Content="TOP"></ComboBoxItem>
+                                                <ComboBoxItem Content="BOT"></ComboBoxItem>
+                                            </ComboBox>
+                                            <Button x:Name="btAddScan" Width="50" Content="Add" Margin="10,0,0,0
                                                     " Click="btAddScan_Click"></Button>
-                                            <Button x:Name="btDelScan" Width="80" Content="Delete" Margin="10,0,0,0
+                                            <Button x:Name="btDelScan" Width="50" Content="Delete" Margin="10,0,0,0
                                                     " Click="btDelScan_Click"></Button>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
@@ -168,7 +172,8 @@
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                                             <Label Content="Code:"></Label>
-                                            <TextBox x:Name="txtCodeScan" Width="255"></TextBox>
+                                            <TextBox x:Name="txtCodeScan" Width="202"></TextBox>
+                                            <Button Content="Read" Width="50" Margin="10,0,0,0"></Button>
                                         </StackPanel>
                                         <StackPanel Margin="0,15,0,0">
                                             <Label Content="Camera Parameter:" FontSize="18" FontWeight="Bold"></Label>
