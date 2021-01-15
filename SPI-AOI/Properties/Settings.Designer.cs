@@ -1069,7 +1069,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("200000")]
         public int RUN_X_TOP_SPEED {
             get {
                 return ((int)(this["RUN_X_TOP_SPEED"]));
@@ -1081,7 +1081,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("200000")]
         public int RUN_Y_TOP_SPEED {
             get {
                 return ((int)(this["RUN_Y_TOP_SPEED"]));

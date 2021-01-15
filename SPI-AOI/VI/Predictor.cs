@@ -147,6 +147,7 @@ namespace SPI_AOI.VI
             boundPadRef = padItem.Bouding;
             PadErrorDetail padEr = new PadErrorDetail();
             double scaleArea = 0;
+            double scaleAreaAddperimeter = 0;
             double shiftx = 0;
             double shifty = 0;
             int inflate = 40;
@@ -163,11 +164,16 @@ namespace SPI_AOI.VI
             if (idPadSegOverlap.Count > 0)
             {
                 double areaAllPadSeg = 0;
+                double perimeter = 0;
                 Rectangle boundAllPadSeg = new Rectangle();
                 for (int j = 0; j < idPadSegOverlap.Count; j++)
                 {
                     PadSegmentInfo padSeg = padSegment[idPadSegOverlap[j]];
                     areaAllPadSeg += padSeg.Area;
+                    using (VectorOfPoint cnt = new VectorOfPoint(padSeg.Contours))
+                    {
+                        perimeter += CvInvoke.ArcLength(cnt, true) / 2;
+                    }
                     if (j == 0)
                     {
                         boundAllPadSeg = padSeg.Bouding;
@@ -184,14 +190,14 @@ namespace SPI_AOI.VI
                 }
                 padEr.Center = new Point(boundAllPadSeg.X + boundAllPadSeg.Width / 2, boundAllPadSeg.Y + boundAllPadSeg.Height / 2);
                 scaleArea = areaAllPadSeg * 100 / sPadRef;
-
+                scaleAreaAddperimeter = (areaAllPadSeg + perimeter) * 100 / sPadRef;
                 shiftx = (Math.Max(Math.Abs(boundPadRef.X - boundAllPadSeg.X), Math.Abs((boundPadRef.X + boundPadRef.Width) - (boundAllPadSeg.X + boundAllPadSeg.Width))) * umPPixel);
                 shifty = (Math.Max(Math.Abs(boundPadRef.Y - boundAllPadSeg.Y), Math.Abs((boundPadRef.Y + boundPadRef.Height) - (boundAllPadSeg.Y + boundAllPadSeg.Height))) * umPPixel);
 
                 bool insert = false;
                 double deviation = (100 - (sPadRef / umPPixel)) / 2;
                 deviation = deviation < 0 ? 0 : deviation;
-                if (scaleArea < padItem.AreaThresh.PERCENT_LSL - deviation)
+                if (scaleAreaAddperimeter < padItem.AreaThresh.PERCENT_LSL - deviation)
                 {
                     //if (sPadRef > 100 || (sPadRef < 100 && scaleArea < 5))
                     {

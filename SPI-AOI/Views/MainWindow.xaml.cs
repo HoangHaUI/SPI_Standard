@@ -141,7 +141,7 @@ namespace SPI_AOI.Views
                 int x = mark.X;
                 int y = mark.Y;
                 mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "Mark " + (i+1).ToString(), x, y));
-                using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, mark, LightStrobe, 300))
+                using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, mark, LightStrobe, 200))
                 {
                     if (image != null)
                     {
