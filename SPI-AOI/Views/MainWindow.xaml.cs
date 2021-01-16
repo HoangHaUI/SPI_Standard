@@ -31,10 +31,13 @@ namespace SPI_AOI.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        // system variable
         System.Timers.Timer mTimer = new System.Timers.Timer(20);
         System.Timers.Timer mTimerCheckStatus = new System.Timers.Timer(50);
         Properties.Settings mParam = Properties.Settings.Default;
         Logger mLog = Heal.LogCtl.GetInstance();
+
+        // info and device variable
         List<Utils.SummaryInfo> mSummary = new List<Utils.SummaryInfo>();
         Utils.FOVDisplayInfo mFOVDisplay = new Utils.FOVDisplayInfo();
         CalibrateInfo mCalibImage = CalibrateLoader.GetIntance();
@@ -42,9 +45,14 @@ namespace SPI_AOI.Views
         PLCComm mPlcComm = new PLCComm();
         IOT.HikCamera mCamera = null;
         DKZ224V4ACCom mLight = null;
+        Devices.MyScaner mScaner = Devices.MyScaner.GetInstance();
+
+        // proccessing vatiabe
         Image<Bgr, byte> mImageGraft = null;
         List<System.Drawing.Rectangle> mROIFOVImage = new List<System.Drawing.Rectangle>();
         List<Utils.PadErrorDetail> mPadErrorDetails = new List<Utils.PadErrorDetail>();
+
+        // status variable
         bool mIsRunning = false;
         bool mIsProcessing = false;
         bool mIsInTimer = false;
@@ -75,7 +83,8 @@ namespace SPI_AOI.Views
             mTimerCheckStatus.Elapsed += OnCheckStatusEvent;
             mTimerCheckStatus.Enabled = true;
             ShowError(false);
-            //Image<Gray, byte> image = new Image<Gray, byte>("D:/2021_01_15_14_46_25.png");
+
+
             //int count1 = CvInvoke.CountNonZero(image);
             //VectorOfVectorOfPoint cnt = new VectorOfVectorOfPoint();
             //CvInvoke.FindContours(image, cnt, null, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
@@ -84,13 +93,12 @@ namespace SPI_AOI.Views
             //MainConfigWindow.AlarmForm alarm = new MainConfigWindow.AlarmForm();
             //alarm.ShowDialog();
             //NameValueCollection data = new NameValueCollection();
-            //data.Add("Type", "Segment");
-            //data.Add("VI_", "True");
+            //data.Add("Type", "Decode");
             //data.Add("FOV", (1 + 1).ToString());
             //data.Add("Debug", Convert.ToString(mParam.Debug));
-            //string fileName = @"D:\Save\2021_01_08\TIME(10_24_40)_._SN(NOT FOUND)\Image_2).png";
+            //string fileName = @"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Decode\3.png";
 
-            //VI.ServiceResults serviceResults = VI.ServiceComm.Sendfile(mParam.ServiceURL, new string[] { fileName }, data, true);
+            //VI.ServiceResults serviceResults = VI.ServiceComm.Sendfile(mParam.ServiceURL, new string[] { fileName }, data);
         }
         public void LoadUI()
         {
@@ -134,7 +142,7 @@ namespace SPI_AOI.Views
         
         private Utils.MarkAdjust CaptureMark(string ID, string SavePath, bool LightStrobe)
         {
-            System.Drawing.Point[] markPointXYPLC = mModel.GetPLCMarkPosition();
+            System.Drawing.Point[] markPointXYPLC = mModel.GetPulseXYMark();
             Utils.MarkAdjust markAdjust = new Utils.MarkAdjust();
             PadItem[] PadMark = new PadItem[2];
             for (int i = 0; i < 2; i++)
@@ -149,7 +157,7 @@ namespace SPI_AOI.Views
                 int x = mark.X;
                 int y = mark.Y;
                 mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "Mark " + (i+1).ToString(), x, y));
-                using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, mark, LightStrobe, 200))
+                using (Image<Bgr, byte> image = VI.MoveXYAxis.CaptureFOV(mPlcComm, mCamera, mLight, mark, LightStrobe, 100))
                 {
                     if (image != null)
                     {
@@ -198,7 +206,6 @@ namespace SPI_AOI.Views
                                     break;
                                 }
                             }
-                            
                         }
                         CvInvoke.Imwrite(fileName, image);
                         Thread isDB = new Thread(() => {
@@ -215,6 +222,60 @@ namespace SPI_AOI.Views
                 }
             }
             return markAdjust;
+        }
+        private string[] CaptureSN(string ID, string SavePath, bool LightStrobe)
+        {
+            Models.ReadCodePosition[] readCodePosition = mModel.GetPulseXYReadCode();
+            string[] sn = new string[readCodePosition.Length];
+            PadItem[] PadMark = new PadItem[2];
+            for (int i = 0; i < readCodePosition.Length; i++)
+            {
+                System.Drawing.Point point = readCodePosition[i].Origin;
+                int x = point.X;
+                int y = point.Y;
+                if(readCodePosition[i].Surface == Surface.TOP)
+                {
+                    mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "ReadCode " + (i + 1).ToString(), x, y));
+                    using (Image<Bgr, byte> image = VI.MoveXYAxis.CaptureFOV(mPlcComm, mCamera, mLight, point, LightStrobe, 100))
+                    {
+                        if (image != null)
+                        {
+                            System.Drawing.Rectangle ROI = readCodePosition[i].ROIImage;
+
+                            string fileName = string.Format("{0}//ReadCode_{1}.png", SavePath, i + 1);
+                            image.ROI = ROI;
+                            CvInvoke.Imwrite(fileName, image);
+                            VI.ServiceResults serviceResults = VI.ServiceComm.Decode(mParam.ServiceURL, new string[] { fileName }, mParam.Debug);
+                            sn[i] = serviceResults.SN;
+                            Thread isDB = new Thread(() => {
+                                mMyDBResult.InsertNewImage(ID, DateTime.Now, fileName, ROI, new System.Drawing.Rectangle(), "ReadCode");
+                            });
+                            isDB.Start();
+                        }
+                        else
+                        {
+                            mLog.Info(string.Format("Cant read code : {0}", i + 1));
+                            //break;
+                        }
+                    }
+                }
+                else if (readCodePosition[i].Surface == Surface.BOT)
+                {
+                    mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving Bot Axis", "ReadCode " + (i + 1).ToString(), x, y));
+                    int moveAxisStatus = VI.MoveXYAxis.ReadCodeBot(mPlcComm, mCamera, mLight, point, 0);
+                    if(moveAxisStatus == 0)
+                    {
+                        sn[i] = mScaner.ReadCode();
+                    }
+                    else
+                    {
+                        mLog.Info(string.Format("Cant read code : {0}", i + 1));
+                        /*break*/;
+                    }
+                }
+                
+            }
+            return sn;
         }
         private void ShowMarkImage(System.Drawing.Bitmap bm, int id)
         {
@@ -250,11 +311,12 @@ namespace SPI_AOI.Views
             {
                 for (int i = 0; i < xyAxisPosition.Length; i++)
                 {
+                    DateTime now = DateTime.Now;
                     System.Drawing.Point fov = xyAxisPosition[i];
                     int x = fov.X;
                     int y = fov.Y;
                     mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "FOV " + (i + 1).ToString(), x, y));
-                    using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, fov, LightStrobe, 300))
+                    using (Image<Bgr, byte> image = VI.MoveXYAxis.CaptureFOV(mPlcComm, mCamera, mLight, fov, LightStrobe, 100))
                     {
                         if (image != null)
                         {
@@ -272,21 +334,16 @@ namespace SPI_AOI.Views
                                 imgGerber.ROI = ROIGerber;
                                 mImageGraft.ROI = ROIGerber;
                                 imgTransform.CopyTo(mImageGraft);
-                                string fileName = string.Format("{0}//Image_{1}.png", SavePath, i + 1);
+                                string fileName = string.Format("{0}//Image_{1}_{2}.png", SavePath, i + 1, now.ToString("HH_mm_ss"));
                                 CvInvoke.Imwrite(fileName, imgTransform);
                                 publishThread[i] = new Thread(() => {
                                     int id = i;
                                     System.Drawing.Rectangle ROIGraft = ROIGerber;
-                                    NameValueCollection data = new NameValueCollection();
-                                    data.Add("Type", "Segment");
-                                    data.Add("VI_", "True");
-                                    data.Add("FOV", (id + 1).ToString());
-                                    data.Add("Debug", Convert.ToString(mParam.Debug));
                                     if(id > 0)
                                     {
                                         publishThread[i - 1].Join();
                                     }
-                                    VI.ServiceResults serviceResults = VI.ServiceComm.Sendfile(mParam.ServiceURL, new string[] { fileName }, data, true);
+                                    VI.ServiceResults serviceResults = VI.ServiceComm.SegmentFOV(mParam.ServiceURL, new string[] { fileName }, id, mParam.Debug);
                                     if (serviceResults != null)
                                     {
                                         lock (serviceResults)
@@ -312,7 +369,7 @@ namespace SPI_AOI.Views
                                 });
                                 Thread isDB = new Thread(() =>
                                 {
-                                    mMyDBResult.InsertNewImage(ID, DateTime.Now, fileName, ROI, ROIGerber, "FOV");
+                                    mMyDBResult.InsertNewImage(ID, now, fileName, ROI, ROIGerber, "FOV");
                                 });
                                 isDB.Start();
                                 mROIFOVImage.Add(ROIGerber);
@@ -328,12 +385,10 @@ namespace SPI_AOI.Views
                 }
                 if(result != -2)
                 {
-                    mLog.Info("waiting predict");
                     for (int i = 0; i < publishThread.Length; i++)
                     {
                         publishThread[i].Join();
                     }
-                    mLog.Info("write image");
                     string fileNameGraft = string.Format("{0}//Image_Graft.png", SavePath);
                     CvInvoke.Imwrite(fileNameGraft, mImageGraft);
                     if (mParam.Debug)
@@ -343,12 +398,9 @@ namespace SPI_AOI.Views
                         string fileNameGerberGraft = string.Format("{0}//Image_Gerber.png", SavePath);
                         CvInvoke.Imwrite(fileNameGerberGraft, imgGerber);
                     }
-                    mLog.Info("predict");
                     Image<Gray, byte> maskReleaseNoise = VI.Predictor.ReleaseNoise(maskSegmentGraft);
                     Utils.PadSegmentInfo[] pads = VI.Predictor.GetPadSegmentInfo(maskReleaseNoise, mModel.Gerber.ROI);
-                    mLog.Info("PadSegmentInfo");
                     Utils.PadErrorDetail[] padError = VI.Predictor.ComparePad(mModel, pads);
-                    mLog.Info(string.Format("has {0} pad error...", padError.Length));
                     padError = VI.Predictor.GetImagePadError(mImageGraft, padError, mModel.Gerber.ROI, mParam.LIMIT_SHOW_ERROR);
                     for (int i = 0; i < padError.Length; i++)
                     {
@@ -379,7 +431,7 @@ namespace SPI_AOI.Views
             int result = -1;
             string date = DateTime.Now.ToString("yyyy_MM_dd");
             string time = DateTime.Now.ToString("HH_mm_ss");
-            string sn = "NOT FOUND";
+            string[] sn = new string[1] { "NOT FOUND"};
             string savePath = mParam.SAVE_IMAGE_PATH + "\\" + date + "\\TIME(" + time + ")_._SN(" + sn + ")";
             string ID = mMyDBResult.GetNewID();
             if(!Directory.Exists(savePath))
@@ -405,6 +457,9 @@ namespace SPI_AOI.Views
                 mParam.LIGHT_VI_DEFAULT_INTENSITY_CH3,
                 mParam.LIGHT_VI_DEFAULT_INTENSITY_CH4);
                 mCamera.SetParameter(IOT.KeyName.ExposureTime, (float)mParam.CAMERA_VI_EXPOSURE_TIME);
+
+                sn = CaptureSN(ID, savePath, lightStrobe);
+
                 int status = CaptureFOV(ID, savePath, markAdjustInfo.X, markAdjustInfo.Y, markAdjustInfo.Angle, lightStrobe);
                 if (!lightStrobe)
                 {
@@ -448,7 +503,14 @@ namespace SPI_AOI.Views
                     }
                     string viResult = pass ? "PASS" : "FAIL";
                     result = pass ? 0 : -1;
-                    mMyDBResult.InsertNewProduct(ID, mModel.Name, DateTime.Now, "NOT FOUND", runningMode, viResult);
+                    string allsn = "";
+                    for (int i = 0; i < sn.Length; i++)
+                    {
+                        allsn += sn[i];
+                        if (i != sn.Length - 1)
+                            allsn += ",";
+                    }
+                    mMyDBResult.InsertNewProduct(ID, mModel.Name, DateTime.Now, allsn, runningMode, viResult);
                 }
                 else
                 {
@@ -967,6 +1029,18 @@ namespace SPI_AOI.Views
                 int[] intensity = mModel.HardwareSettings.LightIntensity;
                 mLight.SetFour(intensity[0], intensity[1], intensity[2], intensity[3]);
                 mLight.ActiveFour(0, 0, 0, 0);
+
+                mScaner = Devices.MyScaner.GetInstance();
+                int stOpenScan = mScaner.Open(mParam.SCANER_COM);
+                if (stOpenScan != 0)
+                {
+
+                    ReleaseResource();
+                    MessageBox.Show(string.Format("Cant open Scanner!"), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    wait.KillMe = true;
+                    return;
+                }
+                
                 mPlcComm.Logout();
                 int conveyorPulse = mPlcComm.Get_Conveyor();
                 if (conveyorPulse != mModel.HardwareSettings.Conveyor)
@@ -998,6 +1072,8 @@ namespace SPI_AOI.Views
                 wait.LabelContent = "Init Parameter...";
                 mPlcComm.Set_Speed_Run_X_Top(mParam.RUN_X_TOP_SPEED);
                 mPlcComm.Set_Speed_Run_Y_Top(mParam.RUN_Y_TOP_SPEED);
+                mPlcComm.Set_Speed_Run_X_Bot(mParam.RUN_X_BOT_SPEED);
+                mPlcComm.Set_Speed_Run_Y_Bot(mParam.RUN_Y_BOT_SPEED);
                 SetButtonRun(Utils.RunMode.START);
                 UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.READY);
                 LoadDetails();
@@ -1068,6 +1144,10 @@ namespace SPI_AOI.Views
                     mLight.Close();
                     mLight = null;
                 }
+            }
+            if (mScaner != null)
+            {
+                mScaner.Close();
             }
             this.Dispatcher.Invoke(() =>
             {

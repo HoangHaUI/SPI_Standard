@@ -1,0 +1,10 @@
+2021-01-16 08:17:46.9607|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:494)|
+2021-01-16 08:18:31.1624|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:494)|
+2021-01-16 08:19:18.4549|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:494)|
+2021-01-16 08:19:38.9840|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:494)|
+2021-01-16 08:38:17.6627|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:494)|
+2021-01-16 08:40:28.1627|Error|Cannot implicitly convert type 'Newtonsoft.Json.Linq.JArray' to 'string'. An explicit conversion exists (are you missing a cast?)(ServiceComm.cs:144)|
+2021-01-16 08:41:52.2398|Error|Unable to connect to the remote server(ServiceComm.cs:116)|
+2021-01-16 08:41:52.2986|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:490)|
+2021-01-16 10:33:44.7193|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:551)|
+2021-01-16 10:38:25.5550|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:551)|

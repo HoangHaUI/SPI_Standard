@@ -36,6 +36,7 @@ namespace SPI_AOI.Models
         public Surface Surface { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
+        public Rectangle ROIImage { get; set; }
         public ReadCodePosition Copy()
         {
             ReadCodePosition cp = new ReadCodePosition();

@@ -153,7 +153,7 @@ namespace SPI_AOI.Views.ModelManagement
         {
             mPlcComm.Logout();
             bool lightStrobe = !Convert.ToBoolean(mParam.LIGHT_MODE);
-            System.Drawing.Point[] markPointXYPLC = mModel.GetPLCMarkPosition();
+            System.Drawing.Point[] markPointXYPLC = mModel.GetPulseXYMark();
             PadItem[] PadMark = new PadItem[2];
             for (int i = 0; i < 2; i++)
             {
@@ -167,7 +167,7 @@ namespace SPI_AOI.Views.ModelManagement
                 int x = mark.X;
                 int y = mark.Y;
                 mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "Mark " + (i + 1).ToString(), x, y));
-                using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, mark, lightStrobe))
+                using (Image<Bgr, byte> image = VI.MoveXYAxis.CaptureFOV(mPlcComm, mCamera, mLight, mark, lightStrobe))
                 {
                     if (image != null)
                     {
@@ -249,7 +249,7 @@ namespace SPI_AOI.Views.ModelManagement
                     mImage = null;
                 }
                 mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "FOV " + (id + 1).ToString(), x, y));
-                using (Image<Bgr, byte> image = VI.CaptureImage.CaptureFOV(mPlcComm, mCamera, mLight, fov, lightStrobe, 300))
+                using (Image<Bgr, byte> image = VI.MoveXYAxis.CaptureFOV(mPlcComm, mCamera, mLight, fov, lightStrobe, 300))
                 {
                     mImage = ImageProcessingUtils.ImageRotation(image, new System.Drawing.Point(image.Width / 2, image.Height / 2), -mModel.AngleAxisCamera * Math.PI / 180.0).Copy();
                     mImage = ImageProcessingUtils.ImageTransformation(mImage, mMarkAdjust.X, mMarkAdjust.Y);

@@ -184,7 +184,7 @@ namespace SPI_AOI.Models
             point = new Point(PlcRefPoint.X + disX, PlcRefPoint.Y + disY);
             return point;
         }
-        public Point[] GetPLCMarkPosition()
+        public Point[] GetPulseXYMark()
         {
             Point[] mark = new Point[2];
             Point realMark1 = this.HardwareSettings.MarkPosition;
@@ -198,6 +198,11 @@ namespace SPI_AOI.Models
                 mark[1] = GetPLCPoint(realMark1, ctMark1, ctMark2);
             }
             return mark;
+
+        }
+        public ReadCodePosition[] GetPulseXYReadCode()
+        {
+            return this.HardwareSettings.ReadCodePosition.ToArray();
         }
         public Point[] GetPulseXYFOVs()
         {

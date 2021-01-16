@@ -19,9 +19,27 @@ namespace SPI_AOI.VI
     class ServiceComm
     {
         private static Logger mLog = Heal.LogCtl.GetInstance();
-        public static ServiceResults Sendfile(string url, string[] files, NameValueCollection formFields = null, bool DontSendIfNotVI = true)
+
+        public static ServiceResults SegmentFOV(string url, string[] files, int NoFOV, bool Debug)
         {
-            string resultPath = "Results";
+            int id = NoFOV;
+            NameValueCollection data = new NameValueCollection();
+            data.Add("Type", "Segment");
+            data.Add("FOV", (id + 1).ToString());
+            data.Add("Debug", Convert.ToString(Debug));
+            return  VI.ServiceComm.Sendfile(url, files, data);
+        }
+        public static ServiceResults Decode(string url, string[] files, bool Debug)
+        {
+            NameValueCollection data = new NameValueCollection();
+            data.Add("Type", "Decode");
+            data.Add("FOV", "0");
+            data.Add("Debug", Convert.ToString(Debug));
+            return VI.ServiceComm.Sendfile(url, files, data);
+        }
+        public static ServiceResults Sendfile(string url, string[] files, NameValueCollection formFields = null)
+        {
+            string resultPath = "ServiceResults";
             string sttFOV = formFields.Get("FOV");
             if (!Directory.Exists(resultPath))
             {
@@ -34,31 +52,8 @@ namespace SPI_AOI.VI
             }
             ServiceResults result = null;
             string[] keys = formFields.AllKeys;
-            bool vi = false;
-            foreach (string item in keys)
-            {
-                if (item.Contains("VI_"))
-                {
-                    string value = formFields.Get(item);
-                    if (value.ToUpper() == "TRUE")
-                    {
-                        vi = true;
-                    }
-                }
-            }
             try
             {
-                if (!vi && DontSendIfNotVI)
-                {
-                    using (Image<Gray, byte> ImgSrc = new Image<Gray, byte>(files[0]))
-                    {
-                        result = new ServiceResults();
-                        result.ImgMask = new Image<Gray, byte>(ImgSrc.Size);
-                        result.QRCode = "NOT FOUND";
-                        return result;
-                    }
-                }
-
                 string boundary = "----------------------------" + DateTime.Now.Ticks.ToString("x");
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -130,14 +125,21 @@ namespace SPI_AOI.VI
                     string status = jsonObj["status"];
                     if(status.ToUpper() == "OK")
                     {
-                        string imageStr = jsonObj["image"];
-                        string sn = jsonObj["sn"];
-                        byte[] datamask = Convert.FromBase64String(imageStr);
-                        string name = pathSave + string.Format("/mask_FOV{0}.png", sttFOV) ;
-                        File.WriteAllBytes(name, datamask);
-                        result = new ServiceResults();
-                        result.ImgMask = new Image<Gray, byte>(name);
-                        result.QRCode = sn;
+                        if(formFields.Get("Type") == "Segment")
+                        {
+                            string imageStr = jsonObj["image"];
+                            byte[] datamask = Convert.FromBase64String(imageStr);
+                            string name = pathSave + string.Format("/mask_FOV{0}.png", sttFOV);
+                            File.WriteAllBytes(name, datamask);
+                            result = new ServiceResults();
+                            result.ImgMask = new Image<Gray, byte>(name);
+                        }
+                        else if(formFields.Get("Type") == "Decode")
+                        {
+                            string code = jsonObj["sn"];
+                            result = new ServiceResults();
+                            result.SN = code;
+                        }
                     }
                 }
             }
@@ -164,7 +166,7 @@ namespace SPI_AOI.VI
     class ServiceResults
     {
         public Image<Gray, byte> ImgMask { get; set; }
-        public string QRCode { get; set; }
+        public string SN { get; set; }
         public void Dispose()
         {
             if (ImgMask != null)

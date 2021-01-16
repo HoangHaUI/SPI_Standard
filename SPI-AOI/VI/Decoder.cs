@@ -27,6 +27,9 @@ namespace SPI_AOI.VI
                 {
                     double alpha = i * 0.1 + 1;
                     CvInvoke.ConvertScaleAbs(image, imgCode, alpha, 0);
+                    CvInvoke.Threshold(imgCode, imgCode, 0, 255, Emgu.CV.CvEnum.ThresholdType.Otsu);
+                    CvInvoke.Imshow("", imgCode);
+                    CvInvoke.WaitKey(0);
                     code = ZxingDecode(imgCode.Bitmap);
                     if(code != null)
                     { break; }

@@ -29,6 +29,7 @@ namespace SPI_AOI.Views.ModelManagement
     {
         Model mModel = null;
         Logger mLog = Heal.LogCtl.GetInstance();
+        Properties.Settings mParam = Properties.Settings.Default;
         IOT.HikCamera mCamera = Devices.MyCamera.GetInstance();
         System.Timers.Timer mTimer = new System.Timers.Timer(10);
         Devices.DKZ224V4ACCom mLightSource = new Devices.DKZ224V4ACCom(Properties.Settings.Default.LIGHT_COM);
@@ -679,11 +680,17 @@ namespace SPI_AOI.Views.ModelManagement
             var r = MessageBox.Show(string.Format("Are you want to add\nPoint ({0},{1}) \nSurface {2}\n to read code position?", x, y, surface), "Information", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
             if (r == MessageBoxResult.Yes)
             {
+                
+                int pix = (int)(mModel.DPI / 25.4);
+                int widthImage = Convert.ToInt32(mScanWidth * mModel.DPI / 25.4);
+                int heightImage = Convert.ToInt32(mScanHeight * mModel.DPI / 25.4);
                 ReadCodePosition readCodeInfo = new ReadCodePosition();
                 readCodeInfo.Origin = new System.Drawing.Point(x, y);
                 readCodeInfo.Surface = surface;
                 readCodeInfo.Height = mScanHeight;
                 readCodeInfo.Width = mScanWidth;
+                readCodeInfo.ROIImage = new System.Drawing.Rectangle(mParam.IMAGE_SIZE.Width / 2 - widthImage / 2, 
+                    mParam.IMAGE_SIZE.Height / 2 - heightImage / 2, widthImage, heightImage);
                 mReadCodePosition.Add(readCodeInfo);
                 LoadIndexReadCodePosition();
                 MessageBox.Show("Add successfully!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
