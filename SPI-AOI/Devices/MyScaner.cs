@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 using System.IO.Ports;
 using System.IO;
 using NLog;
+using System.Threading;
+
+
 
 namespace SPI_AOI.Devices
 {
     class MyScaner
     {
         private static SerialPort mScanPort = null;
-        private static string mCMDRead = "D\n";
+        private static string mCMDRead = "DE\n";
         private static string mCMDEnd = "E\n";
         private static MyScaner mScan = null;
         private static Logger mLog = Heal.LogCtl.GetInstance();
@@ -41,7 +44,7 @@ namespace SPI_AOI.Devices
             try
             {
                 mScanPort.Open();
-                mScanPort.ReadTimeout = 2000;
+                mScanPort.ReadTimeout = 5000;
                 return 0;
             }
             catch (Exception ex)
@@ -67,6 +70,7 @@ namespace SPI_AOI.Devices
             string sn = "NOT FOUND";
             if(mScanPort == null)
             {
+                
                 return sn;
             }
             if(!mScanPort.IsOpen)
@@ -83,12 +87,28 @@ namespace SPI_AOI.Devices
             }
             try
             {
-                mScanPort.Write(mCMDRead);
-                sn = mScanPort.ReadLine();
-                mScanPort.Write(mCMDEnd);
+                for (int i = 0; i < 3; i++)
+                {
+                    string data = mScanPort.ReadTo("\r");
+                    if (!string.IsNullOrEmpty(data))
+                    {
+                        sn = data;
+                        break;
+                    }
+                    mScanPort.Write(mCMDRead);
+                }
+             }
+            catch (Exception ex)
+            {
+                mLog.Error(ex.Message);
+                return sn;
             }
-            catch { return sn; }
             return sn;
+        }
+        public void ReleaseBuffer()
+        {
+            mScanPort.DiscardInBuffer();
+            mScanPort.DiscardOutBuffer();
         }
     }
 }

@@ -152,7 +152,7 @@ namespace SPI_AOI.Views.ModelManagement
         private void CaptureMark()
         {
             mPlcComm.Logout();
-            bool lightStrobe = !Convert.ToBoolean(mParam.LIGHT_MODE);
+            bool lightStrobe = true;
             System.Drawing.Point[] markPointXYPLC = mModel.GetPulseXYMark();
             PadItem[] PadMark = new PadItem[2];
             for (int i = 0; i < 2; i++)
@@ -242,7 +242,7 @@ namespace SPI_AOI.Views.ModelManagement
                 int x = fov.X;
                 int y = fov.Y;
 
-                bool lightStrobe = !Convert.ToBoolean(mParam.LIGHT_MODE);
+                bool lightStrobe = true;
                 if (mImage != null)
                 {
                     mImage.Dispose();

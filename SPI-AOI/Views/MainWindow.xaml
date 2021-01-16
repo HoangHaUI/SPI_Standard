@@ -211,7 +211,7 @@
                 </Grid>
                 <Grid Grid.Column="1" Margin="3">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="180"/>
+                        <RowDefinition Height="220"/>
                         <RowDefinition Height="360"/>
                         <RowDefinition Height="100"/>
                         <RowDefinition Height="35*"/>
@@ -245,9 +245,9 @@
                                         <Label  Content="Pads:" Width="100" Foreground="Gray"/>
                                         <Label x:Name="lbNoPad" Content="-----" FontSize="15"/>
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Visibility="Hidden">
-                                        <Label  Content="Cycle Time:" Width="100" Foreground="Gray"/>
-                                        <Label x:Name="lbCircleTime" Content="-----" FontSize="15"/>
+                                    <StackPanel Orientation="Horizontal" Visibility="Visible">
+                                        <Label  Content="SN:" Width="100" Foreground="Gray"/>
+                                        <Label x:Name="lbSN" Content="-----" FontSize="15"/>
                                     </StackPanel>
                                 </StackPanel>
                             </GroupBox>

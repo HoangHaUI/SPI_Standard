@@ -150,7 +150,7 @@
                                                 <wf:NumericUpDown x:Name="nScanWidth" Width="60" 
                                                                           ValueChanged="nScanWidth_ValueChanged"
                                                                           Minimum="0"
-                                                                          Maximum="17"
+                                                                          Maximum="1000"
                                                                           DecimalPlaces="1"
                                                                           Increment="0.1"
                                                                           TextAlign="Right"
@@ -162,7 +162,7 @@
                                                 <wf:NumericUpDown x:Name="nScanHeight" Width="60" 
                                                                           ValueChanged="nScanHeight_ValueChanged"
                                                                           Minimum="0"
-                                                                          Maximum="17"
+                                                                          Maximum="1000"
                                                                           DecimalPlaces="1"
                                                                           Increment="0.1"
                                                                           TextAlign="Right"
@@ -173,7 +173,7 @@
                                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                                             <Label Content="Code:"></Label>
                                             <TextBox x:Name="txtCodeScan" Width="202"></TextBox>
-                                            <Button Content="Read" Width="50" Margin="10,0,0,0"></Button>
+                                            <Button x:Name="btTestReadCode" Content="Read" Width="50" Margin="10,0,0,0" Click="btTestReadCode_Click"></Button>
                                         </StackPanel>
                                         <StackPanel Margin="0,15,0,0">
                                             <Label Content="Camera Parameter:" FontSize="18" FontWeight="Bold"></Label>

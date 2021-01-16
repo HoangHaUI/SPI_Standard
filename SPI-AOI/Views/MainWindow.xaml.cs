@@ -136,6 +136,7 @@ namespace SPI_AOI.Views
 
                 GC.Collect();
             }
+            mScaner.ReleaseBuffer();
             mIsInTimer = false;
             timer.Enabled = mIsRunning;
         }
@@ -428,6 +429,9 @@ namespace SPI_AOI.Views
         
         private int Processing()
         {
+            this.Dispatcher.Invoke(() => {
+                lbSN.Content = "-----";
+            });
             int result = -1;
             string date = DateTime.Now.ToString("yyyy_MM_dd");
             string time = DateTime.Now.ToString("HH_mm_ss");
@@ -459,7 +463,9 @@ namespace SPI_AOI.Views
                 mCamera.SetParameter(IOT.KeyName.ExposureTime, (float)mParam.CAMERA_VI_EXPOSURE_TIME);
 
                 sn = CaptureSN(ID, savePath, lightStrobe);
-
+                this.Dispatcher.Invoke(() => {
+                    lbSN.Content = sn[0];
+                });
                 int status = CaptureFOV(ID, savePath, markAdjustInfo.X, markAdjustInfo.Y, markAdjustInfo.Angle, lightStrobe);
                 if (!lightStrobe)
                 {
@@ -885,7 +891,7 @@ namespace SPI_AOI.Views
                 lbLoadTime.Content = "-----";
                 lbFovs.Content = "-----";
                 lbGerberFile.Content = "-----";
-                lbCircleTime.Content = "-----";
+                lbSN.Content = "-----";
                 lbTotalCountFovs.Content = "0";
             });
             

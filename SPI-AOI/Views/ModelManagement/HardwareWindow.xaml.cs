@@ -31,6 +31,7 @@ namespace SPI_AOI.Views.ModelManagement
         Logger mLog = Heal.LogCtl.GetInstance();
         Properties.Settings mParam = Properties.Settings.Default;
         IOT.HikCamera mCamera = Devices.MyCamera.GetInstance();
+        Devices.MyScaner mScaner = Devices.MyScaner.GetInstance();
         System.Timers.Timer mTimer = new System.Timers.Timer(10);
         Devices.DKZ224V4ACCom mLightSource = new Devices.DKZ224V4ACCom(Properties.Settings.Default.LIGHT_COM);
         CalibrateInfo mCalibImage = CalibrateLoader.GetIntance();
@@ -41,6 +42,7 @@ namespace SPI_AOI.Views.ModelManagement
         PadItem mPadMark = null;
         double mScanWidth = 10;
         double mScanHeight = 10;
+        bool mReadCodeClick = false;
         List<ReadCodePosition> mReadCodePosition = new List<ReadCodePosition>();
         double mExposureTime = 0;
         double mGain = 0;
@@ -116,9 +118,15 @@ namespace SPI_AOI.Views.ModelManagement
                     MessageBox.Show("Cant ping to PLC, please check the cable and try again!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+                if(mScaner.Open(mParam.SCANER_COM)  != 0)
+                {
+                    MessageBox.Show("Cant open COM scaner, please check the cable and try again!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 if(mLightSource.Open() != 0)
                 {
                     MessageBox.Show("Cant open COM light source, please check the cable and try again!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    mScaner.Close();
                     return;
                 }
                 int r = mCamera.Open();
@@ -126,6 +134,7 @@ namespace SPI_AOI.Views.ModelManagement
                 {
                     MessageBox.Show("Cant open camera, please check the cable!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     mLightSource.Close();
+                    mScaner.Close();
                     return;
                 }
                 mCamera.StartGrabbing();
@@ -174,6 +183,25 @@ namespace SPI_AOI.Views.ModelManagement
                     using (Image<Bgr, byte> img = new Image<Bgr, byte>(bm))
                     {
                         CvInvoke.Undistort(imgDis, img, mCalibImage.CameraMatrix, mCalibImage.DistCoeffs, mCalibImage.NewCameraMatrix);
+                        if(mReadCodeClick)
+                        {
+                            int pix = (int)(mModel.DPI / 25.4);
+                            int widthImage = Convert.ToInt32(mScanWidth * mModel.DPI / 25.4);
+                            int heightImage = Convert.ToInt32(mScanHeight * mModel.DPI / 25.4);
+                            var ROIScan = new System.Drawing.Rectangle(mParam.IMAGE_SIZE.Width / 2 - widthImage / 2,
+                                    mParam.IMAGE_SIZE.Height / 2 - heightImage / 2, widthImage, heightImage);
+                            img.ROI = ROIScan;
+                            CvInvoke.Imwrite("sn.png", img);
+                            img.ROI = new System.Drawing.Rectangle();
+                            var result = VI.ServiceComm.Decode(mParam.ServiceURL, new string[] { "sn.png" }, mParam.Debug);
+                            string sn = result.SN;
+                            mReadCodeClick = false;
+                            this.Dispatcher.Invoke(() => {
+                                MessageBox.Show("SN: " + sn,"Reader", MessageBoxButton.OK, MessageBoxImage.Information);
+                            });
+                        }
+
+
                         System.Drawing.Rectangle rectSearch = new System.Drawing.Rectangle(img.Width / 2 - searchW / 2, img.Height / 2 - searchH / 2, searchW, searchH);
                         System.Drawing.Rectangle rectScan = new System.Drawing.Rectangle(img.Width / 2 - scanW / 2, img.Height / 2 - scanH / 2, scanW, scanH);
                         img.ROI = rectSearch;
@@ -637,7 +665,7 @@ namespace SPI_AOI.Views.ModelManagement
         {
             if(cbScanPointID.SelectedIndex >= 0)
             {
-                ReadCodePosition readCodeInfo = mModel.HardwareSettings.ReadCodePosition[cbScanPointID.SelectedIndex];
+                ReadCodePosition readCodeInfo = mReadCodePosition[cbScanPointID.SelectedIndex];
                 if(readCodeInfo.Surface ==  Surface.TOP)
                 {
                     SetTopAxis(readCodeInfo.Origin.X, readCodeInfo.Origin.Y);
@@ -665,18 +693,19 @@ namespace SPI_AOI.Views.ModelManagement
             int x = 0;
             int y = 0;
             Surface surface = Surface.TOP;
-            if(cbSurface.SelectedItem.ToString() == "BOT")
+            if (cbSurface.SelectedIndex == 1)
             {
                 x = mPLC.Get_X_Bot();
                 y = mPLC.Get_Y_Bot();
                 surface = Surface.BOT;
             }
-            if(cbSurface.SelectedItem.ToString() == "TOP")
+            else if (cbSurface.SelectedIndex == 0)
             {
                 x = mPLC.Get_X_Top();
                 y = mPLC.Get_Y_Top();
                 surface = Surface.TOP;
             }
+            else return;
             var r = MessageBox.Show(string.Format("Are you want to add\nPoint ({0},{1}) \nSurface {2}\n to read code position?", x, y, surface), "Information", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
             if (r == MessageBoxResult.Yes)
             {
@@ -787,6 +816,24 @@ namespace SPI_AOI.Views.ModelManagement
         private void btAutoAdjust_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void btTestReadCode_Click(object sender, RoutedEventArgs e)
+        {
+            int selectId = cbScanPointID.SelectedIndex;
+            if(selectId >= 0 && selectId < mReadCodePosition.Count)
+            {
+                var item = mReadCodePosition[selectId];
+                if(item.Surface == Surface.BOT)
+                {
+                    string sn = mScaner.ReadCode();
+                    MessageBox.Show("SN: " + sn, "Reader", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else if(item.Surface == Surface.TOP)
+                {
+                    mReadCodeClick = true;
+                }
+            }
         }
     }
 }

@@ -218,11 +218,13 @@ namespace SPI_AOI.Devices
         }
         public int Set_X_Bot(int value)
         {
-            return mSLMP.SetDevice2(mParam.PLC_REG_X_BOT, value);
+            mSLMP.SetDevice2(mParam.PLC_REG_X_BOT, value);
+            return mSLMP.GetDevice2(mParam.PLC_REG_X_BOT);
         }
         public int Set_Y_Bot(int value)
         {
-            return mSLMP.SetDevice2(mParam.PLC_REG_Y_BOT, value);
+            mSLMP.SetDevice2(mParam.PLC_REG_Y_BOT, value);
+            return mSLMP.GetDevice2(mParam.PLC_REG_Y_BOT);
         }
         public int Get_X_Bot()
         {
