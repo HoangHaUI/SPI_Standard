@@ -588,3 +588,6 @@ Parameter name: startIndex(SLMP.cs:302)|
 2021-01-15 16:13:03.7149|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:489)|
 2021-01-15 16:57:45.0794|Error|startIndex cannot be larger than length of string.
 Parameter name: startIndex(SLMP.cs:302)|
+2021-01-15 17:26:36.3330|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14934, Y = 22560(MainWindow.xaml.cs:151)|
+2021-01-15 17:26:37.9221|Info|Score matching is lower score standard... 35.08 < 50(MainWindow.xaml.cs:196)|
+2021-01-15 17:43:30.2289|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:489)|

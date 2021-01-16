@@ -40,7 +40,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(617, 540);
+            this.button1.Location = new System.Drawing.Point(439, 388);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(123, 48);
             this.button1.TabIndex = 0;
@@ -66,7 +66,7 @@
             this.txtErrorCode.ForeColor = System.Drawing.Color.DarkRed;
             this.txtErrorCode.Location = new System.Drawing.Point(24, 45);
             this.txtErrorCode.Name = "txtErrorCode";
-            this.txtErrorCode.Size = new System.Drawing.Size(734, 29);
+            this.txtErrorCode.Size = new System.Drawing.Size(556, 29);
             this.txtErrorCode.TabIndex = 2;
             // 
             // txtErrorName
@@ -78,7 +78,7 @@
             this.txtErrorName.Location = new System.Drawing.Point(24, 131);
             this.txtErrorName.Multiline = true;
             this.txtErrorName.Name = "txtErrorName";
-            this.txtErrorName.Size = new System.Drawing.Size(734, 78);
+            this.txtErrorName.Size = new System.Drawing.Size(556, 78);
             this.txtErrorName.TabIndex = 4;
             // 
             // label2
@@ -102,7 +102,7 @@
             this.txtSolution.Location = new System.Drawing.Point(24, 258);
             this.txtSolution.Multiline = true;
             this.txtSolution.Name = "txtSolution";
-            this.txtSolution.Size = new System.Drawing.Size(732, 263);
+            this.txtSolution.Size = new System.Drawing.Size(554, 111);
             this.txtSolution.TabIndex = 6;
             // 
             // label3
@@ -119,7 +119,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 600);
+            this.ClientSize = new System.Drawing.Size(606, 448);
             this.Controls.Add(this.txtSolution);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtErrorName);

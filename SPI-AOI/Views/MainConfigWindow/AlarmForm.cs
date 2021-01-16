@@ -14,7 +14,7 @@ namespace SPI_AOI.Views.MainConfigWindow
     {
         private System.Timers.Timer mTimer = new System.Timers.Timer(200);
         private bool mIsInTimer = false;
-        private bool mIsShow = false;
+        private bool mIsShow = true;
         private string[] mAlarmBits = new string[0];
         private string[] mAlarmMsg = new string[0];
         private string[] mAlarmSolution = new string[0];
@@ -80,25 +80,33 @@ namespace SPI_AOI.Views.MainConfigWindow
                     }
 
                 }
-                else if (flag != -1)
+                else if (flag == -1)
                 {
                     result.Success = false;
                     break;
                 }
             }
+            if(mPLCComm.Get_Error_Machine() == 0)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    this.Close();
+                }));
+            }
             if(result.Success)
             {
-                this.Invoke(new Action(() => {
-                    try
-                    {
-
+                
+                try
+                {
+                    this.Invoke(new Action(() => {
                         txtErrorCode.Text = result.ErCode;
                         txtErrorName.Text = result.ErMessages;
                         txtSolution.Text = result.ErSolution;
                         this.Update();
-                    }
-                    catch { }
-                }));
+                    }));
+                }
+                catch { }
+                
             }
         }
         private void label2_Click(object sender, EventArgs e)

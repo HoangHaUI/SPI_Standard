@@ -528,7 +528,7 @@ namespace SPI_AOI.Views
                 if (!mIsCheck)
                     return;
                 int valAlarmMachine = mPlcComm.Get_Error_Machine();
-                if (valPanelPosition == 1)
+                if (valAlarmMachine == 1)
                 {
                     MainConfigWindow.AlarmForm alarm = new MainConfigWindow.AlarmForm();
                     alarm.ShowDialog();
