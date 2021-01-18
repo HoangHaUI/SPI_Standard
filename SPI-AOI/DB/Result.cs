@@ -13,13 +13,13 @@ namespace SPI_AOI.DB
         private GenCtl mCtl = new GenCtl();
         public Result()
         {
-            InitResultTbl();
+            InitPanelResultTbl();
             InitImageTbl();
             InitErrorDetailsTbl();
         }
-        public void InitResultTbl()
+        public void InitPanelResultTbl()
         {
-            Table.Result resultTbl = new Table.Result();
+            Table.PanelResults resultTbl = new Table.PanelResults();
             string cmd = string.Format("CREATE TABLE IF NOT EXISTS {0} ({1});",
                 resultTbl.TableName,
                 resultTbl.ID + " TEXT PRIMARY KEY," +
@@ -27,7 +27,8 @@ namespace SPI_AOI.DB
                 resultTbl.LoadTime + " TEXT," +
                 resultTbl.SN + " TEXT," +
                 resultTbl.RunningMode + " TEXT," +
-                resultTbl.VIResult + " TEXT"
+                resultTbl.MachineResult + " TEXT," +
+                resultTbl.ConfirmResult + " TEXT"
                 );
             mCtl.ExecuteCmd(mConn, cmd);
         }
@@ -41,6 +42,7 @@ namespace SPI_AOI.DB
                 imgTbl.ImagePath + " TEXT," +
                 imgTbl.ROI + " TEXT," +
                 imgTbl.ROIGerber + " TEXT," +
+                imgTbl.FovID + " INTEGER," +
                 imgTbl.Type + " TEXT"
                 );
             mCtl.ExecuteCmd(mConn, cmd);
@@ -51,8 +53,15 @@ namespace SPI_AOI.DB
             string cmd = string.Format("CREATE TABLE IF NOT EXISTS {0} ({1});",
                 imgTbl.TableName,
                 imgTbl.ID + " TEXT," +
+                imgTbl.ModelName + " TEXT," +
                 imgTbl.Time + " TEXT," +
                 imgTbl.Component + " TEXT," +
+                imgTbl.PadID + " INTEGER," +
+                imgTbl.FovID + " INTEGER," +
+                imgTbl.ROIOnFov + " TEXT," +
+                imgTbl.ROIOnGerber + " TEXT," +
+                imgTbl.MachineResult + " TEXT," +
+                imgTbl.ConfirmResult + " TEXT," +
                 imgTbl.Type + " TEXT"
                 );
             mCtl.ExecuteCmd(mConn, cmd);
@@ -61,16 +70,17 @@ namespace SPI_AOI.DB
         {
             return Guid.NewGuid().ToString().ToUpper();
         }
-        public int InsertNewProduct(
+        public int InsertNewPanelResult(
             string ID,
             string ModelName,
             DateTime Time,
             string SN,
             string RunningMode,
-            string VIResult
+            string MachineResult,
+            string ConfirmResult
             )
         {
-            Table.Result resultTbl = new Table.Result();
+            Table.PanelResults resultTbl = new Table.PanelResults();
             string cmd = string.Format("INSERT INTO {0} ({1}) values({2});",
                 resultTbl.TableName,
                 // --------------
@@ -79,7 +89,8 @@ namespace SPI_AOI.DB
                 resultTbl.LoadTime + "," +
                 resultTbl.SN + "," +
                 resultTbl.RunningMode + "," +
-                resultTbl.VIResult,
+                resultTbl.MachineResult + "," +
+                resultTbl.ConfirmResult,
 
                 //--------------
                 "\'" + ID  + "\'," +
@@ -87,7 +98,8 @@ namespace SPI_AOI.DB
                 "\'" + Time.ToString("yyyy-MM-dd HH:mm:ss") + "\'," +
                 "\'" + SN + "\'," +
                 "\'" + RunningMode + "\'," +
-                "\'" + VIResult + "\'"
+                "\'" + MachineResult + "\'," +
+                "\'" + ConfirmResult + "\'"
                 );
             return mCtl.ExecuteCmd(mConn, cmd);
         }
@@ -95,6 +107,7 @@ namespace SPI_AOI.DB
                 string ID,
                 DateTime TimeCapture,
                 string ImagePath,
+                int FovID,
                 System.Drawing.Rectangle ROI,
                 System.Drawing.Rectangle ROIGerber,
                 string Type
@@ -107,6 +120,7 @@ namespace SPI_AOI.DB
                 resultTbl.ID + "," +
                 resultTbl.TimeCapture + "," +
                 resultTbl.ImagePath + "," +
+                resultTbl.FovID + "," +
                 resultTbl.ROI + "," +
                 resultTbl.ROIGerber + "," +
                 resultTbl.Type,
@@ -115,15 +129,22 @@ namespace SPI_AOI.DB
                 "\'" + ID + "\'," +
                 "\'" + TimeCapture.ToString("yyyy-MM-dd HH:mm:ss") + "\'," +
                 "\'" + ImagePath + "\'," +
+                Convert.ToString(FovID) + "," + 
                 "\'" + string.Format("{0},{1},{2},{3}",ROI.X, ROI.Y, ROI.Width, ROI.Height) + "\'," +
                 "\'" + string.Format("{0},{1},{2},{3}", ROIGerber.X, ROIGerber.Y, ROIGerber.Width, ROIGerber.Height) + "\'," +
                 "\'" + Type + "\'"
                 );
             return mCtl.ExecuteCmd(mConn, cmd);
         }
-        public int InsertNewErrorDetails(
+        public int InsertNewPadError(
                 string ID,
                 DateTime Time,
+                int PadID,
+                int FovID,
+                System.Drawing.Rectangle ROIOnFOV,
+                System.Drawing.Rectangle ROIOnGerber,
+                string MachineResult,
+                string ConfirmResult,
                 string Component,
                 string Type
             )
@@ -135,12 +156,24 @@ namespace SPI_AOI.DB
                 resultTbl.ID + "," +
                 resultTbl.Time + "," +
                 resultTbl.Component + "," +
+                resultTbl.PadID + "," +
+                resultTbl.FovID + "," +
+                resultTbl.ROIOnFov + "," +
+                resultTbl.ROIOnGerber + "," +
+                resultTbl.MachineResult + "," +
+                resultTbl.ConfirmResult + "," +
                 resultTbl.Type,
 
                 //--------------
                 "\'" + ID + "\'," +
                 "\'" + Time.ToString("yyyy-MM-dd HH:mm:ss") + "\'," +
-                "\'" + Component + "\'," +
+                "" + Component + "," +
+                "" + PadID + "," +
+                "\'" + FovID + "\'," +
+                "\'" + string.Format("{0},{1},{2},{3}", ROIOnFOV.X, ROIOnFOV.Y, ROIOnFOV.Width, ROIOnFOV.Height) + "\'," +
+                "\'" + string.Format("{0},{1},{2},{3}", ROIOnGerber.X, ROIOnGerber.Y, ROIOnGerber.Width, ROIOnGerber.Height) + "\'," +
+                "\'" + MachineResult + "\'," +
+                "\'" + ConfirmResult + "\'," +
                 "\'" + Type + "\'"
                 );
             return mCtl.ExecuteCmd(mConn, cmd);
@@ -148,7 +181,7 @@ namespace SPI_AOI.DB
         public string[] GetModelName()
         {
             List<string> modelNames = new List<string>();
-            Table.Result resultTbl = new Table.Result();
+            Table.PanelResults resultTbl = new Table.PanelResults();
             string cmd = string.Format("SELECT {0} from {1};",
                 resultTbl.ModelName,
                 resultTbl.TableName);
@@ -166,7 +199,7 @@ namespace SPI_AOI.DB
         }
         public int CountPass(string ModelName, DateTime StartTime, DateTime EndTime)
         {
-            Table.Result resultTbl = new Table.Result();
+            Table.PanelResults resultTbl = new Table.PanelResults();
             string stTime = StartTime.ToString("yyyy-MM-dd HH:mm:ss");
             string endTime = EndTime.ToString("yyyy-MM-dd HH:mm:ss");
             string cmd = string.Format("Select count({0}) from {1} where {2} and {3} and {4} and {5};",
@@ -175,7 +208,7 @@ namespace SPI_AOI.DB
                 resultTbl.ModelName + "=\'" + ModelName + "\'",
                 resultTbl.LoadTime + ">\'" + stTime + "\'",
                 resultTbl.LoadTime + "<=\'" + endTime + "\'",
-                resultTbl.VIResult + "=\'PASS\'"
+                resultTbl.ConfirmResult + "=\'PASS\'"
                 );
 
             object count = mCtl.ExecuteScalarCmd(mConn, cmd);
@@ -183,7 +216,7 @@ namespace SPI_AOI.DB
         }
         public int CountFail(string ModelName, DateTime StartTime, DateTime EndTime)
         {
-            Table.Result resultTbl = new Table.Result();
+            Table.PanelResults resultTbl = new Table.PanelResults();
             string stTime = StartTime.ToString("yyyy-MM-dd HH:mm:ss");
             string endTime = EndTime.ToString("yyyy-MM-dd HH:mm:ss");
             string cmd = string.Format("Select count({0}) from {1} where {2} and {3} and {4} and {5};",
@@ -192,7 +225,7 @@ namespace SPI_AOI.DB
                 resultTbl.ModelName + "=\'" + ModelName + "\'",
                 resultTbl.LoadTime + ">\'" + stTime + "\'",
                 resultTbl.LoadTime + "<=\'" + endTime + "\'",
-                resultTbl.VIResult + "=\'FAIL\'"
+                resultTbl.ConfirmResult + "=\'FAIL\'"
                 );
 
             object count = mCtl.ExecuteScalarCmd(mConn, cmd);

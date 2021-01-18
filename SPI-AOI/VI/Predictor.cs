@@ -22,7 +22,7 @@ namespace SPI_AOI.VI
             }
             return image;
         }
-        public static PadSegmentInfo[] GetPadSegmentInfo(Image<Gray, byte> image, Rectangle ROI)
+        public static PadSegmentInfo[] GetPadSegmentInfo(Image<Gray, byte> image, Rectangle ROI, int FovID, string ImageCapturePath, string ImageSegmentPath)
         {
             List<PadSegmentInfo> padinfo = new List<PadSegmentInfo>();
             using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
@@ -34,27 +34,33 @@ namespace SPI_AOI.VI
                     if (mm.M00 == 0)
                         continue;
                     Point ctCnt = new Point(Convert.ToInt32(mm.M10 / mm.M00), Convert.ToInt32(mm.M01 / mm.M00));
-                    ctCnt.X += ROI.X;
-                    ctCnt.Y += ROI.Y;
+                    
                     Rectangle bound = CvInvoke.BoundingRectangle(contours[i]);
-                    bound.X += ROI.X;
-                    bound.Y += ROI.Y;
+                    
                     double s = ImageProcessingUtils.ContourArea(contours[i]);
                     PadSegmentInfo pad = new PadSegmentInfo();
-                    pad.Contours = contours[i].ToArray();
-                    for (int j = 0; j < pad.Contours.Length; j++)
+                    pad.FOVID = FovID;
+                    pad.ImageCapturePath = ImageCapturePath;
+                    pad.ImageSegmentPath = ImageSegmentPath;
+                    pad.CenterOnFOV = new Point(ctCnt.X, ctCnt.Y);
+                    pad.ContoursOnFOV = contours[i].ToArray();
+                    for (int j = 0; j < pad.ContoursOnFOV.Length; j++)
                     {
-                        pad.Contours[j] = new Point(pad.Contours[j].X + ROI.X, pad.Contours[j].Y + ROI.Y);
+                        pad.Contours[j] = new Point(pad.ContoursOnFOV[j].X + ROI.X, pad.ContoursOnFOV[j].Y + ROI.Y);
                     }
+                    bound.X += ROI.X;
+                    bound.Y += ROI.Y;
+                    ctCnt.X += ROI.X;
+                    ctCnt.Y += ROI.Y;
                     pad.Bouding = bound;
-                    pad.Area = s;
                     pad.Center = ctCnt;
+                    pad.Area = s;
                     padinfo.Add(pad);
                 }
             }
             return padinfo.ToArray();
         }
-        public static PadErrorDetail[] ComparePad(Models.Model model, PadSegmentInfo[] padSegment)
+        public static PadErrorDetail[] ComparePad(Models.Model model, PadSegmentInfo[] padSegment, int FovID)
         {
             List<PadErrorDetail> padError = new List<PadErrorDetail>();
             double umPPixel = 25.4 / model.DPI * 1000;
@@ -65,16 +71,18 @@ namespace SPI_AOI.VI
                 {
                     continue;
                 }
-                PadErrorDetail padEr = CheckPad(padItem, padSegment, umPPixel, false);
-                if (padEr == null)
-                    continue;
-                else
+                if(padItem.FOVs.Count > 0)
                 {
-                    //padEr = CheckPad(padItem, padSegment, umPPixel, true);
-                    //if (padEr == null)
-                    //    continue;
-                    //else
-                        padError.Add(padEr);
+                    if(padItem.FOVs[0] == FovID)
+                    {
+                        PadErrorDetail padEr = CheckPad(padItem, padSegment, umPPixel, false);
+                        if (padEr == null)
+                            continue;
+                        else
+                        {
+                            padError.Add(padEr);
+                        }
+                    }
                 }
             }
             return padError.ToArray();
@@ -148,8 +156,8 @@ namespace SPI_AOI.VI
             PadErrorDetail padEr = new PadErrorDetail();
             double scaleArea = 0;
             double scaleAreaAddperimeter = 0;
-            double shiftx = 0;
-            double shifty = 0;
+            double shiftxVal = 0;
+            double shiftyVal = 0;
             int inflate = 40;
             padEr.AreaStdHight = padItem.AreaThresh.UM_USL;
             padEr.AreaStdLow = padItem.AreaThresh.PERCENT_LSL;
@@ -157,7 +165,7 @@ namespace SPI_AOI.VI
             padEr.ShiftYStduM = padItem.ShiftYThresh.UM_USL;
             padEr.ShiftXStdArea = padItem.ShiftXThresh.PERCENT_LSL;
             padEr.ShiftYStdArea = padItem.ShiftYThresh.PERCENT_LSL;
-            padEr.ROI = Rectangle.Inflate(boundPadRef, inflate, inflate);
+            padEr.ROIOnGerber = Rectangle.Inflate(boundPadRef, inflate, inflate);
             padEr.Pad = padItem;
             if(padItem.FOVs .Count > 0)
                 padEr.FOVNo = padItem.FOVs[0];
@@ -188,39 +196,72 @@ namespace SPI_AOI.VI
                     if (padSeg.Bouding.Y + padSeg.Bouding.Height > boundAllPadSeg.Y + boundAllPadSeg.Height)
                         boundAllPadSeg.Height = padSeg.Bouding.Y + padSeg.Bouding.Height - boundAllPadSeg.Y;
                 }
+                padEr.ROIOnImage = new Rectangle(boundAllPadSeg.X - (padSegment[idPadSegOverlap[0]].Center.X - padSegment[idPadSegOverlap[0]].CenterOnFOV.X),
+                    boundAllPadSeg.Y - (padSegment[idPadSegOverlap[0]].Center.Y - padSegment[idPadSegOverlap[0]].CenterOnFOV.Y),
+                    boundAllPadSeg.Width,
+                    boundAllPadSeg.Height
+                    );
+                padEr.ROIOnImage.Inflate(inflate, inflate);
                 padEr.Center = new Point(boundAllPadSeg.X + boundAllPadSeg.Width / 2, boundAllPadSeg.Y + boundAllPadSeg.Height / 2);
                 scaleArea = areaAllPadSeg * 100 / sPadRef;
                 scaleAreaAddperimeter = (areaAllPadSeg + perimeter) * 100 / sPadRef;
-                shiftx = (Math.Max(Math.Abs(boundPadRef.X - boundAllPadSeg.X), Math.Abs((boundPadRef.X + boundPadRef.Width) - (boundAllPadSeg.X + boundAllPadSeg.Width))) * umPPixel);
-                shifty = (Math.Max(Math.Abs(boundPadRef.Y - boundAllPadSeg.Y), Math.Abs((boundPadRef.Y + boundPadRef.Height) - (boundAllPadSeg.Y + boundAllPadSeg.Height))) * umPPixel);
+                shiftxVal = (Math.Max(Math.Abs(boundPadRef.X - boundAllPadSeg.X), Math.Abs((boundPadRef.X + boundPadRef.Width) - (boundAllPadSeg.X + boundAllPadSeg.Width))) * umPPixel);
+                shiftyVal = (Math.Max(Math.Abs(boundPadRef.Y - boundAllPadSeg.Y), Math.Abs((boundPadRef.Y + boundPadRef.Height) - (boundAllPadSeg.Y + boundAllPadSeg.Height))) * umPPixel);
 
-                bool insert = false;
+                bool hightArea = false;
+                bool lowArea = false;
+                bool shiftX = false;
+                bool shiftY = false;
                 double deviation = (100 - (sPadRef / umPPixel)) / 2;
                 deviation = deviation < 0 ? 0 : deviation;
                 if (scaleAreaAddperimeter < padItem.AreaThresh.PERCENT_LSL - deviation)
                 {
-                    {
-                        insert = true;
-                    }
+                    lowArea = true;
                 }
                 if (scaleArea > padItem.AreaThresh.UM_USL)
                 {
-                    insert = true;
+                    hightArea = true;
                 }
-                if (shiftx > padItem.ShiftXThresh.UM_USL + 3 * umPPixel)
+                if (shiftxVal > padItem.ShiftXThresh.UM_USL + 3 * umPPixel)
                 {
-                    insert = true;
+                    shiftX = true;
                 }
-                if (shifty > padItem.ShiftXThresh.UM_USL + 3 * umPPixel)
+                if (shiftyVal > padItem.ShiftXThresh.UM_USL + 3 * umPPixel)
                 {
-                    insert = true;
+                    shiftY = true;
                 }
-                if (insert)
+                if (hightArea || lowArea || shiftX || shiftY)
                 {
-
+                    if(hightArea && (shiftX || shiftY))
+                    {
+                        padEr.ErrorType = "Bridge";
+                    }
+                    else if(hightArea)
+                    {
+                        padEr.ErrorType = "Hight Area";
+                    }
+                    else if(lowArea)
+                    {
+                        if(scaleArea == 0)
+                        {
+                            padEr.ErrorType = "Missing";
+                        }
+                        else
+                        {
+                            padEr.ErrorType = "Insufficient";
+                        }
+                    }
+                    else if(shiftX)
+                    {
+                        padEr.ErrorType = "Shift X";
+                    }
+                    else if (shiftY)
+                    {
+                        padEr.ErrorType = "Shift Y";
+                    }
                     padEr.Area = scaleArea;
-                    padEr.ShiftX = shiftx;
-                    padEr.ShiftY = shifty;
+                    padEr.ShiftX = shiftxVal;
+                    padEr.ShiftY = shiftyVal;
                     return padEr;
                 }
                 else
@@ -240,7 +281,7 @@ namespace SPI_AOI.VI
             int lm = PadError.Length > limit ? limit : PadError.Length;
             for (int i = 0; i < lm; i++)
             {
-                Rectangle bound = PadError[i].ROI;
+                Rectangle bound = PadError[i].ROIOnGerber;
                 bound.X -= ROI.X;
                 bound.Y -= ROI.Y;
                 bound.X = bound.X < 0 ? 0 : bound.X;

@@ -148,3 +148,29 @@
 2021-01-18 10:48:28.9471|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:318)|
 2021-01-18 10:48:29.8634|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:318)|
 2021-01-18 10:48:32.2864|Info|show error(MainWindow.xaml.cs:422)|
+2021-01-18 15:07:24.8724|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:564)|
+2021-01-18 15:19:17.2151|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-18 15:20:03.7157|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:570)|
+2021-01-18 15:20:52.7167|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:570)|
+2021-01-18 15:22:24.7156|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:570)|
+2021-01-18 15:23:07.2179|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:571)|
+2021-01-18 15:23:39.2153|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:571)|
+2021-01-18 15:24:23.7173|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:572)|
+2021-01-18 15:26:39.2169|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:572)|
+2021-01-18 15:27:40.2147|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:572)|
+2021-01-18 15:28:46.2152|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:572)|
+2021-01-18 15:29:09.7154|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:572)|
+2021-01-18 15:43:26.2169|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:572)|
+2021-01-18 16:16:12.7146|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:542)|
+2021-01-18 16:17:29.7147|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:542)|
+2021-01-18 16:18:35.7144|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:542)|
+2021-01-18 16:19:40.7145|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:542)|
+2021-01-18 16:20:54.7144|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:542)|
+2021-01-18 16:22:00.7141|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:542)|
+2021-01-18 16:23:05.7170|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:542)|
+2021-01-18 16:23:30.7151|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:542)|
+2021-01-18 16:25:54.2153|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:542)|
+2021-01-18 16:30:04.7153|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:542)|
+2021-01-18 16:30:29.7144|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:542)|
+2021-01-18 17:07:48.7167|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:544)|
+2021-01-18 17:09:57.7246|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:544)|

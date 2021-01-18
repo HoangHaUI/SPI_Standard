@@ -16,10 +16,11 @@ namespace SPI_AOI.Utils
         public int ID { get; set; }
         public Image Image { get; set; }
         public Label Label { get; set; }
+        public Border Border { get; set; }
         public PadErrorControl(System.Drawing.Bitmap image, int PadID)
         {
             Canvas cv = new Canvas();
-            this.Width = 200;
+            this.Width = 190;
             this.Height = 200;
             this.Background = Brushes.Transparent;
             this.BorderBrush = Brushes.Gray;
@@ -32,21 +33,32 @@ namespace SPI_AOI.Utils
             this.AddChild(cv);
             this.ToolTip = DateTime.Now.ToString("HH:mm:ss dd/MM/yyyy");
         }
+        public void SetStatus(int status = -1)
+        {
+            this.Dispatcher.Invoke(() => {
+                if (status == -1)
+                    this.Border.BorderBrush = Brushes.Red;
+                else
+                {
+                    this.Border.BorderBrush = Brushes.Green;
+                }
+            });
+        }
         private Border GetImageControl(System.Drawing.Bitmap image)
         {
             this.Image = new Image();
             BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(image);
             this.Image.Source = bms;
-            Border bd = new Border();
-            bd.Margin = new Thickness(3, 30, 3, 3);
-            bd.Width = 190;
-            bd.Height = 160;
-            bd.Background = Brushes.Gray;
-            bd.ClipToBounds = true;
-            bd.Child = this.Image;
-
-
-            return bd;
+            this.Border = new Border();
+            this.Border.Margin = new Thickness(3, 30, 3, 3);
+            this.Border.Width = 180;
+            this.Border.Height = 160;
+            this.Border.Background = Brushes.Gray;
+            this.Border.ClipToBounds = true;
+            this.Border.Child = this.Image;
+            this.Border.BorderBrush = Brushes.Red;
+            this.Border.BorderThickness = new Thickness(1);
+            return this.Border;
         }
         private Label GetLabel(int PadID)
         {

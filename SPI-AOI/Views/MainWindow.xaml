@@ -320,8 +320,8 @@
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="3">
-                        <Button Content="test" Visibility="Visible" Margin="431,10,10,182" Click="Button_Click"></Button>
-                        <GroupBox Header="Result details" BorderBrush="Gray" FontWeight="Bold" Visibility="Hidden">
+                        <GroupBox Header="Result details" BorderBrush="Gray" FontWeight="Bold"
+                                  Visibility="Hidden">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
@@ -508,13 +508,12 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0" >
-                            <GroupBox Header="Pads" BorderBrush="Gray" Margin="3">
-                                <ScrollViewer VerticalScrollBarVisibility="Visible"  Margin="0,10,0,3">
-                                    <StackPanel x:Name="stackPadError" Orientation="Vertical">
-                                    </StackPanel>
-                                </ScrollViewer>
+                            <GroupBox Header="Pads issue" BorderBrush="Gray" Margin="3">
+                                <ListBox x:Name="stackPadError" SelectionMode="Single"
+                                             SelectionChanged="stackPadError_SelectionChanged">
+                                </ListBox>
                             </GroupBox>
-                            
+
 
                         </Grid>
                         <Grid Grid.Column="1">
@@ -530,19 +529,23 @@
                                         </Grid>
                                     </Border>
                                 </GroupBox>
-                                
+
                             </Grid>
                             <Grid Grid.Row="1">
 
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="407*"/>
-                                        <ColumnDefinition Width="175"/>
+                                        <ColumnDefinition Width="200"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0">
                                         <GroupBox Header="Details" BorderBrush="Gray" Margin="3">
                                             <StackPanel Margin="15">
-                                                <StackPanel Orientation="Horizontal">
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <Label FontSize="15" FontWeight="Bold" Content="Error:" VerticalAlignment="Center"/>
+                                                    <Label x:Name="lbErrorType" FontSize="35" Margin="50,0,0,0" Foreground="Red" Content="Bridge" FontWeight="Bold"></Label>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
                                                     <Label FontSize="15" FontWeight="Bold" Content="Pad ID:"/>
                                                     <Label x:Name="lbPadErrorID" FontSize="15" FontWeight="Bold"  Margin="10,0,0,0"></Label>
                                                 </StackPanel>
@@ -556,7 +559,7 @@
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Label FontSize="15" FontWeight="Bold" Content="Shift X (um):"/>
-                                                        <Label x:Name="lbPadErrorShiftX" FontSize="15" FontWeight="Bold"   Margin="10,0,0,0"></Label>
+                                                    <Label x:Name="lbPadErrorShiftX" FontSize="15" FontWeight="Bold"   Margin="10,0,0,0"></Label>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Label FontSize="15" FontWeight="Bold" Content="Shift Y (um):"/>
@@ -566,7 +569,28 @@
                                         </GroupBox>
                                     </Grid>
                                     <Grid Grid.Column="1">
-                                        <Button x:Name="btFinish" Click="btFinish_Click" Margin="12" Content="Finish" FontSize="30" FontWeight="Bold"></Button>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="56"/>
+                                            <RowDefinition Height="56"/>
+                                            <RowDefinition Height="56"/>
+                                            <RowDefinition Height="56"/>
+                                            <RowDefinition Height="1*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <Button x:Name="btPASS" Margin="8" Content="PASS" FontSize="20" FontWeight="Bold" Grid.RowSpan="2" Foreground="Green" Click="btPASS_Click"></Button>
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <Button x:Name="btAllPASS" Margin="8" Content="All PASS" FontSize="20" FontWeight="Bold" Grid.RowSpan="2"  Foreground="Green" Click="btAllPASS_Click"></Button>
+                                        </Grid>
+                                        <Grid Grid.Row="2">
+                                            <Button x:Name="btFAIL" Margin="8" Content="FAIL" FontSize="20" FontWeight="Bold" Grid.RowSpan="2" Foreground="Red" Click="btFAIL_Click"></Button>
+                                        </Grid>
+                                        <Grid Grid.Row="3">
+                                            <Button x:Name="btPASSFAIL" Margin="8" Content="All FAIL" FontSize="20" FontWeight="Bold" Grid.RowSpan="2" Foreground="Red" Click="btPASSFAIL_Click"></Button>
+                                        </Grid>
+                                        <Grid Grid.Row="4">
+                                            <Button x:Name="btFinish" Click="btFinish_Click" Margin="8,12,8,6" Content="Finish" FontSize="30" FontWeight="Bold" Grid.RowSpan="2"></Button>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -575,6 +599,5 @@
                 </Grid>
             </Grid>
         </Grid>
-
     </Grid>
 </Window>

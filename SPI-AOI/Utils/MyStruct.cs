@@ -39,8 +39,16 @@ namespace SPI_AOI.Utils
     }
     class PadErrorDetail
     {
+        public string PanelID { get; set; }
+        public DateTime LoadTime { get; set; }
+        public string SN { get; set; }
+        public string ErrorType { get; set; }
+        public string MachineResult { get; set; }
+        public string ConfirmResult { get; set; }
+        public string Component { get; set; }
         public Models.PadItem Pad { get; set; }
-        public Rectangle ROI { get; set; }
+        public Rectangle ROIOnImage { get; set; }
+        public Rectangle ROIOnGerber { get; set; }
         public Image<Bgr, byte> PadImage { get; set; }
         public Point[] CntPadReference { get; set; }
         public List<Point[]> ContoursPadSegment { get; set; }
@@ -66,10 +74,15 @@ namespace SPI_AOI.Utils
     }
     class PadSegmentInfo
     {
+        public int FOVID { get; set; }
+        public string ImageCapturePath { get; set; }
+        public string ImageSegmentPath { get; set; }
         public Rectangle Bouding { get; set; }
         public double Area { get; set; }
         public  Point Center { get; set; }
         public Point[] Contours { get; set; }
+        public Point CenterOnFOV { get; set; }
+        public Point[] ContoursOnFOV { get; set; }
     }
     public class PadAdjustResult
     {

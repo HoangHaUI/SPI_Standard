@@ -105,7 +105,7 @@ namespace SPI_AOI.Devices
                 int y = XYReadCode.Y > move ? XYReadCode.Y - move : XYReadCode.Y + move;
                 VI.MoveXYAxis.ReadCodeBot(mPLCComm, new Point(x, y));
                 VI.MoveXYAxis.ReadCodeBot(mPLCComm, XYReadCode);
-                Thread.Sleep(200);
+                //Thread.Sleep(200);
             }
             return sn;
         }

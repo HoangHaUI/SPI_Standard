@@ -821,7 +821,8 @@ namespace SPI_AOI.Views.ModelManagement
         private void btTestReadCode_Click(object sender, RoutedEventArgs e)
         {
             int selectId = cbScanPointID.SelectedIndex;
-            if(selectId >= 0 && selectId < mReadCodePosition.Count)
+            txtCodeScan.Text = "";
+            if (selectId >= 0 && selectId < mReadCodePosition.Count)
             {
                 var item = mReadCodePosition[selectId];
                 if(item.Surface == Surface.BOT)
@@ -830,6 +831,7 @@ namespace SPI_AOI.Views.ModelManagement
                     int y = mPLC.Get_Y_Bot();
                     string sn = mScaner.ReadCode(new System.Drawing.Point(x, y));
                     MessageBox.Show("SN: " + sn, "Reader", MessageBoxButton.OK, MessageBoxImage.Information);
+                    txtCodeScan.Text = sn;
                 }
                 else if(item.Surface == Surface.TOP)
                 {

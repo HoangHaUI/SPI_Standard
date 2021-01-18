@@ -156,8 +156,9 @@
     <Compile Include="DB\Ctl.cs" />
     <Compile Include="DB\Result.cs" />
     <Compile Include="DB\SQLiteConn.cs" />
+    <Compile Include="DB\Struct\DBObjectStruct.cs" />
     <Compile Include="DB\Table\MachineIssueTbl.cs" />
-    <Compile Include="DB\Table\Result.cs" />
+    <Compile Include="DB\Table\VIResultTbl.cs" />
     <Compile Include="Devices\LightSource.cs" />
     <Compile Include="Devices\MyCamera.cs" />
     <Compile Include="Devices\MyPLC.cs" />

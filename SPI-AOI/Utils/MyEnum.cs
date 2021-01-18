@@ -57,6 +57,9 @@ namespace SPI_AOI.Utils
         PASS,
         FAIL,
         GOOD,
+        CAPTURE_FAIL,
+        MOVE_XY_AXIS_FAIL,
+        DETECT_MARK_FAIL,
         BAD,
         NONE,
 
