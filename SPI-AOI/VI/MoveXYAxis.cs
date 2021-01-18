@@ -53,7 +53,7 @@ namespace SPI_AOI.VI
             }
             return img;
         }
-        public static int ReadCodeBot(PLCComm PLC, HikCamera Camera, DKZ224V4ACCom LightCtl, Point Anchor, int TimeSleep = 200)
+        public static int ReadCodeBot(PLCComm PLC, Point Anchor, int TimeSleep = 200)
         {
             bool ret = PLC.SetXYBot(Anchor.X, Anchor.Y);
             if (!ret)

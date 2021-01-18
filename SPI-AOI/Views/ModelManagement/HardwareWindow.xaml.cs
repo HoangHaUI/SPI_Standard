@@ -826,7 +826,9 @@ namespace SPI_AOI.Views.ModelManagement
                 var item = mReadCodePosition[selectId];
                 if(item.Surface == Surface.BOT)
                 {
-                    string sn = mScaner.ReadCode();
+                    int x = mPLC.Get_X_Bot();
+                    int y = mPLC.Get_Y_Bot();
+                    string sn = mScaner.ReadCode(new System.Drawing.Point(x, y));
                     MessageBox.Show("SN: " + sn, "Reader", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else if(item.Surface == Surface.TOP)

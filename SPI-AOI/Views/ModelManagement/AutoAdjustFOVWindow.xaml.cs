@@ -88,6 +88,7 @@ namespace SPI_AOI.Views.ModelManagement
             mPlcComm.Logout();
             mLoaded = true;
             grConfig.IsEnabled = true;
+            btLoad_Click(btLoad, null);
         }
         private void ReleaseResource()
         {
@@ -404,7 +405,7 @@ namespace SPI_AOI.Views.ModelManagement
                         Thread.Sleep(500);
                     }
                 }
-                MessageBox.Show("Done!");
+                MessageBox.Show("Adjust FOV finish!", "INFOMATION", MessageBoxButton.OK, MessageBoxImage.Information);
             });
             auto.Start();
         }
@@ -425,7 +426,7 @@ namespace SPI_AOI.Views.ModelManagement
                         Thread.Sleep(500);
                     }
                 }
-                MessageBox.Show("Done!");
+                MessageBox.Show("Adjust Pad finish!", "INFOMATION", MessageBoxButton.OK, MessageBoxImage.Information);
             });
             auto.Start();
         }

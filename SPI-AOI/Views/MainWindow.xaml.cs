@@ -263,10 +263,10 @@ namespace SPI_AOI.Views
                 else if (readCodePosition[i].Surface == Surface.BOT)
                 {
                     mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving Bot Axis", "ReadCode " + (i + 1).ToString(), x, y));
-                    int moveAxisStatus = VI.MoveXYAxis.ReadCodeBot(mPlcComm, mCamera, mLight, point, 0);
+                    int moveAxisStatus = VI.MoveXYAxis.ReadCodeBot(mPlcComm, point, 0);
                     if(moveAxisStatus == 0)
                     {
-                        sn[i] = mScaner.ReadCode();
+                        sn[i] = mScaner.ReadCode(point);
                     }
                     else
                     {

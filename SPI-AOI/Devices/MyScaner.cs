@@ -7,6 +7,7 @@ using System.IO.Ports;
 using System.IO;
 using NLog;
 using System.Threading;
+using System.Drawing;
 
 
 
@@ -15,10 +16,10 @@ namespace SPI_AOI.Devices
     class MyScaner
     {
         private static SerialPort mScanPort = null;
-        private static string mCMDRead = "DE\n";
-        private static string mCMDEnd = "E\n";
+        private static string mCMDRead = "DE";
         private static MyScaner mScan = null;
         private static Logger mLog = Heal.LogCtl.GetInstance();
+        private static PLCComm mPLCComm = new PLCComm();
         public static MyScaner GetInstance()
         {
             if(mScan == null)
@@ -65,7 +66,7 @@ namespace SPI_AOI.Devices
             }
             return 0;
         }
-        public string ReadCode()
+        public string ReadCode(Point XYReadCode)
         {
             string sn = "NOT FOUND";
             if(mScanPort == null)
@@ -96,6 +97,12 @@ namespace SPI_AOI.Devices
                         break;
                     }
                     mScanPort.Write(mCMDRead);
+                    int move = 1000;
+                    int x = XYReadCode.X > move ? XYReadCode.X - move : XYReadCode.X + move;
+                    int y = XYReadCode.Y > move ? XYReadCode.Y - move : XYReadCode.Y + move;
+                    VI.MoveXYAxis.ReadCodeBot(mPLCComm, new Point(x, y));
+                    VI.MoveXYAxis.ReadCodeBot(mPLCComm, XYReadCode);
+                    Thread.Sleep(200);
                 }
              }
             catch (Exception ex)
