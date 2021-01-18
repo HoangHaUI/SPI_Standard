@@ -125,7 +125,6 @@ namespace SPI_AOI.Views
                 {
                     mPlcComm.Set_Pass();
                     UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PASS);
-                    
                 }
                 else
                 {

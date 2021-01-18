@@ -45,7 +45,7 @@ namespace SPI_AOI.Devices
             try
             {
                 mScanPort.Open();
-                mScanPort.ReadTimeout = 5000;
+                mScanPort.ReadTimeout = 1000;
                 return 0;
             }
             catch (Exception ex)
@@ -86,29 +86,26 @@ namespace SPI_AOI.Devices
                     return sn;
                 }
             }
-            try
+            for (int i = 0; i < 3; i++)
             {
-                for (int i = 0; i < 3; i++)
+                string data = null;
+                try
                 {
-                    string data = mScanPort.ReadTo("\r");
-                    if (!string.IsNullOrEmpty(data))
-                    {
-                        sn = data;
-                        break;
-                    }
-                    mScanPort.Write(mCMDRead);
-                    int move = 1000;
-                    int x = XYReadCode.X > move ? XYReadCode.X - move : XYReadCode.X + move;
-                    int y = XYReadCode.Y > move ? XYReadCode.Y - move : XYReadCode.Y + move;
-                    VI.MoveXYAxis.ReadCodeBot(mPLCComm, new Point(x, y));
-                    VI.MoveXYAxis.ReadCodeBot(mPLCComm, XYReadCode);
-                    Thread.Sleep(200);
+                    data = mScanPort.ReadTo("\r");
                 }
-             }
-            catch (Exception ex)
-            {
-                mLog.Error(ex.Message);
-                return sn;
+                catch { }
+                if (!string.IsNullOrEmpty(data))
+                {
+                    sn = data;
+                    break;
+                }
+                mScanPort.Write(mCMDRead);
+                int move = 5000;
+                int x = XYReadCode.X > move ? XYReadCode.X - move : XYReadCode.X + move;
+                int y = XYReadCode.Y > move ? XYReadCode.Y - move : XYReadCode.Y + move;
+                VI.MoveXYAxis.ReadCodeBot(mPLCComm, new Point(x, y));
+                VI.MoveXYAxis.ReadCodeBot(mPLCComm, XYReadCode);
+                Thread.Sleep(200);
             }
             return sn;
         }
