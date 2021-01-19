@@ -36,10 +36,19 @@ namespace SPI_AOI.Devices
         {
             return mSLMP.GetDevice(Device).Value;
         }
+        public int Get_Bit_Reset_Scan()
+        {
+            return mSLMP.GetDevice(mParam.PLC_BIT_RESET_SCAN).Value;
+        }
+        public int Reset_Bit_Reset_Scan()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_RESET_SCAN, 0).Value;
+        }
         public int Set_Load_Product()
         {
             return mSLMP.SetDevice(mParam.PLC_BIT_LOAD_PRODUCT_SETUP, 1).Value;
         }
+
         public int Set_Unload_Product()
         {
             return mSLMP.SetDevice(mParam.PLC_BIT_UNLOAD_PRODUCT_SETUP, 1).Value;

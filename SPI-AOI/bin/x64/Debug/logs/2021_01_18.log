@@ -174,3 +174,831 @@
 2021-01-18 16:30:29.7144|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:542)|
 2021-01-18 17:07:48.7167|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:544)|
 2021-01-18 17:09:57.7246|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:544)|
+2021-01-18 17:27:46.1673|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 17:27:47.6314|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 17:27:48.7284|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 17:27:58.1233|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:322)|
+2021-01-18 17:27:59.2786|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:322)|
+2021-01-18 17:28:00.1051|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:322)|
+2021-01-18 17:28:00.3225|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:28:01.0670|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:322)|
+2021-01-18 17:28:01.1149|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:28:01.9969|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:322)|
+2021-01-18 17:28:02.0760|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:28:02.8915|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:322)|
+2021-01-18 17:28:03.0051|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:28:03.7940|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:322)|
+2021-01-18 17:28:03.9035|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:28:04.6810|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:322)|
+2021-01-18 17:28:04.8171|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:28:05.5795|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:322)|
+2021-01-18 17:28:05.6936|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:28:06.5061|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:322)|
+2021-01-18 17:28:06.6093|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:28:07.4026|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:322)|
+2021-01-18 17:28:07.5133|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:28:08.3028|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:322)|
+2021-01-18 17:28:08.4114|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:28:09.2705|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:322)|
+2021-01-18 17:28:09.3094|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:28:10.1862|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:322)|
+2021-01-18 17:28:10.2790|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:28:11.0717|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:322)|
+2021-01-18 17:28:11.1955|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:28:11.9054|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:322)|
+2021-01-18 17:28:12.0808|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:28:12.9174|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:28:13.8719|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:24.7309|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 17:29:25.7263|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 17:29:26.7884|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 17:29:27.2642|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:28.3682|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:29.2389|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:29.3825|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:30.2073|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:30.2472|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:31.1268|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:31.2425|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:32.0514|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:32.1491|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:32.9679|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:33.0846|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:33.8406|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:33.9772|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:34.7262|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:34.8828|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:35.7166|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:35.7405|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:36.5982|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:36.7269|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:37.5008|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:37.6095|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:38.4702|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:38.5101|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:39.3708|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:39.4795|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:40.2474|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:40.3841|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:41.1091|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:322)|
+2021-01-18 17:29:41.2628|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:42.1244|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:29:43.1108|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-18 17:35:21.7874|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 17:35:22.9344|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 17:35:24.0644|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 17:35:24.4802|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:322)|
+2021-01-18 17:35:25.6222|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:322)|
+2021-01-18 17:35:26.4560|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:322)|
+2021-01-18 17:35:27.4732|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:322)|
+2021-01-18 17:36:27.4697|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 17:36:28.1519|Info|Score matching is lower score standard... 59.21 < 70(MainWindow.xaml.cs:208)|
+2021-01-18 17:37:09.9868|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 17:37:10.5673|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 17:37:11.0916|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 17:37:11.5027|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:322)|
+2021-01-18 17:37:12.0226|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:322)|
+2021-01-18 17:37:12.6932|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:322)|
+2021-01-18 17:37:13.2606|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:322)|
+2021-01-18 17:37:13.8006|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:322)|
+2021-01-18 17:37:14.3598|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:322)|
+2021-01-18 17:37:14.8646|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:322)|
+2021-01-18 17:37:15.4074|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:322)|
+2021-01-18 17:37:15.9445|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:322)|
+2021-01-18 17:37:16.4214|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:322)|
+2021-01-18 17:37:16.9740|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:322)|
+2021-01-18 17:37:17.4976|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:322)|
+2021-01-18 17:37:18.0324|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:322)|
+2021-01-18 17:37:18.5872|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:322)|
+2021-01-18 17:37:19.1639|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:322)|
+2021-01-18 17:37:19.6839|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:07.6452|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 17:38:08.2147|Info|Score matching is lower score standard... 11.23 < 70(MainWindow.xaml.cs:208)|
+2021-01-18 17:38:33.9068|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 17:38:34.4495|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 17:38:34.9844|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 17:38:35.4436|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:35.9775|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:36.6229|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:37.1904|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:37.7308|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:38.2378|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:38.7923|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:39.3095|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:39.8501|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:40.3877|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:40.9214|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:41.4281|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:42.0046|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:42.5242|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:43.0479|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:322)|
+2021-01-18 17:38:43.6016|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:322)|
+2021-01-18 17:40:51.7069|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 17:40:52.7604|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 17:40:53.8601|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 17:40:54.3161|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:322)|
+2021-01-18 17:40:55.4350|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:322)|
+2021-01-18 17:41:34.5266|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:322)|
+2021-01-18 17:41:39.1532|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:322)|
+2021-01-18 17:41:43.5299|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:322)|
+2021-01-18 17:41:46.5642|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:322)|
+2021-01-18 17:42:11.3476|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:322)|
+2021-01-18 17:42:15.1114|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:322)|
+2021-01-18 17:42:18.4975|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:322)|
+2021-01-18 17:42:21.0141|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:322)|
+2021-01-18 17:42:23.4408|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:322)|
+2021-01-18 17:42:26.3600|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:322)|
+2021-01-18 17:42:29.2496|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:322)|
+2021-01-18 17:42:31.8991|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:322)|
+2021-01-18 17:42:34.2384|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.2564|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.2763|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.3023|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.3192|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.3531|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.3751|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.3985|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.4144|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.4438|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.4587|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.4747|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.5062|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.5371|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.5712|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.5999|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.6188|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.6398|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.6658|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.6827|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.6977|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.7188|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.7441|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.7618|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.7921|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.8061|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.8230|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.8529|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.8831|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.9134|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.9417|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.9617|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:34.9786|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.0086|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.0246|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.0406|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.0575|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.0867|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.1037|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.1337|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.1477|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.1688|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.1994|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.2303|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.2588|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.2882|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.3031|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.3252|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.3512|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.3681|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.3831|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.3990|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.4300|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.4449|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.4659|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.4918|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.5078|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.5377|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.5677|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.5979|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.6273|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.6472|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.6642|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.6943|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.7082|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.7259|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.7408|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.7621|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.7871|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.8030|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.8331|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.8481|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.8657|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.8971|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.9273|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.9567|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:35.9879|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:36.3087|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:322)|
+2021-01-18 17:42:39.8686|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:322)|
+2021-01-18 17:42:44.9058|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:44.9217|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:44.9397|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:44.9527|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:44.9736|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:44.9985|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.0135|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.0424|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.0554|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.0751|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.1051|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.1353|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.1656|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.1957|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.2157|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.2346|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.2617|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.2776|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.2926|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.3128|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.3398|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.3558|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.3856|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.4006|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.4187|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.4495|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.4794|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.5096|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.5390|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.5580|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.5740|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.6042|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.6201|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.6411|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.6411|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.6770|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.7030|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.7190|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.7499|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.7499|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.7808|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.8261|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.8566|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.8876|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.9125|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.9274|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.9554|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.9693|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:45.9866|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.0016|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.0256|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.0517|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.0667|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.0966|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.1315|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.1544|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.1854|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.2163|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.2455|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.2747|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.2969|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.3139|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.3418|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.3588|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.3758|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.3988|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.4238|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.4528|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.4768|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.4927|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.5229|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.5521|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.5822|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.6114|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.6304|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.6463|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.6778|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.6937|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.7097|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.7247|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.7456|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.7706|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.7876|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.8178|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.8318|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.8487|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.8779|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.9079|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.9385|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.9705|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:46.9975|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.0124|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.0425|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.0565|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.0775|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.0775|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.1084|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.1383|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.1542|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.1712|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.2004|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.2173|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.2483|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.2802|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.3111|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.3410|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.3610|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.3819|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.4090|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.4230|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.4380|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.4549|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.4849|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.4998|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.5168|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.5455|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.5615|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:42:47.5920|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:43:28.2532|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:43:31.2951|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:235)|
+2021-01-18 17:43:33.9466|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:302)|
+2021-01-18 17:43:33.9676|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:235)|
+2021-01-18 17:47:56.9123|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 17:47:58.3384|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 17:47:59.4529|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 17:48:02.6528|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:03.7988|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:38.2143|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 17:48:39.3534|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 17:48:40.4032|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 17:48:40.8782|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:42.0065|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:42.8437|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:43.7724|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:44.6682|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:45.5299|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:46.4126|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:47.2926|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:48.1412|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:49.0715|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:49.9552|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:50.8301|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:51.8429|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:52.7613|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:53.6122|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:322)|
+2021-01-18 17:48:54.5192|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:322)|
+2021-01-18 17:49:33.8634|Error|SQL logic error
+no such column: C775(Ctl.cs:30)|
+2021-01-18 17:55:35.0044|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 17:55:36.0703|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 17:55:37.0988|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 17:55:44.5875|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:322)|
+2021-01-18 17:55:45.7257|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:322)|
+2021-01-18 17:55:46.5280|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:322)|
+2021-01-18 17:55:47.5540|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:322)|
+2021-01-18 17:55:48.5386|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:322)|
+2021-01-18 17:55:49.4007|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:322)|
+2021-01-18 17:55:50.2831|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:322)|
+2021-01-18 17:55:51.1592|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:322)|
+2021-01-18 17:55:52.0648|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:322)|
+2021-01-18 17:55:52.9663|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:322)|
+2021-01-18 17:55:53.8396|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:322)|
+2021-01-18 17:55:54.7179|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:322)|
+2021-01-18 17:55:55.7148|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:322)|
+2021-01-18 17:55:56.5827|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:322)|
+2021-01-18 17:55:57.4939|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:322)|
+2021-01-18 17:55:58.4165|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:12.4968|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 17:57:13.5313|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 17:57:14.6495|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 17:57:22.0594|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:23.1673|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:24.0111|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:24.9960|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:25.9512|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:26.8447|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:27.7018|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:28.5726|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:29.4770|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:30.4663|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:31.3590|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:32.2706|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:33.2141|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:34.0817|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:34.9597|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:322)|
+2021-01-18 17:57:35.8745|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:322)|
+2021-01-18 17:58:47.9800|Error|SQL logic error
+no such column: C786(Ctl.cs:30)|
+2021-01-18 17:58:48.0309|Error|SQL logic error
+no such column: C758(Ctl.cs:30)|
+2021-01-18 17:58:48.0778|Error|SQL logic error
+no such column: C758(Ctl.cs:30)|
+2021-01-18 18:00:57.5804|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 18:00:58.7062|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 18:00:59.7558|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 18:01:02.5601|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:03.7329|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:04.5973|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:05.5761|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:06.4707|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:07.3632|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:08.2381|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:09.1283|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:10.0156|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:10.9731|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:11.8707|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:12.7612|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:13.6639|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:14.4982|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:15.4184|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:16.3093|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:321)|
+2021-01-18 18:01:42.6218|Error|SQL logic error
+no such column: C786(Ctl.cs:30)|
+2021-01-18 18:01:42.6717|Error|SQL logic error
+no such column: C758(Ctl.cs:30)|
+2021-01-18 18:03:30.1184|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 18:03:31.1738|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 18:03:32.2589|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 18:03:37.3759|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:321)|
+2021-01-18 18:03:38.5272|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:321)|
+2021-01-18 18:03:39.3071|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:321)|
+2021-01-18 18:03:40.3150|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:321)|
+2021-01-18 18:03:41.3328|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:321)|
+2021-01-18 18:03:42.1977|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:321)|
+2021-01-18 18:03:43.0965|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:321)|
+2021-01-18 18:03:44.0006|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:321)|
+2021-01-18 18:03:44.8749|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:321)|
+2021-01-18 18:03:45.7895|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:321)|
+2021-01-18 18:03:46.6421|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:321)|
+2021-01-18 18:03:47.5125|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:321)|
+2021-01-18 18:03:48.5080|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:321)|
+2021-01-18 18:03:49.3585|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:321)|
+2021-01-18 18:03:50.2563|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:321)|
+2021-01-18 18:03:51.1502|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:321)|
+2021-01-18 18:04:02.6185|Error|SQL logic error
+no such column: C786(Ctl.cs:30)|
+2021-01-18 18:04:02.6684|Error|SQL logic error
+no such column: C758(Ctl.cs:30)|
+2021-01-18 18:04:02.7143|Error|SQL logic error
+no such column: C758(Ctl.cs:30)|
+2021-01-18 18:05:51.1174|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 18:05:52.1619|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 18:05:53.2766|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 18:05:58.3283|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:321)|
+2021-01-18 18:05:59.4601|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:00.2301|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:01.1747|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:02.0690|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:02.8983|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:03.7153|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:04.5753|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:05.3821|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:06.3080|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:07.1733|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:08.0123|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:08.9725|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:09.8048|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:10.6399|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:11.4812|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:38.5166|Error|SQL logic error
+no such column: C786(Ctl.cs:30)|
+2021-01-18 18:06:38.5672|Error|SQL logic error
+no such column: C758(Ctl.cs:30)|
+2021-01-18 18:06:38.6110|Error|SQL logic error
+no such column: C758(Ctl.cs:30)|
+2021-01-18 18:06:39.2569|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 18:06:40.2877|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 18:06:41.3646|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 18:06:44.0661|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:45.1151|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:45.8916|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:46.8640|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:47.7771|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:48.6053|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:49.4276|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:50.2270|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:51.0493|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:51.9396|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:52.8012|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:53.6850|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:54.5707|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:55.3695|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:56.1997|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:321)|
+2021-01-18 18:06:57.0408|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:40.9454|Error|SQL logic error
+no such column: L96(Ctl.cs:30)|
+2021-01-18 18:07:40.9902|Error|SQL logic error
+no such column: C789(Ctl.cs:30)|
+2021-01-18 18:07:41.0341|Error|SQL logic error
+no such column: C775(Ctl.cs:30)|
+2021-01-18 18:07:41.0913|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 18:07:42.1317|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 18:07:43.1471|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 18:07:45.8488|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:46.9214|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:47.7187|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:48.6271|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:49.5459|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:50.4054|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:51.2354|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:52.0838|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:52.9365|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:53.7934|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:54.6445|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:55.5062|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:56.4036|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:57.2151|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:58.0641|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:321)|
+2021-01-18 18:07:58.9055|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:321)|
+2021-01-18 18:08:51.9543|Error|SQL logic error
+no such column: L96(Ctl.cs:30)|
+2021-01-18 18:08:52.0002|Error|SQL logic error
+no such column: C789(Ctl.cs:30)|
+2021-01-18 18:08:52.0451|Error|SQL logic error
+no such column: C775(Ctl.cs:30)|
+2021-01-18 18:08:52.0882|Error|SQL logic error
+no such column: C648(Ctl.cs:30)|
+2021-01-18 18:08:52.1303|Error|SQL logic error
+no such column: C642(Ctl.cs:30)|
+2021-01-18 18:08:52.1724|Error|SQL logic error
+no such column: C623(Ctl.cs:30)|
+2021-01-18 18:08:52.2159|Error|SQL logic error
+no such column: C623(Ctl.cs:30)|
+2021-01-18 18:10:50.3373|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 18:10:51.4578|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 18:10:52.5115|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 18:10:52.9693|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:321)|
+2021-01-18 18:10:54.0666|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:321)|
+2021-01-18 18:10:54.8578|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:321)|
+2021-01-18 18:10:55.8017|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:321)|
+2021-01-18 18:10:56.7238|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:321)|
+2021-01-18 18:10:57.5752|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:321)|
+2021-01-18 18:10:58.4249|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:321)|
+2021-01-18 18:10:59.2588|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:321)|
+2021-01-18 18:11:00.0793|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:321)|
+2021-01-18 18:11:00.9951|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:321)|
+2021-01-18 18:11:01.8439|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:321)|
+2021-01-18 18:11:02.6538|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:321)|
+2021-01-18 18:11:03.5622|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:321)|
+2021-01-18 18:11:04.4073|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:321)|
+2021-01-18 18:11:05.2262|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:321)|
+2021-01-18 18:11:06.1139|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:18.0379|Error|SQL logic error
+no such column: L96(Ctl.cs:30)|
+2021-01-18 18:12:18.1068|Error|SQL logic error
+no such column: C789(Ctl.cs:30)|
+2021-01-18 18:12:18.1496|Error|SQL logic error
+no such column: C775(Ctl.cs:30)|
+2021-01-18 18:12:18.1906|Error|SQL logic error
+no such column: C685(Ctl.cs:30)|
+2021-01-18 18:12:18.2327|Error|SQL logic error
+no such column: C648(Ctl.cs:30)|
+2021-01-18 18:12:18.2761|Error|SQL logic error
+no such column: C642(Ctl.cs:30)|
+2021-01-18 18:12:18.3185|Error|SQL logic error
+no such column: C623(Ctl.cs:30)|
+2021-01-18 18:12:18.3604|Error|SQL logic error
+no such column: C623(Ctl.cs:30)|
+2021-01-18 18:12:18.4367|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 18:12:19.4173|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 18:12:20.4487|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 18:12:25.5686|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:26.6751|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:27.4295|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:28.3580|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:29.2669|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:30.0770|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:30.9601|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:31.8397|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:32.6492|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:33.6093|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:34.4814|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:35.3568|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:36.2557|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:37.0685|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:37.9212|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:38.7401|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:321)|
+2021-01-18 18:12:48.2420|Error|SQL logic error
+no such column: L96(Ctl.cs:30)|
+2021-01-18 18:12:48.3079|Error|SQL logic error
+no such column: C789(Ctl.cs:30)|
+2021-01-18 18:12:48.3487|Error|SQL logic error
+no such column: C775(Ctl.cs:30)|
+2021-01-18 18:12:48.3916|Error|SQL logic error
+no such column: C685(Ctl.cs:30)|
+2021-01-18 18:12:48.4345|Error|SQL logic error
+no such column: C648(Ctl.cs:30)|
+2021-01-18 18:12:48.4763|Error|SQL logic error
+no such column: C642(Ctl.cs:30)|
+2021-01-18 18:12:48.5212|Error|SQL logic error
+no such column: C623(Ctl.cs:30)|
+2021-01-18 18:12:48.5626|Error|SQL logic error
+no such column: C623(Ctl.cs:30)|
+2021-01-18 18:12:56.6895|Info|Moving TOP Axis, Position Name : Mark 1,  X = 14922, Y = 22567(MainWindow.xaml.cs:163)|
+2021-01-18 18:12:57.7548|Info|Moving TOP Axis, Position Name : Mark 2,  X = 690, Y = 39318(MainWindow.xaml.cs:163)|
+2021-01-18 18:12:58.8307|Info|Moving Bot Axis, Position Name : ReadCode 1,  X = 29090, Y = 73154(MainWindow.xaml.cs:269)|
+2021-01-18 18:13:01.5405|Info|Moving TOP Axis, Position Name : FOV 1,  X = 9171, Y = 38298(MainWindow.xaml.cs:321)|
+2021-01-18 18:13:02.6093|Info|Moving TOP Axis, Position Name : FOV 2,  X = 10696, Y = 38314(MainWindow.xaml.cs:321)|
+2021-01-18 18:13:03.4200|Info|Moving TOP Axis, Position Name : FOV 3,  X = 2079, Y = 35922(MainWindow.xaml.cs:321)|
+2021-01-18 18:13:04.3452|Info|Moving TOP Axis, Position Name : FOV 4,  X = 7775, Y = 33014(MainWindow.xaml.cs:321)|
+2021-01-18 18:13:05.2739|Info|Moving TOP Axis, Position Name : FOV 5,  X = 10780, Y = 33461(MainWindow.xaml.cs:321)|
+2021-01-18 18:13:06.1083|Info|Moving TOP Axis, Position Name : FOV 6,  X = 13704, Y = 33244(MainWindow.xaml.cs:321)|
+2021-01-18 18:13:06.9170|Info|Moving TOP Axis, Position Name : FOV 7,  X = 11013, Y = 30567(MainWindow.xaml.cs:321)|
+2021-01-18 18:13:07.7400|Info|Moving TOP Axis, Position Name : FOV 8,  X = 8076, Y = 31182(MainWindow.xaml.cs:321)|
+2021-01-18 18:13:08.5661|Info|Moving TOP Axis, Position Name : FOV 9,  X = 1798, Y = 31143(MainWindow.xaml.cs:321)|
+2021-01-18 18:13:09.4576|Info|Moving TOP Axis, Position Name : FOV 10,  X = 3539, Y = 27048(MainWindow.xaml.cs:321)|
+2021-01-18 18:13:10.3354|Info|Moving TOP Axis, Position Name : FOV 11,  X = 7310, Y = 26588(MainWindow.xaml.cs:321)|
+2021-01-18 18:13:11.1876|Info|Moving TOP Axis, Position Name : FOV 12,  X = 14001, Y = 29583(MainWindow.xaml.cs:321)|
+2021-01-18 18:13:12.1095|Info|Moving TOP Axis, Position Name : FOV 13,  X = 14379, Y = 26523(MainWindow.xaml.cs:321)|
+2021-01-18 18:13:12.9626|Info|Moving TOP Axis, Position Name : FOV 14,  X = 12857, Y = 23979(MainWindow.xaml.cs:321)|
+2021-01-18 18:13:13.7781|Info|Moving TOP Axis, Position Name : FOV 15,  X = 9497, Y = 23810(MainWindow.xaml.cs:321)|
+2021-01-18 18:13:14.6506|Info|Moving TOP Axis, Position Name : FOV 16,  X = 1627, Y = 23859(MainWindow.xaml.cs:321)|
+2021-01-18 18:14:46.8948|Error|SQL logic error
+no such column: L96(Ctl.cs:30)|

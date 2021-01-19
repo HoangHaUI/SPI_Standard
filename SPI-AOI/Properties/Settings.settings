@@ -302,5 +302,8 @@
     <Setting Name="LIMIT_SHOW_ERROR" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">50</Value>
     </Setting>
+    <Setting Name="PLC_BIT_RESET_SCAN" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M850</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -42,6 +42,9 @@ namespace SPI_AOI.Utils
         public string PanelID { get; set; }
         public DateTime LoadTime { get; set; }
         public string SN { get; set; }
+        public string ModelName { get; set; }
+        public string ImageCapturePath { get; set; }
+        public string ImageSegmentPath { get; set; }
         public string ErrorType { get; set; }
         public string MachineResult { get; set; }
         public string ConfirmResult { get; set; }

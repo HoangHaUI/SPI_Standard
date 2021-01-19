@@ -1222,5 +1222,17 @@ namespace SPI_AOI.Properties {
                 this["LIMIT_SHOW_ERROR"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("M850")]
+        public string PLC_BIT_RESET_SCAN {
+            get {
+                return ((string)(this["PLC_BIT_RESET_SCAN"]));
+            }
+            set {
+                this["PLC_BIT_RESET_SCAN"] = value;
+            }
+        }
     }
 }

@@ -44,6 +44,7 @@ namespace SPI_AOI.VI
                     pad.ImageSegmentPath = ImageSegmentPath;
                     pad.CenterOnFOV = new Point(ctCnt.X, ctCnt.Y);
                     pad.ContoursOnFOV = contours[i].ToArray();
+                    pad.Contours = new Point[pad.ContoursOnFOV.Length];
                     for (int j = 0; j < pad.ContoursOnFOV.Length; j++)
                     {
                         pad.Contours[j] = new Point(pad.ContoursOnFOV[j].X + ROI.X, pad.ContoursOnFOV[j].Y + ROI.Y);
@@ -208,6 +209,7 @@ namespace SPI_AOI.VI
                 shiftxVal = (Math.Max(Math.Abs(boundPadRef.X - boundAllPadSeg.X), Math.Abs((boundPadRef.X + boundPadRef.Width) - (boundAllPadSeg.X + boundAllPadSeg.Width))) * umPPixel);
                 shiftyVal = (Math.Max(Math.Abs(boundPadRef.Y - boundAllPadSeg.Y), Math.Abs((boundPadRef.Y + boundPadRef.Height) - (boundAllPadSeg.Y + boundAllPadSeg.Height))) * umPPixel);
 
+                bool onedotfiveArea = false;
                 bool hightArea = false;
                 bool lowArea = false;
                 bool shiftX = false;
@@ -217,6 +219,10 @@ namespace SPI_AOI.VI
                 if (scaleAreaAddperimeter < padItem.AreaThresh.PERCENT_LSL - deviation)
                 {
                     lowArea = true;
+                }
+                if(scaleArea >= 150)
+                {
+                    onedotfiveArea = true;
                 }
                 if (scaleArea > padItem.AreaThresh.UM_USL)
                 {
@@ -230,34 +236,27 @@ namespace SPI_AOI.VI
                 {
                     shiftY = true;
                 }
-                if (hightArea || lowArea || shiftX || shiftY)
+                if (onedotfiveArea || hightArea || lowArea || shiftX || shiftY)
                 {
-                    if(hightArea && (shiftX || shiftY))
+                    if (onedotfiveArea && (shiftX || shiftY))
                     {
-                        padEr.ErrorType = "Bridge";
+                        padEr.ErrorType = VI.ErrorType.Bridge;
                     }
-                    else if(hightArea)
+                    else if (hightArea)
                     {
-                        padEr.ErrorType = "Hight Area";
+                        padEr.ErrorType = ErrorType.OverArea;
                     }
-                    else if(lowArea)
+                    else if (lowArea)
                     {
-                        if(scaleArea == 0)
-                        {
-                            padEr.ErrorType = "Missing";
-                        }
-                        else
-                        {
-                            padEr.ErrorType = "Insufficient";
-                        }
+                        padEr.ErrorType = ErrorType.Insufficient;
                     }
-                    else if(shiftX)
+                    else if (shiftX)
                     {
-                        padEr.ErrorType = "Shift X";
+                        padEr.ErrorType = ErrorType.ShiftX;
                     }
                     else if (shiftY)
                     {
-                        padEr.ErrorType = "Shift Y";
+                        padEr.ErrorType = ErrorType.ShiftY;
                     }
                     padEr.Area = scaleArea;
                     padEr.ShiftX = shiftxVal;
@@ -273,22 +272,26 @@ namespace SPI_AOI.VI
             else
             {
                 // not found solder paste
+                padEr.ErrorType = ErrorType.Missing;
                 return padEr;
             }
         }
-        public static PadErrorDetail[] GetImagePadError(Image<Bgr, byte> image, PadErrorDetail[] PadError, Rectangle ROI, int limit)
+        public static PadErrorDetail[] GetImagePadError(Image<Bgr, byte> imageSrc, PadErrorDetail[] PadError, Rectangle ROI, int limit)
         {
             int lm = PadError.Length > limit ? limit : PadError.Length;
-            for (int i = 0; i < lm; i++)
+            using (Image<Bgr, byte> image = imageSrc.Copy())
             {
-                Rectangle bound = PadError[i].ROIOnGerber;
-                bound.X -= ROI.X;
-                bound.Y -= ROI.Y;
-                bound.X = bound.X < 0 ? 0 : bound.X;
-                bound.Y = bound.Y < 0 ? 0 : bound.Y;
-                image.ROI = bound;
-                PadError[i].PadImage = image.Copy();
-                image.ROI = Rectangle.Empty;
+                for (int i = 0; i < lm; i++)
+                {
+                    Rectangle bound = PadError[i].ROIOnGerber;
+                    bound.X -= ROI.X;
+                    bound.Y -= ROI.Y;
+                    bound.X = bound.X < 0 ? 0 : bound.X;
+                    bound.Y = bound.Y < 0 ? 0 : bound.Y;
+                    image.ROI = bound;
+                    PadError[i].PadImage = image.Copy();
+                    image.ROI = Rectangle.Empty;
+                }
             }
             return PadError;
         }

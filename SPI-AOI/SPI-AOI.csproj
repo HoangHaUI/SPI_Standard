@@ -278,6 +278,7 @@
       <DependentUpon>WaitingForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="VI\AutoAdjustROIFOV.cs" />
+    <Compile Include="VI\ErrorType.cs" />
     <Compile Include="VI\MoveXYAxis.cs" />
     <Compile Include="VI\Decoder.cs" />
     <Compile Include="VI\Predictor.cs" />

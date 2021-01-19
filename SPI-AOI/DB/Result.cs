@@ -138,6 +138,7 @@ namespace SPI_AOI.DB
         }
         public int InsertNewPadError(
                 string ID,
+                string ModelName,
                 DateTime Time,
                 int PadID,
                 int FovID,
@@ -154,6 +155,7 @@ namespace SPI_AOI.DB
                 resultTbl.TableName,
                 // --------------
                 resultTbl.ID + "," +
+                resultTbl.ModelName + "," +
                 resultTbl.Time + "," +
                 resultTbl.Component + "," +
                 resultTbl.PadID + "," +
@@ -166,10 +168,11 @@ namespace SPI_AOI.DB
 
                 //--------------
                 "\'" + ID + "\'," +
+                "\'" + ModelName + "\'," +
                 "\'" + Time.ToString("yyyy-MM-dd HH:mm:ss") + "\'," +
-                "" + Component + "," +
+                "\'" + Component + "\'," +
                 "" + PadID + "," +
-                "\'" + FovID + "\'," +
+                "" + FovID + "," +
                 "\'" + string.Format("{0},{1},{2},{3}", ROIOnFOV.X, ROIOnFOV.Y, ROIOnFOV.Width, ROIOnFOV.Height) + "\'," +
                 "\'" + string.Format("{0},{1},{2},{3}", ROIOnGerber.X, ROIOnGerber.Y, ROIOnGerber.Width, ROIOnGerber.Height) + "\'," +
                 "\'" + MachineResult + "\'," +

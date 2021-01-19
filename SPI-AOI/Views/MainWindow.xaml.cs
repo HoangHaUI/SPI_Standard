@@ -82,7 +82,7 @@ namespace SPI_AOI.Views
             UpdatePanelPosition(0);
             mTimerCheckStatus.Elapsed += OnCheckStatusEvent;
             mTimerCheckStatus.Enabled = true;
-            //ShowError(false);
+            ShowError(false);
             //int count1 = CvInvoke.CountNonZero(image);
             //VectorOfVectorOfPoint cnt = new VectorOfVectorOfPoint();
             //CvInvoke.FindContours(image, cnt, null, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
@@ -94,15 +94,15 @@ namespace SPI_AOI.Views
             //data.Add("Type", "Decode");
             //data.Add("FOV", (1 + 1).ToString());
             //data.Add("Debug", Convert.ToString(mParam.Debug));
-            //string fileName = @"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Decode\3.png";
-            for (int i = 0; i < 50; i++)
-            {
-                Utils.PadErrorControl item = new Utils.PadErrorControl(null, i);
-                item.Click += EventFOVClick;
-                item.ID = i;
-                stackPadError.Items.Add(item);
-            }
-            
+            ////string fileName = @"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Decode\3.png";
+            //for (int i = 0; i < 50; i++)
+            //{
+            //    Utils.PadErrorControl item = new Utils.PadErrorControl(null, i);
+            //    item.Click += EventFOVClick;
+            //    item.ID = i;
+            //    stackPadError.Items.Add(item);
+            //}
+
             //VI.ServiceResults serviceResults = VI.ServiceComm.Sendfile(mParam.ServiceURL, new string[] { fileName }, data);
         }
         public void LoadUI()
@@ -116,11 +116,15 @@ namespace SPI_AOI.Views
             mIsInTimer = true;
             System.Timers.Timer timer = sender as System.Timers.Timer;
             timer.Enabled = false;
+            int valRsScan = mPlcComm.Get_Bit_Reset_Scan();
+            {
+                mScaner.ReleaseBuffer();
+                mPlcComm.Reset_Bit_Reset_Scan();
+            }
             int val = mPlcComm.Get_Has_Product_Top();
-            if(val == 1 && !mIsShowError)
+            if (val == 1 && !mIsShowError)
             {
                 mIsProcessing = true;
-                mScaner.ReleaseBuffer();
                 ResetUI();
                 UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.PROCESSING);
                 UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PROCESSING);
@@ -277,7 +281,6 @@ namespace SPI_AOI.Views
                         mLog.Info(string.Format("Cant read code : {0}", i + 1));
                     }
                 }
-                
             }
             return sn;
         }
@@ -353,9 +356,10 @@ namespace SPI_AOI.Views
                                 string imageCapturePath = fileName;
                                 string imageSegmentPath = fileName.Replace(".png", "_Segment.png");
                                 int id = i;
-                                if (id > 1)
+                                Image<Bgr, byte> imgCapture = new Image<Bgr, byte>(imageCapturePath);
+                                if (id > 2)
                                 {
-                                    publishThread[i - 2].Join();
+                                    publishThread[i - 3].Join();
                                 }
                                 VI.ServiceResults serviceResults = VI.ServiceComm.SegmentFOV(mParam.ServiceURL, new string[] { fileName }, id, mParam.Debug);
                                 if (serviceResults != null)
@@ -364,6 +368,7 @@ namespace SPI_AOI.Views
                                     {
                                         threadStatus[id] = true;
                                     }
+                                    
                                     Image<Gray, byte> imageSegment = serviceResults.ImgMask;
                                     CvInvoke.Imwrite(imageSegmentPath, imageSegment);
                                     imageSegment = VI.Predictor.ReleaseNoise(imageSegment);
@@ -378,16 +383,24 @@ namespace SPI_AOI.Views
                                                 item.PanelID = panelID;
                                                 item.LoadTime = loadTime;
                                                 item.SN = sn;
+                                                item.ModelName = mModel.Name;
+                                                item.MachineResult = "FAIL";
+                                                item.ConfirmResult = "FAIL";
+                                                item.ImageCapturePath = imageCapturePath;
+                                                item.ImageSegmentPath = imageSegmentPath;
                                                 string component = mModel.GetComponentName(item.Pad);
                                                 item.Component = component;
                                             }
-                                            lock(mPadErrorDetails)
+                                            VI.Predictor.GetImagePadError(imgCapture, padError, ROIFOVOnGerber, mParam.LIMIT_SHOW_ERROR);
+                                            lock (mPadErrorDetails)
                                             {
                                                 mPadErrorDetails.AddRange(padError);
                                             }
                                         }
                                     }
                                 }
+                                imgCapture.Dispose();
+                                imgCapture = null;
                             });
                             publishThread[i].Start();
                             this.Dispatcher.Invoke(() =>
@@ -414,12 +427,11 @@ namespace SPI_AOI.Views
                 
             if(result != -2)
             {
-                // wait for all thread complete
                 for (int i = 0; i < publishThread.Length; i++)
                 {
                     publishThread[i].Join();
                 }
-                if (mPadErrorDetails.Count == 0)
+                if (mPadErrorDetails.Count == 0 && !threadStatus.Contains(false))
                     return 0;
                 else
                     return -1;
@@ -437,8 +449,8 @@ namespace SPI_AOI.Views
             DateTime now = DateTime.Now;
             string date = now.ToString("yyyy_MM_dd");
             string time = now.ToString("HH_mm_ss");
-            string[] sn = new string[1] { "NOT FOUND" };
-            string savePath = mParam.SAVE_IMAGE_PATH + "\\" + date + "\\" + time + "_" + sn[0] + "";
+            string[] sn = new string[0];
+            string savePath = mParam.SAVE_IMAGE_PATH + "\\" + date + "\\" + time;
             string ID = mMyDatabase.GetNewID();
             if (!Directory.Exists(savePath))
             {
@@ -752,12 +764,15 @@ namespace SPI_AOI.Views
         }
         public void InitSummary()
         {
-            mSummary.Add(new Utils.SummaryInfo() { Field = "Area Hight", Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = "Area Low", Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = "Shift X", Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = "Shift X Area", Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = "Shift Y", Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = "Shift Y Area", Count = 0, PPM = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.Missing, Count = 0, PPM = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.Insufficient, Count = 0, PPM = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.Excess, Count = 0, PPM = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.OverArea, Count = 0, PPM = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.LowArea, Count = 0, PPM = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.ShiftX, Count = 0, PPM = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.ShiftY, Count = 0, PPM = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.PadAreaError, Count = 0, PPM = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.SumOfDefects, Count = 0, PPM = 0 });
         }
         private Views.UserManagement.UserType Login()
         {
@@ -898,6 +913,7 @@ namespace SPI_AOI.Views
                 lbFovs.Content = "-----";
                 lbGerberFile.Content = "-----";
                 lbSN.Content = "-----";
+                lbNoPad.Content = "-----";
                 lbTotalCountFovs.Content = "0";
             });
             
@@ -1298,22 +1314,28 @@ namespace SPI_AOI.Views
                     lbPadErrorShiftY.Content = "---";
                     lbPadErrorID.Content = "---";
                     lbPadErrorComponent.Content = "---";
+                    lbErrorType.Content = "---";
 
                 });
+                UpdateCountStatistical();
+
             }
         }
         public void EventFOVClick(object sender, RoutedEventArgs e)
         {
             Utils.PadErrorControl item = sender as Utils.PadErrorControl;
-            stackPadError.SelectedIndex = item.ID;
-            if (mImageGraft != null)
+            
+            if (item != null)
             {
+                stackPadError.SelectedIndex = item.ID;
                 var padEr = mPadErrorDetails[item.ID];
                 int idFov = padEr.FOVNo;
-                mImageGraft.ROI = mROIFOVImage[idFov];
-                BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(mImageGraft.Bitmap);
-                imbFOVError.Source = bms;
-                mImageGraft.ROI = new System.Drawing.Rectangle();
+                using (Image<Bgr, byte> imgFOV = new Image<Bgr, byte>(padEr.ImageCapturePath))
+                {
+                    BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(imgFOV.Bitmap);
+                    imbFOVError.Source = bms;
+                }
+                lbErrorType.Content = padEr.ErrorType;
                 lbPadErrorArea.Content = string.Format("{0} | ({1} ~ {2})", padEr.Area, padEr.AreaStdLow, padEr.AreaStdHight);
                 lbPadErrorShiftX.Content = string.Format("{0} | ({1} ~ {2})", padEr.ShiftX, 0, padEr.ShiftXStduM);
                 lbPadErrorShiftY.Content = string.Format("{0} | ({1} ~ {2})", padEr.ShiftY, 0, padEr.ShiftYStduM);
@@ -1339,6 +1361,7 @@ namespace SPI_AOI.Views
                 }
                 mMyDatabase.InsertNewPadError(
                     mPadErrorDetails[i].PanelID,
+                    mPadErrorDetails[i].ModelName,
                     mPadErrorDetails[i].LoadTime,
                     mPadErrorDetails[i].Pad.NoID,
                     mPadErrorDetails[i].FOVNo,
