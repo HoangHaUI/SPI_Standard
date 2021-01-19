@@ -8,7 +8,7 @@
         xmlns:MSChart="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="SPI_AOI.Views.MainWindow"
         mc:Ignorable="d"
-        Height="1000" Width="1800"
+        Height="1030" Width="1800"
         MinWidth="1800"
         MinHeight="1000"
         WindowStartupLocation="CenterScreen"
@@ -104,7 +104,18 @@
                         <Image Source="../Resources/Icons/issue.png" Width="25"/>
                     </Button>
                     <Separator/>
-
+                    <Button x:Name="btHistory" ToolTip="Visual inspect history" 
+                            Style="{StaticResource btToolBarStyle}"
+                            Click="btHistory_Click">
+                        <Image Source="../Resources/Icons/history.png" Width="25"/>
+                    </Button>
+                    <Separator/>
+                    <Button x:Name="btAlarm" ToolTip="Machine alarm solution" 
+                            Style="{StaticResource btToolBarStyle}"
+                            Click="btRun_Click">
+                        <Image Source="../Resources/Icons/bell.png" Width="25"/>
+                    </Button>
+                    <Separator/>
                     <Button x:Name="btModelManager"
                             ToolTip="Model Management"
                             Style="{StaticResource btToolBarStyle}" 
@@ -119,6 +130,7 @@
                             Click="btRun_Click">
                         <Image x:Name="imbBtRun" Source="../Resources/Icons/start.png" Width="25"/>
                     </Button>
+                    
                 </ToolBar>
             </DockPanel>
         </StackPanel>
@@ -453,13 +465,13 @@
                                                         <MSChart:Series Name="YeildRate" ChartType="Pie">
                                                             <MSChart:Series.Points>
                                                                 <MSChart:DataPoint 
-                                                                    Color="DeepSkyBlue" 
+                                                                    Color="Green" 
                                                                     LegendText="PASS" 
                                                                     XValue="0">
                                                                 </MSChart:DataPoint>
                                                                 <MSChart:DataPoint 
                                                                     Color="Red" 
-                                                                    LegendText="FAIL" 
+                                                                    LegendText="NG" 
                                                                     XValue="0">
                                                                 </MSChart:DataPoint>
                                                             </MSChart:Series.Points>
@@ -489,11 +501,13 @@
                                           BorderBrush="Transparent"
                                           IsReadOnly="True" 
                                           AutoGenerateColumns="False" 
+                                          
                                           >
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Width="2*" Header="Defect"  Binding="{Binding Field}"/>
                                         <DataGridTextColumn Width="1*" Header="Count"  Binding="{Binding Count}"/>
-                                        <DataGridTextColumn Width="1*" Header="Rate"  Binding="{Binding PPM}"/>
+                                        <DataGridTextColumn Width="1*" Header="PPM"  Binding="{Binding PPM}"/>
+                                        <DataGridTextColumn Width="1*" Header="Rate (%)"  Binding="{Binding Rate}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </Grid>
@@ -583,10 +597,10 @@
                                             <Button x:Name="btAllPASS" Margin="8" Content="All PASS" FontSize="20" FontWeight="Bold" Grid.RowSpan="2"  Foreground="Green" Click="btAllPASS_Click"></Button>
                                         </Grid>
                                         <Grid Grid.Row="2">
-                                            <Button x:Name="btFAIL" Margin="8" Content="FAIL" FontSize="20" FontWeight="Bold" Grid.RowSpan="2" Foreground="Red" Click="btFAIL_Click"></Button>
+                                            <Button x:Name="btFAIL" Margin="8" Content="NG" FontSize="20" FontWeight="Bold" Grid.RowSpan="2" Foreground="Red" Click="btFAIL_Click"></Button>
                                         </Grid>
                                         <Grid Grid.Row="3">
-                                            <Button x:Name="btPASSFAIL" Margin="8" Content="All FAIL" FontSize="20" FontWeight="Bold" Grid.RowSpan="2" Foreground="Red" Click="btPASSFAIL_Click"></Button>
+                                            <Button x:Name="btPASSFAIL" Margin="8" Content="All NG" FontSize="20" FontWeight="Bold" Grid.RowSpan="2" Foreground="Red" Click="btPASSFAIL_Click"></Button>
                                         </Grid>
                                         <Grid Grid.Row="4">
                                             <Button x:Name="btFinish" Click="btFinish_Click" Margin="8,12,8,6" Content="Finish" FontSize="30" FontWeight="Bold" Grid.RowSpan="2"></Button>

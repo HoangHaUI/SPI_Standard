@@ -51,7 +51,7 @@ namespace SPI_AOI.Views
         Image<Bgr, byte> mImageGraft = null;
         List<System.Drawing.Rectangle> mROIFOVImage = new List<System.Drawing.Rectangle>();
         List<Utils.PadErrorDetail> mPadErrorDetails = new List<Utils.PadErrorDetail>();
-        
+        int mSumPadModel = 0;
         // status variable
         bool mIsRunning = false;
         bool mIsProcessing = false;
@@ -83,6 +83,13 @@ namespace SPI_AOI.Views
             mTimerCheckStatus.Elapsed += OnCheckStatusEvent;
             mTimerCheckStatus.Enabled = true;
             ShowError(false);
+            //string id = mMyDatabase.GetNewID();
+            //mMyDatabase.InsertNewPanelResult(id,
+            //    "Model123", DateTime.Now, "SN123", "Test", "FAIL", "FAIL");
+            //mMyDatabase.InsertNewImage(id, DateTime.Now,
+            //    @"D:\Save\2021_01_19\10_02_45\FOV_10_10_02_59.png", 0, new System.Drawing.Rectangle(), new System.Drawing.Rectangle(), "FOV");
+            //mMyDatabase.InsertNewPadError(id, "Model123", DateTime.Now, 123, 0, new System.Drawing.Rectangle(208, 315, 35, 57), new System.Drawing.Rectangle(), "FAIL", "FAIL", "C152", "Brigde", 150.65462354, 260, 60, 18.546132, 370,
+            //    19.5461321354, 370);
             //int count1 = CvInvoke.CountNonZero(image);
             //VectorOfVectorOfPoint cnt = new VectorOfVectorOfPoint();
             //CvInvoke.FindContours(image, cnt, null, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
@@ -411,7 +418,8 @@ namespace SPI_AOI.Views
                             });
                             Thread isDB = new Thread(() =>
                             {
-                                mMyDatabase.InsertNewImage(ID, now, fileName, i, ROI, ROIFOVOnGerber, "FOV");
+                                int id = i;
+                                mMyDatabase.InsertNewImage(ID, now, fileName, id, ROI, ROIFOVOnGerber, "FOV");
                             });
                             isDB.Start();
                         }
@@ -706,46 +714,79 @@ namespace SPI_AOI.Views
                 string modelName = string.Empty;
                 this.Dispatcher.Invoke(() => {
                     modelName = cbModelStatistical.SelectedItem.ToString();
-                
-                    DateTime now = DateTime.Now;
-                    DateTime endTime = now;
-                    DateTime startTime = now;
-                    if(rbShift.IsChecked == true)
-                    {
-                        DateTime lastDay = now - new TimeSpan(24);
-                        DateTime endLastDay = new DateTime(lastDay.Year, lastDay.Month, lastDay.Day, 19, 30, 0);
-                        TimeSpan subTime = now - endLastDay;
-                        if (subTime.Hours < 12)
-                        {
-                            startTime = endLastDay;
-                        }
-                        else if (endLastDay.Hour >= 12 && endLastDay.Hour < 24)
-                        {
-                            startTime = new DateTime(now.Year, now.Month, now.Day, 7, 30, 0);
-                        }
-                        else
-                        {
-                            startTime = new DateTime(now.Year, now.Month, now.Day, 19, 30, 0);
-                        }
-                    }
-                    else if(rbDay.IsChecked == true)
-                    {
-                        startTime = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
-                    }
-                    else if(rbTotal.IsChecked == true)
-                    {
-                        startTime = new DateTime(2020, 1, 1, 0, 0, 0);
-                    }
-                    int pass = mMyDatabase.CountPass(modelName, startTime, endTime);
-                    int fail = mMyDatabase.CountFail(modelName, startTime, endTime);
+                    DateTime[] dt = GetStartnEndTime();
+                    int pass = mMyDatabase.CountPass(modelName, dt[0], dt[1]);
+                    int fail = mMyDatabase.CountFail(modelName, dt[0], dt[1]);
                     UpdateChartCount(chartYeildRate, txtPass, txtFail, pass, fail);
+
+
+                    long sumOfPad = (pass + fail) * 2000 ;
+                    // sum defect
+                    int missing = mMyDatabase.CountDefect(modelName, VI.ErrorType.Missing, dt[0], dt[1]);
+                    int insufficient = mMyDatabase.CountDefect(modelName, VI.ErrorType.Insufficient, dt[0], dt[1]);
+                    int excess = mMyDatabase.CountDefect(modelName, VI.ErrorType.Excess, dt[0], dt[1]);
+                    int bridge = mMyDatabase.CountDefect(modelName, VI.ErrorType.Bridge, dt[0], dt[1]);
+                    int overArea = mMyDatabase.CountDefect(modelName, VI.ErrorType.OverArea, dt[0], dt[1]);
+                    int lowArea = mMyDatabase.CountDefect(modelName, VI.ErrorType.LowArea, dt[0], dt[1]);
+                    int shiftX = mMyDatabase.CountDefect(modelName, VI.ErrorType.ShiftX, dt[0], dt[1]);
+                    int shiftY = mMyDatabase.CountDefect(modelName, VI.ErrorType.ShiftY, dt[0], dt[1]);
+                    int padAreaError = mMyDatabase.CountDefect(modelName, VI.ErrorType.PadAreaError, dt[0], dt[1]);
+                    int sum = missing + insufficient + bridge + excess + overArea + lowArea + shiftX + shiftY + padAreaError;
+                    sum = sum == 0 ? 1 : sum;
+                    double scalePPM = 1000000 / sumOfPad;
+                    mSummary.Clear();
+                    mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.Missing, Count = missing,           PPM = Convert.ToInt32(missing * scalePPM), Rate = Math.Round((double)missing *100 / sum, 2) });
+                    mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.Insufficient, Count = insufficient, PPM = Convert.ToInt32(insufficient * scalePPM), Rate = Math.Round((double)insufficient * 100 / sum, 2) });
+                    mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.Excess, Count = excess,             PPM = Convert.ToInt32(excess * scalePPM), Rate = Math.Round((double)excess * 100 / sum, 2) });
+                    mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.Bridge, Count = bridge,             PPM = Convert.ToInt32(bridge * scalePPM), Rate = Math.Round((double)bridge * 100 / sum, 2) });
+                    mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.OverArea, Count = overArea,         PPM = Convert.ToInt32(overArea * scalePPM), Rate = Math.Round((double)overArea * 100 / sum, 2) });
+                    mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.LowArea, Count = lowArea,           PPM = Convert.ToInt32(lowArea * scalePPM), Rate = Math.Round((double)lowArea * 100 / sum, 2) });
+                    mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.ShiftX, Count = shiftX,             PPM = Convert.ToInt32(shiftX * scalePPM), Rate = Math.Round((double)shiftX * 100 / sum, 2) });
+                    mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.ShiftY, Count = shiftY,             PPM = Convert.ToInt32(shiftY * scalePPM), Rate = Math.Round((double)shiftY * 100 / sum, 2) });
+                    mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.PadAreaError, Count = padAreaError, PPM = Convert.ToInt32(padAreaError * scalePPM), Rate = Math.Round((double)padAreaError * 100 / sum, 2) });
+                    mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.SumOfDefects, Count = sum,          PPM = Convert.ToInt32(sum * scalePPM), Rate = Math.Round((double)sum * 100 / sum, 2) });
+                    dgwSummary.Items.Refresh();
                 });
                 
+
             }
             else
             {
                 UpdateChartCount(chartYeildRate, txtPass, txtFail, 0, 0);
             }
+        }
+        private DateTime[] GetStartnEndTime()
+        {
+            DateTime now = DateTime.Now;
+            DateTime endTime = now;
+            DateTime startTime = now;
+            if (rbShift.IsChecked == true)
+            {
+                DateTime lastDay = now - new TimeSpan(hours: 24, minutes: 0, seconds: 0);
+                DateTime endLastDay = new DateTime(lastDay.Year, lastDay.Month, lastDay.Day, 19, 30, 0);
+                TimeSpan subTime = now - endLastDay;
+                if (subTime.Hours < 12)
+                {
+                    startTime = endLastDay;
+                }
+                else if (endLastDay.Hour >= 12 && endLastDay.Hour < 24)
+                {
+                    startTime = new DateTime(now.Year, now.Month, now.Day, 7, 30, 0);
+                }
+                else
+                {
+                    startTime = new DateTime(now.Year, now.Month, now.Day, 19, 30, 0);
+                }
+            }
+            else if (rbDay.IsChecked == true)
+            {
+                startTime = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
+            }
+            else if (rbTotal.IsChecked == true)
+            {
+                startTime = new DateTime(2020, 1, 1, 0, 0, 0);
+            }
+            return new DateTime[] { startTime, endTime };
         }
         private void UpdateChartCount(Chart Chart, TextBox TxtPass, TextBox TxtFail, int Pass, int Fail)
         {
@@ -764,15 +805,16 @@ namespace SPI_AOI.Views
         }
         public void InitSummary()
         {
-            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.Missing, Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.Insufficient, Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.Excess, Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.OverArea, Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.LowArea, Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.ShiftX, Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.ShiftY, Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.PadAreaError, Count = 0, PPM = 0 });
-            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.SumOfDefects, Count = 0, PPM = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.Missing, Count = 0, PPM = 0 , Rate = 0});
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.Insufficient, Count = 0, PPM = 0, Rate = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.Excess, Count = 0, PPM = 0, Rate = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.Bridge, Count = 0, PPM = 0, Rate = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.OverArea, Count = 0, PPM = 0, Rate = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.LowArea, Count = 0, PPM = 0, Rate = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.ShiftX, Count = 0, PPM = 0, Rate = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.ShiftY, Count = 0, PPM = 0, Rate = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.PadAreaError, Count = 0, PPM = 0, Rate = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.SumOfDefects, Count = 0, PPM = 0, Rate = 0 });
         }
         private Views.UserManagement.UserType Login()
         {
@@ -1110,7 +1152,9 @@ namespace SPI_AOI.Views
                 mTimer.Enabled = true;
                 mIsInTimer = false;
                 wait.KillMe = true;
-               
+                mSumPadModel = mModel.Gerber.PadItems.Count;
+
+
             });
             startThread.Start();
             wait.ShowDialog();
@@ -1332,13 +1376,16 @@ namespace SPI_AOI.Views
                 int idFov = padEr.FOVNo;
                 using (Image<Bgr, byte> imgFOV = new Image<Bgr, byte>(padEr.ImageCapturePath))
                 {
+                    var loc = padEr.ROIOnImage;
+                    loc.Inflate(10, 10);
+                    CvInvoke.Rectangle(imgFOV, loc, new MCvScalar(0, 255, 255), 2);
                     BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(imgFOV.Bitmap);
                     imbFOVError.Source = bms;
                 }
                 lbErrorType.Content = padEr.ErrorType;
-                lbPadErrorArea.Content = string.Format("{0} | ({1} ~ {2})", padEr.Area, padEr.AreaStdLow, padEr.AreaStdHight);
-                lbPadErrorShiftX.Content = string.Format("{0} | ({1} ~ {2})", padEr.ShiftX, 0, padEr.ShiftXStduM);
-                lbPadErrorShiftY.Content = string.Format("{0} | ({1} ~ {2})", padEr.ShiftY, 0, padEr.ShiftYStduM);
+                lbPadErrorArea.Content = string.Format("{0} | ({1} ~ {2})", Math.Round(padEr.Area, 3), padEr.AreaStdLow, padEr.AreaStdHight);
+                lbPadErrorShiftX.Content = string.Format("{0} | ({1} ~ {2})", Math.Round(padEr.ShiftX, 3), 0, padEr.ShiftXStduM);
+                lbPadErrorShiftY.Content = string.Format("{0} | ({1} ~ {2})", Math.Round(padEr.ShiftY, 3), 0, padEr.ShiftYStduM);
                 string component = mModel.GetComponentName(padEr.Pad);
                 lbPadErrorID.Content = padEr.Pad.NoID.ToString();
                 lbPadErrorComponent.Content = component;
@@ -1352,28 +1399,43 @@ namespace SPI_AOI.Views
         }
         private void btFinish_Click(object sender, RoutedEventArgs e)
         {
-            string panelStatus = "PASS";
-            for (int i = 0; i < mPadErrorDetails.Count; i++)
+            if(mPadErrorDetails.Count > 0)
             {
-                if(mPadErrorDetails[i].ConfirmResult == "FAIL")
+                string panelStatus = "PASS";
+                for (int i = 0; i < mPadErrorDetails.Count; i++)
                 {
-                    panelStatus = "FAIL";
+                    if (mPadErrorDetails[i].ConfirmResult == "FAIL")
+                    {
+                        panelStatus = "FAIL";
+                    }
+                    mMyDatabase.InsertNewPadError(
+                        mPadErrorDetails[i].PanelID,
+                        mPadErrorDetails[i].ModelName,
+                        mPadErrorDetails[i].LoadTime,
+                        mPadErrorDetails[i].Pad.NoID,
+                        mPadErrorDetails[i].FOVNo,
+                        mPadErrorDetails[i].ROIOnImage,
+                        mPadErrorDetails[i].ROIOnGerber,
+                        mPadErrorDetails[i].MachineResult,
+                        mPadErrorDetails[i].ConfirmResult,
+                        mPadErrorDetails[i].Component,
+                        mPadErrorDetails[i].ErrorType,
+                        mPadErrorDetails[i].Area,
+                        mPadErrorDetails[i].AreaStdHight,
+                        mPadErrorDetails[i].AreaStdLow,
+                        mPadErrorDetails[i].ShiftX,
+                        mPadErrorDetails[i].ShiftXStduM,
+                        mPadErrorDetails[i].ShiftY,
+                        mPadErrorDetails[i].ShiftYStduM
+                        );
                 }
-                mMyDatabase.InsertNewPadError(
-                    mPadErrorDetails[i].PanelID,
-                    mPadErrorDetails[i].ModelName,
-                    mPadErrorDetails[i].LoadTime,
-                    mPadErrorDetails[i].Pad.NoID,
-                    mPadErrorDetails[i].FOVNo,
-                    mPadErrorDetails[i].ROIOnImage,
-                    mPadErrorDetails[i].ROIOnGerber,
-                    mPadErrorDetails[i].MachineResult,
-                    mPadErrorDetails[i].ConfirmResult,
-                    mPadErrorDetails[i].Component,
-                    mPadErrorDetails[i].ErrorType);
+                string runningMode = GetRunningModeString();
+                mMyDatabase.InsertNewPanelResult(mPadErrorDetails[0].PanelID, mModel.Name, mPadErrorDetails[0].LoadTime, mPadErrorDetails[0].SN, runningMode, "FAIL", panelStatus);
+                if(panelStatus == "PASS")
+                {
+                    mPlcComm.Set_Bit_Comfirm_Pass();
+                }
             }
-            string runningMode = GetRunningModeString();
-            mMyDatabase.InsertNewPanelResult(mPadErrorDetails[0].PanelID, mModel.Name, mPadErrorDetails[0].LoadTime, mPadErrorDetails[0].SN, runningMode, "FAIL", panelStatus);
             ShowError(false);
         }
         public void ShowComponentPosition(System.Drawing.Rectangle Component)
@@ -1428,7 +1490,7 @@ namespace SPI_AOI.Views
             int id = stackPadError.SelectedIndex;
             if(id >= 0 && id < stackPadError.Items.Count)
             {
-                var r = MessageBox.Show(string.Format("Set PASS for Pad {0}?",mPadErrorDetails[id].Pad.NoID), "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                var r = MessageBox.Show(string.Format("Set PASS for Pad '{0}' ?",mPadErrorDetails[id].Pad.NoID), "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                 if(r == MessageBoxResult.Yes)
                 {
                     Utils.PadErrorControl item = stackPadError.Items[id] as Utils.PadErrorControl;
@@ -1457,7 +1519,7 @@ namespace SPI_AOI.Views
             int id = stackPadError.SelectedIndex;
             if (id >= 0 && id < stackPadError.Items.Count)
             {
-                var r = MessageBox.Show(string.Format("Set FAIL for Pad {0}?", mPadErrorDetails[id].Pad.NoID), "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                var r = MessageBox.Show(string.Format("Set NG for Pad '{0}' ?", mPadErrorDetails[id].Pad.NoID), "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                 if (r == MessageBoxResult.Yes)
                 {
                     Utils.PadErrorControl item = stackPadError.Items[id] as Utils.PadErrorControl;
@@ -1469,7 +1531,7 @@ namespace SPI_AOI.Views
 
         private void btPASSFAIL_Click(object sender, RoutedEventArgs e)
         {
-            var r = MessageBox.Show("Set FAIL for All Pad?", "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            var r = MessageBox.Show("Set NG for All Pad?", "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
             if (r == MessageBoxResult.Yes)
             {
                 for (int i = 0; i < mPadErrorDetails.Count; i++)
@@ -1478,6 +1540,18 @@ namespace SPI_AOI.Views
                     item.SetStatus(0);
                     mPadErrorDetails[i].ConfirmResult = "FAIL";
                 }
+            }
+        }
+
+        private void btHistory_Click(object sender, RoutedEventArgs e)
+        {
+            var userType = Login();
+            if (userType == UserManagement.UserType.Admin ||
+                userType == UserManagement.UserType.Designer ||
+                userType == UserManagement.UserType.Engineer)
+            {
+                Histories.HistoryWindow hist = new Histories.HistoryWindow();
+                hist.ShowDialog();
             }
         }
     }

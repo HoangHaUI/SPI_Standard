@@ -12,7 +12,7 @@ namespace SPI_AOI.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -1232,6 +1232,18 @@ namespace SPI_AOI.Properties {
             }
             set {
                 this["PLC_BIT_RESET_SCAN"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("M937")]
+        public string PLC_BIT_CONFIRM_PASS {
+            get {
+                return ((string)(this["PLC_BIT_CONFIRM_PASS"]));
+            }
+            set {
+                this["PLC_BIT_CONFIRM_PASS"] = value;
             }
         }
     }

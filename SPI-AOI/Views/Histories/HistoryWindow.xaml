@@ -1,0 +1,147 @@
+﻿<Window x:Class="SPI_AOI.Views.Histories.HistoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SPI_AOI.Views.Histories"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Initialized="Window_Initialized"
+        Title="HistoryWindow" Width="1500"  Height="1000">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            
+        </Grid>
+        <Grid Grid.Column="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="570"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="180"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <GroupBox Header="Options" Margin="5">
+                                <StackPanel Margin="0,20,0,0">
+                                    <StackPanel Orientation="Horizontal" Margin="5,5,5,5">
+                                        <Label Content="Model:"></Label>
+                                        <ComboBox  x:Name="cbModelName" Width="195" Margin="17,0,0,0"></ComboBox>
+                                        <Label Content="SN:" Margin="6,0,0,0"></Label>
+                                        <TextBox x:Name="txtSN" Margin="36,0,0,0" Width="195"></TextBox>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5,5,5,5">
+                                        <Label Content="Start time:"></Label>
+                                        <DatePicker x:Name="dateStartTime" Width="195"></DatePicker>
+                                        <Label Content="End time:" Margin="5,0,0,0"></Label>
+                                        <DatePicker x:Name="dateEndTime" Width="195" Margin="5,0,0,0"></DatePicker>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5,5,5,5">
+                                        <Button x:Name="cbFind" Content="Find" Width="103" Height="30" Margin="420,0,0,0" Click="cbFind_Click"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </GroupBox>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <GroupBox Header="Results" Margin="5">
+                                <DataGrid x:Name="dgvPanelResult"
+                                          Margin="5"
+                                          SelectionMode="Single"
+                                          BorderBrush="Transparent"
+                                          IsReadOnly="True" 
+                                          SelectedCellsChanged="dgvPanelResult_SelectedCellsChanged"
+                                          AutoGenerateColumns="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Width="2*" Header="Model"  Binding="{Binding ModelName}"/>
+                                        <DataGridTextColumn Width="1*" Header="SN"  Binding="{Binding SN}"/>
+                                        <DataGridTextColumn Width="2*" Header="Load time"  Binding="{Binding LoadTime}"/>
+                                        <DataGridTextColumn Width="1*" Header="VI Result"  Binding="{Binding MachineResult}"/>
+                                        <DataGridTextColumn Width="1*" Header="Confirm Result"  Binding="{Binding ConfirmResult}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </GroupBox>
+                        </Grid>
+                    </Grid>
+
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="300"/>
+                    </Grid.RowDefinitions>
+                    <GroupBox Header="FOV" Grid.Row="0" Margin="5">
+                        <Border x:Name="bdFOV" Background="Gray" Margin="5" ClipToBounds="True">
+                            <Grid>
+                                <Image x:Name="imageFOV"></Image>
+                                <Border x:Name="bdHightLight"
+                                    BorderThickness="1"
+                                        Margin="300,20,0,0"
+                                        BorderBrush="Yellow"
+                                        Visibility="Hidden"
+                                        Width="50" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left"
+                                        >
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </GroupBox>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="500"/>
+                        </Grid.ColumnDefinitions>
+                        <GroupBox Grid.Column="0" Header="Defects" Margin="5,0,0,5">
+                            <DataGrid x:Name="dgvDefects"
+                                      SelectedCellsChanged="dgvDefects_SelectedCellsChanged"
+                                      SelectionMode="Single"
+                                          Margin="5"
+                                          BorderBrush="Transparent"
+                                          IsReadOnly="True" 
+                                          AutoGenerateColumns="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="1*" Header="Pad ID"  Binding="{Binding PadID}"/>
+                                    <DataGridTextColumn Width="1*" Header="Component"  Binding="{Binding Component}"/>
+                                    <DataGridTextColumn Width="1*" Header="X"  Binding="{Binding ROIOnGerber.X}"/>
+                                    <DataGridTextColumn Width="1*" Header="Y"  Binding="{Binding ROIOnGerber.Y}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </GroupBox>
+                        <GroupBox Grid.Column="1" Header="Details" Margin="5,0,5,5">
+                            <StackPanel Margin="15">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Label FontSize="15" FontWeight="Bold" Content="Error:" VerticalAlignment="Center"/>
+                                    <Label x:Name="lbErrorType" FontSize="35" Margin="50,0,0,0" Foreground="Red" Content="" FontWeight="Bold"></Label>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                                    <Label FontSize="15" FontWeight="Bold" Content="Pad ID:"/>
+                                    <Label x:Name="lbPadErrorID" FontSize="15" FontWeight="Bold"  Margin="10,0,0,0"></Label>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label FontSize="15" FontWeight="Bold" Content="Component:"/>
+                                    <Label x:Name="lbPadErrorComponent" FontSize="15" FontWeight="Bold" Margin="10,0,0,0"></Label>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label FontSize="15" FontWeight="Bold" Content="Area (%):"/>
+                                    <Label x:Name="lbPadErrorArea" FontSize="15" FontWeight="Bold" Margin="10,0,0,0"></Label>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label FontSize="15" FontWeight="Bold" Content="Shift X (um):"/>
+                                    <Label x:Name="lbPadErrorShiftX" FontSize="15" FontWeight="Bold"   Margin="10,0,0,0"></Label>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label FontSize="15" FontWeight="Bold" Content="Shift Y (um):"/>
+                                    <Label x:Name="lbPadErrorShiftY" FontSize="15" FontWeight="Bold"  Margin="10,0,0,0"></Label>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

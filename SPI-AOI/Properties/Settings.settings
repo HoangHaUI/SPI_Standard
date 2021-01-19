@@ -305,5 +305,8 @@
     <Setting Name="PLC_BIT_RESET_SCAN" Type="System.String" Scope="User">
       <Value Profile="(Default)">M850</Value>
     </Setting>
+    <Setting Name="PLC_BIT_CONFIRM_PASS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M937</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

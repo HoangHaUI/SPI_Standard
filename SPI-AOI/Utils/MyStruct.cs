@@ -23,6 +23,7 @@ namespace SPI_AOI.Utils
         public string Field { get; set; }
         public int Count { get; set; }
         public int PPM { get; set; }
+        public double Rate { get; set; }
     }
     class FOVDisplayInfo
     {

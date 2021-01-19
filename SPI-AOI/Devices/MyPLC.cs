@@ -40,6 +40,10 @@ namespace SPI_AOI.Devices
         {
             return mSLMP.GetDevice(mParam.PLC_BIT_RESET_SCAN).Value;
         }
+        public int Set_Bit_Comfirm_Pass()
+        {
+            return mSLMP.SetDevice(mParam.PLC_BIT_CONFIRM_PASS, 1).Value;
+        }
         public int Reset_Bit_Reset_Scan()
         {
             return mSLMP.SetDevice(mParam.PLC_BIT_RESET_SCAN, 0).Value;

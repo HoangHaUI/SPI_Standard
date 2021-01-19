@@ -62,7 +62,14 @@ namespace SPI_AOI.DB
                 imgTbl.ROIOnGerber + " TEXT," +
                 imgTbl.MachineResult + " TEXT," +
                 imgTbl.ConfirmResult + " TEXT," +
-                imgTbl.Type + " TEXT"
+                imgTbl.Type + " TEXT," +
+                imgTbl.AreaMeasure + " REAL," +
+                imgTbl.AreaHight + " REAL," +
+                imgTbl.AreaLow + " REAL," +
+                imgTbl.ShiftXMeasure + " REAL," +
+                imgTbl.ShiftXHight + " REAL," +
+                imgTbl.ShiftYMeasure + " REAL," +
+                imgTbl.ShiftYHight + " REAL"
                 );
             mCtl.ExecuteCmd(mConn, cmd);
         }
@@ -147,7 +154,14 @@ namespace SPI_AOI.DB
                 string MachineResult,
                 string ConfirmResult,
                 string Component,
-                string Type
+                string Type,
+                double AreaMeasure,
+                double AreaHight,
+                double AreaLow,
+                double ShiftXMeasure,
+                double ShiftXHight,
+                double ShiftYMeasure,
+                double ShiftYHight
             )
         {
             Table.ErrorDetails resultTbl = new Table.ErrorDetails();
@@ -164,7 +178,14 @@ namespace SPI_AOI.DB
                 resultTbl.ROIOnGerber + "," +
                 resultTbl.MachineResult + "," +
                 resultTbl.ConfirmResult + "," +
-                resultTbl.Type,
+                resultTbl.Type + "," +
+                resultTbl.AreaMeasure + "," +
+                resultTbl.AreaHight + "," +
+                resultTbl.AreaLow + "," +
+                resultTbl.ShiftXMeasure + "," +
+                resultTbl.ShiftXHight + "," +
+                resultTbl.ShiftYMeasure + "," +
+                resultTbl.ShiftYHight,
 
                 //--------------
                 "\'" + ID + "\'," +
@@ -177,7 +198,14 @@ namespace SPI_AOI.DB
                 "\'" + string.Format("{0},{1},{2},{3}", ROIOnGerber.X, ROIOnGerber.Y, ROIOnGerber.Width, ROIOnGerber.Height) + "\'," +
                 "\'" + MachineResult + "\'," +
                 "\'" + ConfirmResult + "\'," +
-                "\'" + Type + "\'"
+                "\'" + Type + "\'," +
+                 + AreaMeasure + "," +
+                 + AreaHight + "," +
+                 + AreaLow + "," +
+                 + ShiftXMeasure + "," +
+                 + ShiftXHight + "," +
+                 + ShiftYMeasure + "," +
+                 + ShiftYHight
                 );
             return mCtl.ExecuteCmd(mConn, cmd);
         }
@@ -212,6 +240,23 @@ namespace SPI_AOI.DB
                 resultTbl.LoadTime + ">\'" + stTime + "\'",
                 resultTbl.LoadTime + "<=\'" + endTime + "\'",
                 resultTbl.ConfirmResult + "=\'PASS\'"
+                );
+
+            object count = mCtl.ExecuteScalarCmd(mConn, cmd);
+            return Convert.ToInt32(count);
+        }
+        public int CountDefect(string ModelName, string Key, DateTime StartTime, DateTime EndTime)
+        {
+            Table.ErrorDetails errorDetailsTbl = new Table.ErrorDetails();
+            string stTime = StartTime.ToString("yyyy-MM-dd HH:mm:ss");
+            string endTime = EndTime.ToString("yyyy-MM-dd HH:mm:ss");
+            string cmd = string.Format("Select count({0}) from {1} where {2} and {3} and {4} and {5};",
+                errorDetailsTbl.ID,
+                errorDetailsTbl.TableName,
+                errorDetailsTbl.ModelName + "=\'" + ModelName + "\'",
+                errorDetailsTbl.Time + ">\'" + stTime + "\'",
+                errorDetailsTbl.Time + "<=\'" + endTime + "\'",
+                errorDetailsTbl.Type + "=\'"+ Key + "\'"
                 );
 
             object count = mCtl.ExecuteScalarCmd(mConn, cmd);

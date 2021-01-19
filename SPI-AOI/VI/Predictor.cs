@@ -238,7 +238,7 @@ namespace SPI_AOI.VI
                 }
                 if (onedotfiveArea || hightArea || lowArea || shiftX || shiftY)
                 {
-                    if (onedotfiveArea && (shiftX || shiftY))
+                    if ((onedotfiveArea || hightArea) && (shiftX || shiftY))
                     {
                         padEr.ErrorType = VI.ErrorType.Bridge;
                     }
