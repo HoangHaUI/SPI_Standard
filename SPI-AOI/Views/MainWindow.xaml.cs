@@ -150,6 +150,7 @@ namespace SPI_AOI.Views
                     ShowError(true);
                 }
                 GC.Collect();
+                Heal.FilesManagement.DeleteFiles(mParam.SAVE_IMAGE_PATH, mParam.SAVE_IMAGE_HOURS, subfolder: true);
             }
             mIsInTimer = false;
             timer.Enabled = mIsRunning;
@@ -449,6 +450,7 @@ namespace SPI_AOI.Views
 
         private int Processing()
         {
+            
             this.Dispatcher.Invoke(() =>
             {
                 lbSN.Content = "-----";

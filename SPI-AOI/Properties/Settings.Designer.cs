@@ -1033,7 +1033,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("120")]
+        [global::System.Configuration.DefaultSettingValueAttribute("480")]
         public int SAVE_IMAGE_HOURS {
             get {
                 return ((int)(this["SAVE_IMAGE_HOURS"]));

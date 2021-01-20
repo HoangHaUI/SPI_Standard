@@ -255,7 +255,7 @@
       <Value Profile="(Default)">D:\Save</Value>
     </Setting>
     <Setting Name="SAVE_IMAGE_HOURS" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">120</Value>
+      <Value Profile="(Default)">480</Value>
     </Setting>
     <Setting Name="LIGHT_MODE" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
