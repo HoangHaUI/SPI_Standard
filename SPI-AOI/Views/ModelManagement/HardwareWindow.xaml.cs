@@ -829,7 +829,8 @@ namespace SPI_AOI.Views.ModelManagement
                 {
                     int x = mPLC.Get_X_Bot();
                     int y = mPLC.Get_Y_Bot();
-                    string sn = mScaner.ReadCode(new System.Drawing.Point(x, y));
+                    mScaner.ReleaseBuffer();
+                    string sn = mScaner.ReadCode(new System.Drawing.Point(x, y), false);
                     MessageBox.Show("SN: " + sn, "Reader", MessageBoxButton.OK, MessageBoxImage.Information);
                     txtCodeScan.Text = sn;
                 }

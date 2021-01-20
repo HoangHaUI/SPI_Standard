@@ -120,7 +120,7 @@ namespace SPI_AOI.Views.Histories
                 string imagePath = "";
                 for (int i = 0; i < mListImageSaved.Count; i++)
                 {
-                   if( mListImageSaved[i].FovID == fov)
+                   if( mListImageSaved[i].FovID == fov + 1)
                     {
                         imagePath = mListImageSaved[i].ImagePath;
                         break;

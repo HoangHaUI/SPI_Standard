@@ -523,7 +523,7 @@ namespace SPI_AOI.Views
                     if(pass)
                     {
                         // insert db
-                        mMyDatabase.InsertNewPanelResult(ID, mModel.Name, now, allsn, runningMode, viResult, viResult);
+                        mMyDatabase.InsertNewPanelResult(ID, mModel.Name, now, allsn, runningMode, viResult, viResult,mModel.Gerber.PadItems.Count);
                     }
                 }
                 else
@@ -720,9 +720,9 @@ namespace SPI_AOI.Views
                     int pass = mMyDatabase.CountPass(modelName, dt[0], dt[1]);
                     int fail = mMyDatabase.CountFail(modelName, dt[0], dt[1]);
                     UpdateChartCount(chartYeildRate, txtPass, txtFail, pass, fail);
-
-
-                    long sumOfPad = (pass + fail) * 2000 ;
+                    int Sumpad = mMyDatabase.GetSumPadOfModel(modelName);
+                    Console.WriteLine(Sumpad);
+                    long sumOfPad = (pass + fail) * Sumpad;
                     // sum defect
                     int missing = mMyDatabase.CountDefect(modelName, VI.ErrorType.Missing, dt[0], dt[1]);
                     int insufficient = mMyDatabase.CountDefect(modelName, VI.ErrorType.Insufficient, dt[0], dt[1]);
@@ -735,6 +735,7 @@ namespace SPI_AOI.Views
                     int padAreaError = mMyDatabase.CountDefect(modelName, VI.ErrorType.PadAreaError, dt[0], dt[1]);
                     int sum = missing + insufficient + bridge + excess + overArea + lowArea + shiftX + shiftY + padAreaError;
                     sum = sum == 0 ? 1 : sum;
+                    sumOfPad = sumOfPad == 0 ? 1 : sumOfPad;
                     double scalePPM = 1000000 / sumOfPad;
                     mSummary.Clear();
                     mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.Missing, Count = missing,           PPM = Convert.ToInt32(missing * scalePPM), Rate = Math.Round((double)missing *100 / sum, 2) });
@@ -1432,7 +1433,7 @@ namespace SPI_AOI.Views
                         );
                 }
                 string runningMode = GetRunningModeString();
-                mMyDatabase.InsertNewPanelResult(mPadErrorDetails[0].PanelID, mModel.Name, mPadErrorDetails[0].LoadTime, mPadErrorDetails[0].SN, runningMode, "FAIL", panelStatus);
+                mMyDatabase.InsertNewPanelResult(mPadErrorDetails[0].PanelID, mModel.Name, mPadErrorDetails[0].LoadTime, mPadErrorDetails[0].SN, runningMode, "FAIL", panelStatus, mModel.Gerber.PadItems.Count);
                 if(panelStatus == "PASS")
                 {
                     mPlcComm.Set_Bit_Comfirm_Pass();

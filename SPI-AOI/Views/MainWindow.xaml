@@ -150,8 +150,8 @@
                         <RowDefinition Height="200"/>
                     </Grid.RowDefinitions>
                     <GroupBox x:Name="groupBox" Grid.Row="0" Header="Diagram"
-                              BorderBrush="Gray" FontWeight="Bold">
-                        <Border x:Name="bdImbDiagram" Background="Gray"
+                              BorderBrush="#FF003200" FontWeight="Bold">
+                        <Border x:Name="bdImbDiagram" Background="#FF003200"
                                 Margin="5" ClipToBounds="True" >
                             <Grid>
                                 <Image x:Name="imbDiagram"

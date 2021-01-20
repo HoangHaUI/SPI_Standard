@@ -238,14 +238,14 @@ namespace SPI_AOI.VI
                 }
                 if (onedotfiveArea || hightArea || lowArea || shiftX || shiftY)
                 {
-                    padEr.ErrorType = ErrorType.OverArea;
+                    padEr.ErrorType = ErrorType.Excess;
                     if ((onedotfiveArea || hightArea) && (shiftX || shiftY))
                     {
                         padEr.ErrorType = VI.ErrorType.Bridge;
                     }
                     else if (hightArea)
                     {
-                        padEr.ErrorType = ErrorType.OverArea;
+                        padEr.ErrorType = ErrorType.Excess;
                     }
                     else if (lowArea)
                     {

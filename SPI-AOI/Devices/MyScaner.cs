@@ -45,7 +45,7 @@ namespace SPI_AOI.Devices
             try
             {
                 mScanPort.Open();
-                mScanPort.ReadTimeout = 1000;
+                mScanPort.ReadTimeout = 500;
                 return 0;
             }
             catch (Exception ex)
@@ -66,7 +66,7 @@ namespace SPI_AOI.Devices
             }
             return 0;
         }
-        public string ReadCode(Point XYReadCode)
+        public string ReadCode(Point XYReadCode, bool MoveAxis = true)
         {
             string sn = "NOT FOUND";
             if(mScanPort == null)
@@ -86,25 +86,36 @@ namespace SPI_AOI.Devices
                     return sn;
                 }
             }
-            for (int i = 0; i < 3; i++)
+            for (int i = -1; i < 2; i++)
             {
-                string data = null;
-                try
+                bool breakFor = false;
+                
+                for (int j = -1; j < 2; j++)
                 {
-                    data = mScanPort.ReadTo("\r");
+                    string data = null;
+                    try
+                    {
+                        data = mScanPort.ReadTo("\r");
+                    }
+                    catch { }
+                    if (!string.IsNullOrEmpty(data))
+                    {
+                        sn = data;
+                        breakFor = true;
+                        break;
+                    }
+                    mScanPort.Write(mCMDRead);
+                    if (MoveAxis)
+                    {
+                        int move = 2000;
+                        int x = XYReadCode.X + move * i;
+                        int y = XYReadCode.Y + move * j;
+                        VI.MoveXYAxis.ReadCodeBot(mPLCComm, new Point(x, y));
+                    }
                 }
-                catch { }
-                if (!string.IsNullOrEmpty(data))
-                {
-                    sn = data;
+                if (breakFor)
                     break;
-                }
-                mScanPort.Write(mCMDRead);
-                int move = 5000;
-                int x = XYReadCode.X > move ? XYReadCode.X - move : XYReadCode.X + move;
-                int y = XYReadCode.Y > move ? XYReadCode.Y - move : XYReadCode.Y + move;
-                VI.MoveXYAxis.ReadCodeBot(mPLCComm, new Point(x, y));
-                VI.MoveXYAxis.ReadCodeBot(mPLCComm, XYReadCode);
+
                 //Thread.Sleep(200);
             }
             return sn;

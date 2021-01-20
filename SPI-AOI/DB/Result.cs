@@ -28,7 +28,8 @@ namespace SPI_AOI.DB
                 resultTbl.SN + " TEXT," +
                 resultTbl.RunningMode + " TEXT," +
                 resultTbl.MachineResult + " TEXT," +
-                resultTbl.ConfirmResult + " TEXT"
+                resultTbl.ConfirmResult + " TEXT," +
+                resultTbl.SumPadOfModel + " INTEGER"
                 );
             mCtl.ExecuteCmd(mConn, cmd);
         }
@@ -84,7 +85,8 @@ namespace SPI_AOI.DB
             string SN,
             string RunningMode,
             string MachineResult,
-            string ConfirmResult
+            string ConfirmResult,
+            int SumOfPad
             )
         {
             Table.PanelResults resultTbl = new Table.PanelResults();
@@ -97,7 +99,8 @@ namespace SPI_AOI.DB
                 resultTbl.SN + "," +
                 resultTbl.RunningMode + "," +
                 resultTbl.MachineResult + "," +
-                resultTbl.ConfirmResult,
+                resultTbl.ConfirmResult + "," +
+                resultTbl.SumPadOfModel,
 
                 //--------------
                 "\'" + ID  + "\'," +
@@ -106,7 +109,8 @@ namespace SPI_AOI.DB
                 "\'" + SN + "\'," +
                 "\'" + RunningMode + "\'," +
                 "\'" + MachineResult + "\'," +
-                "\'" + ConfirmResult + "\'"
+                "\'" + ConfirmResult + "\'," +
+                "" + SumOfPad
                 );
             return mCtl.ExecuteCmd(mConn, cmd);
         }
@@ -209,6 +213,16 @@ namespace SPI_AOI.DB
                 );
             return mCtl.ExecuteCmd(mConn, cmd);
         }
+        public int GetSumPadOfModel(string ModelName)
+        {
+            Table.PanelResults resultTbl = new Table.PanelResults();
+            string cmd = string.Format("Select {0} from {1} where {2}",
+                resultTbl.SumPadOfModel,
+                resultTbl.TableName,
+                resultTbl.ModelName + "=\'" + ModelName + "\'");
+            object val = mCtl.ExecuteScalarCmd(mConn, cmd);
+            return Convert.ToInt32(val);
+        }
         public string[] GetModelName()
         {
             List<string> modelNames = new List<string>();
@@ -250,13 +264,14 @@ namespace SPI_AOI.DB
             Table.ErrorDetails errorDetailsTbl = new Table.ErrorDetails();
             string stTime = StartTime.ToString("yyyy-MM-dd HH:mm:ss");
             string endTime = EndTime.ToString("yyyy-MM-dd HH:mm:ss");
-            string cmd = string.Format("Select count({0}) from {1} where {2} and {3} and {4} and {5};",
+            string cmd = string.Format("Select count({0}) from {1} where {2} and {3} and {4} and {5} and {6};",
                 errorDetailsTbl.ID,
                 errorDetailsTbl.TableName,
                 errorDetailsTbl.ModelName + "=\'" + ModelName + "\'",
                 errorDetailsTbl.Time + ">\'" + stTime + "\'",
                 errorDetailsTbl.Time + "<=\'" + endTime + "\'",
-                errorDetailsTbl.Type + "=\'"+ Key + "\'"
+                errorDetailsTbl.Type + "=\'"+ Key + "\'",
+                errorDetailsTbl.ConfirmResult + "=\'" + "FAIL" + "\'"
                 );
 
             object count = mCtl.ExecuteScalarCmd(mConn, cmd);

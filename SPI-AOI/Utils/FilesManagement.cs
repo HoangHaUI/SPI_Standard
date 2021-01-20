@@ -41,8 +41,8 @@ namespace Heal
                 }
                 if (subfolder)
                 {
-                    if (files == null || files.Length == count)
-                    {
+                    if (files == null || (files.Length == count  && subPath.Length == 0))
+                    { 
                         Directory.Delete(path);
                     }
                 }
