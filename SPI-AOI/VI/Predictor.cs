@@ -238,7 +238,6 @@ namespace SPI_AOI.VI
                 }
                 if (onedotfiveArea || hightArea || lowArea || shiftX || shiftY)
                 {
-                    padEr.ErrorType = ErrorType.Excess;
                     if ((onedotfiveArea || hightArea) && (shiftX || shiftY))
                     {
                         padEr.ErrorType = VI.ErrorType.Bridge;
@@ -259,10 +258,14 @@ namespace SPI_AOI.VI
                     {
                         padEr.ErrorType = ErrorType.ShiftY;
                     }
-                    padEr.Area = scaleArea;
-                    padEr.ShiftX = shiftxVal;
-                    padEr.ShiftY = shiftyVal;
-                    return padEr;
+                    if(!string.IsNullOrEmpty(padEr.ErrorType))
+                    {
+                        padEr.Area = scaleArea;
+                        padEr.ShiftX = shiftxVal;
+                        padEr.ShiftY = shiftyVal;
+                        return padEr;
+                    }
+                    return null;
                 }
                 else
                 {

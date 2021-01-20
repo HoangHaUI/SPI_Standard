@@ -260,6 +260,8 @@ namespace SPI_AOI.Views
                     int moveAxisStatus = VI.MoveXYAxis.ReadCodeBot(mPlcComm, point, 0);
                     if(moveAxisStatus == 0)
                     {
+                        if(i > 0)
+                            mScaner.ReleaseBuffer();
                         sn[i] = mScaner.ReadCode(point);
                     }
                     else
@@ -267,6 +269,10 @@ namespace SPI_AOI.Views
                         mLog.Info(string.Format("Cant read code : {0}", i + 1));
                     }
                 }
+            }
+            if(readCodePosition.Length > 0)
+            {
+                int moveAxisStatus = VI.MoveXYAxis.ReadCodeBot(mPlcComm, readCodePosition[0].Origin, 0);
             }
             return sn;
         }

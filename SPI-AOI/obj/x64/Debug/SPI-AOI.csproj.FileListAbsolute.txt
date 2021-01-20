@@ -526,3 +526,4 @@ D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\
 C:\Users\Public\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\Histories\HistoryWindow.g.cs
 C:\Users\Public\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\Histories\HistoryWindow.baml
 D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI-AOI.csproj.ResolveComReference.cache
+C:\Users\Public\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI-AOI.csproj.ResolveComReference.cache
