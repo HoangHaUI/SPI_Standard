@@ -28,6 +28,9 @@ def Action():
     global SEGMENT_MODEL
     if request.method == 'POST':
         result  = {}
+        if(request.values.get("Type") == "Test"):
+            result["status"] = "OK"
+            return str(result)
         if 'file' not in request.files:
             flash('No file part')
             result["status"] = "FAIL"

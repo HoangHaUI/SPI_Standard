@@ -11,11 +11,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Runtime.InteropServices;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using SPI_AOI.DB.Struct;
 using System.IO;
+using Excel = Microsoft.Office.Interop.Excel;
 
 
 namespace SPI_AOI.Views.Histories
@@ -23,7 +25,7 @@ namespace SPI_AOI.Views.Histories
     /// <summary>
     /// Interaction logic for HistoryWindow.xaml
     /// </summary>
-    public partial class HistoryWindow : Window
+    public partial class HistoryWindow : System.Windows.Window
     {
         List<DB.Struct.ResultsObject> mListResult = new List<DB.Struct.ResultsObject>();
         List<PadErrorObject> mListPadError = new List<PadErrorObject>();
@@ -138,6 +140,83 @@ namespace SPI_AOI.Views.Histories
                         imageFOV.Source = bms;
                     } 
                 }
+            }
+        }
+
+        private void btExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            if(mListResult.Count > 0)
+            {
+                System.Windows.Forms.SaveFileDialog sfd = new System.Windows.Forms.SaveFileDialog();
+                sfd.DefaultExt = "xls";
+                sfd.Filter = "Excel file | *.xls";
+                sfd.FileName = "SPI_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + ".xls";
+                if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+
+                    if (xlApp == null)
+                    {
+                        MessageBox.Show("Excel is not properly installed!!");
+                        return;
+                    }
+                    Microsoft.Office.Interop.Excel.Workbook xlWorkBook;
+                    Microsoft.Office.Interop.Excel.Worksheet xlWorkSheet;
+                    object misValue = System.Reflection.Missing.Value;
+                    xlWorkBook = xlApp.Workbooks.Add(misValue);
+                    xlWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+                    
+                    xlWorkSheet.Cells[1, 1] = "Model Name";
+                    xlWorkSheet.Cells[1, 2] = "SN";
+                    xlWorkSheet.Cells[1, 3] = "Load Time";
+                    xlWorkSheet.Cells[1, 4] = "Machine VI Result";
+                    xlWorkSheet.Cells[1, 5] = "Confirm VI Result";
+                    xlWorkSheet.Cells[1, 6] = "Component Fail";
+                    xlWorkSheet.Cells[1, 7] = "Pad ID Fail";
+                    xlWorkSheet.Cells[1, 8] = "Fail Type";
+                    int row = 2;
+                    for (int ii = 0; ii < mListResult.Count; ii++)
+                    {
+                        var result = mListResult[ii];
+                        if (result.SN.Contains("NOT FOUND"))
+                            continue;
+                        string ID = result.ID;
+                        var listError = mDBQuery.GetPadErrorDetails(ID);
+                        xlWorkSheet.Cells[row, 1] = result.ModelName;
+                        xlWorkSheet.Cells[row, 2] = result.SN;
+                        xlWorkSheet.Cells[row, 3] = result.LoadTime.ToString("yyyy-MM-dd HH:mm:ss");
+                        xlWorkSheet.Cells[row, 4] = result.MachineResult;
+                        xlWorkSheet.Cells[row, 5] = result.ConfirmResult;
+                        if (listError.Length > 0)
+                        {
+                            string componentFail = "";
+                            string padIDFail = "";
+                            string failType = "";
+                            for (int i = 0; i < listError.Length; i++)
+                            {
+                                componentFail += listError[i].Component + ", ";
+                                padIDFail += listError[i].PadID + ", ";
+                                failType += listError[i].Type + ", ";
+                            }
+                            xlWorkSheet.Cells[row, 6] = componentFail;
+                            xlWorkSheet.Cells[row, 7] = padIDFail;
+                            xlWorkSheet.Cells[row, 8] = failType;
+                        }
+                        row++;
+                    }
+                    xlWorkBook.SaveAs(sfd.FileName, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                    xlWorkBook.Close(true, misValue, misValue);
+                    xlApp.Quit();
+                    Marshal.ReleaseComObject(xlWorkSheet);
+                    Marshal.ReleaseComObject(xlWorkBook);
+                    Marshal.ReleaseComObject(xlApp);
+                    MessageBox.Show("Excel file created , you can find the file " + sfd.FileName, "INFO", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                
+            }
+            else
+            {
+                MessageBox.Show("Content is empty!", "INFO", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
     }

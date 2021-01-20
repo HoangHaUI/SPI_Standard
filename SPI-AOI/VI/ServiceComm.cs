@@ -19,7 +19,7 @@ namespace SPI_AOI.VI
     class ServiceComm
     {
         private static Logger mLog = Heal.LogCtl.GetInstance();
-
+        private static Properties.Settings mParam = Properties.Settings.Default;
         public static ServiceResults SegmentFOV(string url, string[] files, int NoFOV, bool Debug)
         {
             int id = NoFOV;
@@ -140,6 +140,10 @@ namespace SPI_AOI.VI
                             result = new ServiceResults();
                             result.SN = code;
                         }
+                        else if (formFields.Get("Type") == "Test")
+                        {
+                            result = new ServiceResults();
+                        }
                     }
                 }
             }
@@ -160,6 +164,47 @@ namespace SPI_AOI.VI
             Image<Gray, byte> depthImage = new Image<Gray, byte>(size);
             depthImage.Bytes = data;
             return depthImage;
+        }
+        public static int TestService(string url)
+        {
+            NameValueCollection data = new NameValueCollection();
+            data.Add("Type", "Test");
+            data.Add("FOV", "0");
+            data.Add("Debug", Convert.ToString(true));
+            var result = VI.ServiceComm.Sendfile(url, new string[0], data);
+            if(result != null)
+            {
+                return 0;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        public static void StartService()
+        {
+            try
+            {
+                System.Diagnostics.Process p = new System.Diagnostics.Process();
+                System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+                info.FileName = "cmd.exe";
+                info.RedirectStandardInput = true;
+                info.UseShellExecute = false;
+                p.StartInfo = info;
+                p.Start();
+                using (StreamWriter sw = p.StandardInput)
+                {
+                    if (sw.BaseStream.CanWrite)
+                    {
+                        sw.WriteLine("cd Pulish");
+                        sw.WriteLine("services.vbs");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                mLog.Error(ex.Message);
+            }
         }
 
     }

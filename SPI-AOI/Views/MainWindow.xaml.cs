@@ -83,34 +83,12 @@ namespace SPI_AOI.Views
             mTimerCheckStatus.Elapsed += OnCheckStatusEvent;
             mTimerCheckStatus.Enabled = true;
             ShowError(false);
-            //string id = mMyDatabase.GetNewID();
-            //mMyDatabase.InsertNewPanelResult(id,
-            //    "Model123", DateTime.Now, "SN123", "Test", "FAIL", "FAIL");
-            //mMyDatabase.InsertNewImage(id, DateTime.Now,
-            //    @"D:\Save\2021_01_19\10_02_45\FOV_10_10_02_59.png", 0, new System.Drawing.Rectangle(), new System.Drawing.Rectangle(), "FOV");
-            //mMyDatabase.InsertNewPadError(id, "Model123", DateTime.Now, 123, 0, new System.Drawing.Rectangle(208, 315, 35, 57), new System.Drawing.Rectangle(), "FAIL", "FAIL", "C152", "Brigde", 150.65462354, 260, 60, 18.546132, 370,
-            //    19.5461321354, 370);
-            //int count1 = CvInvoke.CountNonZero(image);
-            //VectorOfVectorOfPoint cnt = new VectorOfVectorOfPoint();
-            //CvInvoke.FindContours(image, cnt, null, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
-            //double s = ImageProcessingUtils.ContourArea(cnt[0]);
-            //Console.WriteLine("{0}, {1}", count1, s);
-            //MainConfigWindow.AlarmForm alarm = new MainConfigWindow.AlarmForm();
-            //alarm.ShowDialog();
-            //NameValueCollection data = new NameValueCollection();
-            //data.Add("Type", "Decode");
-            //data.Add("FOV", (1 + 1).ToString());
-            //data.Add("Debug", Convert.ToString(mParam.Debug));
-            ////string fileName = @"D:\Heal\Projects\B06\SPI\Source code\Python\Test\Decode\3.png";
-            //for (int i = 0; i < 50; i++)
-            //{
-            //    Utils.PadErrorControl item = new Utils.PadErrorControl(null, i);
-            //    item.Click += EventFOVClick;
-            //    item.ID = i;
-            //    stackPadError.Items.Add(item);
-            //}
-
-            //VI.ServiceResults serviceResults = VI.ServiceComm.Sendfile(mParam.ServiceURL, new string[] { fileName }, data);
+            int val = VI.ServiceComm.TestService(mParam.ServiceURL);
+            if(val != 0)
+            {
+                VI.ServiceComm.StartService();
+                mLog.Info("Start services...");
+            }
         }
         public void LoadUI()
         {
@@ -343,7 +321,7 @@ namespace SPI_AOI.Views
                     {
                         double angle = -mModel.AngleAxisCamera - Angle;
                         using (Image<Bgr, byte> imgRotated = ImageProcessingUtils.ImageRotation(image, new System.Drawing.Point(image.Width / 2, image.Height / 2), angle * Math.PI / 180.0))
-                        using (Image<Bgr, byte> imgTransform = ImageProcessingUtils.ImageTransformation(image, XDeviation, YDeviation))
+                        using (Image<Bgr, byte> imgTransform = ImageProcessingUtils.ImageTransformation(imgRotated, XDeviation, YDeviation))
                         {
                             
                             SetDisplayFOV(i);

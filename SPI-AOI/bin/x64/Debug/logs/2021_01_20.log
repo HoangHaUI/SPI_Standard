@@ -1072,3 +1072,49 @@ near "1241": syntax error(Ctl.cs:30)|
 2021-01-20 11:18:35.7298|Info|Moving TOP Axis, Position Name : FOV 11,  X = 3123, Y = 24537(MainWindow.xaml.cs:333)|
 2021-01-20 11:18:36.7370|Info|Moving TOP Axis, Position Name : FOV 12,  X = 8315, Y = 24359(MainWindow.xaml.cs:333)|
 2021-01-20 11:18:37.8441|Info|Moving TOP Axis, Position Name : FOV 13,  X = 12435, Y = 24281(MainWindow.xaml.cs:333)|
+2021-01-20 13:25:51.2151|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:31:52.5018|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:32:58.2150|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:35:34.7144|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:42:43.7150|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:45:30.7153|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:46:01.7144|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:47:07.7142|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:48:12.7170|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:50:46.7353|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:51:44.7148|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:53:03.9738|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:54:09.7149|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:55:14.7161|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:55:47.2171|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:56:52.7142|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:57:57.7161|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 13:59:02.7142|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 14:00:07.7154|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 14:01:12.7145|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 14:02:17.7139|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 14:03:22.7368|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 14:04:27.7143|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 14:05:32.7144|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 14:06:37.8928|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 14:07:42.8261|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 14:08:47.7138|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 14:09:52.7147|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:566)|
+2021-01-20 14:43:42.4878|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-20 14:43:42.6234|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:540)|
+2021-01-20 14:44:18.0717|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:119)|
+2021-01-20 14:44:18.1235|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:540)|
+2021-01-20 14:44:37.3298|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:119)|
+2021-01-20 14:44:41.7151|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:540)|
+2021-01-20 14:45:30.6602|Error|The remote server returned an error: (500) Internal Server Error.(ServiceComm.cs:119)|
+2021-01-20 14:45:30.7180|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:540)|
+2021-01-20 14:52:29.6744|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:540)|
+2021-01-20 14:52:44.9217|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-20 14:52:44.9715|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:540)|
+2021-01-20 14:53:23.6288|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-20 14:53:23.7305|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:543)|
+2021-01-20 14:53:42.5621|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:543)|
+2021-01-20 14:54:27.4042|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:544)|
+2021-01-20 14:54:45.3173|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-20 14:54:45.3602|Info|Start services...(MainWindow.xaml.cs:90)|
+2021-01-20 14:54:45.3811|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:544)|
