@@ -1502,3 +1502,4 @@ near "1241": syntax error(Ctl.cs:30)|
 2021-01-20 16:13:23.7455|Info|Moving TOP Axis, Position Name : FOV 16,  X = 12471, Y = 25010(MainWindow.xaml.cs:317)|
 2021-01-20 16:13:24.8065|Info|Moving TOP Axis, Position Name : FOV 17,  X = 16801, Y = 25221(MainWindow.xaml.cs:317)|
 2021-01-20 16:13:25.8344|Info|Moving TOP Axis, Position Name : FOV 18,  X = 19983, Y = 25713(MainWindow.xaml.cs:317)|
+2021-01-20 16:46:50.8147|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:550)|

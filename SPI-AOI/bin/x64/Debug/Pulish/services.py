@@ -49,7 +49,7 @@ def Action():
 
             # segment
             if(action_type == "Segment"):
-                img = cv2.medianBlur(img, 5)
+                img = cv2.medianBlur(img, 3)
                 stt = request.values.get("FOV")
                 debug = request.values.get("Debug") == "True"
                 mask = SegmentUnet.SegmentImage(SEGMENT_MODEL, img, Config.IMAGE_WIDTH, Config.IMAGE_HEIGHT, debug)

@@ -134,7 +134,7 @@ namespace SPI_AOI.VI
             }
             return intersect;
         }
-        private static PadErrorDetail CheckPad(Models.PadItem padItem,PadSegmentInfo[] padSegment,double umPPixel, bool Inflate =false)
+        private static PadErrorDetail CheckPad(Models.PadItem padItem,PadSegmentInfo[] padSegment,double umPPixel, bool Inflate = false)
         {
             Rectangle boundPadRef = padItem.BoudingAdjust;
             if(Inflate)
