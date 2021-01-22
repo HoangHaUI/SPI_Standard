@@ -14,7 +14,7 @@ namespace SPI_AOI.VI
 {
     class AutoAdjustROIFOV
     {
-        public static List<Utils.PadAdjustResult> AdjustPad(Image<Bgr, byte> ImgCap,List<Rectangle> BoundPad, Hsv Upper, Hsv Lower, Rectangle CapROI)
+        public static List<Utils.PadAdjustResult> AdjustPad(Image<Bgr, byte> ImgCap,List<Rectangle> BoundPad, Hsv Upper, Hsv Lower, Rectangle CapROI, bool Debug = false)
         {
             ImgCap.ROI = CapROI;
             List<Utils.PadAdjustResult> adjustResult = new List<Utils.PadAdjustResult>();
@@ -24,6 +24,7 @@ namespace SPI_AOI.VI
                 using (Image<Gray, byte> imgSegment = ImgHsv.InRange(Upper, Lower))
                 using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
                 {
+                    
                     CvInvoke.FindContours(imgSegment, contours, null, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
                     Rectangle[] listBoundPadSeg = new Rectangle[contours.Size];
                     for (int i = 0; i < contours.Size; i++)
@@ -67,9 +68,9 @@ namespace SPI_AOI.VI
                             Point ctRef = new Point(boundPadRef.Width / 2 + boundPadRef.X, boundPadRef.Height / 2 + boundPadRef.Y);
                             int subx = ctRef.X - ctSeg.X;
                             int suby = ctRef.Y - ctSeg.Y;
-                            if (Math.Abs(subx) <= 5 && boundPadRef.Width < 40)
+                            if (Math.Abs(subx) <= 5 && boundPadRef.Width < 30)
                                 padAdjustResult.X = -subx;
-                            if(Math.Abs(suby) <= 5 && boundPadRef.Height < 40)
+                            if(Math.Abs(suby) <= 5 && boundPadRef.Height < 30)
                             {
                                 padAdjustResult.Y = -suby;
                             }
@@ -82,7 +83,7 @@ namespace SPI_AOI.VI
             ImgCap.ROI = Rectangle.Empty;
             return adjustResult;
         }
-        public static Rectangle Adjust(Image<Bgr, byte> ImgCap, Image<Gray, byte> ImgGerber, Hsv Upper, Hsv Lower, Size FOV, Rectangle CapROI)
+        public static Rectangle Adjust(Image<Bgr, byte> ImgCap, Image<Gray, byte> ImgGerber, Hsv Upper, Hsv Lower, Size FOV, Rectangle CapROI, bool Debug = false)
         {
             Rectangle ROIAdjust = new Rectangle(CapROI.X, CapROI.Y, CapROI.Width, CapROI.Height);
             using (Image<Hsv, byte> ImgHsv = new Image<Hsv, byte>(ImgCap.Size))
@@ -91,21 +92,28 @@ namespace SPI_AOI.VI
                 using (Image<Gray, byte> imgSegment = ImgHsv.InRange(Upper, Lower))
                 using(VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
                 {
+                    if (Debug)
+                    {
+                        string path = "debug/AutoAdjust";
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+                        CvInvoke.Imwrite(path + "/ImageCap.png", imgSegment);
+                        CvInvoke.Imwrite(path + "/ImageGerber.png", ImgGerber);
+                    }
                     CvInvoke.FindContours(ImgGerber, contours, null, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
-                    int[] idCheck = GetListContoursAdjust(contours, FOV, 10, 3);
+                    int[] idCheck = GetListContoursAdjust(contours, FOV, 100, 20, 3000);
                     int[] xad = new int[idCheck.Length];
                     int[] yad = new int[idCheck.Length];
                     int extend = 20;
                     for (int i = 0; i < idCheck.Length; i++)
                     {
                         Rectangle ROI = CvInvoke.BoundingRectangle(contours[idCheck[i]]);
-                        ROI.X -= extend;
-                        ROI.Y -= extend;
-                        ROI.Width += 2 * extend;
-                        ROI.Height += 2 * extend;
+                        ROI.Inflate(extend, extend);
                         ImgGerber.ROI = ROI;
                         imgSegment.ROI = ROI;
-                        int[] adjust = GetAdjust(imgSegment, ImgGerber, 20, 10);
+                        int[] adjust = GetAdjust(imgSegment, ImgGerber, 10, 10);
                         xad[i] = adjust[0];
                         yad[i] = adjust[1];
                         ImgGerber.ROI = Rectangle.Empty;
@@ -119,7 +127,7 @@ namespace SPI_AOI.VI
             }
             return ROIAdjust;
         }
-        private static int[] GetListContoursAdjust(VectorOfVectorOfPoint contours, Size FOV, int NumGet = 3, double MaxArea = 3)
+        private static int[] GetListContoursAdjust(VectorOfVectorOfPoint contours, Size FOV, int NumGet = 3, double MinArea = 100, double MaxArea = 3000)
         {
             Tuple<double, int>[] cntInfo = new Tuple<double, int>[contours.Size];
             for (int i = 0; i < contours.Size; i++)
@@ -129,9 +137,9 @@ namespace SPI_AOI.VI
             }
             Tuple<double, int>[] sorted = cntInfo.OrderBy(item => item.Item1).ToArray();
             List<int> id = new List<int>();
-            for (int i = sorted.Length - 1; i >=0; i--)
+            for (int i = 0; i < sorted.Length; i++)
             {
-                if(sorted[i].Item1 * 100 / (FOV.Width * FOV.Height) < MaxArea)
+                if(sorted[i].Item1 > MinArea &&  sorted[i].Item1 < MaxArea)
                 {
                     if (id.Count <= NumGet)
                     {

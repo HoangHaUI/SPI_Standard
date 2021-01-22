@@ -12,7 +12,7 @@ namespace SPI_AOI.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -817,7 +817,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3.230980752")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3.230380752")]
         public double PULSE_X_PER_PIXEL_DEFAULT {
             get {
                 return ((double)(this["PULSE_X_PER_PIXEL_DEFAULT"]));
@@ -829,7 +829,7 @@ namespace SPI_AOI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3.23752057")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3.23702057")]
         public double PULSE_Y_PER_PIXEL_DEFAULT {
             get {
                 return ((double)(this["PULSE_Y_PER_PIXEL_DEFAULT"]));
