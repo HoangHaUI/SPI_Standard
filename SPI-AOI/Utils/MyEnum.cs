@@ -24,7 +24,9 @@ namespace SPI_AOI.Utils
         TEST,
         BY_PASS,
         WARNING,
-        STOP
+        STOP,
+        NOT_FOUND_MARK,
+        CAPTURE_FAIL
     }
     enum LabelMode
     {
@@ -32,7 +34,7 @@ namespace SPI_AOI.Utils
         DOOR,
         RUNNING_MODE,
         MACHINE_STATUS,
-        PRODUCT_STATUS
+        PRODUCT_STATUS,
     }
     public enum AutoLinkMode
     {

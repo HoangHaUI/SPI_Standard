@@ -124,8 +124,20 @@ namespace SPI_AOI.Views
                 else
                 {
                     mPlcComm.Set_Fail();
-                    UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.FAIL);
-                    ShowError(true);
+                    if (result == -1)
+                    {
+                        UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.FAIL);
+                        ShowError(true);
+                    }
+                    else if(result == -2)
+                    {
+                        UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.CAPTURE_FAIL);
+                    }
+                    else if (result == -3)
+                    {
+                        UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.NOT_FOUND_MARK);
+                    }
+                    
                 }
                 GC.Collect();
                 Heal.FilesManagement.DeleteFiles(mParam.SAVE_IMAGE_PATH, mParam.SAVE_IMAGE_HOURS, subfolder: true);
@@ -464,14 +476,8 @@ namespace SPI_AOI.Views
             Utils.MarkAdjust markAdjustInfo = CaptureMark(ID, savePath, lightStrobe);
             if (markAdjustInfo.Status == Utils.ActionStatus.Successfully)
             {
-                mLight.SetFour(mParam.LIGHT_VI_DEFAULT_INTENSITY_CH1,
-                mParam.LIGHT_VI_DEFAULT_INTENSITY_CH2,
-                mParam.LIGHT_VI_DEFAULT_INTENSITY_CH3,
-                mParam.LIGHT_VI_DEFAULT_INTENSITY_CH4);
                 mCamera.SetParameter(IOT.KeyName.ExposureTime, (float)mParam.CAMERA_VI_EXPOSURE_TIME);
-
                 sn = CaptureSN(ID, savePath, lightStrobe);
-
                 string allsn = "";
                 for (int i = 0; i < sn.Length; i++)
                 {
@@ -483,6 +489,10 @@ namespace SPI_AOI.Views
                 {
                     lbSN.Content = allsn;
                 });
+                mLight.SetFour(mParam.LIGHT_VI_DEFAULT_INTENSITY_CH1,
+                 mParam.LIGHT_VI_DEFAULT_INTENSITY_CH2,
+                 mParam.LIGHT_VI_DEFAULT_INTENSITY_CH3,
+                 mParam.LIGHT_VI_DEFAULT_INTENSITY_CH4);
                 int status = CaptureFOV(ID, allsn, now, savePath, markAdjustInfo.X, markAdjustInfo.Y, markAdjustInfo.Angle, lightStrobe);
                 if (!lightStrobe)
                 {
@@ -517,7 +527,7 @@ namespace SPI_AOI.Views
             }
             else
             {
-                result = -2;
+                result = -3;
             }
             SetDisplayFOV(-1);
             UpdateCountStatistical();

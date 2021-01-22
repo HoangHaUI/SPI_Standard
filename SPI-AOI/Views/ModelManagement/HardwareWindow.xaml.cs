@@ -198,6 +198,7 @@ namespace SPI_AOI.Views.ModelManagement
                             mReadCodeClick = false;
                             this.Dispatcher.Invoke(() => {
                                 MessageBox.Show("SN: " + sn,"Reader", MessageBoxButton.OK, MessageBoxImage.Information);
+                                txtCodeScan.Text = sn;
                             });
                         }
 
@@ -521,15 +522,10 @@ namespace SPI_AOI.Views.ModelManagement
                 return true;
             return false;
         }
-        private void SaveChanged()
+        private void SaveMarkSettingChanged()
         {
             mMarkPoint = GetTopCoordinates();
             mConveyor = GetConveyorCoordinates();
-            mModel.HardwareSettings.ReadCodePosition = new List<ReadCodePosition>();
-            for (int i = 0; i < mReadCodePosition.Count; i++)
-            {
-                mModel.HardwareSettings.ReadCodePosition.Add(mReadCodePosition[i].Copy());
-            }
             mModel.HardwareSettings.ExposureTime = mExposureTime;
             mModel.HardwareSettings.Gain = mGain;
             for (int i = 0; i < 4; i++)
@@ -559,18 +555,9 @@ namespace SPI_AOI.Views.ModelManagement
         {
             if(mIsTimerRunning)
             {
-                if (SearchChanged())
+                var r = MessageBox.Show("Are you want to quit?", "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                if (r == MessageBoxResult.Yes)
                 {
-                    var r = MessageBox.Show("Are you want to save changed ?", "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-                    if(r == MessageBoxResult.Yes)
-                    {
-                        SaveChanged();
-                    }
-                    else if(r == MessageBoxResult.Cancel)
-                    {
-                        e.Cancel = true;
-                        return;
-                    }
                     mIsTimerRunning = false;
                     if (mCamera != null)
                     {
@@ -585,6 +572,12 @@ namespace SPI_AOI.Views.ModelManagement
                     }
                     mLightSource.ActiveFour(0, 0, 0, 0);
                     mLightSource.Close();
+                    mScaner.Close();
+                }
+                else if (r == MessageBoxResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
                 }
             }
         }
@@ -687,6 +680,11 @@ namespace SPI_AOI.Views.ModelManagement
             {
                 cbScanPointID.Items.Add(i + 1);
             }
+            mModel.HardwareSettings.ReadCodePosition = new List<ReadCodePosition>();
+            for (int i = 0; i < mReadCodePosition.Count; i++)
+            {
+                mModel.HardwareSettings.ReadCodePosition.Add(mReadCodePosition[i].Copy());
+            }
         }
         private void btAddScan_Click(object sender, RoutedEventArgs e)
         {
@@ -742,6 +740,10 @@ namespace SPI_AOI.Views.ModelManagement
                     LoadIndexReadCodePosition();
                     MessageBox.Show(string.Format("Delete successfully!"), "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
+            }
+            else
+            {
+                MessageBox.Show("ID scan position incorrect!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -808,8 +810,8 @@ namespace SPI_AOI.Views.ModelManagement
 
         private void btApply_Click(object sender, RoutedEventArgs e)
         {
-            SaveChanged();
-            MessageBox.Show("Done!");
+            SaveMarkSettingChanged();
+            MessageBox.Show("Save mark setting successfully!", "Infomation", MessageBoxButton.OK, MessageBoxImage.Information);
 
         }
 
@@ -839,6 +841,53 @@ namespace SPI_AOI.Views.ModelManagement
                     mReadCodeClick = true;
                 }
             }
+        }
+
+        private void btUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            int id = cbScanPointID.SelectedIndex;
+            if(id >= 0)
+            {
+                int x = 0;
+                int y = 0;
+                Surface surface = Surface.TOP;
+                if (cbSurface.SelectedIndex == 1)
+                {
+                    x = mPLC.Get_X_Bot();
+                    y = mPLC.Get_Y_Bot();
+                    surface = Surface.BOT;
+                }
+                else if (cbSurface.SelectedIndex == 0)
+                {
+                    x = mPLC.Get_X_Top();
+                    y = mPLC.Get_Y_Top();
+                    surface = Surface.TOP;
+                }
+                else return;
+                var r = MessageBox.Show(string.Format("Are you want to change Read code position {3} to \nPoint ({0},{1}) \nSurface {2}?", x, y, surface, id), "Information", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                if (r == MessageBoxResult.Yes)
+                {
+
+                    int pix = (int)(mModel.DPI / 25.4);
+                    int widthImage = Convert.ToInt32(mScanWidth * mModel.DPI / 25.4);
+                    int heightImage = Convert.ToInt32(mScanHeight * mModel.DPI / 25.4);
+                    ReadCodePosition readCodeInfo = new ReadCodePosition();
+                    readCodeInfo.Origin = new System.Drawing.Point(x, y);
+                    readCodeInfo.Surface = surface;
+                    readCodeInfo.Height = mScanHeight;
+                    readCodeInfo.Width = mScanWidth;
+                    readCodeInfo.ROIImage = new System.Drawing.Rectangle(mParam.IMAGE_SIZE.Width / 2 - widthImage / 2,
+                        mParam.IMAGE_SIZE.Height / 2 - heightImage / 2, widthImage, heightImage);
+                    mReadCodePosition[id] = readCodeInfo;
+                    LoadIndexReadCodePosition();
+                    MessageBox.Show("Update successfully!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("ID scan position incorrect!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
     }
 }

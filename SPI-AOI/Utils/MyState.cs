@@ -47,6 +47,11 @@ namespace SPI_AOI.Utils
                     return "TESTING";
                 case Utils.LabelStatus.STOP:
                     return "STOPPED";
+                case Utils.LabelStatus.NOT_FOUND_MARK:
+                    return "NOT FOUND MARK";
+                case Utils.LabelStatus.CAPTURE_FAIL:
+                    return "CAPTURE IMAGE FAILED";
+
                 default:
                     return "NOT DEFINE";
             }
@@ -88,6 +93,10 @@ namespace SPI_AOI.Utils
                 case Utils.LabelStatus.WARNING:
                     return Brushes.Orange;
                 case Utils.LabelStatus.STOP:
+                    return Brushes.Red;
+                case Utils.LabelStatus.NOT_FOUND_MARK:
+                    return Brushes.Red;
+                case Utils.LabelStatus.CAPTURE_FAIL:
                     return Brushes.Red;
                 default:
                     return Brushes.Green;

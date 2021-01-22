@@ -318,8 +318,30 @@ namespace SPI_AOI.Views.ModelManagement
             }
 
         }
-
-        private void btAdjust_Click(object sender, RoutedEventArgs e)
+        private void btManualAdjustFOV_Click(object sender, RoutedEventArgs e)
+        {
+            int id = -1;
+            this.Dispatcher.Invoke(() =>
+            {
+                id = cbFOV.SelectedIndex;
+            });
+            if (id > -1)
+            {
+                System.Drawing.Rectangle ROI = new System.Drawing.Rectangle();
+                this.Dispatcher.Invoke(() =>
+                {
+                    ROI = new System.Drawing.Rectangle(
+                        Convert.ToInt32(txtROIX.Text),
+                        Convert.ToInt32(txtROIY.Text),
+                        Convert.ToInt32(txtROIWidth.Text),
+                        Convert.ToInt32(txtROIHeight.Text)
+                        );
+                });
+                mModel.Gerber.FOVs[id].ROI = ROI;
+                ShowDetail();
+            }
+        }
+        private void btAutoAdjustFOV_Click(object sender, RoutedEventArgs e)
         {
             int id = -1;
             this.Dispatcher.Invoke(() =>
@@ -328,15 +350,7 @@ namespace SPI_AOI.Views.ModelManagement
             });
             if(id > -1)
             {
-                System.Drawing.Rectangle ROI = new System.Drawing.Rectangle() ;
-                this.Dispatcher.Invoke(() => {
-                    ROI = new System.Drawing.Rectangle(
-                        Convert.ToInt32(txtROIX.Text),
-                        Convert.ToInt32(txtROIY.Text),
-                        Convert.ToInt32(txtROIWidth.Text),
-                        Convert.ToInt32(txtROIHeight.Text)
-                        );
-                });
+                System.Drawing.Rectangle ROI = mModel.Gerber.FOVs[id].ROI;
                 mImage.ROI = ROI;
                 var modelFov = mModel.FOV;
                 System.Drawing.Rectangle ROIGerber = new System.Drawing.Rectangle(
@@ -348,49 +362,12 @@ namespace SPI_AOI.Views.ModelManagement
                     ROI = VI.AutoAdjustROIFOV.Adjust(mImage, imgGerber, new Hsv(145, 110, 130), new Hsv(255, 255, 255), mModel.FOV, ROI);
                     mModel.Gerber.FOVs[id].ROI = ROI;
                 }
-                if(mAdjustPad)
-                {
-                    List<System.Drawing.Rectangle> padBoundInFOV = new List<System.Drawing.Rectangle>();
-                    List<PadItem> padInFOV = new List<PadItem>();
-                    for (int i = 0; i < mModel.Gerber.PadItems.Count; i++)
-                    {
-                        PadItem item = mModel.Gerber.PadItems[i];
-                        if (item.FOVs.Count > 0)
-                        {
-                            if (item.FOVs[0] == id)
-                            {
-                                System.Drawing.Rectangle padBound = item.Bouding;
-                                padBound.X -= ROIGerber.X;
-                                padBound.Y -= ROIGerber.Y;
-                                padBoundInFOV.Add(padBound);
-                                padInFOV.Add(mModel.Gerber.PadItems[i]);
-                            }
-                        }
-                    }
-                    var adjustPadResult = VI.AutoAdjustROIFOV.AdjustPad(mImage, padBoundInFOV, new Hsv(145, 110, 130), new Hsv(255, 255, 255), mModel.Gerber.FOVs[id].ROI);
-                    for (int i = 0; i < padInFOV.Count; i++)
-                    {
-                        System.Drawing.Rectangle bounding = padInFOV[i].Bouding;
-                        System.Drawing.Point[] cntPoint = padInFOV[i].Contour;
-                        bounding.X += adjustPadResult[i].X;
-                        bounding.Y += adjustPadResult[i].Y;
-                        for (int j = 0; j < cntPoint.Length; j++)
-                        {
-                            cntPoint[j].X += adjustPadResult[i].X;
-                            cntPoint[j].Y += adjustPadResult[i].Y;
-                        }
-                        padInFOV[i].BoudingAdjust = bounding;
-                        padInFOV[i].ContourAdjust = cntPoint;
-                    }
-
-                    mAdjustPad = false;
-                }
                 mModel.Gerber.ProcessingGerberImage.ROI = new System.Drawing.Rectangle();
                 ShowDetail();
             }
         }
 
-        private void btAutoAdjust_Click(object sender, RoutedEventArgs e)
+        private void btAutoAdjustAllFOV_Click(object sender, RoutedEventArgs e)
         {
             Thread auto = new Thread(() => {
                 if(mAnchorFOV != null)
@@ -401,16 +378,16 @@ namespace SPI_AOI.Views.ModelManagement
 
                             cbFOV.SelectedIndex = i;
                         });
-                        btAdjust_Click(null, null);
+                        btAutoAdjustFOV_Click(null, null);
                         Thread.Sleep(500);
                     }
                 }
-                MessageBox.Show("Adjust FOV finish!", "INFOMATION", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Auto Adjust FOV finish!", "INFOMATION", MessageBoxButton.OK, MessageBoxImage.Information);
             });
             auto.Start();
         }
 
-        private void btAutoAdjustPad_Click(object sender, RoutedEventArgs e)
+        private void btAutoAdjustAllPad_Click(object sender, RoutedEventArgs e)
         {
             Thread auto = new Thread(() => {
                 if (mAnchorFOV != null)
@@ -422,7 +399,7 @@ namespace SPI_AOI.Views.ModelManagement
 
                             cbFOV.SelectedIndex = i;
                         });
-                        btAdjust_Click(null, null);
+                        btAutoAdjustPad_Click(null, null);
                         Thread.Sleep(500);
                     }
                 }
@@ -444,8 +421,7 @@ namespace SPI_AOI.Views.ModelManagement
             mPlcComm.Set_Unload_Product();
             mPlcComm.Logout();
         }
-
-        private void btAdjustPad_Click(object sender, RoutedEventArgs e)
+        private void btAutoAdjustPad_Click(object sender, RoutedEventArgs e)
         {
             int id = -1;
             mAdjustPad = true;
@@ -473,7 +449,6 @@ namespace SPI_AOI.Views.ModelManagement
                             if (item.FOVs[0] == id)
                             {
                                 System.Drawing.Rectangle padBound = item.Bouding;
-                                
                                 padBound.X -= ROIGerber.X;
                                 padBound.Y -= ROIGerber.Y;
                                 padBoundInFOV.Add(padBound);
@@ -500,7 +475,36 @@ namespace SPI_AOI.Views.ModelManagement
                 ShowDetail();
             }
         }
-
+        private void btResetAdjustPad_Click(object sender, RoutedEventArgs e)
+        {
+            int id = -1;
+            mAdjustPad = true;
+            this.Dispatcher.Invoke(() =>
+            {
+                id = cbFOV.SelectedIndex;
+            });
+            if (id > -1)
+            {
+                for (int i = 0; i < mModel.Gerber.PadItems.Count; i++)
+                {
+                    PadItem item = mModel.Gerber.PadItems[i];
+                    if (item.FOVs.Count > 0)
+                    {
+                        if (item.FOVs[0] == id)
+                        {
+                            System.Drawing.Point[] cntPoint = new System.Drawing.Point[item.Contour.Length];
+                            for (int j = 0; j < cntPoint.Length; j++)
+                            {
+                                cntPoint[j] = new System.Drawing.Point(item.Contour[j].X, item.Contour[j].Y);
+                            }
+                            item.BoudingAdjust = new System.Drawing.Rectangle( item.Bouding.X, item.Bouding.Y, item.Bouding.Width, item.Bouding.Height);
+                            item.ContourAdjust = cntPoint;
+                        }
+                    }
+                }
+                MessageBox.Show("Reset adjust pad finish!", "Infomation", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (mCamera != null)
@@ -524,5 +528,9 @@ namespace SPI_AOI.Views.ModelManagement
                 }
             }
         }
+
+        
+
+        
     }
 }

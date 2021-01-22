@@ -27,6 +27,17 @@
             <Grid Grid.Column="1">
                 <GroupBox x:Name="grConfig" Margin="5" Header="Configuration">
                     <StackPanel Margin="5">
+                        <StackPanel Orientation="Horizontal" Margin="15">
+                            <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Left">
+                                <Button x:Name="btLoad" Content="Load Panel" Margin="0,0,0,0"
+                                                Width="110" Height="25" Click="btLoad_Click">
+                                </Button>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Left">
+                                <Button x:Name="btUnload" Content="Unload Panel" Width="110" 
+                                                Height="25" Click="btUnload_Click"></Button>
+                            </StackPanel>
+                        </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="3,10,3,10">
                             <Label Content="FOV : "></Label>
                             <ComboBox x:Name="cbFOV" Margin="5,0,0,0" Width="60" SelectionChanged="cbFOV_SelectionChanged"></ComboBox>
@@ -59,29 +70,32 @@
                             <Grid Grid.Column="1">
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
-                                        <Button x:Name="btAdjust" Content="Adjust FOV" Margin="0,0,0,0" Width="110" Height="30" Click="btAdjust_Click"></Button>
+                                        <Button x:Name="btResetAdjustPad" Content="Reset Adjust Pad" Margin="0,0,0,0"
+                                                Width="110" Height="30" Click="btResetAdjustPad_Click"></Button>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
-                                        <Button x:Name="btAdjustPad" Content="Adjust Pad" Margin="0,0,0,0" Width="110" Height="30" Click="btAdjustPad_Click"></Button>
+                                        <Button x:Name="btAdjustPad" Content="Auto Adjust Pad" Margin="0,0,0,0"
+                                                Width="110" Height="30" Click="btAutoAdjustPad_Click"></Button>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
-                                        <Button x:Name="btAutoAdjust" Content="Auto Adjust All FOV" Width="110" Height="30" Click="btAutoAdjust_Click"></Button>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
-                                        <Button x:Name="btAutoAdjustPad" Content="Auto Adjust All Pad" Width="110" Height="30" Click="btAutoAdjustPad_Click"></Button>
+                                        <Button x:Name="btAutoAdjustPad" Content="Auto Adjust All Pad"
+                                                Width="110" Height="30" Click="btAutoAdjustAllPad_Click"></Button>
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>
                             <Grid Grid.Column="0" >
                                 <StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Left">
-                                        <Button x:Name="btLoad" Content="Load" Margin="0,0,0,0"
-                                                Width="110" Height="30" Click="btLoad_Click">
-                                        </Button>
+                                    <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                        <Button x:Name="btManualAdjust" Content="Manual Adjust FOV" Margin="0,0,0,0"
+                                                Width="110" Height="30" Click="btManualAdjustFOV_Click"></Button>
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Left">
-                                        <Button x:Name="btUnload" Content="Unload" Width="110" 
-                                                Height="30" Click="btUnload_Click"></Button>
+                                    <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                        <Button x:Name="btAutoAdjustFOV" Content="Auto Adjust FOV"
+                                                Margin="0,0,0,0" Width="110" Height="30" Click="btAutoAdjustFOV_Click"></Button>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                                        <Button x:Name="btAutoAdjustAllFOV" Content="Auto Adjust All FOV"
+                                                Width="110" Height="30" Click="btAutoAdjustAllFOV_Click"></Button>
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>

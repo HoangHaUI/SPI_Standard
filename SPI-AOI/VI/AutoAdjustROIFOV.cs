@@ -68,9 +68,9 @@ namespace SPI_AOI.VI
                             Point ctRef = new Point(boundPadRef.Width / 2 + boundPadRef.X, boundPadRef.Height / 2 + boundPadRef.Y);
                             int subx = ctRef.X - ctSeg.X;
                             int suby = ctRef.Y - ctSeg.Y;
-                            if (Math.Abs(subx) <= 5 && boundPadRef.Width < 30)
+                            if (Math.Abs(subx) <= 5 && boundPadRef.Width < 100)
                                 padAdjustResult.X = -subx;
-                            if(Math.Abs(suby) <= 5 && boundPadRef.Height < 30)
+                            if(Math.Abs(suby) <= 5 && boundPadRef.Height < 100)
                             {
                                 padAdjustResult.Y = -suby;
                             }
@@ -84,6 +84,57 @@ namespace SPI_AOI.VI
             return adjustResult;
         }
         public static Rectangle Adjust(Image<Bgr, byte> ImgCap, Image<Gray, byte> ImgGerber, Hsv Upper, Hsv Lower, Size FOV, Rectangle CapROI, bool Debug = false)
+        {
+            Rectangle ROIAdjust = new Rectangle(CapROI.X, CapROI.Y, CapROI.Width, CapROI.Height);
+            using (Image<Hsv, byte> ImgHsv = new Image<Hsv, byte>(ImgCap.Size))
+            {
+                CvInvoke.CvtColor(ImgCap, ImgHsv, Emgu.CV.CvEnum.ColorConversion.Bgr2Hsv);
+                using (Image<Gray, byte> imgSegment = ImgHsv.InRange(Upper, Lower))
+                using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
+                {
+                    if (Debug)
+                    {
+                        string path = "debug/AutoAdjust";
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+                        CvInvoke.Imwrite(path + "/ImageCap.png", imgSegment);
+                        CvInvoke.Imwrite(path + "/ImageGerber.png", ImgGerber);
+                    }
+                    CvInvoke.FindContours(ImgGerber, contours, null, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
+                    int[] idCheck = GetListContoursAdjust(contours, FOV, 100, 20, 3000);
+                    for (int i = 0; i < contours.Size; i++)
+                    {
+                        if(!idCheck.Contains(i))
+                        {
+                            CvInvoke.DrawContours(ImgGerber, contours, i, new MCvScalar(0), -1);
+                        }
+                    }
+                    int minDiff = ImgGerber.Width * ImgGerber.Height;
+                    int rangeX = 10;
+                    int rangeY = 10;
+                    for (int x = -rangeX; x < rangeX; x++)
+                    {
+                        for (int y = -rangeY; y < rangeY; y++)
+                        {
+                            using (Image<Gray, byte> imgTransform = ImageProcessingUtils.ImageTransformation(imgSegment.Copy(), x, y))
+                            {
+                                CvInvoke.Subtract(ImgGerber, imgTransform, imgTransform);
+                                int count = CvInvoke.CountNonZero(imgTransform);
+                                if(count < minDiff)
+                                {
+                                    minDiff = count;
+                                    ROIAdjust = new Rectangle(CapROI.X + x, CapROI.Y + y, CapROI.Width, CapROI.Height);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return ROIAdjust;
+        }
+        public static Rectangle Adjust2(Image<Bgr, byte> ImgCap, Image<Gray, byte> ImgGerber, Hsv Upper, Hsv Lower, Size FOV, Rectangle CapROI, bool Debug = false)
         {
             Rectangle ROIAdjust = new Rectangle(CapROI.X, CapROI.Y, CapROI.Width, CapROI.Height);
             using (Image<Hsv, byte> ImgHsv = new Image<Hsv, byte>(ImgCap.Size))

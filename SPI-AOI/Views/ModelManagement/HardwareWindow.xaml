@@ -139,10 +139,12 @@
                                                 <ComboBoxItem Content="TOP"></ComboBoxItem>
                                                 <ComboBoxItem Content="BOT"></ComboBoxItem>
                                             </ComboBox>
-                                            <Button x:Name="btAddScan" Width="50" Content="Add" Margin="10,0,0,0
-                                                    " Click="btAddScan_Click"></Button>
-                                            <Button x:Name="btDelScan" Width="50" Content="Delete" Margin="10,0,0,0
-                                                    " Click="btDelScan_Click"></Button>
+                                            <Button x:Name="btAddScan" Width="40" Content="Add" Margin="10,0,0,0"
+                                                    Click="btAddScan_Click"></Button>
+                                            <Button x:Name="btUpdate" Width="45" Content="Update" Margin="10,0,0,0"
+                                                    Click="btUpdate_Click"></Button>
+                                            <Button x:Name="btDelScan" Width="40" Content="Delete" Margin="10,0,0,0"
+                                                    Click="btDelScan_Click"></Button>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                                             <Label Content="Width:"></Label>
@@ -262,8 +264,11 @@
                                                 </StackPanel>
                                             </StackPanel>
                                         </StackPanel>
-                                        <StackPanel Margin="0,20,0,0">
+                                        <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
                                             <Label Content="Teach template:" FontSize="18" FontWeight="Bold"></Label>
+                                            <Button x:Name="btApply" Click="btApply_Click" Margin="20,0,0,0"
+                                                    Width="120" Height="25" Content="Save Mark Point"
+                                                    ></Button>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
                                             <StackPanel>
@@ -356,9 +361,7 @@
                                             <!--<Button x:Name="btAutoAdjust" Click="btAutoAdjust_Click"
                                                     Width="120" Height="30" Content="Auto Adjust FOVs"
                                                     ></Button>-->
-                                            <Button x:Name="btApply" Click="btApply_Click" Margin="20,0,0,0"
-                                                    Width="120" Height="30" Content="Apply"
-                                                    ></Button>
+                                            
                                         </StackPanel>
                                     </StackPanel>
                                 </GroupBox>

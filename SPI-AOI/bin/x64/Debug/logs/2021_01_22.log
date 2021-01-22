@@ -1,0 +1,10 @@
+2021-01-22 15:31:57.8230|Error|Unable to connect to the remote server(ServiceComm.cs:111)|
+2021-01-22 15:31:57.9985|Info|Start services...(MainWindow.xaml.cs:90)|
+2021-01-22 15:31:59.9872|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:550)|
+2021-01-22 15:54:08.9871|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:550)|
+2021-01-22 15:59:49.4879|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:550)|
+2021-01-22 16:00:55.4873|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:550)|
+2021-01-22 16:02:00.4877|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:550)|
+2021-01-22 16:03:05.4885|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:550)|
+2021-01-22 16:04:10.4886|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:550)|
+2021-01-22 16:05:15.4877|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:550)|
