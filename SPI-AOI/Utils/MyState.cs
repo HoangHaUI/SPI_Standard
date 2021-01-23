@@ -48,9 +48,9 @@ namespace SPI_AOI.Utils
                 case Utils.LabelStatus.STOP:
                     return "STOPPED";
                 case Utils.LabelStatus.NOT_FOUND_MARK:
-                    return "NOT FOUND MARK";
+                    return "NOT FOUND\nMARK";
                 case Utils.LabelStatus.CAPTURE_FAIL:
-                    return "CAPTURE IMAGE FAILED";
+                    return "CAPTURE IMAGE\nFAILED";
 
                 default:
                     return "NOT DEFINE";

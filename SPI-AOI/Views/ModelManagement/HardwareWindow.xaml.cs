@@ -574,7 +574,7 @@ namespace SPI_AOI.Views.ModelManagement
                     mLightSource.Close();
                     mScaner.Close();
                 }
-                else if (r == MessageBoxResult.Cancel)
+                else
                 {
                     e.Cancel = true;
                     return;

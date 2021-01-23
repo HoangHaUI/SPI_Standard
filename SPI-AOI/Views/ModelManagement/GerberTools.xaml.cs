@@ -538,10 +538,10 @@ namespace SPI_AOI.Views.ModelManagement
             if (mModel.Gerber is GerberFile || mModel.Cad.Count > 0)
             {
                 mModel.ClearLinkPad();
+                AutoLinkPadWindow autoLinkWD = new AutoLinkPadWindow();
+                autoLinkWD.ShowDialog();
                 foreach (var item in mModel.Cad)
                 {
-                    AutoLinkPadWindow autoLinkWD = new AutoLinkPadWindow();
-                    autoLinkWD.ShowDialog();
                     if(autoLinkWD.ModeLinkPad != Utils.AutoLinkMode.NotLink)
                     {
                         int mode = 0;
@@ -639,18 +639,10 @@ namespace SPI_AOI.Views.ModelManagement
         {
             if (mModel.Gerber is GerberFile || mModel.Cad.Count > 0)
             {
-                List<PadItem> count = mModel.GetPadsInRect(new System.Drawing.Rectangle(0, 0, mModel.Gerber.ProcessingGerberImage.Width, mModel.Gerber.ProcessingGerberImage.Height), Linked: false);
-                
-                if(count.Count == 0)
-                {
-                    List<PadItem> listSelectPad = mModel.GetPadsInRect(mSelectRecangle, Linked: true);
-                    PadconditionWindow padConditionWD = new PadconditionWindow(mModel.Gerber.PadItems, listSelectPad);
-                    padConditionWD.ShowDialog();
-                }
-                else
-                {
-                    MessageBox.Show(string.Format("Please link all pad before settings!..."), "Information", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                List<PadItem> listSelectPad = mModel.GetPadsInRect(mSelectRecangle, Linked: true);
+                listSelectPad.AddRange(mModel.GetPadsInRect(mSelectRecangle, Linked: false));
+                PadconditionWindow padConditionWD = new PadconditionWindow(mModel.Gerber.PadItems, listSelectPad);
+                padConditionWD.ShowDialog();
             }
         }
 

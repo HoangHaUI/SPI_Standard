@@ -125,7 +125,7 @@ namespace SPI_AOI.VI
                                 if(count < minDiff)
                                 {
                                     minDiff = count;
-                                    ROIAdjust = new Rectangle(CapROI.X + x, CapROI.Y + y, CapROI.Width, CapROI.Height);
+                                    ROIAdjust = new Rectangle(CapROI.X - x, CapROI.Y- y, CapROI.Width, CapROI.Height);
                                 }
                             }
                         }

@@ -502,6 +502,7 @@ namespace SPI_AOI.Views.ModelManagement
                         }
                     }
                 }
+                ShowDetail();
                 MessageBox.Show("Reset adjust pad finish!", "Infomation", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
