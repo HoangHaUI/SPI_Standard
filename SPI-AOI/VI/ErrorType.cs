@@ -18,5 +18,6 @@ namespace SPI_AOI.VI
         public static string LowArea = "Low Area";
         public static string PadAreaError = "Pad Area Error";
         public static string SumOfDefects = "Sum Of Defects";
+        public static string SumOfPads = "Sum Of Pads";
     }
 }

@@ -216,7 +216,6 @@ namespace SPI_AOI.Models
                 }
             }
             this.PadItems = PadItem.GetPads(this.GerberID, this.ProcessingGerberImage, this.ROI);
-            
         }
         public void LinkPadWidthFov(Size FOV)
         {
@@ -235,13 +234,13 @@ namespace SPI_AOI.Models
                     }
                 }
             }
-            List<PadItem> padsNotLink = new List<PadItem>();
-            for (int i = 0; i < this.PadItems.Count; i++)
-            {
-                if(this.PadItems[i].FOVs.Count == 0 && this.PadItems[i].Enable && !this.MarkPoint.PadMark.Contains(i))
-                    padsNotLink.Add(this.PadItems[i]);
-            }
-            Console.WriteLine("has {0} pad not link", padsNotLink.Count);
+            //List<PadItem> padsNotLink = new List<PadItem>();
+            //for (int i = 0; i < this.PadItems.Count; i++)
+            //{
+            //    if(this.PadItems[i].FOVs.Count == 0 && this.PadItems[i].Enable && !this.MarkPoint.PadMark.Contains(i))
+            //        padsNotLink.Add(this.PadItems[i]);
+            //}
+            //Console.WriteLine("has {0} pad not link", padsNotLink.Count);
         }
         public void ClearLinkCadItem()
         {

@@ -124,15 +124,10 @@ namespace Heal
                 }
             }
             string ext = Device.Substring(0, i);
-            int currentIndex = Convert.ToInt32(Device.Substring(i, Device.Length - i));
-            int nextIndex = currentIndex + 1;
-            string DeviceH = ext + nextIndex.ToString();
-            string DeviceL = ext + currentIndex.ToString();
-            SLMPResult sta = SetDevice(DeviceH, valueH);
-            if (sta.Status == SLMPStatus.SUCCESSFULLY)
+            if ("MYS".Contains(ext))
             {
-                sta = SetDevice(DeviceL, valueL);
-                if (sta.Status == SLMPStatus.SUCCESSFULLY)
+                SLMPResult staL = SetDevice(Device, value);
+                if (staL.Status == SLMPStatus.SUCCESSFULLY)
                 {
                     return 0;
                 }
@@ -143,8 +138,33 @@ namespace Heal
             }
             else
             {
-                return -1;
+                if(i == Device.Length)
+                {
+                    return -1;
+                }
+                int currentIndex = Convert.ToInt32(Device.Substring(i, Device.Length - i));
+                int nextIndex = currentIndex + 1;
+                string DeviceH = ext + nextIndex.ToString();
+                string DeviceL = ext + currentIndex.ToString();
+                SLMPResult sta = SetDevice(DeviceH, valueH);
+                if (sta.Status == SLMPStatus.SUCCESSFULLY)
+                {
+                    sta = SetDevice(DeviceL, valueL);
+                    if (sta.Status == SLMPStatus.SUCCESSFULLY)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return -1;
+                    }
+                }
+                else
+                {
+                    return -1;
+                }
             }
+            
         }
         public int GetDevice2(string Device)
         {
@@ -158,21 +178,37 @@ namespace Heal
                 }
             }
             string ext = Device.Substring(0, i);
-            int currentIndex = Convert.ToInt32(Device.Substring(i, Device.Length - i));
-            int nextIndex = currentIndex + 1;
-            string DeviceH = ext + nextIndex.ToString();
-            string DeviceL = ext + currentIndex.ToString();
-            int valueL = 0;
-            int valueH = 0;
-            SLMPResult staH = GetDevice(DeviceH);
-            SLMPResult staL = GetDevice(DeviceL);
-            if(staH.Status == SLMPStatus.SUCCESSFULLY && staL.Status == SLMPStatus.SUCCESSFULLY)
+            if ("MYS".Contains(ext))
             {
-                valueH = staH.Value;
-                valueL = staL.Value;
-                valueH = valueH << 16;
-                value = valueH | valueL;
+                SLMPResult staL = GetDevice(Device);
+                if ( staL.Status == SLMPStatus.SUCCESSFULLY)
+                {
+                    value = staL.Value;
+                }
             }
+            else
+            {
+                if (i == Device.Length)
+                {
+                    return -1;
+                }
+                int currentIndex = Convert.ToInt32(Device.Substring(i, Device.Length - i));
+                int nextIndex = currentIndex + 1;
+                string DeviceH = ext + nextIndex.ToString();
+                string DeviceL = ext + currentIndex.ToString();
+                int valueL = 0;
+                int valueH = 0;
+                SLMPResult staH = GetDevice(DeviceH);
+                SLMPResult staL = GetDevice(DeviceL);
+                if (staH.Status == SLMPStatus.SUCCESSFULLY && staL.Status == SLMPStatus.SUCCESSFULLY)
+                {
+                    valueH = staH.Value;
+                    valueL = staL.Value;
+                    valueH = valueH << 16;
+                    value = valueH | valueL;
+                }
+            }
+                
             return value;
         }
         public SLMPResult SetDevice(string device, int value)

@@ -308,5 +308,17 @@
     <Setting Name="PLC_BIT_CONFIRM_PASS" Type="System.String" Scope="User">
       <Value Profile="(Default)">M937</Value>
     </Setting>
+    <Setting Name="PLC_GO_HOME_TOP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">S75</Value>
+    </Setting>
+    <Setting Name="PLC_GO_HOME_BOT" Type="System.String" Scope="User">
+      <Value Profile="(Default)">S76</Value>
+    </Setting>
+    <Setting Name="PLC_GO_HOME_CONVEYOR" Type="System.String" Scope="User">
+      <Value Profile="(Default)">S4</Value>
+    </Setting>
+    <Setting Name="PLC_GO_HOME_ALL" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M2999</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

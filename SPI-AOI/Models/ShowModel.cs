@@ -90,7 +90,7 @@ namespace SPI_AOI.Models
                 {
                     CvInvoke.Add(model.ImgGerberProcessedBgr, imgAddLayerColor, model.ImgGerberProcessedBgr, mask: model.Gerber.ProcessingGerberImage);
                 }
-                CvInvoke.DrawContours(model.ImgGerberProcessedBgr, contoursRemove, -1, new MCvScalar(0,0,0), -1);
+                CvInvoke.DrawContours(model.ImgGerberProcessedBgr, contoursRemove, -1, new MCvScalar(30,30,30), -1);
             }
             model.ImgGerberProcessedBgr.ROI = Rectangle.Empty;
             model.Gerber.ProcessingGerberImage.ROI = Rectangle.Empty;

@@ -97,6 +97,13 @@
                         <Image Source="../Resources/Icons/camera-hozi.png" Width="25"/>
                     </Button>
                     <Separator/>
+                    <Button x:Name="btPLCMonitor" 
+                            ToolTip="PLC Monitor" 
+                            Style="{StaticResource btToolBarStyle}"
+                            Click="btPLCMonitor_Click">
+                        <Image Source="../Resources/Icons/plc-removebg.png" Width="25" Height="25"/>
+                    </Button>
+                    <Separator/>
                     <Button x:Name="btMachineIssue" 
                             ToolTip="Machine solution define" 
                             Style="{StaticResource btToolBarStyle}"
@@ -112,7 +119,7 @@
                     <Separator/>
                     <Button x:Name="btAlarm" ToolTip="Machine alarm solution" 
                             Style="{StaticResource btToolBarStyle}"
-                            Click="btRun_Click">
+                            Click="btAlarm_Click">
                         <Image Source="../Resources/Icons/bell.png" Width="25"/>
                     </Button>
                     <Separator/>

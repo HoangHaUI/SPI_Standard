@@ -206,11 +206,18 @@ namespace SPI_AOI.Devices
             else
                 return -1;
         }
-        public int Get_Speed()
+        public int Get_Speed_Setup_Top()
         {
             return mSLMP.GetDevice2(mParam.PLC_REG_SPEED_TOP);
         }
-        
+        public int Get_Speed_Setup_Bot()
+        {
+            return mSLMP.GetDevice2(mParam.PLC_REG_SPEED_BOT);
+        }
+        public int Get_Speed_Setup_Conveyor()
+        {
+            return mSLMP.GetDevice2(mParam.PLC_REG_SPEED_CONVEYOR);
+        }
         public int Set_X_Top(int value)
         {
             mSLMP.SetDevice2(mParam.PLC_REG_X_TOP, value);
@@ -367,6 +374,22 @@ namespace SPI_AOI.Devices
         public int Get_Go_Coordinates_Finish_Setup_Bot()
         {
             return mSLMP.GetDevice(mParam.PLC_BIT_GO_COORDINATES_FINISH_SETUP_BOT).Value;
+        }
+        public int Set_Go_Home_Top()
+        {
+            return mSLMP.SetDevice(mParam.PLC_GO_HOME_TOP, 1).Value;
+        }
+        public int Set_Go_Home_Bot()
+        {
+            return mSLMP.SetDevice(mParam.PLC_GO_HOME_BOT, 1).Value;
+        }
+        public int Set_Go_Home_Conveyor()
+        {
+            return mSLMP.SetDevice(mParam.PLC_GO_HOME_CONVEYOR, 1).Value;
+        }
+        public int Set_Go_Home_All()
+        {
+            return mSLMP.SetDevice(mParam.PLC_GO_HOME_ALL, 1).Value;
         }
     }
 }

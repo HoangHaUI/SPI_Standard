@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -61,6 +62,7 @@ namespace SPI_AOI.Views
         bool mIsCheck = true;
         bool mIsLoaded = false;
         bool mIsShowError = false;
+        bool mShowedAlarmForm = false;
         Model mModel = null;
         public MainWindow()
         {
@@ -599,10 +601,15 @@ namespace SPI_AOI.Views
                 if (!mIsCheck)
                     return;
                 int valAlarmMachine = mPlcComm.Get_Error_Machine();
-                if (valAlarmMachine == 1 && !mIsShowError)
+                if (valAlarmMachine == 1 && !mShowedAlarmForm)
                 {
+                    mShowedAlarmForm = true;
                     MainConfigWindow.AlarmForm alarm = new MainConfigWindow.AlarmForm();
                     alarm.ShowDialog();
+                }
+                else
+                {
+                    mShowedAlarmForm = false;
                 }
                 Thread.Sleep(20);
                 if (!mIsCheck)
@@ -727,8 +734,8 @@ namespace SPI_AOI.Views
                     int shiftX = mMyDatabase.CountDefect(modelName, VI.ErrorType.ShiftX, dt[0], dt[1]);
                     int shiftY = mMyDatabase.CountDefect(modelName, VI.ErrorType.ShiftY, dt[0], dt[1]);
                     int padAreaError = mMyDatabase.CountDefect(modelName, VI.ErrorType.PadAreaError, dt[0], dt[1]);
-                    int sum = missing + insufficient + bridge + excess + overArea + lowArea + shiftX + shiftY + padAreaError;
-                    sum = sum == 0 ? 1 : sum;
+                    int sumDf = missing + insufficient + bridge + excess + overArea + lowArea + shiftX + shiftY + padAreaError;
+                    int sum = sumDf == 0 ? 1 : sumDf;
                     sumOfPad = sumOfPad == 0 ? 1 : sumOfPad;
                     double scalePPM = 1000000 / sumOfPad;
                     mSummary.Clear();
@@ -741,7 +748,8 @@ namespace SPI_AOI.Views
                     mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.ShiftX, Count = shiftX,             PPM = Convert.ToInt32(shiftX * scalePPM), Rate = Math.Round((double)shiftX * 100 / sum, 2) });
                     mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.ShiftY, Count = shiftY,             PPM = Convert.ToInt32(shiftY * scalePPM), Rate = Math.Round((double)shiftY * 100 / sum, 2) });
                     mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.PadAreaError, Count = padAreaError, PPM = Convert.ToInt32(padAreaError * scalePPM), Rate = Math.Round((double)padAreaError * 100 / sum, 2) });
-                    mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.SumOfDefects, Count = sum,          PPM = Convert.ToInt32(sum * scalePPM), Rate = Math.Round((double)sum * 100 / sum, 2) });
+                    mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.SumOfDefects, Count = sumDf,        PPM = Convert.ToInt32(sumDf * scalePPM), Rate = Math.Round((double)sumDf * 100 / sum, 2) });
+                    mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.SumOfPads, Count = sumOfPad});
                     dgwSummary.Items.Refresh();
                 });
                 
@@ -935,13 +943,16 @@ namespace SPI_AOI.Views
         private void LoadDetails()
         {
             this.Dispatcher.Invoke(() => {
-                lbModelName.Content = mModel.Name;
+                lbModelName.Content = mModel == null? "By Pass" : mModel.Name;
                 lbLoadTime.Content = DateTime.Now.ToString("HH:mm:ss   dd/MM/yyyy");
-                lbFovs.Content = mModel.Gerber.FOVs.Count.ToString() + " FOVs";
-                lbGerberFile.Content = mModel.Gerber.FileName;
-                lbTotalCountFovs.Content = mModel.Gerber.FOVs.Count.ToString();
-                lbNoPad.Content = mModel.Gerber.PadItems.Count.ToString() + " Pad";
-                cbModelStatistical.SelectedItem = cbModelsName.SelectedItem;
+                lbFovs.Content = mModel == null ? "0 FOVs" : mModel.Gerber.FOVs.Count.ToString() + " FOVs";
+                lbGerberFile.Content = mModel == null ? "NULL" : mModel.Gerber.FileName;
+                lbTotalCountFovs.Content = mModel == null ? "0" : mModel.Gerber.FOVs.Count.ToString();
+                lbNoPad.Content = mModel == null ? "0 Pads" : mModel.Gerber.PadItems.Count.ToString() + " Pads";
+                if(mModel != null)
+                {
+                    cbModelStatistical.SelectedItem = cbModelsName.SelectedItem;
+                }
             });
         }
         private void ResetDetails()
@@ -1160,7 +1171,13 @@ namespace SPI_AOI.Views
         {
             mIsRunning = false;
             ResetUI();
-            mLight.ActiveFour(0, 0, 0, 0);
+            if (mLight != null)
+            {
+                if (mLight.Serial.IsOpen)
+                {
+                    mLight.ActiveFour(0, 0, 0, 0);
+                }
+            }
             ReleaseResource();
             ResetDetails();
             SetDisplayFOV(-1);
@@ -1227,9 +1244,19 @@ namespace SPI_AOI.Views
         {
             if(!mIsRunning)
             {
-                if (cbModelsName.SelectedIndex > -1)
+                if (cbModelsName.SelectedIndex > -1 && mParam.RUNNING_MODE != 2)
                 {
                     StartRunMode();
+                }
+                else
+                {
+                    SetButtonRun(Utils.RunMode.START);
+                    UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.READY);
+                    LoadDetails();
+                    mIsRunning = true;
+                    mTimer.Elapsed += OnMainEvent;
+                    mTimer.Enabled = true;
+                    mIsInTimer = false;
                 }
             }
             else
@@ -1550,6 +1577,24 @@ namespace SPI_AOI.Views
                 Histories.HistoryWindow hist = new Histories.HistoryWindow();
                 hist.ShowDialog();
             }
+        }
+
+        private void btPLCMonitor_Click(object sender, RoutedEventArgs e)
+        {
+            var userType = Login();
+            if (userType == UserManagement.UserType.Admin ||
+                userType == UserManagement.UserType.Designer ||
+                userType == UserManagement.UserType.Engineer)
+            {
+                Views.MainConfigWindow.PLCMonitor PLCMonitorForm = new Views.MainConfigWindow.PLCMonitor();
+                PLCMonitorForm.ShowDialog();
+            }
+        }
+
+        private void btAlarm_Click(object sender, RoutedEventArgs e)
+        {
+            MainConfigWindow.AlarmForm alarm = new MainConfigWindow.AlarmForm();
+            alarm.ShowDialog();
         }
     }
 }

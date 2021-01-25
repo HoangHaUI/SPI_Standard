@@ -12,7 +12,7 @@ namespace SPI_AOI.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -1244,6 +1244,54 @@ namespace SPI_AOI.Properties {
             }
             set {
                 this["PLC_BIT_CONFIRM_PASS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("S75")]
+        public string PLC_GO_HOME_TOP {
+            get {
+                return ((string)(this["PLC_GO_HOME_TOP"]));
+            }
+            set {
+                this["PLC_GO_HOME_TOP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("S76")]
+        public string PLC_GO_HOME_BOT {
+            get {
+                return ((string)(this["PLC_GO_HOME_BOT"]));
+            }
+            set {
+                this["PLC_GO_HOME_BOT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("S4")]
+        public string PLC_GO_HOME_CONVEYOR {
+            get {
+                return ((string)(this["PLC_GO_HOME_CONVEYOR"]));
+            }
+            set {
+                this["PLC_GO_HOME_CONVEYOR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("M2999")]
+        public string PLC_GO_HOME_ALL {
+            get {
+                return ((string)(this["PLC_GO_HOME_ALL"]));
+            }
+            set {
+                this["PLC_GO_HOME_ALL"] = value;
             }
         }
     }

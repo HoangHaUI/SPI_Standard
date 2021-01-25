@@ -83,7 +83,7 @@ namespace SPI_AOI.Views.UserManagement
         }
         private void InitUser()
         {
-            string adminInfo = "admin_Admin_iot,thieu_Engineer_123";
+            string adminInfo = "admin_Admin_iot,thieu_Engineer_123,hungmeb06_Engineer_foxconn123,tinhmeb06_Engineer_foxconn456";
             byte[] bytes = ASCIIEncoding.ASCII.GetBytes(adminInfo);
             string base64 = Convert.ToBase64String(bytes);
             File.WriteAllText(UserPath, base64);

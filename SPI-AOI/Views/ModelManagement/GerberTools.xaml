@@ -52,11 +52,6 @@
                         <MenuItem x:Name="chbShowComponentCenter" Header="_Show Component Center" IsCheckable="True" Click="chbShowComponentCenter_Click"></MenuItem>
                         <MenuItem x:Name="chbShowComponentName" Click="chbShowComponentName_Click" Header="_Show Component Name" IsCheckable="True"></MenuItem>
                     </MenuItem>
-                    <MenuItem Header="_Short Keys" Margin="5">
-                        <MenuItem Header="_Open Gerber file"></MenuItem>
-                        <MenuItem Header="_Open CAD file"></MenuItem>
-                        <MenuItem Header="_"></MenuItem>
-                    </MenuItem>
                     <MenuItem Header="_Help" Margin="5">
                         <MenuItem Header="_Open Gerber file"></MenuItem>
                         <MenuItem Header="_Open CAD file"></MenuItem>
@@ -85,13 +80,13 @@
                     <Button x:Name="btRotation"
                             Click="btRotation_Click" Width="35"
                             Height="35" Margin="5,0,5,0"
-                            ToolTip="Manual adjust R - XY">
+                            ToolTip="Rotation + Transformation">
                         <Image Source="../../Resources/Icons/rotation.png"></Image>
                     </Button>
                     <Button x:Name="btRemovePad"
                             Click="btRemovePad_Click" Width="35"
                             Height="35" Margin="5,0,5,0"
-                            ToolTip="Remove Pad (Ctrl + X)">
+                            ToolTip="Delete Pad (Ctrl + X)">
                         <Image Source="../../Resources/Icons/x_red2.png"></Image>
                     </Button>
                     <Button x:Name="btSelectPad"
@@ -103,7 +98,7 @@
                     <Button x:Name="btAdjustsadxXY" 
                             Click="btAdjustXY_Click" Width="35"
                             Height="35" Margin="5,0,5,0"
-                            ToolTip="Auto Adjsut XY">
+                            ToolTip="Auto Alignment">
                         <Image Source="../../Resources/Icons/copy.png"></Image>
                     </Button>
                     <Button x:Name="btLinkPad" 
@@ -115,7 +110,7 @@
                     <Button x:Name="btSetLinkPad" 
                             Click="btSetLinkPad_Click" Width="35"
                             Height="35" Margin="5,0,5,0"
-                            ToolTip="Set Pad Name">
+                            ToolTip="Set Component Name">
                         <Image Source="../../Resources/Icons/D10.png"></Image>
                     </Button>
                     <Button x:Name="btDeleteLinkPad" 
@@ -127,7 +122,7 @@
                     <Button x:Name="btPadSettings" 
                             Click="btPadSettings_Click" Width="35"
                             Height="35" Margin="5,0,5,0"
-                            ToolTip="Pad settings">
+                            ToolTip="Pad spect settings">
                         <Image Source="../../Resources/Icons/settings.png"></Image>
                     </Button>
                     <Button x:Name="btMark1" 
@@ -145,6 +140,7 @@
                     <Button x:Name="btSaveGerber" 
                             Click="btSaveGerber_Click" Width="35"
                             Height="35" Margin="5,0,5,0"
+                            Opacity="0.2"
                             ToolTip="Save gerber image">
                         <Image Source="../../Resources/Icons/save.png"></Image>
                     </Button>
