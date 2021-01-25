@@ -115,32 +115,44 @@ namespace SPI_AOI.Views
                 ResetUI();
                 UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.PROCESSING);
                 UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PROCESSING);
-                int result = Processing();
-                mIsProcessing = false; 
-                mPlcComm.Reset_Has_Product_Top();
-                if(result == 0)
+                if(mParam.RUNNING_MODE != 2)
                 {
-                    mPlcComm.Set_Pass();
-                    UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PASS);
+                    int result = Processing();
+                    mIsProcessing = false;
+                    mPlcComm.Reset_Has_Product_Top();
+                    if (result == 0)
+                    {
+                        mPlcComm.Set_Pass();
+                        UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PASS);
+                    }
+                    else
+                    {
+                        mPlcComm.Set_Fail();
+                        if (result == -1)
+                        {
+                            UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.FAIL);
+                            ShowError(true);
+                        }
+                        else if (result == -2)
+                        {
+                            UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.CAPTURE_FAIL);
+                        }
+                        else if (result == -3)
+                        {
+                            UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.NOT_FOUND_MARK);
+                        }
+
+                    }
                 }
                 else
                 {
-                    mPlcComm.Set_Fail();
-                    if (result == -1)
-                    {
-                        UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.FAIL);
-                        ShowError(true);
-                    }
-                    else if(result == -2)
-                    {
-                        UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.CAPTURE_FAIL);
-                    }
-                    else if (result == -3)
-                    {
-                        UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.NOT_FOUND_MARK);
-                    }
-                    
+                    // by pass mode
+                    mIsProcessing = false;
+                    mPlcComm.Reset_Has_Product_Top();
+                    mPlcComm.Set_Pass();
+                    UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PASS);
                 }
+                
                 GC.Collect();
                 Heal.FilesManagement.DeleteFiles(mParam.SAVE_IMAGE_PATH, mParam.SAVE_IMAGE_HOURS, subfolder: true);
             }
@@ -1531,8 +1543,11 @@ namespace SPI_AOI.Views
             {
                 for (int i = 0; i < mPadErrorDetails.Count; i++)
                 {
-                    Utils.PadErrorControl item = stackPadError.Items[i] as Utils.PadErrorControl;
-                    item.SetStatus(0);
+                    if(i < stackPadError.Items.Count)
+                    {
+                        Utils.PadErrorControl item = stackPadError.Items[i] as Utils.PadErrorControl;
+                        item.SetStatus(0);
+                    }
                     mPadErrorDetails[i].ConfirmResult = "PASS";
                 }
             }

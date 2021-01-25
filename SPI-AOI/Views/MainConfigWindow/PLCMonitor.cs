@@ -73,7 +73,7 @@ namespace SPI_AOI.Views.MainConfigWindow
                     txtX_Top.Text = xTop.ToString();
                     txtY_Top.Text = yTop.ToString();
                     txtX_Bot.Text = xBot.ToString();
-                    txtX_Bot.Text = yBot.ToString();
+                    txtY_Bot.Text = yBot.ToString();
                     txtY_Conveyor.Text = yConveyor.ToString();
                     txtSpeedTop.Text = speedTop.ToString();
                     txtSpeedBot.Text = speedBot.ToString();
@@ -216,13 +216,13 @@ namespace SPI_AOI.Views.MainConfigWindow
         private void btGoBot_ConveyorAxis_MouseDown(object sender, MouseEventArgs e)
         {
             mPLCComm.Login();
-            mPLCComm.Set_Go_Up_Conveyor();
+            mPLCComm.Set_Go_Down_Conveyor();
         }
 
         private void btGoBot_ConveyorAxis_MouseUp(object sender, MouseEventArgs e)
         {
             mPLCComm.Login();
-            mPLCComm.Reset_Go_Up_Conveyor();
+            mPLCComm.Reset_Go_Down_Conveyor();
         }
 
         private void btLoadPanel_Click(object sender, EventArgs e)

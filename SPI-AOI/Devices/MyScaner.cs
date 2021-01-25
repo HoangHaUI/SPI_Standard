@@ -122,8 +122,14 @@ namespace SPI_AOI.Devices
         }
         public void ReleaseBuffer()
         {
-            mScanPort.DiscardInBuffer();
-            mScanPort.DiscardOutBuffer();
+            if(mScanPort != null)
+            {
+                if(mScanPort.IsOpen)
+                {
+                    mScanPort.DiscardInBuffer();
+                    mScanPort.DiscardOutBuffer();
+                }
+            }
         }
     }
 }
