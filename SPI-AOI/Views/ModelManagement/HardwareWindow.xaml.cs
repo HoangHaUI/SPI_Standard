@@ -234,8 +234,8 @@ namespace SPI_AOI.Views.ModelManagement
                             img.ROI = System.Drawing.Rectangle.Empty;
                             CvInvoke.Line(img, new System.Drawing.Point(0, img.Height / 2), new System.Drawing.Point(img.Width, img.Height / 2), new MCvScalar(255, 0, 0), 1);
                             CvInvoke.Line(img, new System.Drawing.Point(img.Width / 2, 0), new System.Drawing.Point(img.Width / 2, img.Height), new MCvScalar(255, 0, 0), 1);
-                            CvInvoke.Rectangle(img, rectScan, new MCvScalar(0, 255, 0), 1);
-                            CvInvoke.Rectangle(img, rectSearch, new MCvScalar(0, 255, 255), 1);
+                            CvInvoke.Rectangle(img, rectScan, new MCvScalar(0, 255, 0),2);
+                            CvInvoke.Rectangle(img, rectSearch, new MCvScalar(0, 255, 255), 2);
                             this.Dispatcher.Invoke(() => {
                                 BitmapSource bmsMark = Utils.Convertor.Bitmap2BitmapSource(imgSearchBgr.Bitmap);
                                 imbBinaryMark.Source = bmsMark;

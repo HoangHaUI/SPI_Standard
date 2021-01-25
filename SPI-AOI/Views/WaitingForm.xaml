@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SPI_AOI.Views"
         mc:Ignorable="d"
-        Title="WaitingForm" WindowStartupLocation="CenterScreen" Background="#FFF0F0F0" Height="120" Width="350" ResizeMode="NoResize" ShowInTaskbar="False" WindowStyle="None">
+        Title="WaitingForm" WindowStartupLocation="CenterScreen" Background="#FFF0F0F0" Height="120" Width="350" ResizeMode="NoResize" ShowInTaskbar="True" WindowStyle="SingleBorderWindow">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>

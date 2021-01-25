@@ -538,11 +538,11 @@ namespace SPI_AOI.Views.ModelManagement
             if (mModel.Gerber is GerberFile || mModel.Cad.Count > 0)
             {
                 mModel.ClearLinkPad();
-                AutoLinkPadWindow autoLinkWD = new AutoLinkPadWindow();
-                autoLinkWD.ShowDialog();
                 foreach (var item in mModel.Cad)
                 {
-                    if(autoLinkWD.ModeLinkPad != Utils.AutoLinkMode.NotLink)
+                    AutoLinkPadWindow autoLinkWD = new AutoLinkPadWindow();
+                    autoLinkWD.ShowDialog();
+                    if (autoLinkWD.ModeLinkPad != Utils.AutoLinkMode.NotLink)
                     {
                         int mode = 0;
                         if (autoLinkWD.ModeLinkPad == Utils.AutoLinkMode.RnC)
