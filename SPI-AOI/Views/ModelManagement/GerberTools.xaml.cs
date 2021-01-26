@@ -433,7 +433,7 @@ namespace SPI_AOI.Views.ModelManagement
                 List<PadItem> padSelectedNotLink = mModel.GetPadsInRect(mSelectRecangle);
                 if(padSelectedLink.Count > 0 || padSelectedNotLink .Count > 0)
                 {
-                    var r = MessageBox.Show(string.Format("Are you want to delete pads ?"), 
+                    var r = MessageBox.Show(string.Format("You want to set Untest pads selected ?"), 
                         "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                     if(r == MessageBoxResult.Yes)
                     {
@@ -754,6 +754,39 @@ namespace SPI_AOI.Views.ModelManagement
                 }
             }
 
+        }
+
+        private void btActivePad_Click(object sender, RoutedEventArgs e)
+        {
+            if (mModel.Gerber is GerberFile)
+            {
+                List<PadItem> padSelectedLink = mModel.GetPadsInRect(mSelectRecangle, true);
+                List<PadItem> padSelectedNotLink = mModel.GetPadsInRect(mSelectRecangle);
+                if (padSelectedLink.Count > 0 || padSelectedNotLink.Count > 0)
+                {
+                    var r = MessageBox.Show(string.Format("You want to set test pads selected ?"),
+                        "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    if (r == MessageBoxResult.Yes)
+                    {
+                        foreach (var item in padSelectedLink)
+                        {
+                            item.Enable = true;
+                        }
+                        foreach (var item in padSelectedNotLink)
+                        {
+                            item.Enable = true;
+                        }
+                        ShowAllLayerImb(ActionMode.Update_Color_Gerber);
+                        mSelectRecangle = System.Drawing.Rectangle.Empty;
+                        imBox.Refresh();
+                        UpdateListImportedFile();
+                    }
+                }
+            }
+            else
+            {
+
+            }
         }
     }
 }

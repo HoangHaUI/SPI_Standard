@@ -527,3 +527,4 @@ D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI-AO
 C:\Users\Public\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI-AOI.csproj.ResolveComReference.cache
 D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI_AOI.Views.MainConfigWindow.PLCMonitor.resources
 C:\Users\Public\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI_AOI.Views.MainConfigWindow.PLCMonitor.resources
+D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI_AOI.Views.MainConfigWindow.InsertSNForm.resources

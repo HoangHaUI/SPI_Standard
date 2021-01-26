@@ -25698,3 +25698,54 @@ Parameter name: startIndex(SLMP.cs:338)|
 2021-01-26 11:30:15.9026|Info|Moving TOP Axis, Position Name : FOV 18,  X = 6976, Y = 38674(MainWindow.xaml.cs:342)|
 2021-01-26 11:30:16.7932|Info|Moving TOP Axis, Position Name : FOV 19,  X = 11295, Y = 38276(MainWindow.xaml.cs:342)|
 2021-01-26 11:30:17.7149|Info|Moving TOP Axis, Position Name : FOV 20,  X = 14442, Y = 38347(MainWindow.xaml.cs:342)|
+2021-01-26 13:38:39.3974|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:573)|
+2021-01-26 13:39:20.4027|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:573)|
+2021-01-26 13:41:02.8985|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:573)|
+2021-01-26 13:43:04.3049|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:573)|
+2021-01-26 14:09:01.8977|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 14:10:06.8971|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 14:15:36.8983|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 14:16:24.4002|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 14:16:24.4681|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-26 14:16:26.0209|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-26 14:16:27.5697|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-26 14:16:29.1176|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-26 14:16:31.6748|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-26 14:16:32.1874|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-26 14:16:34.7515|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-26 14:16:35.2632|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-26 14:17:06.1366|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-26 14:17:07.3975|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 14:17:07.7213|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-26 14:17:09.2732|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-26 14:17:10.8220|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-26 14:17:12.3719|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-26 14:17:13.9227|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-26 14:17:15.4736|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-26 14:40:16.8983|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 14:42:43.9001|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 14:43:49.9025|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 14:44:55.8979|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 14:49:39.0585|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 14:50:36.3053|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 14:54:01.7867|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 15:05:36.8570|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 15:14:20.3626|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 15:17:43.3985|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 15:19:40.2888|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|
+2021-01-26 15:20:45.5892|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:598)|

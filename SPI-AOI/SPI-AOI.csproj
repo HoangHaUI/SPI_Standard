@@ -177,6 +177,7 @@
     <Compile Include="Models\ShowModel.cs" />
     <Compile Include="Models\Utils.cs" />
     <Compile Include="Utils\CalibrateLoader.cs" />
+    <Compile Include="Utils\Disable2W.cs" />
     <Compile Include="Utils\LightSrcCtl.cs" />
     <Compile Include="Utils\MyEnum.cs" />
     <Compile Include="Utils\MyState.cs" />
@@ -204,6 +205,12 @@
     </Compile>
     <Compile Include="Views\MainConfigWindow\AlgorithmSettings.Designer.cs">
       <DependentUpon>AlgorithmSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainConfigWindow\InsertSNForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MainConfigWindow\InsertSNForm.Designer.cs">
+      <DependentUpon>InsertSNForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\MainConfigWindow\IOConfigForm.cs">
       <SubType>Form</SubType>
@@ -382,6 +389,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\Icons\active.png" />
+    <Resource Include="Resources\Icons\flipx.png" />
+    <Resource Include="Resources\Icons\flipy.png" />
+    <EmbeddedResource Include="Views\MainConfigWindow\InsertSNForm.resx">
+      <DependentUpon>InsertSNForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\MainConfigWindow\PLCMonitor.resx">
       <DependentUpon>PLCMonitor.cs</DependentUpon>
     </EmbeddedResource>

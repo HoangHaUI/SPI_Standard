@@ -1294,5 +1294,17 @@ namespace SPI_AOI.Properties {
                 this["PLC_GO_HOME_ALL"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DO_READ_CODE {
+            get {
+                return ((bool)(this["DO_READ_CODE"]));
+            }
+            set {
+                this["DO_READ_CODE"] = value;
+            }
+        }
     }
 }

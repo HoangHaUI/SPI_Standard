@@ -320,5 +320,8 @@
     <Setting Name="PLC_GO_HOME_ALL" Type="System.String" Scope="User">
       <Value Profile="(Default)">M2999</Value>
     </Setting>
+    <Setting Name="DO_READ_CODE" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

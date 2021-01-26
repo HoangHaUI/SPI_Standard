@@ -49,7 +49,6 @@ namespace SPI_AOI.Views
         Devices.MyScaner mScaner = Devices.MyScaner.GetInstance();
 
         // proccessing vatiabe
-        Image<Bgr, byte> mImageGraft = null;
         List<System.Drawing.Rectangle> mROIFOVImage = new List<System.Drawing.Rectangle>();
         List<Utils.PadErrorDetail> mPadErrorDetails = new List<Utils.PadErrorDetail>();
         int mSumPadModel = 0;
@@ -115,6 +114,8 @@ namespace SPI_AOI.Views
                 ResetUI();
                 UpdateStatus(Utils.LabelMode.MACHINE_STATUS, Utils.LabelStatus.PROCESSING);
                 UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PROCESSING);
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
                 if(mParam.RUNNING_MODE != 2)
                 {
                     int result = Processing();
@@ -141,7 +142,6 @@ namespace SPI_AOI.Views
                         {
                             UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.NOT_FOUND_MARK);
                         }
-
                     }
                 }
                 else
@@ -152,7 +152,11 @@ namespace SPI_AOI.Views
                     mPlcComm.Set_Pass();
                     UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.PASS);
                 }
-                
+                this.Dispatcher.Invoke(() =>
+                {
+                    double cycleTime = (sw.ElapsedMilliseconds / 1000.0) + 3; // 3s for unload
+                    lbSN.Content = Math.Round(cycleTime, 2).ToString() + " s";
+                });
                 GC.Collect();
                 Heal.FilesManagement.DeleteFiles(mParam.SAVE_IMAGE_PATH, mParam.SAVE_IMAGE_HOURS, subfolder: true);
             }
@@ -272,6 +276,14 @@ namespace SPI_AOI.Views
                                 mMyDatabase.InsertNewImage(ID, DateTime.Now, fileName, i, ROI, new System.Drawing.Rectangle(), "ReadCode");
                             });
                             isDB.Start();
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                using (var bm = image.Bitmap)
+                                {
+                                    BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(bm);
+                                    ImbCameraView.Source = bms;
+                                }
+                            });
                         }
                         else
                         {
@@ -328,11 +340,6 @@ namespace SPI_AOI.Views
             Thread[] publishThread = new Thread[Fovs.Length];
             bool[] threadStatus = new bool[Fovs.Length];
             ReleasePadErrorAndFOVImage();
-            if(mImageGraft != null)
-            {
-                mImageGraft.Dispose();
-                mImageGraft = null;
-            }
             for (int i = 0; i < xyAxisPosition.Length; i++)
             {
                 DateTime now = DateTime.Now;
@@ -422,9 +429,12 @@ namespace SPI_AOI.Views
                             publishThread[i].Start();
                             this.Dispatcher.Invoke(() =>
                             {
-                                BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(imgTransform.Bitmap);
-                                ImbCameraView.Source = bms;
-                                lbcountFovs.Content = (i + 1).ToString();
+                                using (var bm = imgTransform.Bitmap)
+                                {
+                                    BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(bm);
+                                    ImbCameraView.Source = bms;
+                                    lbcountFovs.Content = (i + 1).ToString();
+                                }
                             });
                             Thread isDB = new Thread(() =>
                             {
@@ -489,13 +499,28 @@ namespace SPI_AOI.Views
             Utils.MarkAdjust markAdjustInfo = CaptureMark(ID, savePath, lightStrobe);
             if (markAdjustInfo.Status == Utils.ActionStatus.Successfully)
             {
-                sn = CaptureSN(ID, savePath, lightStrobe);
-                string allsn = "";
-                for (int i = 0; i < sn.Length; i++)
+
+                string allsn = "Dont Read";
+                if (mParam.DO_READ_CODE)
                 {
-                    allsn += sn[i];
-                    if (i != sn.Length - 1)
-                        allsn += ",";
+                    sn = CaptureSN(ID, savePath, lightStrobe);
+                    for (int i = 0; i < sn.Length; i++)
+                    {
+                        if (sn[i] == "NOT FOUND")
+                        {
+                            using (Views.MainConfigWindow.InsertSNForm insertSNForm = new MainConfigWindow.InsertSNForm())
+                            {
+                                insertSNForm.ShowDialog();
+                                sn[i] = insertSNForm.SN_Input;
+                            }
+                        }
+                    }
+                    for (int i = 0; i < sn.Length; i++)
+                    {
+                        allsn += sn[i];
+                        if (i != sn.Length - 1)
+                            allsn += ",";
+                    }
                 }
                 this.Dispatcher.Invoke(() =>
                 {
@@ -976,6 +1001,7 @@ namespace SPI_AOI.Views
                 lbSN.Content = "-----";
                 lbNoPad.Content = "-----";
                 lbTotalCountFovs.Content = "0";
+                lbCycleTime.Content = "-----";
             });
             
         }
@@ -1296,20 +1322,40 @@ namespace SPI_AOI.Views
         {
             var userType = Login();
             if (userType == UserManagement.UserType.Admin ||
-                userType == UserManagement.UserType.Designer ||
-                userType == UserManagement.UserType.Engineer)
+                userType == UserManagement.UserType.Designer)
             {
                 Views.MainConfigWindow.AlgorithmSettings algorithmForm = new Views.MainConfigWindow.AlgorithmSettings();
                 algorithmForm.ShowDialog();
                 UpdateRunningMode();
             }
+            else
+            {
+                if (userType == UserManagement.UserType.Engineer ||
+                   userType == UserManagement.UserType.Worker || userType == UserManagement.UserType.Client)
+                    MessageBox.Show("you don't have permission to access?", "Security", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            mIsCheck = false;
-            mTimerCheckStatus.Enabled = false;
-            Thread.Sleep(500);
+            var quit = MessageBox.Show("You want to quit?", "Quit", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            if(quit == MessageBoxResult.Yes)
+            {
+                mIsRunning = false;
+                ResetUI();
+                if (mLight != null)
+                {
+                    if (mLight.Serial.IsOpen)
+                    {
+                        mLight.ActiveFour(0, 0, 0, 0);
+                    }
+                }
+                ReleaseResource();
+                ShowError(false);
+                mIsCheck = false;
+                mTimerCheckStatus.Enabled = false;
+                Thread.Sleep(500);
+            }
         }
 
         private void btExit_Click(object sender, RoutedEventArgs e)
@@ -1357,7 +1403,7 @@ namespace SPI_AOI.Views
             {
                 mIsShowError = true;
                 this.Dispatcher.Invoke(() => {
-                    int lm = mPadErrorDetails.Count > mParam.LIMIT_SHOW_ERROR ? mParam.LIMIT_SHOW_ERROR : mPadErrorDetails.Count; // 
+                    int lm = mPadErrorDetails.Count > mParam.LIMIT_SHOW_ERROR ? mParam.LIMIT_SHOW_ERROR : mPadErrorDetails.Count;
                     for (int i = 0; i < lm; i++)
                     {
                         Utils.PadErrorControl item = new Utils.PadErrorControl(mPadErrorDetails[i].PadImage.Bitmap, mPadErrorDetails[i].Pad.NoID);
@@ -1370,17 +1416,14 @@ namespace SPI_AOI.Views
                     ColStatistical.Width = new GridLength(0);
                     chartForm.Visibility = Visibility.Hidden;
                     bdFOVError.Visibility = Visibility.Visible;
+                    stackPadError.SelectedIndex = 0;
                 });
             }
             else
             {
                 mIsShowError = false; this.Dispatcher.Invoke(() =>
                 {
-                    if(mImageGraft != null)
-                    {
-                        mImageGraft.Dispose();
-                        mImageGraft = null;
-                    }
+                    imbFOVError.Source = null;
                     stackPadError.Items.Clear();
                     bdFOVError.Visibility = Visibility.Hidden;
                     ColInfo.Width = new GridLength(500);
@@ -1609,6 +1652,10 @@ namespace SPI_AOI.Views
         {
             MainConfigWindow.AlarmForm alarm = new MainConfigWindow.AlarmForm();
             alarm.ShowDialog();
+        }
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("explorer.exe", @"logs");
         }
     }
 }

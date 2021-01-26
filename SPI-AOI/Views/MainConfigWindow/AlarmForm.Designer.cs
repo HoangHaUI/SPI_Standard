@@ -62,6 +62,7 @@
             // 
             this.txtErrorCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtErrorCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtErrorCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtErrorCode.ForeColor = System.Drawing.Color.DarkRed;
             this.txtErrorCode.Location = new System.Drawing.Point(24, 45);
@@ -73,6 +74,7 @@
             // 
             this.txtErrorName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtErrorName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtErrorName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtErrorName.ForeColor = System.Drawing.Color.DarkRed;
             this.txtErrorName.Location = new System.Drawing.Point(24, 131);
@@ -97,6 +99,7 @@
             this.txtSolution.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSolution.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSolution.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSolution.ForeColor = System.Drawing.Color.DarkRed;
             this.txtSolution.Location = new System.Drawing.Point(24, 258);

@@ -35,12 +35,12 @@ namespace SPI_AOI.Views.MainConfigWindow
             {
                 cbScanner.SelectedItem = mParam.SCANER_COM;
             }
-            txtCameraMatrix.Text = mParam.CAMERA_MATRIX_FILE;
-            txtCameraDistcoeffs.Text = mParam.CAMERA_DISTCOEFFS_FILE;
             nFOVW.Value = mParam.IMAGE_SIZE.Width;
             nFOVH.Value = mParam.IMAGE_SIZE.Height;
             nSaveDays.Value = mParam.SAVE_IMAGE_HOURS;
             txtSavePath.Text = mParam.SAVE_IMAGE_PATH;
+            rbEnableScan.Checked = mParam.DO_READ_CODE;
+            rbDisableScan.Checked = !mParam.DO_READ_CODE;
             mLoaded = true;
         }
         private void IOConfigForm_Load(object sender, EventArgs e)
@@ -64,16 +64,7 @@ namespace SPI_AOI.Views.MainConfigWindow
 
         private void btBrowserCameraDistcoeffs_Click(object sender, EventArgs e)
         {
-            if (!mLoaded)
-                return;
-            using (OpenFileDialog ofd = new OpenFileDialog())
-            {
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    mParam.CAMERA_DISTCOEFFS_FILE = ofd.FileName;
-                }
-            }
-            mParam.Save();
+            
         }
 
         private void cbLightPort_SelectedIndexChanged(object sender, EventArgs e)
@@ -139,6 +130,72 @@ namespace SPI_AOI.Views.MainConfigWindow
                 return;
             NumericUpDown n = sender as NumericUpDown;
             mParam.IMAGE_SIZE = new Size(mParam.IMAGE_SIZE.Width, Convert.ToInt32(n.Value));
+            mParam.Save();
+        }
+
+        private void rbControlRun_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            RadioButton rb = sender as RadioButton;
+            if (rb.Checked)
+                mParam.RUNNING_MODE = 0;
+            mParam.Save();
+        }
+
+        private void rbByPass_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            RadioButton rb = sender as RadioButton;
+            if (rb.Checked)
+                mParam.RUNNING_MODE = 2;
+            mParam.Save();
+        }
+
+        private void rbTesting_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            RadioButton rb = sender as RadioButton;
+            if (rb.Checked)
+                mParam.RUNNING_MODE = 1;
+            mParam.Save();
+        }
+
+        private void rbLightStrobeMode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            RadioButton rb = sender as RadioButton;
+            if (rb.Checked)
+                mParam.LIGHT_MODE = 0;
+            mParam.Save();
+        }
+
+        private void rbLightConstantMode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            RadioButton rb = sender as RadioButton;
+            if (rb.Checked)
+                mParam.LIGHT_MODE = 1;
+            mParam.Save();
+        }
+
+        private void rbEnableScan_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            mParam.DO_READ_CODE = rbEnableScan.Checked;
+            mParam.Save();
+        }
+
+        private void rbDisableScan_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            mParam.DO_READ_CODE = rbEnableScan.Checked;
             mParam.Save();
         }
     }

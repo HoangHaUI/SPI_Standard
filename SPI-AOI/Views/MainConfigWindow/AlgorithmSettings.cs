@@ -67,6 +67,8 @@ namespace SPI_AOI.Views.MainConfigWindow
             nLightCH2.Value = Convert.ToDecimal(mParam.LIGHT_SETUP_DEFAULT_INTENSITY_CH2);
             nLightCH3.Value = Convert.ToDecimal(mParam.LIGHT_SETUP_DEFAULT_INTENSITY_CH3);
             nLightCH4.Value = Convert.ToDecimal(mParam.LIGHT_SETUP_DEFAULT_INTENSITY_CH4);
+            txtCameraMatrix.Text = mParam.CAMERA_MATRIX_FILE;
+            txtCameraDistcoeffs.Text = mParam.CAMERA_DISTCOEFFS_FILE;
             mLoaded = true;
         }
 
@@ -267,6 +269,34 @@ namespace SPI_AOI.Views.MainConfigWindow
                 return;
             NumericUpDown numeric = sender as NumericUpDown;
             mParam.FOV = new Size(mParam.FOV.Width, Convert.ToInt32(numeric.Value));
+            mParam.Save();
+        }
+
+        private void btBrowserCameraMatrix_Click(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    mParam.CAMERA_MATRIX_FILE = ofd.FileName;
+                }
+            }
+            mParam.Save();
+        }
+
+        private void btBrowserCameraDistcoeffs_Click(object sender, EventArgs e)
+        {
+            if (!mLoaded)
+                return;
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    mParam.CAMERA_DISTCOEFFS_FILE = ofd.FileName;
+                }
+            }
             mParam.Save();
         }
     }

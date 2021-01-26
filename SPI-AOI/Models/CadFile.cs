@@ -175,5 +175,49 @@ namespace SPI_AOI.Models
                 this.CadItems[i].PadsIndex = new List<int>();
             }
         }
+        public void FlipX()
+        {
+            if(this.CadItems.Count > 0)
+            {
+                float min = 65535;
+                float max = 0;
+                for (int i = 0; i < this.CadItems.Count; i++)
+                {
+                    if(this.CadItems[i].Name != "UNDEFINE")
+                    {
+                        min = min > this.CadItems[i].Center.X ? this.CadItems[i].Center.X : min;
+                        max = max < this.CadItems[i].Center.X ? this.CadItems[i].Center.X : max;
+                    }
+                }
+                float valFlip = (min + max) / 2;
+                for (int i = 0; i < this.CadItems.Count; i++)
+                {
+                    PointF ct = this.CadItems[i].Center;
+                    this.CadItems[i].Center = new PointF(ct.X + 2 * (valFlip - ct.X), ct.Y);
+                }
+            }
+        }
+        public void FlipY()
+        {
+            if (this.CadItems.Count > 0)
+            {
+                float min = 65535;
+                float max = 0;
+                for (int i = 0; i < this.CadItems.Count; i++)
+                {
+                    if (this.CadItems[i].Name != "UNDEFINE")
+                    {
+                        min = min > this.CadItems[i].Center.Y ? this.CadItems[i].Center.Y : min;
+                        max = max < this.CadItems[i].Center.Y ? this.CadItems[i].Center.Y : max;
+                    }
+                }
+                float valFlip = (min + max) / 2;
+                for (int i = 0; i < this.CadItems.Count; i++)
+                {
+                    PointF ct = this.CadItems[i].Center;
+                    this.CadItems[i].Center = new PointF(ct.X , ct.Y + 2 * (valFlip - ct.Y));
+                }
+            }
+        }
     }
 }

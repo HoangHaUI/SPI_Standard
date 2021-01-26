@@ -42,7 +42,10 @@ namespace SPI_AOI.Views.ModelManagement
             }
             this.Dispatcher.Invoke(() =>
             {
-                cbLayer.SelectedIndex = -1;
+                if(cbLayer.Items.Count > 0)
+                    cbLayer.SelectedIndex = 0;
+                else
+                    cbLayer.SelectedIndex = -1;
                 cbLayer.Items.Refresh();
             });
         }
@@ -64,7 +67,6 @@ namespace SPI_AOI.Views.ModelManagement
             {
                 btRotate90.IsEnabled = true;
                 btRotate_90.IsEnabled = true;
-                
                 object item = cbLayer.SelectedItem;
                 if (item is CadFile)
                 {
@@ -72,9 +74,21 @@ namespace SPI_AOI.Views.ModelManagement
                     txtY.IsEnabled = true;
                     btSetY.IsEnabled = true;
                     btSetX.IsEnabled = true;
-                    txtX.Text = ((CadFile)item).X.ToString();
-                    txtY.Text = ((CadFile)item).Y.ToString();
-                    
+                    txtX.Text = "0";
+                    txtY.Text = "0";
+                    btFlipX.IsEnabled = true;
+                    btFlipY.IsEnabled = true;
+                }
+                else
+                {
+                    txtX.IsEnabled = false;
+                    txtY.IsEnabled = false;
+                    btSetY.IsEnabled = false;
+                    btSetX.IsEnabled = false;
+                    txtX.Text = "0";
+                    txtY.Text = "0";
+                    btFlipX.IsEnabled = false;
+                    btFlipY.IsEnabled = false;
                 }
             }
             else
@@ -85,6 +99,8 @@ namespace SPI_AOI.Views.ModelManagement
                 txtY.IsEnabled = false;
                 btSetY.IsEnabled = false;
                 btSetX.IsEnabled = false;
+                btFlipX.IsEnabled = false;
+                btFlipY.IsEnabled = false;
             }
             
         }
@@ -101,6 +117,22 @@ namespace SPI_AOI.Views.ModelManagement
             {
                 ((CadFile)item).Angle += angle;
                 ((CadFile)item).Angle = ((CadFile)item).Angle % 360;
+                mGerberToolsForm.ShowAllLayerImb(ActionMode.Draw_Cad);
+            }
+        }
+        private void Flip(bool x, bool y)
+        {
+            object item = cbLayer.SelectedItem;
+            if (item is CadFile)
+            {
+                if(x)
+                {
+                    ((CadFile)item).FlipX();
+                }
+                if (y)
+                {
+                    ((CadFile)item).FlipY();
+                }
                 mGerberToolsForm.ShowAllLayerImb(ActionMode.Draw_Cad);
             }
         }
@@ -130,7 +162,7 @@ namespace SPI_AOI.Views.ModelManagement
             if (item is CadFile)
             {
                 CadFile cad = (CadFile)item;
-                cad.X = val;
+                cad.X += val;
                 mGerberToolsForm.ShowAllLayerImb(ActionMode.Draw_Cad);
             }
         }
@@ -151,9 +183,19 @@ namespace SPI_AOI.Views.ModelManagement
             if (item is CadFile)
             {
                 CadFile cad = (CadFile)item;
-                cad.Y = val;
+                cad.Y += val;
                 mGerberToolsForm.ShowAllLayerImb(ActionMode.Draw_Cad);
             }
+        }
+
+        private void btFlipX_Click(object sender, RoutedEventArgs e)
+        {
+            Flip(false, true);
+        }
+
+        private void btFlipY_Click(object sender, RoutedEventArgs e)
+        {
+            Flip(true, false);
         }
     }
 }

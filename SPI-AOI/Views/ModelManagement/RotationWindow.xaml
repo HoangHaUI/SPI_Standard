@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         Background="#FFEEEEEE"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Title="Adjust Window" Height="208.667" Width="367" Initialized="Window_Initialized">
+        Title="Adjust Window" Height="254" Width="367"
+        Initialized="Window_Initialized">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -43,11 +44,23 @@
                 <Label Content="Rotate +90"/>
             </DockPanel>
         </Button>
-        <Label x:Name="label" Content="X:" HorizontalAlignment="Left" Margin="41,118,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtX" HorizontalAlignment="Left" Height="24" Margin="60,118,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="62"/>
-        <Button x:Name="btSetX" Click="btSetX_Click" Content="Set" HorizontalAlignment="Left" Margin="127,118,0,0" VerticalAlignment="Top" Width="31" Height="24"/>
-        <Label x:Name="label_Copy" Content="Y:" HorizontalAlignment="Left" Margin="186,118,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,1.013"/>
-        <TextBox x:Name="txtY" HorizontalAlignment="Left" Height="24" Margin="205,118,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="61"/>
-        <Button x:Name="btSetY" Click="btSetY_Click" Content="Set" HorizontalAlignment="Left" Margin="272,118,0,0" VerticalAlignment="Top" Width="31" Height="24"/>
+        <Button x:Name="btFlipX" Click="btFlipX_Click" Width="98" Height="28" HorizontalAlignment="Left" Margin="60,112,0,0" VerticalAlignment="Top">
+            <DockPanel>
+                <Image Source="/SPI-AOI;component/Resources/Icons/flipx.png"/>
+                <Label Content="Flip Cad X"></Label>
+            </DockPanel>
+        </Button>
+        <Button x:Name="btFlipY" Click="btFlipY_Click" Width="98" Height="28" HorizontalAlignment="Left" Margin="205,112,0,0" VerticalAlignment="Top">
+            <DockPanel>
+                <Image Source="/SPI-AOI;component/Resources/Icons/flipy.png"/>
+                <Label Content="Flip Cad Y"/>
+            </DockPanel>
+        </Button>
+        <Label x:Name="label" Content="X:" HorizontalAlignment="Left" Margin="41,159,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtX" HorizontalAlignment="Left" Height="24" Margin="60,159,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="62"/>
+        <Button x:Name="btSetX" Click="btSetX_Click" Content="Set" HorizontalAlignment="Left" Margin="127,159,0,0" VerticalAlignment="Top" Width="31" Height="24"/>
+        <Label x:Name="label_Copy" Content="Y:" HorizontalAlignment="Left" Margin="186,159,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.067,1.013"/>
+        <TextBox x:Name="txtY" HorizontalAlignment="Left" Height="24" Margin="205,159,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="61"/>
+        <Button x:Name="btSetY" Click="btSetY_Click" Content="Set" HorizontalAlignment="Left" Margin="272,159,0,0" VerticalAlignment="Top" Width="31" Height="24"/>
     </Grid>
 </Window>

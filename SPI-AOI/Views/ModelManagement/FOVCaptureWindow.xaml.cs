@@ -34,6 +34,7 @@ namespace SPI_AOI.Views.ModelManagement
         private void Window_Initialized(object sender, EventArgs e)
         {
             LoadUI();
+            mModel.UpdateAfterEditGerber();
         }
         private void LoadUI()
         {

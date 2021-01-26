@@ -142,16 +142,13 @@ namespace SPI_AOI.Views.ModelManagement
         {
             GerberTools gerberTools = new GerberTools(mModel);
             gerberTools.ShowDialog();
-            mModel.UpdateAfterEditGerber();
             LoadDetails();
-
         }
 
         private void btFOVsSettings_Click(object sender, RoutedEventArgs e)
         {
             FOVCaptureWindow fovWD = new FOVCaptureWindow(mModel);
             fovWD.Show();
-            //mModel.UpdateAfterEditGerber();
             LoadDetails();
         }
 
@@ -159,7 +156,6 @@ namespace SPI_AOI.Views.ModelManagement
         {
             HardwareWindow hwWD = new HardwareWindow(mModel);
             hwWD.Show();
-            //mModel.UpdateAfterEditGerber();
             LoadDetails();
         }
         private void LoadDetails()

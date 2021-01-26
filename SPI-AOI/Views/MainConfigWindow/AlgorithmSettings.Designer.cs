@@ -31,9 +31,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.rbControlRun = new System.Windows.Forms.RadioButton();
-            this.rbTesting = new System.Windows.Forms.RadioButton();
             this.rbByPass = new System.Windows.Forms.RadioButton();
+            this.rbTesting = new System.Windows.Forms.RadioButton();
+            this.rbControlRun = new System.Windows.Forms.RadioButton();
             this.nFOVW = new System.Windows.Forms.NumericUpDown();
             this.nFOVH = new System.Windows.Forms.NumericUpDown();
             this.nPulsePerPixelX = new System.Windows.Forms.NumericUpDown();
@@ -53,9 +53,9 @@
             this.label10 = new System.Windows.Forms.Label();
             this.nDPIScale = new System.Windows.Forms.NumericUpDown();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.rbLightConstantMode = new System.Windows.Forms.RadioButton();
             this.rbLightStrobeMode = new System.Windows.Forms.RadioButton();
             this.label11 = new System.Windows.Forms.Label();
-            this.rbLightConstantMode = new System.Windows.Forms.RadioButton();
             this.label12 = new System.Windows.Forms.Label();
             this.nExposureTime = new System.Windows.Forms.NumericUpDown();
             this.label13 = new System.Windows.Forms.Label();
@@ -70,6 +70,12 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.nThicknessDefault = new System.Windows.Forms.NumericUpDown();
+            this.btBrowserCameraDistcoeffs = new System.Windows.Forms.Button();
+            this.txtCameraDistcoeffs = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.btBrowserCameraMatrix = new System.Windows.Forms.Button();
+            this.txtCameraMatrix = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nFOVW)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nFOVH)).BeginInit();
@@ -121,16 +127,16 @@
             this.panel1.Size = new System.Drawing.Size(114, 111);
             this.panel1.TabIndex = 2;
             // 
-            // rbControlRun
+            // rbByPass
             // 
-            this.rbControlRun.AutoSize = true;
-            this.rbControlRun.Location = new System.Drawing.Point(13, 33);
-            this.rbControlRun.Name = "rbControlRun";
-            this.rbControlRun.Size = new System.Drawing.Size(81, 17);
-            this.rbControlRun.TabIndex = 2;
-            this.rbControlRun.Text = "Control Run";
-            this.rbControlRun.UseVisualStyleBackColor = true;
-            this.rbControlRun.CheckedChanged += new System.EventHandler(this.rbControlRun_CheckedChanged);
+            this.rbByPass.AutoSize = true;
+            this.rbByPass.Location = new System.Drawing.Point(13, 79);
+            this.rbByPass.Name = "rbByPass";
+            this.rbByPass.Size = new System.Drawing.Size(63, 17);
+            this.rbByPass.TabIndex = 4;
+            this.rbByPass.Text = "By Pass";
+            this.rbByPass.UseVisualStyleBackColor = true;
+            this.rbByPass.CheckedChanged += new System.EventHandler(this.rbByPass_CheckedChanged);
             // 
             // rbTesting
             // 
@@ -145,16 +151,16 @@
             this.rbTesting.UseVisualStyleBackColor = true;
             this.rbTesting.CheckedChanged += new System.EventHandler(this.rbTesting_CheckedChanged);
             // 
-            // rbByPass
+            // rbControlRun
             // 
-            this.rbByPass.AutoSize = true;
-            this.rbByPass.Location = new System.Drawing.Point(13, 79);
-            this.rbByPass.Name = "rbByPass";
-            this.rbByPass.Size = new System.Drawing.Size(63, 17);
-            this.rbByPass.TabIndex = 4;
-            this.rbByPass.Text = "By Pass";
-            this.rbByPass.UseVisualStyleBackColor = true;
-            this.rbByPass.CheckedChanged += new System.EventHandler(this.rbByPass_CheckedChanged);
+            this.rbControlRun.AutoSize = true;
+            this.rbControlRun.Location = new System.Drawing.Point(13, 33);
+            this.rbControlRun.Name = "rbControlRun";
+            this.rbControlRun.Size = new System.Drawing.Size(81, 17);
+            this.rbControlRun.TabIndex = 2;
+            this.rbControlRun.Text = "Control Run";
+            this.rbControlRun.UseVisualStyleBackColor = true;
+            this.rbControlRun.CheckedChanged += new System.EventHandler(this.rbControlRun_CheckedChanged);
             // 
             // nFOVW
             // 
@@ -487,6 +493,17 @@
             this.panel2.Size = new System.Drawing.Size(114, 87);
             this.panel2.TabIndex = 5;
             // 
+            // rbLightConstantMode
+            // 
+            this.rbLightConstantMode.AutoSize = true;
+            this.rbLightConstantMode.Location = new System.Drawing.Point(13, 56);
+            this.rbLightConstantMode.Name = "rbLightConstantMode";
+            this.rbLightConstantMode.Size = new System.Drawing.Size(67, 17);
+            this.rbLightConstantMode.TabIndex = 3;
+            this.rbLightConstantMode.Text = "Constant";
+            this.rbLightConstantMode.UseVisualStyleBackColor = true;
+            this.rbLightConstantMode.CheckedChanged += new System.EventHandler(this.rbLightConstantMode_CheckedChanged);
+            // 
             // rbLightStrobeMode
             // 
             this.rbLightStrobeMode.AutoSize = true;
@@ -508,17 +525,6 @@
             this.label11.Size = new System.Drawing.Size(77, 13);
             this.label11.TabIndex = 1;
             this.label11.Text = "Lighting Mode:";
-            // 
-            // rbLightConstantMode
-            // 
-            this.rbLightConstantMode.AutoSize = true;
-            this.rbLightConstantMode.Location = new System.Drawing.Point(13, 56);
-            this.rbLightConstantMode.Name = "rbLightConstantMode";
-            this.rbLightConstantMode.Size = new System.Drawing.Size(67, 17);
-            this.rbLightConstantMode.TabIndex = 3;
-            this.rbLightConstantMode.Text = "Constant";
-            this.rbLightConstantMode.UseVisualStyleBackColor = true;
-            this.rbLightConstantMode.CheckedChanged += new System.EventHandler(this.rbLightConstantMode_CheckedChanged);
             // 
             // label12
             // 
@@ -732,12 +738,70 @@
             0});
             this.nThicknessDefault.ValueChanged += new System.EventHandler(this.nThicknessDefault_ValueChanged);
             // 
+            // btBrowserCameraDistcoeffs
+            // 
+            this.btBrowserCameraDistcoeffs.Location = new System.Drawing.Point(568, 236);
+            this.btBrowserCameraDistcoeffs.Name = "btBrowserCameraDistcoeffs";
+            this.btBrowserCameraDistcoeffs.Size = new System.Drawing.Size(31, 23);
+            this.btBrowserCameraDistcoeffs.TabIndex = 42;
+            this.btBrowserCameraDistcoeffs.Text = "...";
+            this.btBrowserCameraDistcoeffs.UseVisualStyleBackColor = true;
+            this.btBrowserCameraDistcoeffs.Click += new System.EventHandler(this.btBrowserCameraDistcoeffs_Click);
+            // 
+            // txtCameraDistcoeffs
+            // 
+            this.txtCameraDistcoeffs.Location = new System.Drawing.Point(398, 238);
+            this.txtCameraDistcoeffs.Name = "txtCameraDistcoeffs";
+            this.txtCameraDistcoeffs.Size = new System.Drawing.Size(164, 20);
+            this.txtCameraDistcoeffs.TabIndex = 41;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(395, 222);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(110, 13);
+            this.label14.TabIndex = 40;
+            this.label14.Text = "Camera distcoeffs file:";
+            // 
+            // btBrowserCameraMatrix
+            // 
+            this.btBrowserCameraMatrix.Location = new System.Drawing.Point(568, 187);
+            this.btBrowserCameraMatrix.Name = "btBrowserCameraMatrix";
+            this.btBrowserCameraMatrix.Size = new System.Drawing.Size(31, 23);
+            this.btBrowserCameraMatrix.TabIndex = 39;
+            this.btBrowserCameraMatrix.Text = "...";
+            this.btBrowserCameraMatrix.UseVisualStyleBackColor = true;
+            this.btBrowserCameraMatrix.Click += new System.EventHandler(this.btBrowserCameraMatrix_Click);
+            // 
+            // txtCameraMatrix
+            // 
+            this.txtCameraMatrix.Location = new System.Drawing.Point(398, 189);
+            this.txtCameraMatrix.Name = "txtCameraMatrix";
+            this.txtCameraMatrix.Size = new System.Drawing.Size(164, 20);
+            this.txtCameraMatrix.TabIndex = 38;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(395, 173);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(92, 13);
+            this.label20.TabIndex = 37;
+            this.label20.Text = "Camera matrix file:";
+            // 
             // AlgorithmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(631, 281);
+            this.ClientSize = new System.Drawing.Size(635, 286);
+            this.Controls.Add(this.btBrowserCameraDistcoeffs);
+            this.Controls.Add(this.txtCameraDistcoeffs);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.btBrowserCameraMatrix);
+            this.Controls.Add(this.txtCameraMatrix);
+            this.Controls.Add(this.label20);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.nThicknessDefault);
             this.Controls.Add(this.nLightCH4);
@@ -850,5 +914,11 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.NumericUpDown nThicknessDefault;
+        private System.Windows.Forms.Button btBrowserCameraDistcoeffs;
+        private System.Windows.Forms.TextBox txtCameraDistcoeffs;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button btBrowserCameraMatrix;
+        private System.Windows.Forms.TextBox txtCameraMatrix;
+        private System.Windows.Forms.Label label20;
     }
 }
