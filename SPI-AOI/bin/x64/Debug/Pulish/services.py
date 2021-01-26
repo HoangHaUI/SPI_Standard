@@ -66,6 +66,7 @@ def Action():
                 sn = Decoder.Decode(img_gray)
                 result["status"] = "OK"
                 result["sn"] = sn
+                print(str(result))
                 return str(result)
 
     elif request.method == 'GET':

@@ -57,6 +57,24 @@ namespace SPI_AOI.Devices
             }
             return true;
         }
+        public bool GoFinishTopSetup()
+        {
+            int val = 0;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            while (true)
+            {
+                val = Get_Go_Coordinates_Finish_Setup_Top();
+                if (val == 1 || sw.ElapsedMilliseconds == 5000)
+                    break;
+                Thread.Sleep(3);
+            }
+            if (val != 1)
+            {
+                return false;
+            }
+            return true;
+        }
         public bool SetXYBot(int X, int Y)
         {
             int setX = 0;

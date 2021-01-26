@@ -85,10 +85,9 @@ namespace SPI_AOI.Views.ModelManagement
             int[] intensity = mModel.HardwareSettings.LightIntensity;
             mLight.SetFour(intensity[0], intensity[1], intensity[2], intensity[3]);
             mLight.ActiveFour(0, 0, 0, 0);
-            mPlcComm.Logout();
+            mPlcComm.Login();
             mLoaded = true;
             grConfig.IsEnabled = true;
-            btLoad_Click(btLoad, null);
         }
         private void ReleaseResource()
         {
@@ -152,7 +151,6 @@ namespace SPI_AOI.Views.ModelManagement
         }
         private void CaptureMark()
         {
-            mPlcComm.Logout();
             bool lightStrobe = true;
             System.Drawing.Point[] markPointXYPLC = mModel.GetPulseXYMark();
             PadItem[] PadMark = new PadItem[2];
@@ -168,7 +166,7 @@ namespace SPI_AOI.Views.ModelManagement
                 int x = mark.X;
                 int y = mark.Y;
                 mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "Mark " + (i + 1).ToString(), x, y));
-                using (Image<Bgr, byte> image = VI.MoveXYAxis.CaptureFOV(mPlcComm, mCamera, mLight, mark, lightStrobe))
+                using (Image<Bgr, byte> image = VI.MoveXYAxis.CaptureFOV(mPlcComm, mCamera, mLight, mark, lightStrobe,setup:true))
                 {
                     if (image != null)
                     {
@@ -225,6 +223,8 @@ namespace SPI_AOI.Views.ModelManagement
         }
         private void cbFOV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            mPlcComm.Login();
+            mPlcComm.Set_Speed_Top(50000);
             if (!mLoaded)
                 return;
             if(mMark == null)
@@ -250,7 +250,7 @@ namespace SPI_AOI.Views.ModelManagement
                     mImage = null;
                 }
                 mLog.Info(string.Format("{0}, Position Name : {1},  X = {2}, Y = {3}", "Moving TOP Axis", "FOV " + (id + 1).ToString(), x, y));
-                using (Image<Bgr, byte> image = VI.MoveXYAxis.CaptureFOV(mPlcComm, mCamera, mLight, fov, lightStrobe, 300))
+                using (Image<Bgr, byte> image = VI.MoveXYAxis.CaptureFOV(mPlcComm, mCamera, mLight, fov, lightStrobe, 300, setup: true))
                 {
                     mImage = ImageProcessingUtils.ImageRotation(image, new System.Drawing.Point(image.Width / 2, image.Height / 2), -mModel.AngleAxisCamera * Math.PI / 180.0).Copy();
                     mImage = ImageProcessingUtils.ImageTransformation(mImage, mMarkAdjust.X, mMarkAdjust.Y);
@@ -412,14 +412,12 @@ namespace SPI_AOI.Views.ModelManagement
         {
             mPlcComm.Login();
             mPlcComm.Set_Load_Product();
-            mPlcComm.Logout();
         }
 
         private void btUnload_Click(object sender, RoutedEventArgs e)
         {
             mPlcComm.Login();
             mPlcComm.Set_Unload_Product();
-            mPlcComm.Logout();
         }
         private void btAutoAdjustPad_Click(object sender, RoutedEventArgs e)
         {

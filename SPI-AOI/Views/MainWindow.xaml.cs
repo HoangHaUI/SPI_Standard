@@ -263,9 +263,8 @@ namespace SPI_AOI.Views
                         if (image != null)
                         {
                             System.Drawing.Rectangle ROI = readCodePosition[i].ROIImage;
-
-                            string fileName = string.Format("{0}//ReadCode_{1}.png", SavePath, i + 1);
                             image.ROI = ROI;
+                            string fileName = string.Format("{0}//ReadCode_{1}.png", SavePath, i + 1);
                             CvInvoke.Imwrite(fileName, image);
                             VI.ServiceResults serviceResults = VI.ServiceComm.Decode(mParam.ServiceURL, new string[] { fileName }, mParam.Debug);
                             sn[i] = serviceResults.SN;
@@ -490,7 +489,6 @@ namespace SPI_AOI.Views
             Utils.MarkAdjust markAdjustInfo = CaptureMark(ID, savePath, lightStrobe);
             if (markAdjustInfo.Status == Utils.ActionStatus.Successfully)
             {
-                mCamera.SetParameter(IOT.KeyName.ExposureTime, (float)mParam.CAMERA_VI_EXPOSURE_TIME);
                 sn = CaptureSN(ID, savePath, lightStrobe);
                 string allsn = "";
                 for (int i = 0; i < sn.Length; i++)
@@ -503,6 +501,7 @@ namespace SPI_AOI.Views
                 {
                     lbSN.Content = allsn;
                 });
+                mCamera.SetParameter(IOT.KeyName.ExposureTime, (float)mParam.CAMERA_VI_EXPOSURE_TIME);
                 mLight.SetFour(mParam.LIGHT_VI_DEFAULT_INTENSITY_CH1,
                  mParam.LIGHT_VI_DEFAULT_INTENSITY_CH2,
                  mParam.LIGHT_VI_DEFAULT_INTENSITY_CH3,

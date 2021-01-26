@@ -4,6 +4,7 @@ from pyzbar.pyzbar import decode, bounding_box
 
 
 def Decode(img):
+    print("scan code " + str(img.shape))
     sn = "NOT FOUND"
     rect = (0,0,0,0)
     try:
