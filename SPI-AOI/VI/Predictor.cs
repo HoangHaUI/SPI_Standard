@@ -119,7 +119,7 @@ namespace SPI_AOI.VI
                 {
                     for (int n = 0; n < idPadOverlap.Count; n++)
                     {
-                        idPadBrigde.Add(model.Gerber.PadItems[n].NoID);
+                        idPadBrigde.Add(model.Gerber.PadItems[idPadOverlap[n]].NoID);
                     }
                 }
             }
@@ -145,7 +145,7 @@ namespace SPI_AOI.VI
             double scaleAreaAddperimeter = 0;
             double shiftxVal = 0;
             double shiftyVal = 0;
-            int inflate = 40;
+            int inflate = 50;
             padEr.AreaStdHight = padItem.AreaThresh.UM_USL;
             padEr.AreaStdLow = padItem.AreaThresh.PERCENT_LSL;
             padEr.ShiftXStduM = padItem.ShiftXThresh.UM_USL;
@@ -183,11 +183,22 @@ namespace SPI_AOI.VI
                     if (padSeg.Bouding.Y + padSeg.Bouding.Height > boundAllPadSeg.Y + boundAllPadSeg.Height)
                         boundAllPadSeg.Height = padSeg.Bouding.Y + padSeg.Bouding.Height - boundAllPadSeg.Y;
                 }
-                padEr.ROIOnImage = new Rectangle(boundAllPadSeg.X - (padSegment[idPadSegOverlap[0]].Center.X - padSegment[idPadSegOverlap[0]].CenterOnFOV.X),
-                    boundAllPadSeg.Y - (padSegment[idPadSegOverlap[0]].Center.Y - padSegment[idPadSegOverlap[0]].CenterOnFOV.Y),
-                    boundAllPadSeg.Width,
-                    boundAllPadSeg.Height
+                if(boundAllPadSeg == new Rectangle())
+                {
+                    padEr.ROIOnImage = new Rectangle(boundPadRef.X - (padSegment[idPadSegOverlap[0]].Center.X - padSegment[idPadSegOverlap[0]].CenterOnFOV.X),
+                    boundPadRef.Y - (padSegment[idPadSegOverlap[0]].Center.Y - padSegment[idPadSegOverlap[0]].CenterOnFOV.Y),
+                    boundPadRef.Width,
+                    boundPadRef.Height
                     );
+                }
+                else
+                {
+                    padEr.ROIOnImage = new Rectangle(boundAllPadSeg.X - (padSegment[idPadSegOverlap[0]].Center.X - padSegment[idPadSegOverlap[0]].CenterOnFOV.X),
+                        boundAllPadSeg.Y - (padSegment[idPadSegOverlap[0]].Center.Y - padSegment[idPadSegOverlap[0]].CenterOnFOV.Y),
+                        boundAllPadSeg.Width,
+                        boundAllPadSeg.Height
+                        );
+                }
                 padEr.ROIOnImage.Inflate(inflate, inflate);
                 padEr.Center = new Point(boundAllPadSeg.X + boundAllPadSeg.Width / 2, boundAllPadSeg.Y + boundAllPadSeg.Height / 2);
                 scaleArea = areaAllPadSeg * 100 / sPadRef;

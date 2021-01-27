@@ -282,6 +282,11 @@ namespace SPI_AOI.Models
             string modelIDOld = this.ID;
             this.ID = Utils.GetNewID();
             this.Name = ModelName;
+            this.Gerber.ClearSelectPad();
+            for (int i = 0; i < this.Cad.Count; i++)
+            {
+                this.Cad[i].ClearSelectCenter();
+            }
             try
             {
                 string json = JsonConvert.SerializeObject(this);

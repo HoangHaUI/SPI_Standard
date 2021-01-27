@@ -531,3 +531,5 @@ D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI_AO
 C:\Users\Public\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI_AOI.Views.MainConfigWindow.InsertSNForm.resources
 D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\ModelManagement\SaveAsWindow.g.cs
 D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\ModelManagement\SaveAsWindow.baml
+C:\Users\Public\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\ModelManagement\SaveAsWindow.g.cs
+C:\Users\Public\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\ModelManagement\SaveAsWindow.baml

@@ -57,7 +57,7 @@ namespace SPI_AOI.Utils
             this.Border.ClipToBounds = true;
             this.Border.Child = this.Image;
             this.Border.BorderBrush = Brushes.Red;
-            this.Border.BorderThickness = new Thickness(1);
+            this.Border.BorderThickness = new Thickness(3);
             return this.Border;
         }
         private Label GetLabel(int PadID)

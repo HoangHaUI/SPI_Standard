@@ -363,7 +363,7 @@ namespace SPI_AOI.Views
                     result = - 4; // move xy fail
                     break;
                 }
-                using (Image<Bgr, byte> image = VI.MoveXYAxis.CaptureFOV(mPlcComm, mCamera, mLight, fov, LightStrobe, 50))
+                using (Image<Bgr, byte> image = VI.MoveXYAxis.CaptureFOV(mPlcComm, mCamera, mLight, fov, LightStrobe, 150))
                 {
                     if (image != null)
                     {
@@ -390,10 +390,11 @@ namespace SPI_AOI.Views
                                 string imageCapturePath = fileName;
                                 string imageSegmentPath = fileName.Replace(".png", "_Segment.png");
                                 int id = i;
+                                System.Drawing.Rectangle ROIGerber = new System.Drawing.Rectangle(ROIFOVOnGerber.X, ROIFOVOnGerber.Y, ROIFOVOnGerber.Width, ROIFOVOnGerber.Height);
                                 Image<Bgr, byte> imgCapture = new Image<Bgr, byte>(imageCapturePath);
-                                if (id > 2)
+                                if (id > 0)
                                 {
-                                    publishThread[i - 3].Join();
+                                    publishThread[id - 1].Join();
                                 }
                                 VI.ServiceResults serviceResults = VI.ServiceComm.SegmentFOV(mParam.ServiceURL, new string[] { fileName }, id, mParam.Debug);
                                 if (serviceResults != null)
@@ -406,7 +407,7 @@ namespace SPI_AOI.Views
                                     Image<Gray, byte> imageSegment = serviceResults.ImgMask;
                                     CvInvoke.Imwrite(imageSegmentPath, imageSegment);
                                     imageSegment = VI.Predictor.ReleaseNoise(imageSegment);
-                                    Utils.PadSegmentInfo[] padSegmentInfo = VI.Predictor.GetPadSegmentInfo(imageSegment, ROIFOVOnGerber, id, imageCapturePath, imageSegmentPath);
+                                    Utils.PadSegmentInfo[] padSegmentInfo = VI.Predictor.GetPadSegmentInfo(imageSegment, ROIGerber, id, imageCapturePath, imageSegmentPath);
                                     lock(mModel)
                                     {
                                         Utils.PadErrorDetail[] padError = VI.Predictor.ComparePad(mModel, padSegmentInfo, id);
@@ -425,7 +426,7 @@ namespace SPI_AOI.Views
                                                 string component = mModel.GetComponentName(item.Pad);
                                                 item.Component = component;
                                             }
-                                            VI.Predictor.GetImagePadError(imgCapture, padError, ROIFOVOnGerber, mParam.LIMIT_SHOW_ERROR);
+                                            VI.Predictor.GetImagePadError(imgCapture, padError, ROIGerber, mParam.LIMIT_SHOW_ERROR);
                                             lock (mPadErrorDetails)
                                             {
                                                 mPadErrorDetails.AddRange(padError);
@@ -886,10 +887,6 @@ namespace SPI_AOI.Views
                 dbWD.ShowDialog();
             }
             LoadModelsName();
-        }
-        private void UpdateResult()
-        {
-
         }
         private void btPLCConfig_Click(object sender, RoutedEventArgs e)
         {
@@ -1480,7 +1477,7 @@ namespace SPI_AOI.Views
                 {
                     var loc = padEr.ROIOnImage;
                     loc.Inflate(10, 10);
-                    CvInvoke.Rectangle(imgFOV, loc, new MCvScalar(0, 255, 255), 2);
+                    CvInvoke.Rectangle(imgFOV, loc, new MCvScalar(0, 255, 255), 4);
                     BitmapSource bms = Utils.Convertor.Bitmap2BitmapSource(imgFOV.Bitmap);
                     imbFOVError.Source = bms;
                 }
@@ -1504,42 +1501,35 @@ namespace SPI_AOI.Views
             if(mPadErrorDetails.Count > 0)
             {
                 string panelStatus = "PASS";
-                Views.WaitingForm wait = new WaitingForm("Insert error to database...", 120);
-                Thread insert = new Thread(() => {
-                    for (int i = 0; i < mPadErrorDetails.Count; i++)
+                for (int i = 0; i < mPadErrorDetails.Count; i++)
+                {
+                    if (mPadErrorDetails[i].ConfirmResult == "FAIL")
                     {
-                        if (mPadErrorDetails[i].ConfirmResult == "FAIL")
-                        {
-                            panelStatus = "FAIL";
-                        }
-                        mMyDatabase.InsertNewPadError(
-                            mPadErrorDetails[i].PanelID,
-                            mPadErrorDetails[i].ModelName,
-                            mPadErrorDetails[i].LoadTime,
-                            mPadErrorDetails[i].Pad.NoID,
-                            mPadErrorDetails[i].FOVNo,
-                            mPadErrorDetails[i].ROIOnImage,
-                            mPadErrorDetails[i].ROIOnGerber,
-                            mPadErrorDetails[i].MachineResult,
-                            mPadErrorDetails[i].ConfirmResult,
-                            mPadErrorDetails[i].Component,
-                            mPadErrorDetails[i].ErrorType,
-                            mPadErrorDetails[i].Area,
-                            mPadErrorDetails[i].AreaStdHight,
-                            mPadErrorDetails[i].AreaStdLow,
-                            mPadErrorDetails[i].ShiftX,
-                            mPadErrorDetails[i].ShiftXStduM,
-                            mPadErrorDetails[i].ShiftY,
-                            mPadErrorDetails[i].ShiftYStduM
-                            );
+                        panelStatus = "FAIL";
                     }
-                    string runningMode = GetRunningModeString();
-                    mMyDatabase.InsertNewPanelResult(mPadErrorDetails[0].PanelID, mModel.Name, mPadErrorDetails[0].LoadTime, mPadErrorDetails[0].SN, runningMode, "FAIL", panelStatus, mModel.Gerber.PadItems.Count);
-                    wait.KillMe = true;
-                });
-                insert.Start();
-                wait.ShowDialog();
-                insert.Join();
+                    mMyDatabase.InsertNewPadError(
+                        mPadErrorDetails[i].PanelID,
+                        mPadErrorDetails[i].ModelName,
+                        mPadErrorDetails[i].LoadTime,
+                        mPadErrorDetails[i].Pad.NoID,
+                        mPadErrorDetails[i].FOVNo,
+                        mPadErrorDetails[i].ROIOnImage,
+                        mPadErrorDetails[i].ROIOnGerber,
+                        mPadErrorDetails[i].MachineResult,
+                        mPadErrorDetails[i].ConfirmResult,
+                        mPadErrorDetails[i].Component,
+                        mPadErrorDetails[i].ErrorType,
+                        mPadErrorDetails[i].Area,
+                        mPadErrorDetails[i].AreaStdHight,
+                        mPadErrorDetails[i].AreaStdLow,
+                        mPadErrorDetails[i].ShiftX,
+                        mPadErrorDetails[i].ShiftXStduM,
+                        mPadErrorDetails[i].ShiftY,
+                        mPadErrorDetails[i].ShiftYStduM
+                        );
+                }
+                string runningMode = GetRunningModeString();
+                mMyDatabase.InsertNewPanelResult(mPadErrorDetails[0].PanelID, mModel.Name, mPadErrorDetails[0].LoadTime, mPadErrorDetails[0].SN, runningMode, "FAIL", panelStatus, mModel.Gerber.PadItems.Count);
                 if (panelStatus == "PASS")
                 {
                     mPlcComm.Set_Bit_Comfirm_Pass();
