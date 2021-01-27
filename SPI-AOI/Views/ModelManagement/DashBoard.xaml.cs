@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SPI_AOI.Models;
 using System.IO;
+using System.Threading;
 
 namespace SPI_AOI.Views.ModelManagement
 {
@@ -28,7 +29,6 @@ namespace SPI_AOI.Views.ModelManagement
         }
         private void Window_Initialized(object sender, EventArgs e)
         {
-            
             ResetDetails();
             btReload_Click(null, null);
             cbModelsName_SelectionChanged(null, null);
@@ -61,7 +61,15 @@ namespace SPI_AOI.Views.ModelManagement
             {
                 string modelName = cbModelsName.SelectedItem.ToString();
                 int id = cbModelsName.SelectedIndex;
-                mModel = Model.LoadModelByName(cbModelsName.SelectedItem.ToString());
+                Views.WaitingForm wait = new WaitingForm("Loading model " + modelName, 15);
+                Thread loadingThread = new Thread(() => {
+                    this.Dispatcher.Invoke(() => {
+                        mModel = Model.LoadModelByName(cbModelsName.SelectedItem.ToString());
+                        wait.KillMe = true;
+                    });
+                });
+                loadingThread.Start();
+                wait.ShowDialog();
                 if (mModel != null)
                 {
                     // insert model to config
@@ -168,9 +176,11 @@ namespace SPI_AOI.Views.ModelManagement
             btSaveModel.IsEnabled = true;
             btRemoveModel.IsEnabled = true;
             btExportModel.IsEnabled = true;
+            btSaveAsModel.IsEnabled = true;
             btSaveModel.Opacity = 1;
             btRemoveModel.Opacity = 1;
             btExportModel.Opacity = 1;
+            btSaveAsModel.Opacity = 1;
         }
         private void ResetDetails()
         {
@@ -182,9 +192,11 @@ namespace SPI_AOI.Views.ModelManagement
             btSaveModel.IsEnabled = false;
             btRemoveModel.IsEnabled = false;
             btExportModel.IsEnabled = false;
-            btSaveModel.Opacity = 0.5;
-            btRemoveModel.Opacity = 0.5;
-            btExportModel.Opacity = 0.5;
+            btSaveAsModel.IsEnabled = false;
+            btSaveModel.Opacity = 0.3;
+            btRemoveModel.Opacity = 0.3;
+            btExportModel.Opacity = 0.3;
+            btSaveAsModel.Opacity = 0.3;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -201,6 +213,29 @@ namespace SPI_AOI.Views.ModelManagement
             AutoAdjustFOVWindow adjustWindow = new AutoAdjustFOVWindow(mModel);
             adjustWindow.ShowDialog();
             LoadDetails();
+        }
+
+        private void btSaveAsModel_Click(object sender, RoutedEventArgs e)
+        {
+            if(mModel != null)
+            {
+                SaveAsWindow saveASWindow = new SaveAsWindow(mModel.Name);
+                saveASWindow.ShowDialog();
+                string newName = saveASWindow.ModelName;
+                if(!string.IsNullOrEmpty(newName))
+                {
+                    string path = mModel.SaveAsModel(newName);
+                    if(path != null)
+                    {
+                        MessageBox.Show("Save model successfully!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        btReload_Click(null, null);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cant not save the model!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+            }
         }
     }
 }

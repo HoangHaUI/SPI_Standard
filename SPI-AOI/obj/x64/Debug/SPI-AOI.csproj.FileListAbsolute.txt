@@ -529,3 +529,5 @@ D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI_AO
 C:\Users\Public\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI_AOI.Views.MainConfigWindow.PLCMonitor.resources
 D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI_AOI.Views.MainConfigWindow.InsertSNForm.resources
 C:\Users\Public\Projects\SPI-AOI\SPI-AOI\obj\x64\Debug\SPI_AOI.Views.MainConfigWindow.InsertSNForm.resources
+D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\ModelManagement\SaveAsWindow.g.cs
+D:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\obj\x64\Debug\Views\ModelManagement\SaveAsWindow.baml

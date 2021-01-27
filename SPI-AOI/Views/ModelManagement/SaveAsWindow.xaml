@@ -1,0 +1,18 @@
+﻿<Window x:Class="SPI_AOI.Views.ModelManagement.SaveAsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SPI_AOI.Views.ModelManagement"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        FontSize="18"
+        Title="Save As Model" Height="157.389" Width="589.833">
+    <Canvas>
+        <Label Content="Model Name:" Width="150" Height="30" Canvas.Left="20" Canvas.Top="21"/>
+        <TextBox x:Name="txtModelName" Width="450" Height="30" Canvas.Left="20" Canvas.Top="59"/>
+        <Button x:Name="btSave" Click="btSave_Click" 
+                Content="Save" Width="70" Height="30" Canvas.Left="491" Canvas.Top="59"/>
+    </Canvas>
+</Window>

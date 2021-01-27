@@ -35,6 +35,31 @@ namespace SPI_AOI.Views.MainConfigWindow
             {
                 cbScanner.SelectedItem = mParam.SCANER_COM;
             }
+            switch (mParam.RUNNING_MODE)
+            {
+                case 0:
+                    rbControlRun.Checked = true;
+                    break;
+                case 1:
+                    rbTesting.Checked = true;
+                    break;
+                case 2:
+                    rbByPass.Checked = true;
+                    break;
+                default:
+                    break;
+            }
+            switch (mParam.LIGHT_MODE)
+            {
+                case 0:
+                    rbLightStrobeMode.Checked = true;
+                    break;
+                case 1:
+                    rbLightConstantMode.Checked = true;
+                    break;
+                default:
+                    break;
+            }
             nFOVW.Value = mParam.IMAGE_SIZE.Width;
             nFOVH.Value = mParam.IMAGE_SIZE.Height;
             nSaveDays.Value = mParam.SAVE_IMAGE_HOURS;

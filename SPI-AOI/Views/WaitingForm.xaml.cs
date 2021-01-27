@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace SPI_AOI.Views
 {
     /// <summary>
@@ -21,6 +22,10 @@ namespace SPI_AOI.Views
     {
         private bool mKillMe = false;
         private string mContent = "Processing...";
+
+        private System.Timers.Timer mTimer = new System.Timers.Timer(1000);
+        private int mCountSecond = 0;
+        private int mTimeOut = 180;
         public string LabelContent
         {
             get
@@ -30,16 +35,35 @@ namespace SPI_AOI.Views
             set
             {
                 mContent = value;
+                mCountSecond = 0;
                 this.Dispatcher.Invoke(() => {
                     lbStatus.Content = mContent;
                 });
             }
         }
+        private void OntimedEvent(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            mCountSecond++;
+            if(mCountSecond > mTimeOut)
+            {
+                mTimer.Enabled = false;
+                KillMe = true;
+            }
+        }
+        public WaitingForm(string Content = "Processing...", int Timeout = 180)
+        {
+            InitializeComponent();
+            this.LabelContent = Content;
+            mTimeOut = Timeout;
+            mTimer.Elapsed += OntimedEvent;
+            mTimer.Enabled = true;
+        }
         public WaitingForm(string Content = "Processing...")
         {
             InitializeComponent();
             this.LabelContent = Content;
-
+            mTimer.Elapsed += OntimedEvent;
+            mTimer.Enabled = true;
         }
         public bool KillMe
         {
@@ -50,6 +74,7 @@ namespace SPI_AOI.Views
                 if(mKillMe == true)
                 {
                     this.Dispatcher.Invoke(() => {
+                        mTimer.Enabled = false;
                         this.Close();
                     });
                 }

@@ -129,7 +129,7 @@ namespace SPI_AOI.Views.ModelManagement
                 {
                     ((CadFile)item).FlipX();
                 }
-                if (y)
+                else if (y)
                 {
                     ((CadFile)item).FlipY();
                 }
@@ -190,12 +190,12 @@ namespace SPI_AOI.Views.ModelManagement
 
         private void btFlipX_Click(object sender, RoutedEventArgs e)
         {
-            Flip(false, true);
+            Flip(true, false);
         }
 
         private void btFlipY_Click(object sender, RoutedEventArgs e)
         {
-            Flip(true, false);
+            Flip(false, true);
         }
     }
 }

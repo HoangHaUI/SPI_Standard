@@ -99,13 +99,11 @@ namespace SPI_AOI.Models
         {
             using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
             {
-                for (int i = 0; i < model.Gerber.PadItems.Count; i++)
+                for (int i = 0; i < model.Gerber.PadSelected.Count; i++)
                 {
-                    Rectangle bound = model.Gerber.PadItems[i].Bouding;
-
-                    if (model.Gerber.SelectPad.Contains(bound) && model.Gerber.PadItems[i].Enable)
+                    if (model.Gerber.PadSelected[i].Enable)
                     {
-                        contours.Push(new VectorOfPoint(model.Gerber.PadItems[i].Contour));
+                        contours.Push(new VectorOfPoint(model.Gerber.PadSelected[i].Contour));
                     }
                 }
                 CvInvoke.DrawContours(ImgDraw, contours, -1, new MCvScalar(255, 255, 255), -1);
@@ -160,12 +158,11 @@ namespace SPI_AOI.Models
                 if (model.Gerber.Visible)
                 {
                     img = model.ImgGerberProcessedBgr.Copy();
-                    if (model.Gerber.SelectPad != Rectangle.Empty)
+                    if (model.Gerber.PadSelected.Count > 0)
                     {
                         HightLightSelectPad(img, model);
                     }
                 }
-
                 else
                 {
                     img = new Image<Bgr, byte>(model.ImgGerberProcessedBgr.Size);
@@ -186,13 +183,9 @@ namespace SPI_AOI.Models
                             ct.Y += y;
                             Point newCtRotate = ImageProcessingUtils.PointRotation(ct, new Point(item.CenterRotation.X + item.X, item.CenterRotation.Y + item.Y), angle);
                             MCvScalar color = new MCvScalar(cl.B, cl.G, cl.R);
-                            if (item.SelectCenter != Rectangle.Empty)
+                            if (item.CadItemSelected.Contains(caditem))
                             {
-                                Rectangle bound = new Rectangle(newCtRotate.X, newCtRotate.Y, 1, 1);
-                                if (item.SelectCenter.Contains(bound))
-                                {
-                                    color = new MCvScalar(255, 255, 255);
-                                }
+                                color = new MCvScalar(255, 255, 255);
                             }
                             if(model.ShowComponentCenter)
                             {

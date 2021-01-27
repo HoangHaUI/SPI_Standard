@@ -269,6 +269,38 @@ namespace SPI_AOI.Models
             }
             return new FileInfo(modelPath).FullName;
         }
+        public string SaveAsModel(string ModelName)
+        {
+            string modelPath = ModelPath + "/" + ModelName + ".json";
+            var mgGerberProcessedBgr = this.ImgGerberProcessedBgr;
+            this.ImgGerberProcessedBgr = null;
+            var orgGerberImage = this.Gerber.OrgGerberImage;
+            this.Gerber.OrgGerberImage = null;
+            var processingGerberImage = this.Gerber.ProcessingGerberImage;
+            this.Gerber.ProcessingGerberImage = null;
+            string modelNameOld = this.Name;
+            string modelIDOld = this.ID;
+            this.ID = Utils.GetNewID();
+            this.Name = ModelName;
+            try
+            {
+                string json = JsonConvert.SerializeObject(this);
+                File.WriteAllText(modelPath, json);
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                this.ID = modelIDOld;
+                this.Name = modelNameOld;
+                this.ImgGerberProcessedBgr = mgGerberProcessedBgr;
+                this.Gerber.OrgGerberImage = orgGerberImage;
+                this.Gerber.ProcessingGerberImage = processingGerberImage;
+            }
+            return new FileInfo(modelPath).FullName;
+        }
         public static Model LoadModelByPath(string Path)
         {
             Model model = null;

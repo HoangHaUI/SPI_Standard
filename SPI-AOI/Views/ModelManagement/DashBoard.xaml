@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SPI_AOI.Views.ModelManagement"
         mc:Ignorable="d"
-        Title="Model Management - Dash Board" Height="345" Width="723.5"
+        Title="Model Management - Dash Board" Height="345" Width="780"
         Background="#FFEEEEEE"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -47,6 +47,7 @@
                                 Click="btSaveModel_Click">
                             <Image Source="../../Resources/Icons/save.png"></Image>
                         </Button>
+                       
 
                         <Button x:Name="btRemoveModel" ToolTip="Remove Model" 
                                 Style="{StaticResource btTool}"
@@ -54,6 +55,7 @@
                             <Image Source="../../Resources/Icons/bin.png" Height="30"></Image>
                         </Button>
                         <Separator></Separator>
+                        
                         <Button x:Name="btImportModel" ToolTip="Import Model" 
                                 Style="{StaticResource btTool}"
                                 Click="btImportModel_Click">
@@ -63,6 +65,11 @@
                                 Style="{StaticResource btTool}"
                                 Click="btExportModel_Click">
                             <Image Source="../../Resources/Icons/export.png"></Image>
+                        </Button>
+                        <Button x:Name="btSaveAsModel" ToolTip="Save As Model" 
+                                Style="{StaticResource btTool}"
+                                Click="btSaveAsModel_Click">
+                            <Image Source="../../Resources/Icons/Save-As-icon.png" Margin="3"></Image>
                         </Button>
                     </ToolBar>
                 </DockPanel>

@@ -31,8 +31,6 @@ namespace SPI_AOI.Views.ModelManagement
         // variable user status
         bool mMousePress = false;
         bool mCtrlPress = false;
-        //bool mIsDrawROI = false;
-        //bool mIsDrawItems = false;
         System.Drawing.Rectangle mSelectRecangle = System.Drawing.Rectangle.Empty;
         System.Drawing.Point StartPoint = new System.Drawing.Point();
         public Model mModel = new Model();
@@ -102,8 +100,10 @@ namespace SPI_AOI.Views.ModelManagement
             mMousePress = false;
             Cursor = Cursors.Arrow;
         }
-        private void DrawItems(System.Drawing.Rectangle Rect)
+        private void DrawItems(System.Drawing.Rectangle Rect, int Action)
         {
+            /// 0 remove
+            /// 1 add
             List<object> availabilityLayers = mModel.GetListLayerInRect(Rect);
             int id = -1;
             if (availabilityLayers.Count != 1)
@@ -119,13 +119,27 @@ namespace SPI_AOI.Views.ModelManagement
             if(id> -1)
             {
                 object itemsSelected = availabilityLayers[id];
-                if (itemsSelected is GerberFile)
+                if(Action ==1)
                 {
-                    ((GerberFile)itemsSelected).SelectPad = mSelectRecangle;
+                    if (itemsSelected is GerberFile)
+                    {
+                        ((GerberFile)itemsSelected).AddSelectPad(mSelectRecangle);
+                    }
+                    else if (itemsSelected is CadFile)
+                    {
+                        ((CadFile)itemsSelected).AddSelectCenter(mSelectRecangle);
+                    }
                 }
-                else if (itemsSelected is CadFile)
+                else if(Action == 0)
                 {
-                    ((CadFile)itemsSelected).SelectCenter = mSelectRecangle;
+                    if (itemsSelected is GerberFile)
+                    {
+                        ((GerberFile)itemsSelected).RemoveSelectPad(mSelectRecangle);
+                    }
+                    else if (itemsSelected is CadFile)
+                    {
+                        ((CadFile)itemsSelected).RemoveSelectCenter(mSelectRecangle);
+                    }
                 }
                 ShowAllLayerImb(ActionMode.Select_Pad);
             }
@@ -151,7 +165,6 @@ namespace SPI_AOI.Views.ModelManagement
             }
             if (id > -1)
             {
-                
                 List<PadItem> pads = mModel.GetPadsInRect(Rect, Linked:false);
                 foreach (var item in pads)
                 {
@@ -410,13 +423,28 @@ namespace SPI_AOI.Views.ModelManagement
                 {
                     if(mSelectRecangle != System.Drawing.Rectangle.Empty)
                     {
-                        DrawItems(mSelectRecangle);
+                        DrawItems(mSelectRecangle, 1);
                         mSelectRecangle = System.Drawing.Rectangle.Empty;
                         imBox.Refresh();
                     }
-                    else
+                }
+            }
+            else
+            {
+                MessageBox.Show(string.Format("Please insert gerber file..."), "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+        private void btUnSelectPad_Click(object sender, RoutedEventArgs e)
+        {
+            if (mModel.Gerber is GerberFile || mModel.Cad.Count > 0)
+            {
+                if (imBox.Image != null)
+                {
+                    if (mSelectRecangle != System.Drawing.Rectangle.Empty)
                     {
-                        MessageBox.Show(string.Format("Area select is emty!"), "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        DrawItems(mSelectRecangle, 0);
+                        mSelectRecangle = System.Drawing.Rectangle.Empty;
+                        imBox.Refresh();
                     }
                 }
             }
@@ -639,8 +667,7 @@ namespace SPI_AOI.Views.ModelManagement
         {
             if (mModel.Gerber is GerberFile || mModel.Cad.Count > 0)
             {
-                List<PadItem> listSelectPad = mModel.GetPadsInRect(mSelectRecangle, Linked: true);
-                listSelectPad.AddRange(mModel.GetPadsInRect(mSelectRecangle, Linked: false));
+                List<PadItem> listSelectPad = mModel.Gerber.GetPadSelected();
                 PadconditionWindow padConditionWD = new PadconditionWindow(mModel.Gerber.PadItems, listSelectPad);
                 padConditionWD.ShowDialog();
             }
@@ -788,5 +815,7 @@ namespace SPI_AOI.Views.ModelManagement
 
             }
         }
+
+        
     }
 }

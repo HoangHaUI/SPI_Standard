@@ -24,15 +24,14 @@ namespace SPI_AOI.Models
         public byte[] FileData { get; set; }
         public Image<Gray, byte> OrgGerberImage { get; set; }
         public Image<Gray, byte> ProcessingGerberImage { get; set; }
-        
         public bool Visible { get; set; }
         public double Angle { get; set; }
         public SPI_AOI.Utils.StartPoint StartPoint { get; set; }
         public Rectangle ROI { get; set; }
-        public Rectangle SelectPad { get; set; }
         public Mark MarkPoint { get; set; }
         public List<Fov> FOVs { get; set; }
         public List<PadItem> PadItems { get; set; }
+        public List <PadItem> PadSelected { get; set; }
         public static GerberFile GetNewGerber(string ID, string Path, float DPI, Size FOV)
         {
             if(Path == null)
@@ -57,7 +56,8 @@ namespace SPI_AOI.Models
             gerber.ProcessingGerberImage = gerber.OrgGerberImage.Copy();
             gerber.FileData = File.ReadAllBytes(fi.FullName);
             gerber.ROI = new Rectangle();
-            gerber.SelectPad = Rectangle.Empty;
+            gerber.PadSelected = new List<PadItem>();
+            gerber.PadSelected = new List<PadItem>();
             gerber.MarkPoint = new Mark(gerber.GerberID);
             gerber.ResetMark();
             gerber.StartPoint = SPI_AOI.Utils.StartPoint.TOP_LEFT;
@@ -119,13 +119,44 @@ namespace SPI_AOI.Models
         }
         public List<PadItem> GetPadSelected()
         {
+            return this.PadSelected;
+        }
+        public int AddSelectPad(Rectangle SelectRect)
+        {
+            List<PadItem> padSelected = PadInRect(SelectRect);
+            for (int i = 0; i < padSelected.Count; i++)
+            {
+                if (!this.PadSelected.Contains(padSelected[i]))
+                {
+                    this.PadSelected.Add(padSelected[i]);
+                }
+            }
+            return this.PadSelected.Count;
+        }
+        public int RemoveSelectPad(Rectangle SelectRect)
+        {
+            List<PadItem> padSelected = PadInRect(SelectRect);
+            for (int i = 0; i < padSelected.Count; i++)
+            {
+                if (this.PadSelected.Contains(padSelected[i]))
+                {
+                    this.PadSelected.Remove(padSelected[i]);
+                }
+            }
+            return this.PadSelected.Count;
+        }
+        public void ClearSelectPad()
+        {
+            this.PadSelected.Clear();
+        }
+        public List<PadItem> PadInRect(Rectangle SelectRect)
+        {
             List<PadItem> padSelected = new List<PadItem>();
-            if (this.SelectPad != Rectangle.Empty)
+            if (SelectRect != Rectangle.Empty)
             {
                 for (int i = 0; i < this.PadItems.Count; i++)
                 {
-                    Rectangle bound = new Rectangle(this.PadItems[i].Center.X, this.PadItems[i].Center.Y, 1, 1);
-                    if (this.SelectPad.Contains(bound))
+                    if (SelectRect.Contains(this.PadItems[i].Center))
                     {
                         padSelected.Add(this.PadItems[i]);
                     }
@@ -133,30 +164,13 @@ namespace SPI_AOI.Models
             }
             return padSelected;
         }
-        public Image<Bgr, byte> GetDiagramImage()
+        public Point GetCenterOfPadSelected()
         {
-            this.ProcessingGerberImage.ROI = this.ROI;
-            Image<Bgr, byte> Img = new Image<Bgr, byte>(this.ProcessingGerberImage.Size);
-            using (Image<Gray, byte> imgTemp = this.ProcessingGerberImage.Copy())
-            using (Image<Bgr, byte> imgAdd = new Image<Bgr, byte>(Img.Size.Width, Img.Size.Height, new Bgr(0, 50, 0)))
-            {
-                CvInvoke.BitwiseNot(imgTemp, imgTemp);
-                CvInvoke.CvtColor(this.ProcessingGerberImage, Img, Emgu.CV.CvEnum.ColorConversion.Gray2Bgr);
-                CvInvoke.Add(Img, imgAdd, Img, mask: imgTemp);
-            }
-            return Img;
-        }
-        public Point GetCenterPadsSelected()
-        {
-            if (this.SelectPad == Rectangle.Empty)
-            {
-                return new Point();
-            }
-            List<PadItem> padSelected = GetPadSelected();
+            Point centerOfPadSelect = new Point();
             List<Point> centerEachPad = new List<Point>();
-            for (int i = 0; i < padSelected.Count; i++)
+            for (int i = 0; i < this.PadSelected.Count; i++)
             {
-                centerEachPad.Add(padSelected[i].Center);
+                centerEachPad.Add(this.PadSelected[i].Center);
             }
             if (centerEachPad.Count > 0)
             {
@@ -169,12 +183,23 @@ namespace SPI_AOI.Models
                 }
                 x = x / centerEachPad.Count;
                 y = y / centerEachPad.Count;
-                return new Point(Convert.ToInt32(x), Convert.ToInt32(y));
+                centerOfPadSelect =  new Point(Convert.ToInt32(x), Convert.ToInt32(y));
             }
-            else
+            return centerOfPadSelect;
+        }
+
+        public Image<Bgr, byte> GetDiagramImage()
+        {
+            this.ProcessingGerberImage.ROI = this.ROI;
+            Image<Bgr, byte> Img = new Image<Bgr, byte>(this.ProcessingGerberImage.Size);
+            using (Image<Gray, byte> imgTemp = this.ProcessingGerberImage.Copy())
+            using (Image<Bgr, byte> imgAdd = new Image<Bgr, byte>(Img.Size.Width, Img.Size.Height, new Bgr(0, 50, 0)))
             {
-                return new Point();
+                CvInvoke.BitwiseNot(imgTemp, imgTemp);
+                CvInvoke.CvtColor(this.ProcessingGerberImage, Img, Emgu.CV.CvEnum.ColorConversion.Gray2Bgr);
+                CvInvoke.Add(Img, imgAdd, Img, mask: imgTemp);
             }
+            return Img;
         }
         public void UpdateFOV(Size FOV)
         {

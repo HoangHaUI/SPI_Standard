@@ -867,6 +867,7 @@ namespace SPI_AOI.Views
             mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.ShiftY, Count = 0, PPM = 0, Rate = 0 });
             mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.PadAreaError, Count = 0, PPM = 0, Rate = 0 });
             mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.SumOfDefects, Count = 0, PPM = 0, Rate = 0 });
+            mSummary.Add(new Utils.SummaryInfo() { Field = VI.ErrorType.SumOfPads, Count = 0, PPM = 0, Rate = 0 });
         }
         private Views.UserManagement.UserType Login()
         {
@@ -1179,7 +1180,7 @@ namespace SPI_AOI.Views
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
                     int val = mPlcComm.Get_Go_Coordinates_Finish_Conveyor();
-                    while (val != 1 && sw.ElapsedMilliseconds < 180000)
+                    while (val != 1 && sw.ElapsedMilliseconds < 180000 && wait.IsActive)
                     {
                         Thread.Sleep(50);
                         val = mPlcComm.Get_Go_Coordinates_Finish_Conveyor();
@@ -1209,8 +1210,6 @@ namespace SPI_AOI.Views
                 mIsInTimer = false;
                 wait.KillMe = true;
                 mSumPadModel = mModel.Gerber.PadItems.Count;
-
-
             });
             startThread.Start();
             wait.ShowDialog();
@@ -1288,6 +1287,16 @@ namespace SPI_AOI.Views
                 imbDiagram.Source = null ;
             });
         }
+        private void StartByPassMode()
+        {
+            SetButtonRun(Utils.RunMode.START);
+            UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.READY);
+            LoadDetails();
+            mIsRunning = true;
+            mTimer.Elapsed += OnMainEvent;
+            mTimer.Enabled = true;
+            mIsInTimer = false;
+        }
         private void btRun_Click(object sender, RoutedEventArgs e)
         {
             if(!mIsRunning)
@@ -1296,22 +1305,25 @@ namespace SPI_AOI.Views
                 {
                     StartRunMode();
                 }
-                else
+                else if(mParam.RUNNING_MODE == 2)
                 {
-                    SetButtonRun(Utils.RunMode.START);
-                    UpdateStatus(Utils.LabelMode.PRODUCT_STATUS, Utils.LabelStatus.READY);
-                    LoadDetails();
-                    mIsRunning = true;
-                    mTimer.Elapsed += OnMainEvent;
-                    mTimer.Enabled = true;
-                    mIsInTimer = false;
+                    StartByPassMode();
+                }
+                else if (cbModelsName.SelectedIndex == -1 && mParam.RUNNING_MODE != 2)
+                {
+                    var r = MessageBox.Show("Not found model name to Run, you want to switch to By pass mode ?", "Switch Bypass Mode", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if(r == MessageBoxResult.Yes)
+                    {
+                        mParam.RUNNING_MODE = 2;
+                        UpdateRunningMode();
+                        StartByPassMode();
+                    }
                 }
             }
             else
             {
                 StopRunMode();
             }
-            
         }
         private void btSetupCamera_Click(object sender, RoutedEventArgs e)
         {
@@ -1492,36 +1504,43 @@ namespace SPI_AOI.Views
             if(mPadErrorDetails.Count > 0)
             {
                 string panelStatus = "PASS";
-                for (int i = 0; i < mPadErrorDetails.Count; i++)
-                {
-                    if (mPadErrorDetails[i].ConfirmResult == "FAIL")
+                Views.WaitingForm wait = new WaitingForm("Insert error to database...", 120);
+                Thread insert = new Thread(() => {
+                    for (int i = 0; i < mPadErrorDetails.Count; i++)
                     {
-                        panelStatus = "FAIL";
+                        if (mPadErrorDetails[i].ConfirmResult == "FAIL")
+                        {
+                            panelStatus = "FAIL";
+                        }
+                        mMyDatabase.InsertNewPadError(
+                            mPadErrorDetails[i].PanelID,
+                            mPadErrorDetails[i].ModelName,
+                            mPadErrorDetails[i].LoadTime,
+                            mPadErrorDetails[i].Pad.NoID,
+                            mPadErrorDetails[i].FOVNo,
+                            mPadErrorDetails[i].ROIOnImage,
+                            mPadErrorDetails[i].ROIOnGerber,
+                            mPadErrorDetails[i].MachineResult,
+                            mPadErrorDetails[i].ConfirmResult,
+                            mPadErrorDetails[i].Component,
+                            mPadErrorDetails[i].ErrorType,
+                            mPadErrorDetails[i].Area,
+                            mPadErrorDetails[i].AreaStdHight,
+                            mPadErrorDetails[i].AreaStdLow,
+                            mPadErrorDetails[i].ShiftX,
+                            mPadErrorDetails[i].ShiftXStduM,
+                            mPadErrorDetails[i].ShiftY,
+                            mPadErrorDetails[i].ShiftYStduM
+                            );
                     }
-                    mMyDatabase.InsertNewPadError(
-                        mPadErrorDetails[i].PanelID,
-                        mPadErrorDetails[i].ModelName,
-                        mPadErrorDetails[i].LoadTime,
-                        mPadErrorDetails[i].Pad.NoID,
-                        mPadErrorDetails[i].FOVNo,
-                        mPadErrorDetails[i].ROIOnImage,
-                        mPadErrorDetails[i].ROIOnGerber,
-                        mPadErrorDetails[i].MachineResult,
-                        mPadErrorDetails[i].ConfirmResult,
-                        mPadErrorDetails[i].Component,
-                        mPadErrorDetails[i].ErrorType,
-                        mPadErrorDetails[i].Area,
-                        mPadErrorDetails[i].AreaStdHight,
-                        mPadErrorDetails[i].AreaStdLow,
-                        mPadErrorDetails[i].ShiftX,
-                        mPadErrorDetails[i].ShiftXStduM,
-                        mPadErrorDetails[i].ShiftY,
-                        mPadErrorDetails[i].ShiftYStduM
-                        );
-                }
-                string runningMode = GetRunningModeString();
-                mMyDatabase.InsertNewPanelResult(mPadErrorDetails[0].PanelID, mModel.Name, mPadErrorDetails[0].LoadTime, mPadErrorDetails[0].SN, runningMode, "FAIL", panelStatus, mModel.Gerber.PadItems.Count);
-                if(panelStatus == "PASS")
+                    string runningMode = GetRunningModeString();
+                    mMyDatabase.InsertNewPanelResult(mPadErrorDetails[0].PanelID, mModel.Name, mPadErrorDetails[0].LoadTime, mPadErrorDetails[0].SN, runningMode, "FAIL", panelStatus, mModel.Gerber.PadItems.Count);
+                    wait.KillMe = true;
+                });
+                insert.Start();
+                wait.ShowDialog();
+                insert.Join();
+                if (panelStatus == "PASS")
                 {
                     mPlcComm.Set_Bit_Comfirm_Pass();
                 }
@@ -1550,14 +1569,8 @@ namespace SPI_AOI.Views
                 double showDisplayHeight = fovHeight * scaleHeight;
                 double addX = 0;
                 double addY = 0;
-                if(showDisplayWidth < 15)
-                {
-                    addX = 15 - showDisplayWidth;
-                }
-                if(showDisplayHeight < 15)
-                {
-                    addY = 15 - showDisplayHeight;
-                }
+                addX = showDisplayWidth < 15 ? 15 - showDisplayWidth : addX;
+                addY = showDisplayHeight < 15 ? 15 - showDisplayHeight : addY;
                 Point startPoint = new Point (
                                Component.X * scaleWidth + (bdImbWidth - imbWidth) / 2 - addX /2,
                                Component.Y * scaleHeight  + (bdImbHeight - imbHeight) / 2 - addY / 2
@@ -1589,7 +1602,6 @@ namespace SPI_AOI.Views
                 }
             }
         }
-
         private void btAllPASS_Click(object sender, RoutedEventArgs e)
         {
             var r = MessageBox.Show("Set PASS for All Pad?", "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);

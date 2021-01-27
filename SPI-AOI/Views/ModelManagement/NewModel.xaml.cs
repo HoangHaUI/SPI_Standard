@@ -56,11 +56,18 @@ namespace SPI_AOI.Views.ModelManagement
 
         private void btAdd_Click(object sender, RoutedEventArgs e)
         {
+            string[] listModelExist = Model.GetModelNames();
+            
             string user = mParam.USER_LOGIN;
             string modelName = txtModelName.Text;
             string gerberPath = txtGerberPath.Text;
             double pcbThickness = 0;
-            try
+            if (listModelExist.Contains(modelName))
+            {
+                MessageBox.Show("Model " + modelName + " is existed!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+                try
             {
                 pcbThickness = Convert.ToDouble(txtThickness.Text);
             }

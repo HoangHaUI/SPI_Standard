@@ -12,19 +12,19 @@ namespace SPI_AOI.Models
     public class CadFile
     {
         private static NLog.Logger mLog = Heal.LogCtl.GetInstance();
-        public string ModelID { get; set; }//
-        public string CadFileID { get; set; }//
-        public Color Color { get; set; }//
-        public string FileName { get; set; }//
-        public string FilePath { get; set; }//
+        public string ModelID { get; set; }
+        public string CadFileID { get; set; }
+        public Color Color { get; set; }
+        public string FileName { get; set; }
+        public string FilePath { get; set; }
         public string[] CadFileData { get; set; }
-        public bool Visible { get; set; }//
-        public int X { get; set; }//
-        public int Y { get; set; }//
-        public double Angle { get; set; }//
-        public Rectangle SelectCenter { get; set; }//
-        public Point CenterRotation { get; set; }//
-        public List<CadItem> CadItems { get; set; }//
+        public bool Visible { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public double Angle { get; set; }
+        public Point CenterRotation { get; set; }
+        public List<CadItem> CadItems { get; set; }
+        public List<CadItem> CadItemSelected { get; set; }
         public static CadFile GetNewCadFile(string ID, string Path, double DPI, int GerberWidth = 0, int GerberHeight= 0)
         {
             FileInfo fi = new FileInfo(Path);
@@ -37,6 +37,7 @@ namespace SPI_AOI.Models
             cad.Visible = true;
             cad.Angle = 0;
             cad.CadItems = new List<CadItem>();
+            cad.CadItemSelected = new List<CadItem>();
             string[] content = File.ReadAllLines(fi.FullName);
             double _XMin = 999999;
             double _YMin = 999999;
@@ -113,38 +114,75 @@ namespace SPI_AOI.Models
             cad.CadFileData = content;
             return cad;
         }
-        public Point GetCenterSelected()
+        public Point GetCenterOfCenterSelected()
         {
-            List<Point> centerSelected = new List<Point>();
-            for (int i = 0; i < CadItems.Count; i++)
+            Point centerOfCenter = new Point();
+            if (this.CadItemSelected.Count > 0)
             {
-                Point ct = Point.Round(CadItems[i].Center);
-                ct.X += this.X;
-                ct.Y += this.Y;
-                Point newCtRotate = ImageProcessingUtils.PointRotation(ct, new Point((int)this.CenterRotation.X + this.X, (int)this.CenterRotation.Y + this.Y), this.Angle * Math.PI / 180.0);
-                Rectangle bound = new Rectangle(newCtRotate.X, newCtRotate.Y, 1, 1);
-                if (this.SelectCenter.Contains(bound))
-                {
-                    centerSelected.Add(newCtRotate);
-                }
-            }
-            if (centerSelected.Count > 0)
-            {
+                
                 long x = 0;
                 long y = 0;
-                for (int i = 0; i < centerSelected.Count; i++)
+                for (int i = 0; i < this.CadItemSelected.Count; i++)
                 {
-                    x += centerSelected[i].X;
-                    y += centerSelected[i].Y;
+                    Point ct = Point.Round(CadItemSelected[i].Center);
+                    ct.X += this.X;
+                    ct.Y += this.Y;
+                    Point newCtRotate = ImageProcessingUtils.PointRotation(ct, new Point((int)this.CenterRotation.X + this.X, (int)this.CenterRotation.Y + this.Y), this.Angle * Math.PI / 180.0);
+                    x += newCtRotate.X;
+                    y += newCtRotate.Y;
                 }
-                x = x / centerSelected.Count;
-                y = y / centerSelected.Count;
-                return new Point(Convert.ToInt32(x), Convert.ToInt32(y));
+                x = x / this.CadItemSelected.Count;
+                y = y / this.CadItemSelected.Count;
+                centerOfCenter = new Point(Convert.ToInt32(x), Convert.ToInt32(y));
             }
-            else
+            return centerOfCenter;
+        }
+        public int AddSelectCenter(Rectangle SelectRect)
+        {
+            List<CadItem> centerSelected = ItemInRect(SelectRect);
+            for (int i = 0; i < centerSelected.Count; i++)
             {
-                return new Point();
+                if(!this.CadItemSelected.Contains(centerSelected[i]))
+                {
+                    this.CadItemSelected.Add(centerSelected[i]);
+                }
             }
+            return centerSelected.Count;
+        }
+        public int RemoveSelectCenter(Rectangle SelectRect)
+        {
+            List<CadItem> centerSelected = ItemInRect(SelectRect);
+            for (int i = 0; i < centerSelected.Count; i++)
+            {
+                if (this.CadItemSelected.Contains(centerSelected[i]))
+                {
+                    this.CadItemSelected.Remove(centerSelected[i]);
+                }
+            }
+            return centerSelected.Count;
+        }
+        public void ClearSelectCenter()
+        {
+            this.CadItemSelected.Clear();
+        }
+        public List<CadItem> ItemInRect(Rectangle SelectRect)
+        {
+            List<CadItem> centerSelected = new List<CadItem>();
+            if(SelectRect != Rectangle.Empty)
+            {
+                for (int i = 0; i < CadItems.Count; i++)
+                {
+                    Point ct = Point.Round(CadItems[i].Center);
+                    ct.X += this.X;
+                    ct.Y += this.Y;
+                    Point newCtRotate = ImageProcessingUtils.PointRotation(ct, new Point((int)this.CenterRotation.X + this.X, (int)this.CenterRotation.Y + this.Y), this.Angle * Math.PI / 180.0);
+                    if (SelectRect.Contains(newCtRotate))
+                    {
+                        centerSelected.Add(CadItems[i]);
+                    }
+                }
+            }
+            return centerSelected;
         }
         public CadFile Copy()
         {
@@ -156,7 +194,6 @@ namespace SPI_AOI.Models
             cad.Angle = this.Angle;
             cad.Color = this.Color;
             cad.CenterRotation = new Point(this.CenterRotation.X, CenterRotation.Y);
-            cad.SelectCenter = Rectangle.Empty;
             cad.Visible = true;
             cad.X = this.X;
             cad.Y = this.Y;
@@ -166,6 +203,7 @@ namespace SPI_AOI.Models
             {
                 cad.CadItems.Add(this.CadItems[i].Copy(cad.CadFileID));
             }
+            cad.CadItemSelected = new List<CadItem>();
             return cad;
         }
         public void ClearLinkPadItem()

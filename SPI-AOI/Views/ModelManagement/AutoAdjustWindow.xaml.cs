@@ -70,15 +70,18 @@ namespace SPI_AOI.Views.ModelManagement
             
             GerberFile gerber = mGerbers[cbGerber.SelectedIndex];
             CadFile cad = mCads[cbCad.SelectedIndex]; ;
-            System.Drawing.Point cGerber = gerber.GetCenterPadsSelected();
-            System.Drawing.Point cCad = cad.GetCenterSelected();
+            System.Drawing.Point cGerber = gerber.GetCenterOfPadSelected();
+            System.Drawing.Point cCad = cad.GetCenterOfCenterSelected();
             if (cGerber != new System.Drawing.Point() && cCad != new System.Drawing.Point())
             {
                 int subx = cGerber.X - cCad.X;
                 int suby = cGerber.Y - cCad.Y;
                 cad.X += subx;
                 cad.Y += suby;
+                gerber.ClearSelectPad();
+                cad.ClearSelectCenter();
                 mGerberToolsWindow.ShowAllLayerImb(ActionMode.Draw_Cad);
+                this.Close();
             }
             else
             {

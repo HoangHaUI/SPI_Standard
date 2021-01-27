@@ -15,6 +15,16 @@ namespace SPI_AOI.Models
     {
         public string GerberID { get; set; }
         public bool Enable { get; set; }
+        public bool CheckArea { get; set; }
+        public bool CheckShiftX { get; set; }
+        public bool CheckShiftY { get; set; }
+        public bool CheckBrigde { get; set; }
+        public bool CheckMissing { get; set; }
+        public bool CheckInsufficient { get; set; }
+        public bool CheckExcess { get; set; }
+        public bool CheckOverArea { get; set; }
+        public bool CheckLowArea { get; set; }
+        public bool CheckPadAreaError { get; set; }
         public int NoID { get; set; }
         public double Area { get; set; }
         public Point[] Contour { get; set; }
@@ -73,6 +83,16 @@ namespace SPI_AOI.Models
                     pad.CadItemIndex = -1;
                     pad.NoID = i;
                     pad.Enable = true;
+                    pad.CheckArea = true;
+                    pad.CheckBrigde = true;
+                    pad.CheckExcess = true;
+                    pad.CheckInsufficient = true;
+                    pad.CheckLowArea = true;
+                    pad.CheckMissing = true;
+                    pad.CheckOverArea = true;
+                    pad.CheckPadAreaError = true;
+                    pad.CheckShiftX = true;
+                    pad.CheckShiftY = true;
                     padItems.Add(pad);
                 }
             }

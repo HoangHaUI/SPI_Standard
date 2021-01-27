@@ -1,21 +1,22 @@
 ﻿
 
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\Histories\HistoryWindow.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\MainWindow.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\ModelManagement\AutoAdjustFOVWindow.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\ModelManagement\AutoAdjustWindow.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\ModelManagement\AutoLinkPadWindow.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\ModelManagement\DashBoard.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\ModelManagement\FOVCaptureWindow.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\ModelManagement\HardwareWindow.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\ModelManagement\NewModel.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\ModelManagement\SuggestLinkPadWindow.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\ModelManagement\AvailabilityLayerWindow.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\ModelManagement\GerberTools.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\ModelManagement\RotationWindow.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\ModelManagement\PadconditionWindow.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\ModelManagement\XYMovingWindow.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\Styles\Base.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\UserManagement\LoginWindow.xaml;;
-FC:\Users\Public\Projects\SPI-AOI\SPI-AOI\Views\WaitingForm.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\Histories\HistoryWindow.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\MainWindow.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\ModelManagement\AutoAdjustFOVWindow.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\ModelManagement\AutoAdjustWindow.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\ModelManagement\AutoLinkPadWindow.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\ModelManagement\DashBoard.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\ModelManagement\FOVCaptureWindow.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\ModelManagement\HardwareWindow.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\ModelManagement\NewModel.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\ModelManagement\SuggestLinkPadWindow.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\ModelManagement\AvailabilityLayerWindow.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\ModelManagement\GerberTools.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\ModelManagement\RotationWindow.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\ModelManagement\PadconditionWindow.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\ModelManagement\XYMovingWindow.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\Styles\Base.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\UserManagement\LoginWindow.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\WaitingForm.xaml;;
+FD:\Heal\Projects\B06\SPI\Source code\CSharp\SPI-AOI\SPI-AOI\Views\ModelManagement\SaveAsWindow.xaml;;
 
