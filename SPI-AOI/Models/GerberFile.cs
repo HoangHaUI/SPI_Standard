@@ -199,6 +199,24 @@ namespace SPI_AOI.Models
                 CvInvoke.CvtColor(this.ProcessingGerberImage, Img, Emgu.CV.CvEnum.ColorConversion.Gray2Bgr);
                 CvInvoke.Add(Img, imgAdd, Img, mask: imgTemp);
             }
+            using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
+            {
+                for (int i = 0; i < this.PadItems.Count; i++)
+                {
+                    PadItem pad = this.PadItems[i];
+                    if (!pad.Enable)
+                    {
+                        Point[] cnt = new Point[pad.Contour.Length];
+                        for (int j = 0; j < pad.Contour.Length; j++)
+                        {
+                            cnt[j] = new Point(pad.Contour[j].X - this.ROI.X, pad.Contour[j].Y - this.ROI.Y);
+                        }
+                        contours.Push(new VectorOfPoint(cnt));
+                    }
+                    
+                }
+                CvInvoke.DrawContours(Img, contours, -1, new MCvScalar(0, 50, 0), -1);
+            }
             return Img;
         }
         public void UpdateFOV(Size FOV)

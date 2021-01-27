@@ -152,9 +152,9 @@
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition x:Name="ColInfo" Width="500"/>
-                    <ColumnDefinition x:Name="ColStatistical" Width="350"/>
-                    <ColumnDefinition x:Name="ColError" Width="0"/>
+                    <ColumnDefinition x:Name="ColInfo" Width="0"/>
+                    <ColumnDefinition x:Name="ColStatistical" Width="0"/>
+                    <ColumnDefinition x:Name="ColError" Width="850"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0" Margin="3">
@@ -570,34 +570,49 @@
                                         <ColumnDefinition Width="200"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0">
-                                        <GroupBox Header="Details" BorderBrush="Gray" Margin="3">
-                                            <StackPanel Margin="15">
-                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <Label FontSize="15" FontWeight="Bold" Content="Error:" VerticalAlignment="Center"/>
-                                                    <Label x:Name="lbErrorType" FontSize="35" Margin="50,0,0,0" Foreground="Red" Content="Bridge" FontWeight="Bold"></Label>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                                                    <Label FontSize="15" FontWeight="Bold" Content="Pad ID:"/>
-                                                    <Label x:Name="lbPadErrorID" FontSize="15" FontWeight="Bold"  Margin="10,0,0,0"></Label>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Label FontSize="15" FontWeight="Bold" Content="Component:"/>
-                                                    <Label x:Name="lbPadErrorComponent" FontSize="15" FontWeight="Bold" Margin="10,0,0,0"></Label>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Label FontSize="15" FontWeight="Bold" Content="Area (%):"/>
-                                                    <Label x:Name="lbPadErrorArea" FontSize="15" FontWeight="Bold" Margin="10,0,0,0"></Label>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Label FontSize="15" FontWeight="Bold" Content="Shift X (um):"/>
-                                                    <Label x:Name="lbPadErrorShiftX" FontSize="15" FontWeight="Bold"   Margin="10,0,0,0"></Label>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Label FontSize="15" FontWeight="Bold" Content="Shift Y (um):"/>
-                                                    <Label x:Name="lbPadErrorShiftY" FontSize="15" FontWeight="Bold"  Margin="10,0,0,0"></Label>
-                                                </StackPanel>
-                                            </StackPanel>
-                                        </GroupBox>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="70"/>
+                                                <RowDefinition Height="283*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <DockPanel HorizontalAlignment="Center">
+                                                    <Button x:Name="btPadErrorBack" Click="btPadErrorBack_Click" Height="35" Width="150" FontWeight="Bold" FontSize="20" Content="&lt;" Margin="15,15,20,0"></Button>
+                                                    <Button x:Name="btPadErrorNext" Click="btPadErrorNext_Click" Height="35" Width="150" FontWeight="Bold" FontSize="20" Content="&gt;" Margin="20,15,15,0"></Button>
+                                                </DockPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <GroupBox Header="Details" BorderBrush="Gray" Margin="3">
+                                                    <StackPanel Margin="15">
+                                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                            <Label FontSize="15" FontWeight="Bold" Content="Error:" VerticalAlignment="Center"/>
+                                                            <Label x:Name="lbErrorType" FontSize="35" Margin="50,0,0,0" Foreground="Red" Content="Bridge" FontWeight="Bold"></Label>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                                                            <Label FontSize="15" FontWeight="Bold" Content="Pad ID:"/>
+                                                            <Label x:Name="lbPadErrorID" FontSize="15" FontWeight="Bold"  Margin="10,0,0,0"></Label>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label FontSize="15" FontWeight="Bold" Content="Component:"/>
+                                                            <Label x:Name="lbPadErrorComponent" FontSize="15" FontWeight="Bold" Margin="10,0,0,0"></Label>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label FontSize="15" FontWeight="Bold" Content="Area (%):"/>
+                                                            <Label x:Name="lbPadErrorArea" FontSize="15" FontWeight="Bold" Margin="10,0,0,0"></Label>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label FontSize="15" FontWeight="Bold" Content="Shift X (um):"/>
+                                                            <Label x:Name="lbPadErrorShiftX" FontSize="15" FontWeight="Bold"   Margin="10,0,0,0"></Label>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label FontSize="15" FontWeight="Bold" Content="Shift Y (um):"/>
+                                                            <Label x:Name="lbPadErrorShiftY" FontSize="15" FontWeight="Bold"  Margin="10,0,0,0"></Label>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </GroupBox>
+                                            </Grid>
+                                        </Grid>
+                                        
                                     </Grid>
                                     <Grid Grid.Column="1">
                                         <Grid.RowDefinitions>

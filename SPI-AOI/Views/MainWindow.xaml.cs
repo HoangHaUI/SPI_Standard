@@ -878,6 +878,11 @@ namespace SPI_AOI.Views
         }
         private void btModelManager_Click(object sender, RoutedEventArgs e)
         {
+            if (mIsRunning)
+            {
+                MessageBox.Show("Please stop the program before performing this action!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             var userType = Login();
             if(userType == UserManagement.UserType.Admin ||
                 userType == UserManagement.UserType.Designer ||
@@ -890,6 +895,11 @@ namespace SPI_AOI.Views
         }
         private void btPLCConfig_Click(object sender, RoutedEventArgs e)
         {
+            if (mIsRunning)
+            {
+                MessageBox.Show("Please stop the program before performing this action!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             var userType = Login();
             if (userType == UserManagement.UserType.Admin ||
                 userType == UserManagement.UserType.Designer ||
@@ -902,6 +912,12 @@ namespace SPI_AOI.Views
 
         private void btMachineIssue_Click(object sender, RoutedEventArgs e)
         {
+
+            if (mIsRunning)
+            {
+                MessageBox.Show("Please stop the program before performing this action!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             var userType = Login();
             if (userType == UserManagement.UserType.Admin ||
                 userType == UserManagement.UserType.Designer ||
@@ -1328,6 +1344,11 @@ namespace SPI_AOI.Views
         }
         private void btIOConfig_Click(object sender, RoutedEventArgs e)
         {
+            if (mIsRunning)
+            {
+                MessageBox.Show("Please stop the program before performing this action!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             var userType = Login();
             if (userType == UserManagement.UserType.Admin ||
                 userType == UserManagement.UserType.Designer ||
@@ -1341,6 +1362,11 @@ namespace SPI_AOI.Views
         }
         private void btAlgorithmSettings_Click(object sender, RoutedEventArgs e)
         {
+            if(mIsRunning)
+            {
+                MessageBox.Show("Please stop the program before performing this action!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             var userType = Login();
             if (userType == UserManagement.UserType.Admin ||
                 userType == UserManagement.UserType.Designer)
@@ -1377,6 +1403,10 @@ namespace SPI_AOI.Views
                 mTimerCheckStatus.Enabled = false;
                 Thread.Sleep(500);
             }
+            else
+            {
+                e.Cancel = true;
+            }
         }
 
         private void btExit_Click(object sender, RoutedEventArgs e)
@@ -1409,6 +1439,12 @@ namespace SPI_AOI.Views
 
         private void btLightCtl_Click(object sender, RoutedEventArgs e)
         {
+
+            if (mIsRunning)
+            {
+                MessageBox.Show("Please stop the program before performing this action!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             var userType = Login();
             if (userType == UserManagement.UserType.Admin ||
                 userType == UserManagement.UserType.Designer ||
@@ -1652,6 +1688,12 @@ namespace SPI_AOI.Views
 
         private void btPLCMonitor_Click(object sender, RoutedEventArgs e)
         {
+
+            if (mIsRunning)
+            {
+                MessageBox.Show("Please stop the program before performing this action!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             var userType = Login();
             if (userType == UserManagement.UserType.Admin ||
                 userType == UserManagement.UserType.Designer ||
@@ -1670,6 +1712,27 @@ namespace SPI_AOI.Views
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("explorer.exe", @"logs");
+        }
+
+        private void btPadErrorBack_Click(object sender, RoutedEventArgs e)
+        {
+            int crSelect = stackPadError.SelectedIndex;
+            if(crSelect > 0)
+            {
+                crSelect--;
+            }
+            stackPadError.SelectedIndex = crSelect;
+        }
+
+        private void btPadErrorNext_Click(object sender, RoutedEventArgs e)
+        {
+            int limit = stackPadError.Items.Count;
+            int crSelect = stackPadError.SelectedIndex;
+            if (crSelect < limit - 1)
+            {
+                crSelect++;
+            }
+            stackPadError.SelectedIndex = crSelect;
         }
     }
 }

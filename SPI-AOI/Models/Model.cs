@@ -252,6 +252,11 @@ namespace SPI_AOI.Models
             this.Gerber.OrgGerberImage = null;
             var processingGerberImage = this.Gerber.ProcessingGerberImage;
             this.Gerber.ProcessingGerberImage = null;
+            this.Gerber.ClearSelectPad();
+            for (int i = 0; i < this.Cad.Count; i++)
+            {
+                this.Cad[i].ClearSelectCenter();
+            }
             try
             {
                 string json = JsonConvert.SerializeObject(this);
@@ -323,6 +328,14 @@ namespace SPI_AOI.Models
                 if (model.Gerber != null)
                 {
                     model.Gerber.LoadGerber(model.DPI, model.FOV);
+                }
+                model.Gerber.ClearSelectPad();
+                if(model.Cad != null)
+                {
+                    for (int i = 0; i < model.Cad.Count; i++)
+                    {
+                        model.Cad[i].ClearSelectCenter();
+                    }
                 }
             }
             return model;

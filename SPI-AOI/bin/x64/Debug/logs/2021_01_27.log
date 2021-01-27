@@ -1164,3 +1164,40 @@ Parameter name: startIndex(SLMP.cs:271)|
 2021-01-27 18:06:55.8130|Info|Moving TOP Axis, Position Name : FOV 11,  X = 3126, Y = 24535(MainWindow.xaml.cs:359)|
 2021-01-27 18:06:56.8169|Info|Moving TOP Axis, Position Name : FOV 12,  X = 8317, Y = 24357(MainWindow.xaml.cs:359)|
 2021-01-27 18:06:57.8905|Info|Moving TOP Axis, Position Name : FOV 13,  X = 12436, Y = 24279(MainWindow.xaml.cs:359)|
+2021-01-27 19:50:41.2107|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:610)|
+2021-01-27 19:58:50.5629|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:610)|
+2021-01-27 19:59:06.9234|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:610)|
+2021-01-27 20:00:25.2808|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:610)|
+2021-01-27 20:01:28.2125|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:610)|
+2021-01-27 20:01:39.6209|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:610)|
+2021-01-27 20:07:23.2408|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:610)|
+2021-01-27 20:08:26.9473|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:610)|
+2021-01-27 20:09:35.8101|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:610)|
+2021-01-27 20:26:07.3986|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:610)|
+2021-01-27 20:27:43.3982|Error|Ping PLC failed, IP :192.168.3.100:9999...(MainWindow.xaml.cs:610)|
+2021-01-27 20:28:02.5390|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-27 20:28:04.0938|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-27 20:28:05.6437|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-27 20:28:07.1926|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-27 20:28:08.7434|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-27 20:28:10.2953|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-27 20:28:11.8461|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-27 20:28:13.3960|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-27 20:28:14.9488|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-27 20:28:16.4987|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-27 20:28:18.0485|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-27 20:28:19.5994|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|
+2021-01-27 20:28:21.1482|Error|startIndex cannot be larger than length of string.
+Parameter name: startIndex(SLMP.cs:338)|

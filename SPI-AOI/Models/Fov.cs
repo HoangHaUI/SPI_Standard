@@ -16,6 +16,7 @@ namespace SPI_AOI.Models
         public int NO { get; set; }
         public Point Anchor { get; set; }
         public Rectangle ROI { get; set; }
+        //public bool Enable { get; set; }
         public List<int> PadItems { get; set; }
         private static Properties.Settings mParam = Properties.Settings.Default;
         public static List<Fov> GetFov(string ID, Image<Gray, byte> ImgGerber, Rectangle ROI, Size FOV,  SPI_AOI.Utils.StartPoint StartPoint)
