@@ -44,6 +44,7 @@ namespace SPI_AOI.Models
             cp.Width = this.Width;
             cp.Height = this.Height;
             cp.Origin = new Point(this.Origin.X, this.Origin.Y);
+            cp.ROIImage = new Rectangle(this.ROIImage.X, this.ROIImage.Y, this.ROIImage.Width, this.ROIImage.Height);
             return cp;
         }
     }

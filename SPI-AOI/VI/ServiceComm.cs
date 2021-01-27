@@ -116,6 +116,7 @@ namespace SPI_AOI.VI
                     memStream.Close();
                     requestStream.Write(tempBuffer, 0, tempBuffer.Length);
                 }
+                request.Timeout = 3000;
                 using (var response = request.GetResponse())
                 {
                     Stream stream2 = response.GetResponseStream();

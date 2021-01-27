@@ -22,12 +22,14 @@ namespace SPI_AOI.Views.MainConfigWindow
         {
             if(e.KeyCode == Keys.Enter)
             {
+                SN_Input = textBox1.Text;
                 this.Close();
             }
         }
 
         private void btOK_Click(object sender, EventArgs e)
         {
+            SN_Input = textBox1.Text;
             this.Close();
         }
     }

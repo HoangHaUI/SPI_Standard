@@ -154,8 +154,8 @@ namespace SPI_AOI.Views
                 }
                 this.Dispatcher.Invoke(() =>
                 {
-                    double cycleTime = (sw.ElapsedMilliseconds / 1000.0) + 3; // 3s for unload
-                    lbSN.Content = Math.Round(cycleTime, 2).ToString() + " s";
+                    double cycleTime = (sw.ElapsedMilliseconds / 1000.0) + 5; // 5s for load / unload
+                    lbCycleTime.Content = Math.Round(cycleTime, 2).ToString() + " s";
                 });
                 GC.Collect();
                 Heal.FilesManagement.DeleteFiles(mParam.SAVE_IMAGE_PATH, mParam.SAVE_IMAGE_HOURS, subfolder: true);
@@ -271,11 +271,6 @@ namespace SPI_AOI.Views
                             string fileName = string.Format("{0}//ReadCode_{1}.png", SavePath, i + 1);
                             CvInvoke.Imwrite(fileName, image);
                             VI.ServiceResults serviceResults = VI.ServiceComm.Decode(mParam.ServiceURL, new string[] { fileName }, mParam.Debug);
-                            sn[i] = serviceResults.SN;
-                            Thread isDB = new Thread(() => {
-                                mMyDatabase.InsertNewImage(ID, DateTime.Now, fileName, i, ROI, new System.Drawing.Rectangle(), "ReadCode");
-                            });
-                            isDB.Start();
                             this.Dispatcher.Invoke(() =>
                             {
                                 using (var bm = image.Bitmap)
@@ -284,6 +279,21 @@ namespace SPI_AOI.Views
                                     ImbCameraView.Source = bms;
                                 }
                             });
+                            if (serviceResults != null)
+                            {
+                                sn[i] = serviceResults.SN;
+                                Thread isDB = new Thread(() => {
+                                    mMyDatabase.InsertNewImage(ID, DateTime.Now, fileName, i, ROI, new System.Drawing.Rectangle(), "ReadCode");
+                                });
+                                isDB.Start();
+                            
+                            }
+                            else
+                            {
+                                sn[i] = "NOT FOUND";
+
+                                break;
+                            }
                         }
                         else
                         {
@@ -515,6 +525,7 @@ namespace SPI_AOI.Views
                             }
                         }
                     }
+                    allsn = "";
                     for (int i = 0; i < sn.Length; i++)
                     {
                         allsn += sn[i];
@@ -1316,6 +1327,7 @@ namespace SPI_AOI.Views
                 Views.MainConfigWindow.IOConfigForm ioForm = new Views.MainConfigWindow.IOConfigForm();
                 ioForm.ShowDialog();
                 mCalibImage = CalibrateLoader.UpdateInstance();
+                UpdateRunningMode();
             }
         }
         private void btAlgorithmSettings_Click(object sender, RoutedEventArgs e)
