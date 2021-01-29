@@ -1619,29 +1619,21 @@ namespace SPI_AOI.Views
             int id = stackPadError.SelectedIndex;
             if(id >= 0 && id < stackPadError.Items.Count)
             {
-                var r = MessageBox.Show(string.Format("Set PASS for Pad '{0}' ?",mPadErrorDetails[id].Pad.NoID), "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-                if(r == MessageBoxResult.Yes)
-                {
                     Utils.PadErrorControl item = stackPadError.Items[id] as Utils.PadErrorControl;
                     item.SetStatus(0);
                     mPadErrorDetails[id].ConfirmResult = "PASS";
-                }
             }
         }
         private void btAllPASS_Click(object sender, RoutedEventArgs e)
         {
-            var r = MessageBox.Show("Set PASS for All Pad?", "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-            if (r == MessageBoxResult.Yes)
+            for (int i = 0; i < mPadErrorDetails.Count; i++)
             {
-                for (int i = 0; i < mPadErrorDetails.Count; i++)
+                if(i < stackPadError.Items.Count)
                 {
-                    if(i < stackPadError.Items.Count)
-                    {
-                        Utils.PadErrorControl item = stackPadError.Items[i] as Utils.PadErrorControl;
-                        item.SetStatus(0);
-                    }
-                    mPadErrorDetails[i].ConfirmResult = "PASS";
+                    Utils.PadErrorControl item = stackPadError.Items[i] as Utils.PadErrorControl;
+                    item.SetStatus(0);
                 }
+                mPadErrorDetails[i].ConfirmResult = "PASS";
             }
         }
 
@@ -1650,27 +1642,19 @@ namespace SPI_AOI.Views
             int id = stackPadError.SelectedIndex;
             if (id >= 0 && id < stackPadError.Items.Count)
             {
-                var r = MessageBox.Show(string.Format("Set NG for Pad '{0}' ?", mPadErrorDetails[id].Pad.NoID), "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-                if (r == MessageBoxResult.Yes)
-                {
                     Utils.PadErrorControl item = stackPadError.Items[id] as Utils.PadErrorControl;
                     item.SetStatus(0);
                     mPadErrorDetails[id].ConfirmResult = "FAIL";
-                }
             }
         }
 
         private void btPASSFAIL_Click(object sender, RoutedEventArgs e)
         {
-            var r = MessageBox.Show("Set NG for All Pad?", "Question", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-            if (r == MessageBoxResult.Yes)
+            for (int i = 0; i < mPadErrorDetails.Count; i++)
             {
-                for (int i = 0; i < mPadErrorDetails.Count; i++)
-                {
-                    Utils.PadErrorControl item = stackPadError.Items[i] as Utils.PadErrorControl;
-                    item.SetStatus(0);
-                    mPadErrorDetails[i].ConfirmResult = "FAIL";
-                }
+                Utils.PadErrorControl item = stackPadError.Items[i] as Utils.PadErrorControl;
+                item.SetStatus(-1);
+                mPadErrorDetails[i].ConfirmResult = "FAIL";
             }
         }
 

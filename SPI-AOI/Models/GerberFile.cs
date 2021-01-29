@@ -215,7 +215,7 @@ namespace SPI_AOI.Models
                     }
                     
                 }
-                CvInvoke.DrawContours(Img, contours, -1, new MCvScalar(0, 50, 0), -1);
+                CvInvoke.DrawContours(Img, contours, -1, new MCvScalar(30, 30, 30), -1);
             }
             return Img;
         }
